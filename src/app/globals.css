@@ -191,6 +191,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Prevent horizontal scrolling on small screens */
+@layer base {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+
 /* Wave animation enhancements */
 @keyframes wave-float {
   0%, 100% {

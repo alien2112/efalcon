@@ -11,6 +11,7 @@ interface NavigationProps {
 
 export function Navigation({ currentSection, onNavigate }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -18,6 +19,18 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Lock background scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
 
   return (
     <div className={`fixed left-0 right-0 top-0 z-50 h-[103px] backdrop-blur-md border-b transition-colors ${
@@ -37,8 +50,8 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
               />
             </Link>
 
-            {/* Navigation Links */}
-            <div className="flex gap-8 items-center">
+            {/* Desktop Navigation Links */}
+            <div className="hidden md:flex gap-8 items-center">
               <Link
                 href="/services"
                 className={`font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-colors ${
@@ -74,8 +87,8 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
               {/* Contact link removed; using Connect button instead */}
             </div>
 
-            {/* Connect Button with Fancy Design */}
-            <Link href="/contact-us" aria-label="Connect with us" className="relative h-[44px] w-[150px] rounded-[50px] hover:opacity-90 transition-opacity flex items-center justify-center" style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}>
+            {/* Desktop Connect Button */}
+            <Link href="/contact-us" aria-label="Connect with us" className="hidden md:flex relative h-[44px] w-[150px] rounded-[50px] hover:opacity-90 transition-opacity items-center justify-center" style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}>
                 {/* Particle Background */}
                 <div className="absolute inset-[-15%_19.76%_-13.01%_-3.89%] pointer-events-none">
                   <div className="absolute inset-[-3.91%_-0.73%_-3.91%_-1.42%]">
@@ -110,8 +123,48 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
                 {/* Border */}
                 <div aria-hidden="true" className="absolute border border-solid border-white inset-0 pointer-events-none rounded-[50px]" />
             </Link>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMenuOpen(v => !v)}
+              className="md:hidden relative h-10 w-10 grid place-items-center rounded-full hover:bg-white/10 transition"
+            >
+              <span className={`block h-0.5 w-6 bg-white transition-transform duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`}></span>
+              <span className={`block h-0.5 w-6 bg-white my-1 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+              <span className={`block h-0.5 w-6 bg-white transition-transform duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`}></span>
+            </button>
           </div>
         </div>
+      </div>
+    </div>
+    {/* Mobile overlay */}
+    {menuOpen && (
+      <div
+        onClick={() => setMenuOpen(false)}
+        className="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-[1px] transition-opacity"
+      />
+    )}
+    {/* Mobile slide-down menu */}
+    <div
+      className={`md:hidden fixed left-0 right-0 z-50 top-[103px] origin-top transition-transform duration-300 ${menuOpen ? 'translate-y-0' : '-translate-y-4 pointer-events-none'}`}
+    >
+      <div className="mx-4 rounded-xl border border-white/10 bg-[rgba(8,8,8,0.95)] p-4 shadow-lg">
+        <nav className="flex flex-col">
+          <Link href="/services" onClick={() => setMenuOpen(false)} className="px-3 py-3 rounded-lg text-white/90 hover:bg-white/10">Services</Link>
+          <Link href="/our-work" onClick={() => setMenuOpen(false)} className="px-3 py-3 rounded-lg text-white/90 hover:bg-white/10">Our Work</Link>
+          <Link href="/about-us" onClick={() => setMenuOpen(false)} className="px-3 py-3 rounded-lg text-white/90 hover:bg-white/10">About Us</Link>
+          <Link href="/blog" onClick={() => setMenuOpen(false)} className="px-3 py-3 rounded-lg text-white/90 hover:bg-white/10">Blog</Link>
+          <Link
+            href="/contact-us"
+            onClick={() => setMenuOpen(false)}
+            className="mt-2 relative h-[44px] rounded-[50px] hover:opacity-90 transition-opacity flex items-center justify-center"
+            style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}
+          >
+            <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-white tracking-[0.56px]">CONNECT US</span>
+            <span aria-hidden className="absolute border border-solid border-white inset-0 pointer-events-none rounded-[50px]" />
+          </Link>
+        </nav>
       </div>
     </div>
   );
