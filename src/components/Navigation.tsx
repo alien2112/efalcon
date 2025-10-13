@@ -33,6 +33,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
   }, [menuOpen]);
 
   return (
+    <>
     <div className={`fixed left-0 right-0 top-0 z-50 h-[103px] backdrop-blur-md border-b transition-colors ${
       scrolled ? 'bg-[rgba(8,8,8,0.65)] border-[rgba(255,255,255,0.2)]' : 'bg-[rgba(113,97,6,0.1)] border-[rgba(255,255,255,0.1)]'
     }`}>
@@ -167,5 +168,6 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
         </nav>
       </div>
     </div>
+    </>
   );
 }
