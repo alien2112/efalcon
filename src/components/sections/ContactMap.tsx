@@ -34,54 +34,17 @@ export function ContactMap() {
               isLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
             }`}
           >
-            {/* Placeholder Map - In a real implementation, you would integrate with Google Maps or similar */}
-            <div className="w-full h-full bg-gradient-to-br from-[#716106] to-[#5a4f05] flex items-center justify-center relative">
-              {/* Map Pattern Overlay */}
-              <div className="absolute inset-0 opacity-20">
-                <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <defs>
-                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5"/>
-                    </pattern>
-                  </defs>
-                  <rect width="100" height="100" fill="url(#grid)" />
-                </svg>
-              </div>
-
-              {/* Map Content */}
-              <div className="text-center text-white z-10">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] mb-2">
-                  Riyadh Office
-                </h3>
-                <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] opacity-90">
-                  Riyadh, Kingdom of Saudi Arabia
-                </p>
-              </div>
-
-              {/* Interactive Elements */}
-              <div className="absolute top-4 right-4 flex flex-col gap-2">
-                <button className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                </button>
-                <button className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4m16 0l-4-4m4 4l-4 4" />
-                  </svg>
-                </button>
-              </div>
-
-              <div className="absolute bottom-4 left-4 flex gap-2">
-                <button className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">Satellite</button>
-                <button className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">Street</button>
-              </div>
-            </div>
+            {/* Real Google Maps Embed */}
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.5!2d46.6753!3d24.7136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2ee2b5b5b5b5b5%3A0x3e2ee2b5b5b5b5b5!2sKing%20Fahd%20Rd%2C%20Riyadh%20Saudi%20Arabia!5e0!3m2!1sen!2ssa!4v1640000000000!5m2!1sen!2ssa"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Ebdaa Falcon Location - King Fahed Road, Riyadh"
+            />
           </div>
 
           {/* Map Info Overlay */}
@@ -96,7 +59,7 @@ export function ContactMap() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600">
-                    Riyadh, Kingdom of Saudi Arabia
+                    King Fahed Road, Riyadh
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -111,14 +74,22 @@ export function ContactMap() {
                   <svg className="w-4 h-4 text-[#716106]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600">
-                    +966 11 123 4567
-                  </span>
+                  <a 
+                    href="tel:+966565145666"
+                    className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 hover:text-[#716106] transition-colors"
+                  >
+                    +966 56 514 5666
+                  </a>
                 </div>
               </div>
-              <button className="mt-4 w-full bg-[#716106] text-white py-2 rounded-lg font-medium hover:bg-[#5a4f05] transition-colors">
+              <a 
+                href="https://www.google.com/maps/dir/?api=1&destination=King+Fahd+Rd%2C+Riyadh%2C+Saudi+Arabia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 w-full bg-[#716106] text-white py-2 rounded-lg font-medium hover:bg-[#5a4f05] transition-colors text-center block"
+              >
                 Get Directions
-              </button>
+              </a>
             </div>
           </div>
         </div>

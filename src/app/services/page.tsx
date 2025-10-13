@@ -40,7 +40,10 @@ export default function ServicesIndexPage() {
       {/* Intro */}
       <section className="bg-white py-12 md:py-16">
         <div className="max-w-[1100px] mx-auto px-4 md:px-8 text-center">
-          <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px]">
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#716106] mb-6">
+            Comprehensive Energy Solutions
+          </h2>
+          <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] leading-relaxed">
             Ebdaa Falcon provides a comprehensive suite of integrated services across the energy, logistics, and infrastructure sectors. We leverage global partnerships and deep industry expertise to deliver excellence and superior value to our clients, in line with the ambitious goals of Saudi Vision 2030.
           </p>
         </div>
@@ -49,26 +52,50 @@ export default function ServicesIndexPage() {
       {/* Services Grid - engaging cards */}
       <section className="bg-gray-50 py-12 md:py-20">
         <div className="max-w-[1200px] mx-auto px-4 md:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[40px] text-[#716106] mb-4">
+              Our Service Portfolio
+            </h2>
+            <p className="font-['Alice:Regular',_sans-serif] text-gray-600 text-[16px] md:text-[18px] max-w-[800px] mx-auto">
+              Discover our range of specialized services designed to meet your energy and logistics needs
+            </p>
+          </div>
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {services.map((s) => (
-              <div key={s.slug} className="group bg-white rounded-[16px] border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
-                <div className="relative h-[180px] md:h-[220px] overflow-hidden">
-                  <Image src={s.imageUrl} alt={s.title} fill className="object-cover group-hover:scale-[1.05] transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[20px] md:text-[22px]">{s.title}</h3>
+            {services.map((s, index) => (
+              <div key={s.slug} className="group bg-white rounded-[20px] border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="relative h-[200px] md:h-[240px] overflow-hidden">
+                  <Image src={s.imageUrl} alt={s.title} fill className="object-cover group-hover:scale-[1.08] transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">{index + 1}</span>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[20px] md:text-[22px] mb-1">{s.title}</h3>
+                    <div className="w-12 h-1 bg-[#FFD700] rounded-full"></div>
                   </div>
                 </div>
-                <div className="p-5 md:p-6">
-                  <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px] line-clamp-3">{s.summary}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {s.features.slice(0, 3).map((f) => (
-                      <span key={f} className="text-[12px] md:text-[13px] px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-['ADLaM_Display:Regular',_sans-serif]">{f}</span>
-                    ))}
+                <div className="p-6 md:p-8">
+                  <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px] leading-relaxed mb-4">{s.summary}</p>
+                  <div className="mb-6">
+                    <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[14px] mb-3">Key Features:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {s.features.slice(0, 3).map((f) => (
+                        <span key={f} className="text-[11px] md:text-[12px] px-3 py-1 rounded-full bg-[#716106]/10 text-[#716106] font-['ADLaM_Display:Regular',_sans-serif] border border-[#716106]/20">{f}</span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="mt-5">
-                    <Link href={`/services/${s.slug}`} className="inline-block text-[#716106] hover:text-[#514500] underline font-['ADLaM_Display:Regular',_sans-serif]">Learn more →</Link>
-                  </div>
+                  <Link 
+                    href={`/services/${s.slug}`} 
+                    className="inline-flex items-center gap-2 text-[#716106] hover:text-[#514500] font-['ADLaM_Display:Regular',_sans-serif] text-[14px] group-hover:gap-3 transition-all duration-200"
+                  >
+                    Explore Service
+                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -76,22 +103,32 @@ export default function ServicesIndexPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#716106] py-8 md:py-12 text-white">
-        <div className="max-w-[1280px] mx-auto px-4 md:px-8 text-center">
-          <div className="mb-6">
-            <Image 
-              src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png"
-              alt="Ebdaa Falcon Logo"
-              width={60}
-              height={60}
-              className="mx-auto"
-            />
+      {/* Call to Action */}
+      <section className="bg-gradient-to-r from-[#716106] to-[#514500] py-16 md:py-20">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-8 text-center">
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[32px] md:text-[48px] mb-6">
+            Ready to Get Started?
+          </h2>
+          <p className="font-['Alice:Regular',_sans-serif] text-white/90 text-[16px] md:text-[18px] mb-8 max-w-[600px] mx-auto">
+            Contact our team to discuss your specific requirements and discover how we can support your energy and logistics needs.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/contact-us" 
+              className="bg-white text-[#716106] px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 hover:scale-105 transform font-['ADLaM_Display:Regular',_sans-serif]"
+            >
+              Contact Us Today
+            </Link>
+            <Link 
+              href="/our-work" 
+              className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-medium hover:bg-white hover:text-[#716106] transition-colors duration-300 hover:scale-105 transform font-['ADLaM_Display:Regular',_sans-serif]"
+            >
+              View Our Work
+            </Link>
           </div>
-          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] md:text-[16px] mb-4">© 2025 Ebdaa Falcon. All rights reserved.</p>
-          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[12px] md:text-[14px] text-white/70">Excellence in Energy, Logistics & Sustainability</p>
         </div>
-      </footer>
+      </section>
+
     </div>
   );
 }

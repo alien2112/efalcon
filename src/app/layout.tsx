@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Footer } from "@/components/Footer";
+import { FloatingActions } from "@/components/FloatingActions";
 
 // Force dynamic rendering for all routes under this layout
 export const dynamic = "force-dynamic";
@@ -36,6 +38,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         {children}
+        <Footer />
+        <FloatingActions />
       </body>
     </html>
   );
