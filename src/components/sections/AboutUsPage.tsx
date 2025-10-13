@@ -7,20 +7,33 @@ export function AboutUsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32">
-        <Image
-          src="/about%20us%20.jpg"
-          alt="About Us Banner"
-          fill
-          className="object-cover"
-          priority
-        />
+      {/* Hero Section with radial reveal matching Services */}
+      <section className="relative py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="relative w-full h-full overflow-hidden">
+            <div className="absolute inset-0 reveal-clip">
+              <Image
+                src="/about%20us%20.jpg"
+                alt="About Us Banner"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div>
+        </div>
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 text-center">
           <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-4xl md:text-6xl lg:text-7xl text-white mb-6">About Ebdaa Falcon</h1>
           <p className="font-['Alice:Regular',_sans-serif] text-xl md:text-2xl text-white/90 max-w-4xl mx-auto">Delivering excellence in energy, logistics and sustainable growth across the Middle East and beyond.</p>
         </div>
+        <style jsx>{`
+          .reveal-clip { position:absolute; inset:0; animation: clipReveal 1600ms ease-out forwards; will-change: clip-path; }
+          @keyframes clipReveal {
+            0% { clip-path: circle(0% at 50% 50%); }
+            100% { clip-path: circle(150% at 50% 50%); }
+          }
+        `}</style>
       </section>
 
       {/* Purpose Section */}

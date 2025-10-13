@@ -10,9 +10,9 @@ export interface ServiceItem {
 export const services: ServiceItem[] = [
   {
     slug: 'engine-oils',
-    title: 'Engine Oils',
-    summary: 'High-quality Saudi-made oils designed to extend engine life and deliver maximum performance.',
-    imageUrl: '/images/999718f4c2f82d26b7f5fe8222338d676599195f.png',
+    title: 'Motor Oils',
+    summary: 'High-quality Saudi-made motor oils engineered for durability and peak performance.',
+    imageUrl: '/gallery/engine%20oil1.jpg',
     features: [
       'Synthetic and mineral formulations',
       'Extended engine protection',
@@ -26,7 +26,7 @@ export const services: ServiceItem[] = [
     slug: 'oil-gas-solutions',
     title: 'Oil & Gas Solutions',
     summary: 'Integrated solutions in storage, transportation, and trading of petroleum derivatives.',
-    imageUrl: '/images/5992bbb553331fc55d07d245c68d3a2d7b8fea26.png',
+    imageUrl: '/gallery/oil%20extraction.jpg',
     features: [
       'Bulk storage facilities',
       'Import/export operations',
@@ -40,7 +40,7 @@ export const services: ServiceItem[] = [
     slug: 'logistics-marine-services',
     title: 'Logistics & Marine Services',
     summary: 'World-class logistics across marine ports and inland operations to keep supply chains moving.',
-    imageUrl: '/images/de677a78167b5a290392b1d450bcb146fab1dd5e.png',
+    imageUrl: '/gallery/logistic%20.jpg',
     features: [
       'Port handling and stevedoring',
       'Customs and documentation',
@@ -54,7 +54,7 @@ export const services: ServiceItem[] = [
     slug: 'renewable-energy-desalination',
     title: 'Renewable Energy & Water Desalination',
     summary: 'Sustainable solar and wind energy solutions alongside advanced water desalination systems.',
-    imageUrl: '/images/665db4c10244e78f94bf59a54bb37d716103ac23.png',
+    imageUrl: '/gallery/solar%20panels.jpg',
     features: [
       'Solar and wind integrations',
       'Hybrid energy systems',

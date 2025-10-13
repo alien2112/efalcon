@@ -35,7 +35,7 @@ export function ServicesSection() {
               _id: '1',
               title: "Petroleum Storage & Trading",
               description: "Comprehensive storage solutions and strategic trading of petroleum products",
-              imageUrl: "/images/999718f4c2f82d26b7f5fe8222338d676599195f.png",
+              imageUrl: "/gallery/oil%20extraction.jpg",
               order: 1,
               isActive: true
             },
@@ -43,7 +43,7 @@ export function ServicesSection() {
               _id: '2',
               title: "Logistics Solutions",
               description: "Integrated logistics across marine ports and inland operations",
-              imageUrl: "/images/de677a78167b5a290392b1d450bcb146fab1dd5e.png",
+              imageUrl: "/gallery/logistic%20.jpg",
               order: 2,
               isActive: true
             },
@@ -51,7 +51,7 @@ export function ServicesSection() {
               _id: '3',
               title: "International Partnerships",
               description: "Representing global partners with world-class service standards",
-              imageUrl: "/images/665db4c10244e78f94bf59a54bb37d716103ac23.png",
+              imageUrl: "/gallery/solar%20panels.jpg",
               order: 3,
               isActive: true
             }
@@ -65,7 +65,7 @@ export function ServicesSection() {
             _id: '1',
             title: "Petroleum Storage & Trading",
             description: "Comprehensive storage solutions and strategic trading of petroleum products",
-            imageUrl: "/images/999718f4c2f82d26b7f5fe8222338d676599195f.png",
+            imageUrl: "/gallery/oil%20extraction.jpg",
             order: 1,
             isActive: true
           },
@@ -73,7 +73,7 @@ export function ServicesSection() {
             _id: '2',
             title: "Logistics Solutions",
             description: "Integrated logistics across marine ports and inland operations",
-            imageUrl: "/images/de677a78167b5a290392b1d450bcb146fab1dd5e.png",
+            imageUrl: "/gallery/logistic%20.jpg",
             order: 2,
             isActive: true
           },
@@ -81,7 +81,7 @@ export function ServicesSection() {
             _id: '3',
             title: "International Partnerships",
             description: "Representing global partners with world-class service standards",
-            imageUrl: "/images/665db4c10244e78f94bf59a54bb37d716103ac23.png",
+            imageUrl: "/gallery/solar%20panels.jpg",
             order: 3,
             isActive: true
           }
@@ -183,8 +183,15 @@ export function ServicesSection() {
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-white max-w-[600px] mx-auto">
                 {services[currentSlide].description}
               </p>
-              <div className="mt-6">
-                <Link href={`/services/${encodeURIComponent(services[currentSlide].title.toLowerCase().replace(/\s+/g,'-'))}`} className="text-white underline hover:text-[#FFD700] transition-colors font-['ADLaM_Display:Regular',_sans-serif]">
+            <div className="mt-6">
+              <Link href={`/services/${(() => {
+                const title = services[currentSlide].title.toLowerCase();
+                if (title.includes('petroleum') || title.includes('trading')) return 'oil-gas-solutions';
+                if (title.includes('logistics')) return 'logistics-marine-services';
+                if (title.includes('international') || title.includes('renewable') || title.includes('energy')) return 'renewable-energy-desalination';
+                if (title.includes('engine') || title.includes('motor')) return 'engine-oils';
+                return encodeURIComponent(title.replace(/\s+/g,'-'));
+              })()}`} className="text-white underline hover:text-[#FFD700] transition-colors font-['ADLaM_Display:Regular',_sans-serif]">
                   Learn more →
                 </Link>
               </div>

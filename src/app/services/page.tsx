@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
+import { services } from '@/lib/services';
 import { Navigation } from '@/components/Navigation';
 
 export default function ServicesIndexPage() {
@@ -8,13 +10,31 @@ export default function ServicesIndexPage() {
     <div className="size-full overflow-y-auto overflow-x-hidden">
       <Navigation currentSection="services" onNavigate={() => {}} />
 
-      {/* Hero */}
+      {/* Hero with radial center-to-out reveal (no image stretching) */}
       <section className="relative w-full h-[38vh] md:h-[48vh] overflow-hidden">
-        <Image src="/images/de677a78167b5a290392b1d450bcb146fab1dd5e.png" alt="Our Services" fill className="object-cover" />
+        <div className="absolute inset-0">
+          <div className="relative w-full h-full overflow-hidden">
+            {/* Image revealed by expanding clip-path circle from center */}
+            <div className="absolute inset-0 reveal-clip">
+              <Image src="/ourservicesbanner.png" alt="Our Services" fill className="object-cover" priority />
+            </div>
+          </div>
+        </div>
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
           <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px]">Our Services</h1>
         </div>
+        <style jsx>{`
+          .reveal-clip { 
+            animation: clipReveal 1600ms ease-out forwards; 
+            will-change: clip-path, opacity;
+          }
+          @keyframes clipReveal {
+            0% { clip-path: circle(0% at 50% 50%); opacity: 0.6; }
+            60% { opacity: 1; }
+            100% { clip-path: circle(150% at 50% 50%); opacity: 1; }
+          }
+        `}</style>
       </section>
 
       {/* Intro */}
@@ -26,74 +46,32 @@ export default function ServicesIndexPage() {
         </div>
       </section>
 
-      {/* Services Sections */}
+      {/* Services Grid - engaging cards */}
       <section className="bg-gray-50 py-12 md:py-20">
-        <div className="max-w-[1200px] mx-auto px-4 md:px-8 grid gap-8">
-          {/* 1. Petroleum Products & Integrated Logistics */}
-          <div className="bg-white rounded-[16px] border border-gray-200 p-6 md:p-8">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-3">Petroleum Products & Integrated Logistics</h2>
-            <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] mb-4">
-              We are specialists in the complete lifecycle of petroleum products, offering secure and efficient solutions for storage, transportation, and trading. Our world-class logistics services ensure reliability across marine ports and inland operations.
-            </p>
-            <p className="font-['Alice:Regular',_sans-serif] text-gray-800 font-semibold mb-2">Our services in this sector include:</p>
-            <ul className="list-disc pl-6 space-y-2 font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px]">
-              <li>
-                <span className="font-semibold">Storage & Creation:</span> State-of-the-art facilities for the storage of oil, gas, and various petroleum derivatives.
-              </li>
-              <li>
-                <span className="font-semibold">Transportation & Trading:</span> A robust network for the movement and commerce of key energy products, including:
-                <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>Crude Oil</li>
-                  <li>Diesel</li>
-                  <li>Petrol (Gasoline)</li>
-                  <li>Kerosene</li>
-                  <li>Gas</li>
-                </ul>
-              </li>
-              <li>
-                <span className="font-semibold">Marine & Port Logistics:</span> Complete management and logistical support for sea ports dealing with petroleum products.
-              </li>
-            </ul>
-          </div>
-
-          {/* 2. Alternative Energy Solutions */}
-          <div className="bg-white rounded-[16px] border border-gray-200 p-6 md:p-8">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-3">Alternative Energy Solutions</h2>
-            <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] mb-4">
-              We are committed to building a sustainable future by developing alternative energy sources that are less harmful to the environment and more cost-effective than fossil fuels. Our focus is on harnessing renewable natural resources.
-            </p>
-            <ul className="list-disc pl-6 space-y-2 font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px]">
-              <li>
-                <span className="font-semibold">Solar Energy:</span> We utilize advanced technology to exploit energy from the sun for useful industries, employing photovoltaic cells and semi-conductive materials to generate electrical energy.
-              </li>
-              <li>
-                <span className="font-semibold">Wind Energy:</span> We design and implement systems where turbines convert the kinetic energy of the wind into mechanical and electrical power for various industrial and agricultural needs.
-              </li>
-            </ul>
-          </div>
-
-          {/* 3. Water Desalination */}
-          <div className="bg-white rounded-[16px] border border-gray-200 p-6 md:p-8">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-3">Water Desalination</h2>
-            <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px]">
-              We provide a critical service in water desalination, a process that converts salt water into pure, fresh water suitable for drinking and daily use. Our systems involve a large series of processes to separate salts and minerals, collecting water from the sea and purifying it of all impurities.
-            </p>
-          </div>
-
-          {/* 4. Electrical Infrastructure */}
-          <div className="bg-white rounded-[16px] border border-gray-200 p-6 md:p-8">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-3">Electrical Infrastructure</h2>
-            <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px]">
-              We support the expansion of modern energy grids through the provision of electrical towers. These essential structures support high-voltage lines that transmit electricity over long distances, connecting power stations to end consumers. Our towers are designed for both AC and DC systems.
-            </p>
-          </div>
-
-          {/* 5. Falcon Motor Oils */}
-          <div className="bg-white rounded-[16px] border border-gray-200 p-6 md:p-8">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-3">Falcon Motor Oils</h2>
-            <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px]">
-              Under our own brand, we produce a specialized line of high-quality Falcon Motor Oils. These fully synthetic oils are engineered to keep engines running like new, with specific formulations for both gasoline and diesel engines.
-            </p>
+        <div className="max-w-[1200px] mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {services.map((s) => (
+              <div key={s.slug} className="group bg-white rounded-[16px] border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                <div className="relative h-[180px] md:h-[220px] overflow-hidden">
+                  <Image src={s.imageUrl} alt={s.title} fill className="object-cover group-hover:scale-[1.05] transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[20px] md:text-[22px]">{s.title}</h3>
+                  </div>
+                </div>
+                <div className="p-5 md:p-6">
+                  <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px] line-clamp-3">{s.summary}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {s.features.slice(0, 3).map((f) => (
+                      <span key={f} className="text-[12px] md:text-[13px] px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-['ADLaM_Display:Regular',_sans-serif]">{f}</span>
+                    ))}
+                  </div>
+                  <div className="mt-5">
+                    <Link href={`/services/${s.slug}`} className="inline-block text-[#716106] hover:text-[#514500] underline font-['ADLaM_Display:Regular',_sans-serif]">Learn more →</Link>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

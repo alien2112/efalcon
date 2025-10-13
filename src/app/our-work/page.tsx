@@ -8,13 +8,29 @@ export default function OurWorkRoute() {
   return (
     <div className="size-full overflow-y-auto overflow-x-hidden">
       <Navigation currentSection="work" onNavigate={() => {}} />
-      {/* Hero */}
+      {/* Hero with radial reveal */}
       <section className="relative w-full h-[38vh] md:h-[48vh] overflow-hidden">
-        <Image src="/images/665db4c10244e78f94bf59a54bb37d716103ac23.png" alt="Our Work" fill className="object-cover" />
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 reveal-clip-slow">
+            <Image src="/images/665db4c10244e78f94bf59a54bb37d716103ac23.png" alt="Our Work" fill className="object-cover" priority />
+          </div>
+        </div>
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
           <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px]">Our Work</h1>
         </div>
+        <style jsx>{`
+          .reveal-clip-slow { 
+            animation: clipReveal 1600ms ease-out forwards; 
+            will-change: clip-path, opacity;
+            clip-path: circle(0% at 50% 50%);
+          }
+          @keyframes clipReveal {
+            0% { clip-path: circle(0% at 50% 50%); opacity: 0.6; }
+            60% { opacity: 1; }
+            100% { clip-path: circle(150% at 50% 50%); opacity: 1; }
+          }
+        `}</style>
       </section>
 
       {/* Intro */}
@@ -48,8 +64,13 @@ export default function OurWorkRoute() {
         <div className="max-w-[1200px] mx-auto px-4 md:px-8">
           <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-3">Project Focus: Water Cleaning and Purification Systems</h2>
           <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] mb-6">We implement comprehensive water treatment solutions. Our projects encompass the entire water purification cycle, ensuring the delivery of safe, clean water.</p>
-          <div className="bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-8 text-center">
-            <div className="w-full h-[240px] md:h-[360px] bg-gray-200 rounded-md flex items-center justify-center text-gray-600">Water System Diagram Placeholder (with future hotspots)</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="relative w-full h-[240px] md:h-[360px] rounded-[12px] overflow-hidden border border-gray-200">
+              <Image src="/gallery/waterpurification.jpg" alt="Water Purification Plant" fill className="object-cover" />
+            </div>
+            <div className="relative w-full h-[240px] md:h-[360px] rounded-[12px] overflow-hidden border border-gray-200">
+              <Image src="/gallery/water%20purification1.jpg" alt="Water Purification System Components" fill className="object-cover" />
+            </div>
           </div>
           <ul className="mt-6 list-disc pl-6 font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] space-y-1">
             <li>Treatment Facilities</li>
@@ -65,8 +86,14 @@ export default function OurWorkRoute() {
         <div className="max-w-[1200px] mx-auto px-4 md:px-8">
           <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-6">Portfolio: Renewable Energy Projects</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1,2,3].map(i => (
-              <div key={i} className="bg-white border border-gray-200 rounded-[16px] p-4 h-[180px] md:h-[220px] flex items-center justify-center text-gray-500">Project Photo Placeholder</div>
+            {[
+              { src: '/gallery/solar%20panels.jpg', alt: 'Solar Panels Installation' },
+              { src: '/gallery/solar%20energy.jpg', alt: 'Solar Energy Farm' },
+              { src: '/gallery/wind%20genrators.jpg', alt: 'Wind Generators Field' }
+            ].map((img) => (
+              <div key={img.src} className="relative h-[180px] md:h-[220px] rounded-[16px] overflow-hidden border border-gray-200">
+                <Image src={img.src} alt={img.alt} fill className="object-cover" />
+              </div>
             ))}
           </div>
         </div>

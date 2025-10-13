@@ -10,13 +10,20 @@ interface BlogHeroProps {
 export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
   return (
     <div className="relative w-full h-[40vh] md:h-[52vh] overflow-hidden">
-      <Image
-        src="/blog%20banner.jpg"
-        alt="Blog Banner"
-        fill
-        className="object-cover"
-        priority
-      />
+      {/* Match Services banner structure: clip-path on image wrapper */}
+      <div className="absolute inset-0">
+        <div className="relative w-full h-full overflow-hidden">
+          <div className="absolute inset-0 reveal-clip">
+            <Image
+              src="/blog%20banner.jpg"
+              alt="Blog Banner"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        </div>
+      </div>
       <div className="absolute inset-0 bg-black/40" />
       <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
         <div>
@@ -28,6 +35,17 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
           </p>
         </div>
       </div>
+      <style jsx>{`
+        .reveal-clip { 
+          position:absolute; inset:0; 
+          animation: clipReveal 1600ms ease-out forwards; 
+          will-change: clip-path, opacity; 
+        }
+        @keyframes clipReveal {
+          0% { clip-path: circle(0% at 50% 50%); }
+          100% { clip-path: circle(150% at 50% 50%); }
+        }
+      `}</style>
     </div>
   );
 }
