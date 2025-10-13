@@ -29,6 +29,10 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
   const [textProgress, setTextProgress] = useState(0);
 
   useEffect(() => {
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let autoProgressInterval: NodeJS.Timeout | null = null;
+
     const handleScroll = (e: Event) => {
       if (!heroRef.current) return;
 
@@ -81,12 +85,123 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
       }
     };
 
+    // Touch event handlers for mobile devices
+    const handleTouchStart = (e: TouchEvent) => {
+      if (!animationComplete && e.touches.length === 1) {
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!animationComplete && e.touches.length === 1) {
+        e.preventDefault();
+        
+        const touchCurrentY = e.touches[0].clientY;
+        const deltaY = touchStartY - touchCurrentY; // Inverted for natural scroll direction
+        
+        // Apply sensitivity multiplier for touch events - adjusted for mobile
+        const sensitivity = 0.003; // Increased sensitivity for better mobile experience
+        animationProgressRef.current = Math.max(0, Math.min(1, animationProgressRef.current + (deltaY * sensitivity)));
+        
+        setScrollProgress(animationProgressRef.current);
+        
+        const waveDelta = deltaY * sensitivity;
+        const textDelta = deltaY * (TEXT_CONFIG.speed * 2.5); // Faster for touch
+        
+        setWaveProgress(prev => Math.max(0, Math.min(1, prev + waveDelta)));
+        setTextProgress(prev => Math.max(0, Math.min(1, prev + textDelta)));
+        
+        // Check if animation is complete
+        if (animationProgressRef.current >= 0.95) {
+          setAnimationComplete(true);
+          onAnimationComplete?.();
+          setTimeout(() => {
+            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+          }, 100);
+        }
+        
+        // Update touch start position for continuous tracking
+        touchStartY = touchCurrentY;
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      // Add momentum for better mobile experience
+      if (!animationComplete && touchStartTime > 0) {
+        const touchDuration = Date.now() - touchStartTime;
+        const touchDistance = Math.abs(touchStartY - e.changedTouches[0].clientY);
+        
+        // If it's a quick swipe, add momentum
+        if (touchDuration < 300 && touchDistance > 50) {
+          const momentum = touchDistance * 0.001;
+          animationProgressRef.current = Math.max(0, Math.min(1, animationProgressRef.current + momentum));
+          
+          setScrollProgress(animationProgressRef.current);
+          setWaveProgress(prev => Math.max(0, Math.min(1, prev + momentum)));
+          setTextProgress(prev => Math.max(0, Math.min(1, prev + momentum * 2)));
+          
+          if (animationProgressRef.current >= 0.95) {
+            setAnimationComplete(true);
+            onAnimationComplete?.();
+            setTimeout(() => {
+              window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            }, 100);
+          }
+        }
+      }
+    };
+
+    // Auto-progression fallback for mobile devices
+    const startAutoProgress = () => {
+      if (autoProgressInterval) return;
+      
+      autoProgressInterval = setInterval(() => {
+        if (!animationComplete && animationProgressRef.current < 0.95) {
+          const autoDelta = 0.01; // Slow auto-progression
+          animationProgressRef.current = Math.max(0, Math.min(1, animationProgressRef.current + autoDelta));
+          
+          setScrollProgress(animationProgressRef.current);
+          setWaveProgress(prev => Math.max(0, Math.min(1, prev + autoDelta)));
+          setTextProgress(prev => Math.max(0, Math.min(1, prev + autoDelta * 1.2)));
+          
+          if (animationProgressRef.current >= 0.95) {
+            setAnimationComplete(true);
+            onAnimationComplete?.();
+            setTimeout(() => {
+              window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            }, 100);
+          }
+        }
+      }, 100); // Update every 100ms
+    };
+
+    // Start auto-progression after 3 seconds if no interaction
+    const autoProgressTimeout = setTimeout(() => {
+      if (!animationComplete && animationProgressRef.current < 0.1) {
+        startAutoProgress();
+      }
+    }, 3000);
+
+    // Add event listeners
     window.addEventListener('wheel', handleScroll, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: false });
 
     return () => {
       window.removeEventListener('wheel', handleScroll);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      
+      // Clean up timers
+      if (autoProgressInterval) {
+        clearInterval(autoProgressInterval);
+      }
+      clearTimeout(autoProgressTimeout);
     };
   }, [animationComplete]);
 
