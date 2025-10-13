@@ -7,22 +7,34 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 // Reuse the same globe library and container styling as About Us
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
 
-type Point = {
+type PresenceLevel = 'strong' | 'expanding' | 'partner';
+
+type Marker = {
   id: string;
   name: string;
   lat: number;
   lng: number;
+  level: PresenceLevel;
 };
 
-const COUNTRIES: Point[] = [
-  { id: 'sa', name: 'Saudi Arabia', lat: 23.8859, lng: 45.0792 },
-  { id: 'ae', name: 'UAE', lat: 23.4241, lng: 53.8478 },
-  { id: 'kw', name: 'Kuwait', lat: 29.3117, lng: 47.4818 },
-  { id: 'bh', name: 'Bahrain', lat: 26.0667, lng: 50.5577 },
-  { id: 'qa', name: 'Qatar', lat: 25.3548, lng: 51.1839 },
-  { id: 'om', name: 'Oman', lat: 21.4735, lng: 55.9754 },
-  { id: 'jo', name: 'Jordan', lat: 31.24, lng: 36.51 },
-  { id: 'eg', name: 'Egypt', lat: 26.8206, lng: 30.8025 }
+const STRONG: Marker[] = [
+  { id: 'sa', name: 'Saudi Arabia', lat: 23.8859, lng: 45.0792, level: 'strong' },
+  { id: 'iq', name: 'Iraq', lat: 33.2232, lng: 43.6793, level: 'strong' },
+  { id: 'eg', name: 'Egypt', lat: 26.8206, lng: 30.8025, level: 'strong' },
+  { id: 'tn', name: 'Tunisia', lat: 33.8869, lng: 9.5375, level: 'strong' }
+];
+
+const EXPANDING: Marker[] = [
+  { id: 'ma', name: 'Morocco', lat: 31.7917, lng: -7.0926, level: 'expanding' },
+  { id: 'mr', name: 'Mauritania', lat: 20.2540, lng: -9.2399, level: 'expanding' },
+  { id: 'ng', name: 'Nigeria', lat: 9.0820, lng: 8.6753, level: 'expanding' },
+  { id: 'id', name: 'Indonesia', lat: -0.7893, lng: 113.9213, level: 'expanding' }
+];
+
+const PARTNERS: Marker[] = [
+  { id: 'us', name: 'United States', lat: 37.0902, lng: -95.7129, level: 'partner' },
+  { id: 'eu', name: 'Europe', lat: 54.5260, lng: 15.2551, level: 'partner' },
+  { id: 'my', name: 'Malaysia', lat: 4.2105, lng: 101.9758, level: 'partner' }
 ];
 
 export function AboutSection() {
@@ -31,7 +43,18 @@ export function AboutSection() {
   const globeRef = useRef<{
     pointOfView: (view: { lat: number; lng: number; altitude: number }, ms?: number) => void;
   } | null>(null);
-  const points = useMemo(() => COUNTRIES.map(c => ({ ...c, size: 0.8 })), []);
+  const points = useMemo(() => {
+    // Different sizes by presence level
+    const withSize = (m: Marker): Marker & { size: number } => {
+      const sizeByLevel: Record<PresenceLevel, number> = {
+        strong: 1.6,
+        expanding: 1.2,
+        partner: 0.9
+      };
+      return { ...m, size: sizeByLevel[m.level] };
+    };
+    return [...STRONG, ...EXPANDING, ...PARTNERS].map(withSize);
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -57,7 +80,7 @@ export function AboutSection() {
         </h2>
 
         {/* Text with Globe on the right */}
-        <div className="grid lg:grid-cols-[1.6fr_1fr] gap-10 items-center">
+        <div className="grid lg:grid-cols-[1.4fr_1.2fr] gap-10 items-center">
           {/* Text (Left) */}
           <div className="max-w-[706px] mx-auto md:mx-0 md:ml-[56px]">
             <div className="font-['Alice:Regular',_sans-serif] text-[20px] md:text-[32px] text-white leading-[1.375]">
@@ -90,7 +113,8 @@ export function AboutSection() {
               backgroundPosition: '0 0, 1px 1px'
             }}
           >
-            <div ref={containerRef} className="relative aspect-[16/9] md:aspect-[21/9]">
+            {/* Make the globe visually larger with a squarer aspect and taller container */}
+            <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1]">
               <Globe
                 ref={globeRef as unknown as any}
                 height={size.h}
@@ -99,18 +123,23 @@ export function AboutSection() {
                 globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
                 bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
                 pointsData={points as unknown as object[]}
-                pointLat={((d: any) => (d as Point).lat) as unknown as any}
-                pointLng={((d: any) => (d as Point).lng) as unknown as any}
-                pointAltitude={() => 0.01}
-                pointColor={() => '#FFD700'}
-                pointRadius={((d: any) => (d as { size: number }).size * 0.2) as unknown as any}
+                pointLat={((d: any) => (d as Marker).lat) as unknown as any}
+                pointLng={((d: any) => (d as Marker).lng) as unknown as any}
+                pointAltitude={() => 0.02}
+                pointColor={((d: any) => {
+                  const level = (d as Marker & { size: number }).level;
+                  if (level === 'strong') return '#FFD700'; // gold
+                  if (level === 'expanding') return '#00E5FF'; // cyan
+                  return '#FF4D8D'; // magenta
+                }) as unknown as any}
+                pointRadius={((d: any) => (d as { size: number }).size * 0.28) as unknown as any}
                 labelsData={points as unknown as object[]}
-                labelLat={((d: any) => (d as Point).lat) as unknown as any}
-                labelLng={((d: any) => (d as Point).lng) as unknown as any}
-                labelText={((d: any) => (d as Point).name) as unknown as any}
-                labelSize={() => 1.6}
+                labelLat={((d: any) => (d as Marker).lat) as unknown as any}
+                labelLng={((d: any) => (d as Marker).lng) as unknown as any}
+                labelText={((d: any) => (d as Marker).name) as unknown as any}
+                labelSize={() => 1.8}
                 labelColor={() => 'white'}
-                labelDotRadius={() => 0.4}
+                labelDotRadius={() => 0.5}
                 atmosphereAltitude={0.15}
                 enablePointerInteraction
               />
