@@ -12,12 +12,12 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
   // ===== ANIMATION CONFIGURATION =====
   const WAVE_CONFIG = {
     speed: 0.001,           // Wave animation speed multiplier
-    phases: [0.15, 0.3, 0.5, 0.7, 0.8, 0.9] // Wave phase thresholds
+    phases: [0.25, 0.5, 0.75, 0.9] // Wave phase thresholds - 4 phases
   };
   
   const TEXT_CONFIG = {
     speed: 0.0008,          // Text animation speed multiplier (20% slower)
-    phases: [0.2, 0.4, 0.6, 0.75, 0.9, 1.0] // Text phase thresholds
+    phases: [0.25, 0.5, 0.75, 0.9] // Text phase thresholds - 4 phases
   };
 
   // ===== MAIN ANIMATION STATE =====
@@ -238,7 +238,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
     const phase = getWavePhase();
     
     switch (phase) {
-      case 1: // Wave over text, text not visible
+      case 1: // Phase 1: Logo - Wave covers the logo initially
         return {
           x: -34,
           y: 20,
@@ -246,16 +246,15 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           size: 1.1,
           opacity: 1
         };
-      case 2: // Wave goes down, text becomes visible
+      case 2: // Phase 2: Logistic Image - Wave moves to reveal logistic content
         return {
           x: -31.5,
           y: 60,
           angle: 180,
-          size: 1.1 ,
+          size: 1.1,
           opacity: 1
-
         };
-      case 3: // Text goes to top left, wave to bottom right
+      case 3: // Phase 3: Oil Station - Wave moves to show oil station content
         return {
           x: -22.5,
           y: 60,
@@ -263,29 +262,13 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           size: 1.1,
           opacity: 1
         };
-      case 4: // Wave goes to left of page
+      case 4: // Phase 4: Water Desalination - Wave moves to final position
         return {
           x: -37.5,
           y: 35,
           angle: 60,
           size: 1,
           opacity: 1
-        };
-      case 5: // Wave returns to bottom showing trust text
-        return {
-            x: -33,
-            y: 30,
-            angle: 0,
-            size: 1.1 ,
-            opacity: 1
-        };
-      case 6: // Wave goes to right edge
-        return {
-          x: -10,
-          y: 25,
-          angle: 25,
-          size: 1.1,
-          opacity: 0.7
         };
       default:
         return {
@@ -315,7 +298,23 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
     const phase = getTextPhase();
     
     switch (phase) {
-      case 1: // Text not visible
+      case 1: // Phase 1: Logo - Text not visible initially
+        return {
+          x: 0,
+          y: 0,
+          angle: 0,
+          size: 1.0,
+          opacity: 0
+        };
+      case 2: // Phase 2: Logistic Image - Text becomes visible
+        return {
+          x: -40,
+          y: -20,
+          angle: 0,
+          size: 0.8,
+          opacity: 1.0
+        };
+      case 3: // Phase 3: Oil Station - Text moves to center
         return {
           x: 0,
           y: 0,
@@ -323,45 +322,13 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           size: 1.0,
           opacity: 1
         };
-      case 2: // Text becomes visible in center
-        return {
-            x: -40,
-            y: -20,
-            angle: 0,
-            size: 0.8,
-            opacity: 1.0
-        };
-      case 3: // Text moves to top left
-        return {
-            x: 0,
-            y: 0,
-            angle: 0,
-            size: 1.0,
-            opacity: 1
-        };
-      case 4: // Text stays in top left
-        return {
-            x: 0,
-            y: 0,
-            angle: 0,
-            size: 1.2,
-            opacity: 1.0
-        };
-      case 5: // Trust text in center
+      case 4: // Phase 4: Water Desalination - Text stays in center
         return {
           x: 0,
           y: 0,
           angle: 0,
           size: 1.2,
           opacity: 1.0
-        };
-      case 6: // Trust text in center
-        return {
-          x: 0,
-          y: 0,
-          angle: 0,
-          size: 1.2,
-          opacity: 0.8
         };
       default:
         return {
@@ -379,29 +346,39 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
     console.log(`Text Content Phase: ${phase}`);
     
     switch (phase) {
-      case 1:
-      case 2:
+      case 1: // Phase 1: Logo
         return {
-          title: "Petroleum Derivatives and Logistics Services",
-          description: "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We also provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
+          title: "إبداع فالكون",
+          subtitle: "EBDAA FALCON",
+          showDescription: false,
+          isTrustText: false
+        };
+      case 2: // Phase 2: Logistic Image
+        return {
+          title: "INTEGRATED LOGISTIC SOLUTION",
+          description: "provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
           showDescription: true,
           isTrustText: false
         };
-      case 3:
-      case 4:
-      case 5:
-      case 6:
+      case 3: // Phase 3: Oil Station
         return {
-          title: "TRUST US",
-          description: "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We also provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
+          title: "LEADERS IN OIL AND GAS",
+          description: "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products.",
           showDescription: true,
-          isTrustText: true
+          isTrustText: false
+        };
+      case 4: // Phase 4: Water Desalination
+        return {
+          title: "Water Desalination",
+          description: "Desalination is the process of converting salt water into pure fresh water. It is suitable for drinking and daily use.",
+          showDescription: true,
+          isTrustText: false
         };
       default:
         return {
-          title: "Petroleum Derivatives and Logistics Services",
-          description: "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We also provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
-          showDescription: true,
+          title: "إبداع فالكون",
+          subtitle: "EBDAA FALCON",
+          showDescription: false,
           isTrustText: false
         };
     }
@@ -409,13 +386,11 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
 
   // ===== MAIN ANIMATION CONTROL =====
   const getPhase = () => {
-    // Divide scroll progress into 6 phases
-    if (scrollProgress < 0.15) return 1; // 0-15%
-    if (scrollProgress < 0.3) return 2;  // 15-30%
-    if (scrollProgress < 0.5) return 3;   // 30-50%
-    if (scrollProgress < 0.7) return 4;  // 50-70%
-    if (scrollProgress < 0.8) return 5;  // 70-80%
-    return 6; // 80-100%
+    // Divide scroll progress into 4 phases
+    if (scrollProgress < 0.25) return 1; // 0-25%
+    if (scrollProgress < 0.5) return 2;   // 25-50%
+    if (scrollProgress < 0.75) return 3; // 50-75%
+    return 4; // 75-100%
   };
 
   // ===== ANIMATION CALCULATIONS =====
@@ -463,6 +438,13 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           >
             {textContent.title}
           </h1>
+          
+          {/* Subtitle (for Phase 1) */}
+          {textContent.subtitle && (
+            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] leading-[1.2] text-white tracking-[-1.44px] transition-all duration-500 ease-out">
+              {textContent.subtitle}
+            </h2>
+          )}
           
           {/* Description */}
           {textContent.showDescription && (

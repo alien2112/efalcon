@@ -12,12 +12,12 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
   // Animation configuration
   const ANIMATION_CONFIG = {
     speed: 0.001,
-    phases: [0.15, 0.3, 0.5, 0.7, 0.8, 0.9]
+    phases: [0.25, 0.5, 0.75, 0.9] // 4 phases
   };
   
   const TEXT_CONFIG = {
     speed: 0.0008,
-    phases: [0.2, 0.4, 0.6, 0.75, 0.9, 1.0]
+    phases: [0.25, 0.5, 0.75, 0.9] // 4 phases
   };
 
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -218,7 +218,7 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
     const phase = getWavePhase();
     
     switch (phase) {
-      case 1:
+      case 1: // Phase 1: Logo
         return {
           x: -34,
           y: 20,
@@ -226,7 +226,7 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
           size: 1.1,
           opacity: 1
         };
-      case 2:
+      case 2: // Phase 2: Logistic Image
         return {
           x: -31.5,
           y: 60,
@@ -234,7 +234,7 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
           size: 1.1,
           opacity: 1
         };
-      case 3:
+      case 3: // Phase 3: Oil Station
         return {
           x: -22.5,
           y: 60,
@@ -242,29 +242,13 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
           size: 1.1,
           opacity: 1
         };
-      case 4:
+      case 4: // Phase 4: Water Desalination
         return {
           x: -37.5,
           y: 35,
           angle: 60,
           size: 1,
           opacity: 1
-        };
-      case 5:
-        return {
-          x: -33,
-          y: 30,
-          angle: 0,
-          size: 1.1,
-          opacity: 1
-        };
-      case 6:
-        return {
-          x: -10,
-          y: 25,
-          angle: 25,
-          size: 1.1,
-          opacity: 0.7
         };
       default:
         return {
@@ -290,15 +274,15 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
     const phase = getTextPhase();
     
     switch (phase) {
-      case 1:
+      case 1: // Phase 1: Logo - Text not visible initially
         return {
           x: 0,
           y: 0,
           angle: 0,
           size: 1.0,
-          opacity: 1
+          opacity: 0
         };
-      case 2:
+      case 2: // Phase 2: Logistic Image - Text becomes visible
         return {
           x: -40,
           y: -20,
@@ -306,7 +290,7 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
           size: 0.8,
           opacity: 1.0
         };
-      case 3:
+      case 3: // Phase 3: Oil Station - Text moves to center
         return {
           x: 0,
           y: 0,
@@ -314,29 +298,13 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
           size: 1.0,
           opacity: 1
         };
-      case 4:
+      case 4: // Phase 4: Water Desalination - Text stays in center
         return {
           x: 0,
           y: 0,
           angle: 0,
           size: 1.2,
           opacity: 1.0
-        };
-      case 5:
-        return {
-          x: 0,
-          y: 0,
-          angle: 0,
-          size: 1.2,
-          opacity: 1.0
-        };
-      case 6:
-        return {
-          x: 0,
-          y: 0,
-          angle: 0,
-          size: 1.2,
-          opacity: 0.8
         };
       default:
         return {
@@ -353,28 +321,38 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
     const phase = getTextPhase();
     
     switch (phase) {
-      case 1:
-      case 2:
+      case 1: // Phase 1: Logo
         return {
-          title: 'Let’s build something great together',
-          subtitle: 'We’re here to discuss your needs and craft the right solution.',
+          title: 'إبداع فالكون',
+          subtitle: 'EBDAA FALCON',
           showSubtitle: true,
           isContactText: false
         };
-      case 3:
-      case 4:
-      case 5:
-      case 6:
+      case 2: // Phase 2: Logistic Image
         return {
-          title: 'Contact Ebdaa Falcon',
-          subtitle: 'Talk to our team about energy, logistics, and partnerships.',
+          title: 'INTEGRATED LOGISTIC SOLUTION',
+          subtitle: 'provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.',
           showSubtitle: true,
-          isContactText: true
+          isContactText: false
+        };
+      case 3: // Phase 3: Oil Station
+        return {
+          title: 'LEADERS IN OIL AND GAS',
+          subtitle: 'Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products.',
+          showSubtitle: true,
+          isContactText: false
+        };
+      case 4: // Phase 4: Water Desalination
+        return {
+          title: 'Water Desalination',
+          subtitle: 'Desalination is the process of converting salt water into pure fresh water. It is suitable for drinking and daily use.',
+          showSubtitle: true,
+          isContactText: false
         };
       default:
         return {
-          title: 'Let’s build something great together',
-          subtitle: 'We’re here to discuss your needs and craft the right solution.',
+          title: 'إبداع فالكون',
+          subtitle: 'EBDAA FALCON',
           showSubtitle: true,
           isContactText: false
         };
