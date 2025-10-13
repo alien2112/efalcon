@@ -71,18 +71,11 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
               >
                 BLOG
               </Link>
-              <Link
-                href="/contact-us"
-                className={`font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-colors ${
-                  currentSection === 'contact' ? 'text-white' : 'text-[#cecfd2] hover:text-white'
-                }`}
-              >
-                CONTACT US
-              </Link>
+              {/* Contact link removed; using Connect button instead */}
             </div>
 
             {/* Connect Button with Fancy Design */}
-            <button className="relative h-[44px] w-[150px] rounded-[50px] hover:opacity-90 transition-opacity" style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}>
+            <Link href="/contact-us" aria-label="Connect with us" className="relative h-[44px] w-[150px] rounded-[50px] hover:opacity-90 transition-opacity flex items-center justify-center" style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}>
                 {/* Particle Background */}
                 <div className="absolute inset-[-15%_19.76%_-13.01%_-3.89%] pointer-events-none">
                   <div className="absolute inset-[-3.91%_-0.73%_-3.91%_-1.42%]">
@@ -116,7 +109,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
                 
                 {/* Border */}
                 <div aria-hidden="true" className="absolute border border-solid border-white inset-0 pointer-events-none rounded-[50px]" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
