@@ -1,0 +1,300 @@
+{
+  "metadata": {
+    "title": "Ebdaa Falcon - Petroleum Derivatives and Logistics Services",
+    "description": "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
+    "keywords": "petroleum, logistics, energy, storage, trading, marine ports, Middle East, Saudi Arabia"
+  },
+  "navigation": {
+    "vision": "VISION",
+    "services": "SERVICES",
+    "ourWork": "OUR WORK",
+    "aboutUs": "ABOUT US",
+    "blog": "BLOG",
+    "contactUs": "CONTACT US",
+    "connectUs": "CONNECT US"
+  },
+  "hero": {
+    "title": "Petroleum Derivatives and Logistics Services",
+    "trustTitle": "TRUST US",
+    "description": "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We also provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards."
+  },
+  "vision": {
+    "title": "OUR VISION",
+    "leftDescription": "To be a leading force in the energy and logistics sectors, driving sustainable growth and excellence across the Middle East and beyond",
+    "rightDescription": "Building strategic partnerships and delivering innovative solutions that create lasting value for our clients and communities"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Driving Excellence in Energy, Logistics & Sustainability",
+    "defaultServices": {
+      "petroleumStorage": {
+        "title": "Petroleum Storage & Trading",
+        "description": "Comprehensive storage solutions and strategic trading of petroleum products"
+      },
+      "logisticsSolutions": {
+        "title": "Logistics Solutions",
+        "description": "Integrated logistics across marine ports and inland operations"
+      },
+      "internationalPartnerships": {
+        "title": "International Partnerships",
+        "description": "Representing global partners with world-class service standards"
+      }
+    }
+  },
+  "work": {
+    "title": "Our Work",
+    "defaultWork": {
+      "petroleumStorage": {
+        "title": "Petroleum Products Storage",
+        "description": "State-of-the-art facilities for safe and efficient petroleum storage"
+      },
+      "marinePortOperations": {
+        "title": "Marine Port Operations",
+        "description": "Comprehensive port logistics and handling services"
+      },
+      "inlandTransportation": {
+        "title": "Inland Transportation",
+        "description": "Reliable inland logistics and distribution networks"
+      },
+      "tradingSolutions": {
+        "title": "Trading Solutions",
+        "description": "Strategic petroleum products trading and market solutions"
+      }
+    }
+  },
+  "about": {
+    "title": "Our Presence Around The World",
+    "description": "Ebdaa Falcon operates across multiple regions, proudly serving clients and partners worldwide. With strong roots in Saudi Arabia, our presence extends to the Middle East, Africa, Asia, Europe, and the United States. Through strategic partnerships and integrated energy and logistics solutions, we deliver excellence that creates a global impact while supporting local growth.",
+    "presence": {
+      "strongPresence": "Strong presence in Saudi Arabia, Iraq, Egypt, and Tunisia",
+      "expanding": "Expanding across Morocco, Mauritania, Nigeria, and Indonesia",
+      "partnerships": "Active partnerships in USA, Europe, and Malaysia"
+    }
+  },
+  "aboutUs": {
+    "hero": {
+      "title": "About Ebdaa Falcon",
+      "subtitle": "Pioneering Excellence in Energy & Logistics"
+    },
+    "purpose": {
+      "title": "Our Purpose",
+      "quote": "\"My first goal is for our country to be a successful and pioneering model in the world at all levels, and I will work with you to achieve that.\"",
+      "attribution": "– The Custodian of the Two Holy Mosques, King Salman bin Abdulaziz Al Saud",
+      "description": "Inspired by the ambition of Saudi Vision 2030, Ebdaa Falcon is dedicated to pioneering integrated solutions in energy and logistics, driving progress, and building a sustainable future."
+    },
+    "whoWeAre": {
+      "title": "Who We Are",
+      "description": "Ebdaa Falcon is a leading Saudi Arabian company specializing in a diverse portfolio of services across the energy and logistics sectors. We deal with international partners to deliver the highest levels of excellence in the storage, transportation, and trading of petroleum products.",
+      "mission": "Our mission is to provide superior, integrated services that meet the evolving needs of our clients. We are a premier provider of logistics services and a representative for global companies in petroleum derivatives, alternative energies, and water desalination."
+    },
+    "whatWeDo": {
+      "title": "What We Do",
+      "subtitle": "Our operations are diversified to cover the full spectrum of modern energy and infrastructure needs.",
+      "services": {
+        "petroleumProducts": {
+          "title": "Petroleum Products & Logistics",
+          "description": "We specialize in the creation, storage, and logistics of oil, gas, and petroleum derivatives. Our services include marine port management and a comprehensive logistics network. We manage a fleet capable of transporting crude oil and refined products such as diesel, petrol, kerosene, and gas."
+        },
+        "alternativeEnergy": {
+          "title": "Alternative Energy",
+          "description": "As a forward-thinking company, we are dedicated to generating alternative energies, focusing on solar and wind power. We believe in a future powered by clean, renewable, and less costly energy sources that are less harmful to the environment."
+        },
+        "waterDesalination": {
+          "title": "Water Desalination",
+          "description": "We address critical water needs through our water desalination services. Our process converts saltwater into pure, fresh water suitable for drinking and daily use, helping to support communities."
+        },
+        "falconMotorOils": {
+          "title": "Falcon Motor Oils",
+          "description": "We produce a specialized line of high-quality \"Falcon Motor Oils\" for both gasoline and diesel engines, ensuring optimal performance and protection."
+        }
+      }
+    },
+    "globalPresence": {
+      "title": "Our Global Presence",
+      "description": "Headquartered in Riyadh, Kingdom of Saudi Arabia, Ebdaa Falcon has a significant international footprint. Our operations and partnerships extend to:",
+      "countries": [
+        "Iraq",
+        "Egypt", 
+        "Tunisia",
+        "Morocco",
+        "Mauritania",
+        "Nigeria",
+        "Indonesia",
+        "USA, European Union, and Malaysia"
+      ]
+    },
+    "leadership": {
+      "title": "Our Leadership",
+      "description": "Ebdaa Falcon is led by a forward-looking management team committed to excellence and strategic growth.",
+      "ceo": {
+        "name": "Mosaed M. Al-Jhail",
+        "title": "Chairman of the Board & Chief Executive Officer"
+      }
+    }
+  },
+  "ourWorkPage": {
+    "title": "Our Work Portfolio",
+    "subtitle": "Explore our comprehensive portfolio of energy and logistics projects that showcase our expertise and commitment to excellence.",
+    "readyToStart": "Ready to Start Your Project?",
+    "getInTouchDescription": "Let's discuss how we can help bring your energy and logistics vision to life.",
+    "getInTouch": "Get In Touch",
+    "client": "Client"
+  },
+  "footer": {
+    "copyright": "© 2025 Ebdaa Falcon. All rights reserved.",
+    "tagline": "Excellence in Energy, Logistics & Sustainability"
+  },
+  "blog": {
+    "hero": {
+      "title": "Petroleum Derivatives and Logistics Services",
+      "subtitle": "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We also provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
+      "blogTitle": "OUR BLOG",
+      "blogSubtitle": "Stay updated with the latest insights and developments in energy and logistics"
+    },
+    "posts": {
+      "title": "Latest Articles",
+      "subtitle": "Discover insights, trends, and innovations in the energy and logistics sectors",
+      "readMore": "Read More",
+      "loadMore": "Load More Posts"
+    },
+    "categories": {
+      "title": "Explore Categories",
+      "subtitle": "Browse our content by topic and stay informed about your areas of interest",
+      "cta": {
+        "title": "Stay Connected",
+        "description": "Subscribe to our newsletter for the latest updates and insights",
+        "button": "Subscribe Now"
+      }
+    },
+    "footer": {
+      "copyright": "© 2025 Ebdaa Falcon. All rights reserved.",
+      "tagline": "Excellence in Energy, Logistics & Sustainability"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Petroleum Derivatives and Logistics Services",
+      "subtitle": "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We also provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
+      "contactTitle": "CONTACT US",
+      "contactSubtitle": "Get in touch with our team for inquiries, partnerships, and business opportunities"
+    },
+    "form": {
+      "title": "Get In Touch",
+      "subtitle": "Send us a message and we'll get back to you as soon as possible",
+      "fields": {
+        "name": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "company": "Company Name",
+        "service": "Service Interest",
+        "subject": "Subject",
+        "message": "Message"
+      },
+      "placeholders": {
+        "name": "Enter your full name",
+        "email": "Enter your email address",
+        "phone": "Enter your phone number",
+        "company": "Enter your company name",
+        "service": "Select a service",
+        "subject": "Enter message subject",
+        "message": "Enter your message here..."
+      },
+      "submit": "Send Message",
+      "submitting": "Sending...",
+      "success": {
+        "title": "Message Sent Successfully!",
+        "message": "Thank you for contacting us. We'll get back to you within 24 hours."
+      }
+    },
+    "info": {
+      "title": "Contact Information",
+      "subtitle": "Reach out to us through any of the following channels",
+      "cta": {
+        "title": "Ready to Start Your Project?",
+        "description": "Let's discuss how we can help bring your energy and logistics vision to life.",
+        "call": "Call Now",
+        "email": "Send Email"
+      }
+    },
+    "map": {
+      "title": "Find Us",
+      "subtitle": "Visit our headquarters or get directions to our location",
+      "location": {
+        "title": "Ebdaa Falcon Headquarters",
+        "address": "Riyadh, Kingdom of Saudi Arabia"
+      },
+      "controls": {
+        "satellite": "Satellite",
+        "street": "Street View"
+      },
+      "info": {
+        "title": "Office Information",
+        "address": "Riyadh, Kingdom of Saudi Arabia",
+        "hours": "Sunday - Thursday: 8:00 AM - 5:00 PM",
+        "phone": "+966 11 123 4567",
+        "directions": "Get Directions"
+      }
+    },
+    "footer": {
+      "copyright": "© 2025 Ebdaa Falcon. All rights reserved.",
+      "tagline": "Excellence in Energy, Logistics & Sustainability"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Admin Login",
+      "description": "Enter your credentials to access the admin dashboard",
+      "username": "Username",
+      "password": "Password",
+      "loginButton": "Login",
+      "loggingIn": "Logging in...",
+      "loginSuccess": "Login successful!",
+      "loginFailed": "Login failed"
+    },
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "logout": "Logout",
+      "tabs": {
+        "visionImages": "Vision Images",
+        "servicesImages": "Services Images",
+        "workImages": "Work Images"
+      },
+      "addButton": {
+        "vision": "Add Vision Image",
+        "services": "Add Service Image",
+        "work": "Add Work Image"
+      },
+      "form": {
+        "title": "Title",
+        "description": "Description",
+        "imageUrl": "Image URL",
+        "position": "Position",
+        "order": "Order",
+        "leftBox": "Left Box",
+        "rightBox": "Right Box",
+        "add": "Add",
+        "update": "Update",
+        "cancel": "Cancel",
+        "saving": "Saving...",
+        "editImage": "Edit Image",
+        "addImage": "Add {type} Image",
+        "updateImageDetails": "Update the image details",
+        "enterImageDetails": "Enter the image details"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "position": "Position",
+        "order": "Order"
+      },
+      "messages": {
+        "imageAdded": "Image added successfully!",
+        "imageUpdated": "Image updated successfully!",
+        "imageDeleted": "Image deleted successfully!",
+        "operationFailed": "Operation failed",
+        "deleteFailed": "Delete failed",
+        "deleteConfirm": "Are you sure you want to delete this image?"
+      }
+    }
+  }
+}
