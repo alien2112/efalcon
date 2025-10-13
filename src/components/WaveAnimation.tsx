@@ -298,13 +298,13 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
     const phase = getTextPhase();
     
     switch (phase) {
-      case 1: // Phase 1: Logo - Text not visible initially
+      case 1: // Phase 1: Logo - Text visible below logo
         return {
           x: 0,
-          y: 0,
+          y: 20,
           angle: 0,
           size: 1.0,
-          opacity: 0
+          opacity: 1
         };
       case 2: // Phase 2: Logistic Image - Text becomes visible
         return {
@@ -418,6 +418,56 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           priority
         />
       </div>
+
+      {/* Phase Images */}
+      {textPhase >= 1 && (
+        <div className="absolute inset-0 z-5 transition-all duration-500 ease-out">
+          {textPhase === 1 && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] max-w-[600px] h-[40%] max-h-[300px]">
+              <Image
+                src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png"
+                alt="Ebdaa Falcon Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          )}
+          {textPhase === 2 && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
+              <Image
+                src="/gallery/logistic .jpg"
+                alt="Logistic Image"
+                fill
+                className="object-contain rounded-lg"
+                priority
+              />
+            </div>
+          )}
+          {textPhase === 3 && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
+              <Image
+                src="/gallery/oil extraction.jpg"
+                alt="Oil Station"
+                fill
+                className="object-contain rounded-lg"
+                priority
+              />
+            </div>
+          )}
+          {textPhase === 4 && (
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
+              <Image
+                src="/gallery/water purification1.jpg"
+                alt="Water Desalination"
+                fill
+                className="object-contain rounded-lg"
+                priority
+              />
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Text Content */}
       <div 
