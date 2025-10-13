@@ -383,9 +383,9 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
       </div>
 
       {/* Phase Images */}
-      {textPhase >= 1 && (
+      {getTextPhase() >= 1 && (
         <div className="absolute inset-0 z-5 transition-all duration-500 ease-out">
-          {textPhase === 1 && (
+          {getTextPhase() === 1 && (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] max-w-[600px] h-[40%] max-h-[300px]">
               <Image
                 src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png"
@@ -396,7 +396,7 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
               />
             </div>
           )}
-          {textPhase === 2 && (
+          {getTextPhase() === 2 && (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
               <Image
                 src="/gallery/logistic .jpg"
@@ -407,7 +407,7 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
               />
             </div>
           )}
-          {textPhase === 3 && (
+          {getTextPhase() === 3 && (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
               <Image
                 src="/gallery/oil extraction.jpg"
@@ -418,7 +418,7 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
               />
             </div>
           )}
-          {textPhase === 4 && (
+          {getTextPhase() === 4 && (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
               <Image
                 src="/gallery/water purification1.jpg"

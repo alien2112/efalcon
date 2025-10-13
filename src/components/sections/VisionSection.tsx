@@ -1,101 +1,80 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
-
-interface VisionImage {
-  _id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  position: 'left' | 'right';
-  isActive: boolean;
-}
+import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
 
 export function VisionSection() {
-  const [visionImages, setVisionImages] = useState<VisionImage[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchVisionImages = async () => {
-      try {
-        const response = await fetch('/api/admin/vision-images');
-        const result = await response.json();
-        
-        if (result.success) {
-          setVisionImages(result.data || []);
-        }
-      } catch (error) {
-        console.error('Error fetching vision images:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchVisionImages();
-  }, []);
-
-  const leftImage = visionImages.find(img => img.position === 'left');
-  const rightImage = visionImages.find(img => img.position === 'right');
   return (
-    <div className="relative w-full bg-[#716106] py-20 md:py-32 overflow-hidden">
-      <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
-        {/* Section Title */}
-        <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[72px] leading-[1.2] text-center text-white mb-16">
-          OUR VISION
-        </h2>
-
-        {/* Vision Content Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 relative">
-          {/* Left Box */}
-          <div className="bg-[#d9d9d9] opacity-[0.51] rounded-[51px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.6)] p-8 md:p-12 h-[400px] md:h-[624px] flex items-center justify-center relative">
-            <div className="text-center">
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[18px] md:text-[24px] text-[#514500] leading-relaxed">
-                {leftImage?.description || "To be a leading force in the energy and logistics sectors, driving sustainable growth and excellence across the Middle East and beyond"}
-              </p>
-            </div>
-            
-            {/* Left Image Watermark */}
-            {leftImage && (
-              <div className="absolute h-[300px] md:h-[500px] left-[-50px] md:left-[-100px] opacity-[0.08] top-[50px] w-[200px] md:w-[400px] pointer-events-none overflow-hidden">
-                <Image 
-                  src={leftImage.imageUrl}
-                  alt={leftImage.title}
-                  fill
-                  className="object-cover"
-                />
+    <div className="relative w-full overflow-hidden">
+      {/* Top Section: OUR VISION */}
+      <div className="relative bg-[#716106] py-20 md:py-32 mt-16 md:mt-24">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
+        </div>
+        
+        <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Content */}
+            <FadeInOnScroll direction="left" delay={0.2}>
+              <div className="space-y-6">
+                <h2 className="font-bold text-white text-4xl md:text-6xl lg:text-7xl leading-tight">
+                  OUR VISION
+                </h2>
+                <p className="text-white text-lg md:text-xl leading-relaxed">
+                  My foremost goal is for our nation to be a successful model and a leader in the world at all levels, and I will work with you to achieve that. - The Custodian of the Two Holy Mosques, King Salman bin Abdulaziz Al Saud
+                </p>
               </div>
-            )}
+            </FadeInOnScroll>
+            
+            {/* Right Image */}
+            <ParallaxWrapper speed={0.3} direction="right">
+              <div className="relative">
+                <div className="relative rounded-lg overflow-hidden shadow-2xl border-4 border-yellow-400">
+                  <Image 
+                    src="/vision.png"
+                    alt="Vision 2030 and Saudi Leadership"
+                    width={600}
+                    height={400}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </div>
+            </ParallaxWrapper>
           </div>
+        </div>
+      </div>
 
-          {/* Right Box */}
-          <div className="bg-[#d9d9d9] opacity-[0.51] rounded-[51px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.6)] p-8 md:p-12 h-[400px] md:h-[624px] flex items-center justify-center relative">
-            <div className="text-center">
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[18px] md:text-[24px] text-[#514500] leading-relaxed">
-                {rightImage?.description || "Building strategic partnerships and delivering innovative solutions that create lasting value for our clients and communities"}
-              </p>
-            </div>
+      {/* Bottom Section: Ebdaa Falcon Company */}
+      <div className="relative bg-[#716106] py-20 md:py-32">
+        <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Image */}
+            <ParallaxWrapper speed={0.3} direction="left">
+              <div className="relative order-2 lg:order-1">
+                <div className="relative rounded-lg overflow-hidden shadow-2xl border-4 border-yellow-300">
+                  <Image 
+                    src="/vision2.png"
+                    alt="Mosaed M. Al-Jhail Chairman"
+                    width={400}
+                    height={500}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </div>
+            </ParallaxWrapper>
             
-            {/* Right Image Watermark */}
-            {rightImage ? (
-              <div className="absolute h-[300px] md:h-[500px] right-[-50px] md:right-[-100px] opacity-[0.08] top-[50px] w-[200px] md:w-[400px] pointer-events-none overflow-hidden">
-                <Image 
-                  src={rightImage.imageUrl}
-                  alt={rightImage.title}
-                  fill
-                  className="object-cover"
-                />
+            {/* Right Content */}
+            <FadeInOnScroll direction="right" delay={0.4}>
+              <div className="space-y-6 order-1 lg:order-2">
+                <h2 className="font-bold text-white text-3xl md:text-5xl lg:text-6xl leading-tight">
+                  Ebdaa Falcon Company
+                </h2>
+                <p className="text-white text-lg md:text-xl leading-relaxed">
+                  Is a company that has been deals with international companies in the field of oil and gas, Petroleum derivatives, sea ports and logistics services. It aims reach to the highest levels of excellence And the superior service that meets your needs. Is involved in storing, transporting and trading petroleum products. It is the first company in logistics services. We represent international companies in the field of oil and gas derivatives, alternative energies and water desalination. - Mosaed M. Al-Jhail Chairman of Board & Chief Executive
+                </p>
               </div>
-            ) : (
-              <div className="absolute h-[300px] md:h-[500px] right-[-50px] md:right-[-100px] opacity-[0.08] top-[50px] w-[200px] md:w-[400px] pointer-events-none overflow-hidden">
-                <Image 
-                  src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png"
-                  alt=""
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            )}
+            </FadeInOnScroll>
           </div>
         </div>
       </div>

@@ -1,109 +1,517 @@
-"use client";
+'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { ChevronRight, Download, ArrowRight, Search } from 'lucide-react';
 import { Navigation } from '@/components/Navigation';
-import { WorkSection } from '@/components/sections/WorkSection';
+import { Banner } from '@/components/Banner';
+import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { AnimatedCounter } from '@/components/ui/animated-counter';
 
-export default function OurWorkRoute() {
+interface WorkProject {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  imageUrl: string;
+  downloadUrl?: string;
+  year?: string;
+  location?: string;
+}
+
+interface WorkCategory {
+  id: string;
+  name: string;
+  description: string;
+  projects: WorkProject[];
+}
+
+const workCategories: WorkCategory[] = [
+  {
+    id: 'oil-gas-projects',
+    name: 'Oil & Gas Projects',
+    description: 'Comprehensive petroleum storage, trading, and distribution projects with state-of-the-art facilities and strategic partnerships.',
+    projects: [
+      {
+        id: 'petroleum-storage-facility',
+        title: 'Petroleum Storage Facility',
+        description: 'Advanced storage facilities for crude oil and refined products with cutting-edge safety systems.',
+        category: 'oil-gas-projects',
+        imageUrl: '/gallery/oil%20extraction.jpg',
+        downloadUrl: '/documents/petroleum-storage-project.pdf',
+        year: '2023',
+        location: 'Saudi Arabia'
+      },
+      {
+        id: 'trading-operations',
+        title: 'Trading Operations Center',
+        description: 'Strategic petroleum products trading and market solutions with real-time monitoring systems.',
+        category: 'oil-gas-projects',
+        imageUrl: '/gallery/solar%20panels.jpg',
+        downloadUrl: '/documents/trading-operations.pdf',
+        year: '2023',
+        location: 'UAE'
+      },
+      {
+        id: 'refinery-integration',
+        title: 'Refinery Integration Project',
+        description: 'High-quality refined petroleum products and derivatives processing facility.',
+        category: 'oil-gas-projects',
+        imageUrl: '/gallery/wind%20genrators.jpg',
+        downloadUrl: '/documents/refinery-integration.pdf',
+        year: '2022',
+        location: 'Iraq'
+      }
+    ]
+  },
+  {
+    id: 'logistics-projects',
+    name: 'Logistics & Marine Projects',
+    description: 'Integrated logistics solutions across marine ports and inland operations with comprehensive handling and distribution services.',
+    projects: [
+      {
+        id: 'marine-port-expansion',
+        title: 'Marine Port Expansion',
+        description: 'Comprehensive port logistics and handling services with modern infrastructure.',
+        category: 'logistics-projects',
+        imageUrl: '/gallery/logistic%20.jpg',
+        downloadUrl: '/documents/marine-port-expansion.pdf',
+        year: '2023',
+        location: 'Egypt'
+      },
+      {
+        id: 'inland-transportation-network',
+        title: 'Inland Transportation Network',
+        description: 'Reliable inland logistics and distribution networks connecting major industrial zones.',
+        category: 'logistics-projects',
+        imageUrl: '/gallery/electric.jpg',
+        downloadUrl: '/documents/inland-transportation.pdf',
+        year: '2022',
+        location: 'Morocco'
+      },
+      {
+        id: 'warehousing-solutions',
+        title: 'Modern Warehousing Solutions',
+        description: 'State-of-the-art warehousing and storage facilities with automated systems.',
+        category: 'logistics-projects',
+        imageUrl: '/gallery/wind%20genrators.jpg',
+        downloadUrl: '/documents/warehousing-solutions.pdf',
+        year: '2023',
+        location: 'Tunisia'
+      }
+    ]
+  }
+];
+
+const projectHighlights = [
+  {
+    id: 'energy-sector',
+    title: 'Energy Sector Projects',
+    description: 'Comprehensive energy solutions for power generation, oil refineries, and petrochemical facilities across multiple countries.',
+    imageUrl: '/gallery/oil%20extraction.jpg',
+    stats: { projects: 15, countries: 8, year: '2023' }
+  },
+  {
+    id: 'logistics-expansion',
+    title: 'Logistics Expansion',
+    description: 'Strategic expansion of logistics networks and marine operations to support growing regional demand.',
+    imageUrl: '/gallery/logistic%20.jpg',
+    stats: { projects: 12, countries: 6, year: '2023' }
+  },
+  {
+    id: 'sustainability-initiatives',
+    title: 'Sustainability Initiatives',
+    description: 'Supporting the transition to sustainable energy with innovative logistics and storage solutions.',
+    imageUrl: '/gallery/solar%20panels.jpg',
+    stats: { projects: 8, countries: 4, year: '2023' }
+  }
+];
+
+export default function OurWorkPage() {
+  const [activeCategory, setActiveCategory] = useState('oil-gas-projects');
+  const [currentHighlight, setCurrentHighlight] = useState(0);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  const [hoveredHighlight, setHoveredHighlight] = useState<string | null>(null);
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const currentCategory = workCategories.find(cat => cat.id === activeCategory);
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsFormSubmitting(true);
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setIsFormSubmitting(false);
+    setFormSubmitted(true);
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setFormSubmitted(false);
+    }, 3000);
+  };
+
   return (
-    <div className="size-full overflow-y-auto overflow-x-hidden">
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
       <Navigation currentSection="work" onNavigate={() => {}} />
-      {/* Hero with radial reveal */}
-      <section className="relative w-full h-[38vh] md:h-[48vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 reveal-clip-slow">
-            <Image src="/images/665db4c10244e78f94bf59a54bb37d716103ac23.png" alt="Our Work" fill className="object-cover" priority />
-          </div>
-        </div>
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
-          <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px]">Our Work</h1>
-        </div>
-        <style jsx>{`
-          .reveal-clip-slow { 
-            animation: clipReveal 1600ms ease-out forwards; 
-            will-change: clip-path, opacity;
-            clip-path: circle(0% at 50% 50%);
-          }
-          @keyframes clipReveal {
-            0% { clip-path: circle(0% at 50% 50%); opacity: 0.6; }
-            60% { opacity: 1; }
-            100% { clip-path: circle(150% at 50% 50%); opacity: 1; }
-          }
-        `}</style>
-      </section>
 
-      {/* Intro */}
-      <section className="bg-white py-12 md:py-16">
-        <div className="max-w-[1100px] mx-auto px-4 md:px-8 text-center">
-          <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px]">
-            Our work spans continents and industries, reflecting our capacity to manage complex projects and deliver results. From large-scale maritime logistics to pioneering renewable energy installations, our portfolio is a testament to our commitment to efficiency, reliability, and world-class standards.
-          </p>
-        </div>
-      </section>
-
-      {/* Case Study 1 */}
-      <section className="bg-gray-50 py-12 md:py-20">
-        <div className="max-w-[1200px] mx-auto px-4 md:px-8 grid lg:grid-cols-2 gap-10 items-start">
-          <div>
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-3">Case Study: Maritime Logistics & Fleet Capabilities</h2>
-            <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] mb-4">Our integrated logistics network is supported by a diverse and capable fleet designed for the global energy market.</p>
-            <ul className="list-disc pl-6 font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] space-y-1">
-              <li><span className="font-semibold">Vessel Classes:</span> Refined Products: 10,000-25,000 DWT and 25,000-45,000 DWT; Refined Products or Crude Oil: 45,000-80,000 DWT, 80,000-120,000 DWT, 80,000-160,000 DWT; Crude Oil: 160,000-320,000 DWT and 320,000-550,000 DWT.</li>
-              <li><span className="font-semibold">Barge Operations:</span> Petroleum Barges hauling 10,000–200,000 barrels; General Cargo Barges for containers, modular units, drilling rigs up to 20,000 barrels.</li>
-            </ul>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-8 text-center">
-            <div className="w-full h-[220px] md:h-[320px] bg-gray-100 rounded-md flex items-center justify-center text-gray-500">Vessel Infographic Placeholder</div>
-          </div>
-        </div>
-      </section>
-
-      {/* Case Study 2 */}
-      <section className="bg-white py-12 md:py-20">
-        <div className="max-w-[1200px] mx-auto px-4 md:px-8">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-3">Project Focus: Water Cleaning and Purification Systems</h2>
-          <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] mb-6">We implement comprehensive water treatment solutions. Our projects encompass the entire water purification cycle, ensuring the delivery of safe, clean water.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="relative w-full h-[240px] md:h-[360px] rounded-[12px] overflow-hidden border border-gray-200">
-              <Image src="/gallery/waterpurification.jpg" alt="Water Purification Plant" fill className="object-cover" />
-            </div>
-            <div className="relative w-full h-[240px] md:h-[360px] rounded-[12px] overflow-hidden border border-gray-200">
-              <Image src="/gallery/water%20purification1.jpg" alt="Water Purification System Components" fill className="object-cover" />
-            </div>
-          </div>
-          <ul className="mt-6 list-disc pl-6 font-['Alice:Regular',_sans-serif] text-gray-700 text-[16px] md:text-[18px] space-y-1">
-            <li>Treatment Facilities</li>
-            <li>Industrial and Home Water Filtration</li>
-            <li>Water Purification and Delivery Systems</li>
-            <li>Technical Water Testing for Hardness and Composition</li>
-          </ul>
-        </div>
-      </section>
-
-      {/* Case Study 3 */}
-      <section className="bg-gray-50 py-12 md:py-20">
-        <div className="max-w-[1200px] mx-auto px-4 md:px-8">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[24px] md:text-[32px] mb-6">Portfolio: Renewable Energy Projects</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { src: '/gallery/solar%20panels.jpg', alt: 'Solar Panels Installation' },
-              { src: '/gallery/solar%20energy.jpg', alt: 'Solar Energy Farm' },
-              { src: '/gallery/wind%20genrators.jpg', alt: 'Wind Generators Field' }
-            ].map((img) => (
-              <div key={img.src} className="relative h-[180px] md:h-[220px] rounded-[16px] overflow-hidden border border-gray-200">
-                <Image src={img.src} alt={img.alt} fill className="object-cover" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Keep existing portfolio grid below if desired */}
-      <div id="work">
-        <WorkSection />
+      {/* Banner */}
+      <div className="pt-[103px]">
+        <Banner
+          title="Our Work"
+          subtitle="Ebdaa Falcon delivers excellence through strategic projects across energy, logistics, and sustainability sectors, creating lasting impact through innovative solutions and world-class execution."
+          breadcrumbs={[
+            { label: 'Home', href: '/' },
+            { label: 'Our Work' }
+          ]}
+          backgroundImage="/ourworkbanner.jpg"
+        />
       </div>
+
+      {/* Work Portfolio Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <FadeInOnScroll direction="up" delay={0.2}>
+            <div className="mb-12">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6 text-center">
+                Our Portfolio
+              </h2>
+              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
+                We showcase our expertise through successful projects that demonstrate our commitment to excellence, 
+                innovation, and sustainable solutions across diverse industries and regions.
+              </p>
+            </div>
+          </FadeInOnScroll>
+
+          {/* Work Category Tabs */}
+          <FadeInOnScroll direction="up" delay={0.4}>
+            <div className="flex justify-center mb-12">
+              <div className="bg-gray-100 rounded-lg p-2 flex space-x-2">
+                {workCategories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`px-6 py-3 rounded-md font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 ${
+                      activeCategory === category.id
+                        ? 'bg-[#716106] text-white shadow-lg scale-105'
+                        : 'text-gray-600 hover:text-[#716106] hover:bg-white hover:shadow-md'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+          </div>
+        </div>
+          </FadeInOnScroll>
+
+          {/* Work Content */}
+          {currentCategory && (
+            <ParallaxWrapper speed={0.2} direction="up">
+              <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
+                {/* Work Info */}
+                <FadeInOnScroll direction="left" delay={0.6}>
+                  <div className="space-y-6">
+                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-[#716106]">
+                      {currentCategory.name}
+                    </h3>
+                    <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 leading-relaxed">
+                      {currentCategory.description}
+                    </p>
+                    <div className="space-y-2">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <span className="font-medium">Projects Completed:</span>
+                        <span className="ml-2 font-bold text-[#716106]">
+                          <AnimatedCounter end={currentCategory.projects.length} duration={2} />
+                        </span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <span className="font-medium">Active Regions:</span>
+                        <span className="ml-2">Middle East & Africa</span>
+                      </div>
+                    </div>
+        </div>
+                </FadeInOnScroll>
+
+                {/* Project Cards */}
+                <FadeInOnScroll direction="right" delay={0.8}>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {currentCategory.projects.map((project, index) => (
+                      <div 
+                        key={project.id} 
+                        className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group ${
+                          hoveredProject === project.id ? 'scale-105' : ''
+                        }`}
+                        onMouseEnter={() => setHoveredProject(project.id)}
+                        onMouseLeave={() => setHoveredProject(null)}
+                      >
+                        <div className="relative h-48">
+                          <Image
+                            src={project.imageUrl}
+                            alt={project.title}
+                            fill
+                            className={`object-cover transition-transform duration-300 ${
+                              hoveredProject === project.id ? 'scale-110' : 'group-hover:scale-105'
+                            }`}
+                          />
+                          <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 ${
+                            hoveredProject === project.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                          }`} />
+                          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+                            hoveredProject === project.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                          }`}>
+                            <div className={`flex items-center justify-center w-12 h-12 rounded-full bg-white/20 border border-white/30 backdrop-blur transition-all duration-300 ${
+                              hoveredProject === project.id ? 'scale-110' : ''
+                            }`}>
+                              <Search className="text-white" size={20} strokeWidth={2} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="p-6">
+                          <div className="flex justify-between items-start mb-3">
+                            <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-[#716106]">
+                              {project.title}
+                            </h4>
+                            <span className={`text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded transition-all duration-300 ${
+                              hoveredProject === project.id ? 'bg-[#716106] text-white' : ''
+                            }`}>
+                              {project.year}
+                            </span>
+                          </div>
+                          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
+                            {project.description}
+                          </p>
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs text-gray-500">{project.location}</span>
+                            {project.downloadUrl && (
+                              <a
+                                href={project.downloadUrl}
+                                download
+                                className={`inline-flex items-center transition-all duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[12px] ${
+                                  hoveredProject === project.id 
+                                    ? 'text-[#8B7A0A] scale-110' 
+                                    : 'text-[#716106] hover:text-[#8B7A0A]'
+                                }`}
+                              >
+                                <Download className="w-3 h-3 mr-1" />
+                                Details
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+          </div>
+                </FadeInOnScroll>
+          </div>
+            </ParallaxWrapper>
+          )}
+        </div>
+      </section>
+
+      {/* Project Highlights Section */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <FadeInOnScroll direction="up" delay={0.2}>
+            <div className="text-center mb-12">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6">
+                Project Highlights
+              </h2>
+            </div>
+          </FadeInOnScroll>
+
+          {/* Highlights Carousel */}
+          <ParallaxWrapper speed={0.3} direction="up">
+            <div className="relative">
+              {/* Carousel Navigation */}
+              <div className="flex justify-center mb-8">
+                <div className="flex space-x-2">
+                  {projectHighlights.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentHighlight(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
+                        currentHighlight === index ? 'bg-[#716106] scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Highlight Cards */}
+              <div className="grid md:grid-cols-3 gap-8">
+                {projectHighlights.map((highlight, index) => (
+                  <FadeInOnScroll key={highlight.id} direction="up" delay={0.1 * index}>
+                    <div 
+                      className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${
+                        hoveredHighlight === highlight.id ? 'scale-105' : ''
+                      }`}
+                      onMouseEnter={() => setHoveredHighlight(highlight.id)}
+                      onMouseLeave={() => setHoveredHighlight(null)}
+                    >
+                      <div className="relative h-48">
+                        <Image
+                          src={highlight.imageUrl}
+                          alt={highlight.title}
+                          fill
+                          className={`object-cover transition-transform duration-300 ${
+                            hoveredHighlight === highlight.id ? 'scale-110' : ''
+                          }`}
+                        />
+                        <div className={`absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-300 ${
+                          hoveredHighlight === highlight.id ? 'opacity-100' : 'opacity-0'
+                        }`} />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] text-[#716106] mb-3">
+                          {highlight.title}
+                        </h3>
+                        <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed mb-4">
+                          {highlight.description}
+                        </p>
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
+                            hoveredHighlight === highlight.id ? 'bg-[#716106]/10' : ''
+                          }`}>
+                            <div className={`text-lg font-bold transition-colors duration-300 ${
+                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
+                            }`}>
+                              <AnimatedCounter end={highlight.stats.projects} duration={1.5} delay={index * 0.1} />
+                            </div>
+                            <div className="text-xs text-gray-600">Projects</div>
+                          </div>
+                          <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
+                            hoveredHighlight === highlight.id ? 'bg-[#716106]/10' : ''
+                          }`}>
+                            <div className={`text-lg font-bold transition-colors duration-300 ${
+                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
+                            }`}>
+                              <AnimatedCounter end={highlight.stats.countries} duration={1.5} delay={index * 0.1 + 0.2} />
+                            </div>
+                            <div className="text-xs text-gray-600">Countries</div>
+                          </div>
+                          <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
+                            hoveredHighlight === highlight.id ? 'bg-[#716106]/10' : ''
+                          }`}>
+                            <div className={`text-lg font-bold transition-colors duration-300 ${
+                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
+                            }`}>
+                              {highlight.stats.year}
+                            </div>
+                            <div className="text-xs text-gray-600">Year</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeInOnScroll>
+                ))}
+              </div>
+            </div>
+          </ParallaxWrapper>
+        </div>
+      </section>
+
+      {/* Contact Form Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-4 md:px-8">
+          <FadeInOnScroll direction="up" delay={0.2}>
+            <div className="text-center mb-12">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#716106] mb-6">
+                Interested in Our Work?
+              </h2>
+              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">
+                Let&apos;s discuss how we can help bring your project to life with our expertise and innovative solutions.
+              </p>
+            </div>
+          </FadeInOnScroll>
+
+          <ParallaxWrapper speed={0.2} direction="up">
+            <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
+              <form onSubmit={handleFormSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Project Type
+                    </label>
+                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400">
+                      <option>Oil & Gas Projects</option>
+                      <option>Logistics & Marine</option>
+                      <option>Sustainability Initiatives</option>
+                      <option>General Consultation</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                      placeholder="Your Name"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                    placeholder="your.email@example.com"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Project Description
+                  </label>
+                  <textarea
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
+                    placeholder="Please describe your project requirements..."
+                    required
+                  />
+                </div>
+                <div className="text-center">
+                  <button
+                    type="submit"
+                    disabled={isFormSubmitting}
+                    className={`px-8 py-3 rounded-lg font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center ${
+                      formSubmitted 
+                        ? 'bg-green-600 text-white' 
+                        : 'bg-[#716106] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
+                    }`}
+                  >
+                    {isFormSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                        Sending...
+                      </>
+                    ) : formSubmitted ? (
+                      <>
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Message Sent!
+                      </>
+                    ) : (
+                      <>
+                        Start Project Discussion
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </>
+                    )}
+                  </button>
+              </div>
+              </form>
+          </div>
+          </ParallaxWrapper>
+        </div>
+      </section>
     </div>
   );
 }
-
