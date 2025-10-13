@@ -146,11 +146,14 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
         className="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-[1px] transition-opacity"
       />
     )}
-    {/* Mobile slide-down menu */}
+    {/* Mobile right-side drawer menu */}
     <div
-      className={`md:hidden fixed left-0 right-0 z-50 top-[103px] origin-top transition-transform duration-300 ${menuOpen ? 'translate-y-0' : '-translate-y-4 pointer-events-none'}`}
+      className={`md:hidden fixed top-[103px] bottom-0 right-0 z-50 w-4/5 max-w-xs transition-transform duration-300 ${menuOpen ? 'translate-x-0' : 'translate-x-full pointer-events-none'}`}
+      role="dialog"
+      aria-modal="true"
+      aria-hidden={!menuOpen}
     >
-      <div className="mx-4 rounded-xl border border-white/10 bg-[rgba(8,8,8,0.95)] p-4 shadow-lg">
+      <div className="h-full rounded-l-xl border border-white/10 bg-[rgba(8,8,8,0.97)] p-4 shadow-2xl">
         <nav className="flex flex-col">
           <Link href="/services" onClick={() => setMenuOpen(false)} className="px-3 py-3 rounded-lg text-white/90 hover:bg-white/10">Services</Link>
           <Link href="/our-work" onClick={() => setMenuOpen(false)} className="px-3 py-3 rounded-lg text-white/90 hover:bg-white/10">Our Work</Link>
@@ -159,7 +162,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
           <Link
             href="/contact-us"
             onClick={() => setMenuOpen(false)}
-            className="mt-2 relative h-[44px] rounded-[50px] hover:opacity-90 transition-opacity flex items-center justify-center"
+            className="mt-3 relative h-[44px] rounded-[50px] hover:opacity-90 transition-opacity flex items-center justify-center"
             style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}
           >
             <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-white tracking-[0.56px]">CONNECT US</span>
