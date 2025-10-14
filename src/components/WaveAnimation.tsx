@@ -12,12 +12,17 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
   // ===== ANIMATION CONFIGURATION =====
   const WAVE_CONFIG = {
     speed: 0.001,           // Wave animation speed multiplier
-    phases: [0.25, 0.5, 0.75, 0.9] // Wave phase thresholds - 4 phases
+    phases: [0.2, 0.4, 0.6, 0.8, 0.9] // Wave phase thresholds - 5 phases
   };
   
   const TEXT_CONFIG = {
     speed: 0.0008,          // Text animation speed multiplier (20% slower)
-    phases: [0.25, 0.5, 0.75, 0.9] // Text phase thresholds - 4 phases
+    phases: [0.2, 0.4, 0.6, 0.8, 0.9] // Text phase thresholds - 5 phases
+  };
+
+  const IMAGE_CONFIG = {
+    speed: 0.0009,          // Image animation speed multiplier (between wave and text)
+    phases: [0.2, 0.4, 0.6, 0.8, 0.9] // Image phase thresholds - 5 phases
   };
 
   // ===== MAIN ANIMATION STATE =====
@@ -32,10 +37,12 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
   // ===== TEXT ANIMATION STATE =====
   const [textProgress, setTextProgress] = useState(0);
 
+  // ===== IMAGE ANIMATION STATE =====
+  const [imageProgress, setImageProgress] = useState(0);
+
   useEffect(() => {
     let touchStartY = 0;
     let touchStartTime = 0;
-    let autoProgressInterval: NodeJS.Timeout | null = null;
 
     const handleScroll = (e: Event) => {
       if (!heroRef.current) return;
@@ -55,9 +62,11 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         // Wave animation can have different timing than text
         const waveDelta = deltaY * 0.001; // Same rate as scroll progress
         const textDelta = deltaY * TEXT_CONFIG.speed;
+        const imageDelta = deltaY * IMAGE_CONFIG.speed;
         
         setWaveProgress(prev => Math.max(0, Math.min(1, prev + waveDelta)));
         setTextProgress(prev => Math.max(0, Math.min(1, prev + textDelta)));
+        setImageProgress(prev => Math.max(0, Math.min(1, prev + imageDelta)));
         
         // Check if animation is complete (reached phase 6)
         if (animationProgressRef.current >= 0.95) {
@@ -84,9 +93,11 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         // Update wave and text progress independently
         const waveDelta = deltaY * 0.001; // Same rate as scroll progress
         const textDelta = deltaY * TEXT_CONFIG.speed;
+        const imageDelta = deltaY * IMAGE_CONFIG.speed;
         
         setWaveProgress(prev => Math.max(0, Math.min(1, prev + waveDelta)));
         setTextProgress(prev => Math.max(0, Math.min(1, prev + textDelta)));
+        setImageProgress(prev => Math.max(0, Math.min(1, prev + imageDelta)));
         
         if (animationProgressRef.current >= 0.95) {
           setAnimationComplete(true);
@@ -123,9 +134,11 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         // Update wave and text progress independently
         const waveDelta = deltaY * sensitivity;
         const textDelta = deltaY * (TEXT_CONFIG.speed * 2.5); // Faster for touch
+        const imageDelta = deltaY * (IMAGE_CONFIG.speed * 2.5); // Faster for touch
         
         setWaveProgress(prev => Math.max(0, Math.min(1, prev + waveDelta)));
         setTextProgress(prev => Math.max(0, Math.min(1, prev + textDelta)));
+        setImageProgress(prev => Math.max(0, Math.min(1, prev + imageDelta)));
         
         // Check if animation is complete
         if (animationProgressRef.current >= 0.95) {
@@ -155,6 +168,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           setScrollProgress(animationProgressRef.current);
           setWaveProgress(prev => Math.max(0, Math.min(1, prev + momentum)));
           setTextProgress(prev => Math.max(0, Math.min(1, prev + momentum * 2)));
+          setImageProgress(prev => Math.max(0, Math.min(1, prev + momentum * 1.5)));
           
           if (animationProgressRef.current >= 0.95) {
             setAnimationComplete(true);
@@ -167,36 +181,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
       }
     };
 
-    // Auto-progression fallback for mobile devices
-    const startAutoProgress = () => {
-      if (autoProgressInterval) return;
-      
-      autoProgressInterval = setInterval(() => {
-        if (!animationComplete && animationProgressRef.current < 0.95) {
-          const autoDelta = 0.01; // Slow auto-progression
-          animationProgressRef.current = Math.max(0, Math.min(1, animationProgressRef.current + autoDelta));
-          
-          setScrollProgress(animationProgressRef.current);
-          setWaveProgress(prev => Math.max(0, Math.min(1, prev + autoDelta)));
-          setTextProgress(prev => Math.max(0, Math.min(1, prev + autoDelta * 1.2)));
-          
-          if (animationProgressRef.current >= 0.95) {
-            setAnimationComplete(true);
-            onAnimationComplete?.();
-            setTimeout(() => {
-              window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-            }, 100);
-          }
-        }
-      }, 100); // Update every 100ms
-    };
-
-    // Start auto-progression after 3 seconds if no interaction
-    const autoProgressTimeout = setTimeout(() => {
-      if (!animationComplete && animationProgressRef.current < 0.1) {
-        startAutoProgress();
-      }
-    }, 3000);
+    // Auto-progression removed - animation only responds to user interaction
 
     // Add event listeners
     window.addEventListener('wheel', handleScroll, { passive: false });
@@ -212,11 +197,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
       
-      // Clean up timers
-      if (autoProgressInterval) {
-        clearInterval(autoProgressInterval);
-      }
-      clearTimeout(autoProgressTimeout);
+      // Clean up timers (auto-progression removed)
     };
   }, [animationComplete]);
 
@@ -241,7 +222,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
       case 1: // Phase 1: Logo - Wave covers the logo initially
         return {
           x: -34,
-          y: 20,
+          y: -50,
           angle: 180,
           size: 1.1,
           opacity: 1
@@ -265,8 +246,16 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
       case 4: // Phase 4: Water Desalination - Wave moves to final position
         return {
           x: -37.5,
-          y: 35,
-          angle: 60,
+          y: 30,
+          angle: 50,
+          size: 1,
+          opacity: 1
+        };
+      case 5: // Phase 5: Extra Phase - Wave final position
+        return {
+          x: -37.5,
+          y: 30,
+          angle: 50,
           size: 1,
           opacity: 1
         };
@@ -300,7 +289,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
     switch (phase) {
       case 1: // Phase 1: Logo - Text visible below logo
         return {
-          x: 0,
+          x: 2,
           y: 20,
           angle: 0,
           size: 1.0,
@@ -308,24 +297,32 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         };
       case 2: // Phase 2: Logistic Image - Text becomes visible
         return {
-          x: -40,
-          y: -20,
+          x: 0,
+          y: 10,
           angle: 0,
           size: 0.8,
           opacity: 1.0
         };
       case 3: // Phase 3: Oil Station - Text moves to center
         return {
-          x: 0,
-          y: 0,
+          x: -30,
+          y: 25,
           angle: 0,
           size: 1.0,
           opacity: 1
         };
       case 4: // Phase 4: Water Desalination - Text stays in center
         return {
-          x: 0,
-          y: 0,
+          x: 30,
+          y: 30,
+          angle: 0,
+          size: 1.2,
+          opacity: 1.0
+        };
+      case 5: // Phase 5: Extra Phase - Text final position
+        return {
+          x: 30,
+          y: 30,
           angle: 0,
           size: 1.2,
           opacity: 1.0
@@ -374,31 +371,150 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           showDescription: true,
           isTrustText: false
         };
+      case 5: // Phase 5: Extra Phase
+        return {
+          title: "Water Desalination",
+          description: "Desalination is the process of converting salt water into pure fresh water. It is suitable for drinking and daily use.",
+          showDescription: true,
+          isTrustText: false
+        };
       default:
         return {
-          title: "إبداع فالكون",
-          subtitle: "EBDAA FALCON",
-          showDescription: false,
-          isTrustText: false
+        };
+    }
+  };
+
+  // ===== IMAGE ANIMATION FUNCTIONS =====
+  const getImagePhase = () => {
+    // Independent image animation phases using configuration
+    for (let i = 0; i < IMAGE_CONFIG.phases.length; i++) {
+      if (imageProgress < IMAGE_CONFIG.phases[i]) {
+        console.log(`Image Phase: ${i + 1}, Progress: ${imageProgress.toFixed(3)}, Threshold: ${IMAGE_CONFIG.phases[i]}`);
+        return i + 1;
+      }
+    }
+    console.log(`Image Phase: ${IMAGE_CONFIG.phases.length}, Progress: ${imageProgress.toFixed(3)}`);
+    return IMAGE_CONFIG.phases.length;
+  };
+
+  const getImageTransform = () => {
+    const phase = getImagePhase();
+    
+    switch (phase) {
+      case 1: // Phase 1: Logo - Image starts small and centered
+        return {
+          x: 1,
+          y: -10,
+          scale: 0.8,
+          opacity: 0.7,
+          rotation: 0
+        };
+      case 2: // Phase 2: Logistic Image - Image grows and becomes more visible
+        return {
+          x: 30,
+          y: 20,
+          scale: 1.0,
+          opacity: 1.0,
+          rotation: 0
+        };
+      case 3: // Phase 3: Oil Station - Image slightly rotates and scales
+        return {
+          x: 0,
+          y: 25,
+          scale: 1.05,
+          opacity: 1.0,
+          rotation: 0
+        };
+      case 4: // Phase 4: Water Desalination - Image final position
+        return {
+          x: 48,
+          y: 50,
+          scale: 1.1,
+          opacity: 1.0,
+          rotation: 0
+        };
+      case 5: // Phase 5: Extra Phase - Image final position
+        return {
+          x: 48,
+          y: 50,
+          scale: 1.1,
+          opacity: 1.0,
+          rotation: 0
+        };
+      default:
+        return {
+          x: 0,
+          y: 0,
+          scale: 1.0,
+          opacity: 1.0,
+          rotation: 0
+        };
+    }
+  };
+
+  const getImageContent = () => {
+    const phase = getImagePhase();
+    console.log(`Image Content Phase: ${phase}`);
+    
+    switch (phase) {
+      case 1: // Phase 1: Logo
+        return {
+          src: "/logofirstsection.png",
+          alt: "Ebdaa Falcon Logo",
+          className: "object-contain"
+        };
+      case 2: // Phase 2: Logistic Image
+        return {
+          src: "/gallery/logistic .jpg",
+          alt: "Logistic Image",
+          className: "object-contain rounded-lg"
+        };
+      case 3: // Phase 3: Oil Station
+        return {
+          src: "/gallery/oil extraction.jpg",
+          alt: "Oil Station",
+          className: "object-contain rounded-lg"
+        };
+      case 4: // Phase 4: Water Desalination
+        return {
+          src: "/gallery/water purification1.jpg",
+          alt: "Water Desalination",
+          className: "object-contain rounded-lg"
+        };
+      case 5: // Phase 5: Extra Phase
+        return {
+          src: "/gallery/water purification1.jpg",
+          alt: "Water Desalination",
+          className: "object-contain rounded-lg"
+        };
+      default:
+        return {
+          src: "/logofirstsection.png",
+          alt: "Ebdaa Falcon Logo",
+          className: "object-contain"
         };
     }
   };
 
   // ===== MAIN ANIMATION CONTROL =====
   const getPhase = () => {
-    // Divide scroll progress into 4 phases
-    if (scrollProgress < 0.25) return 1; // 0-25%
-    if (scrollProgress < 0.5) return 2;   // 25-50%
-    if (scrollProgress < 0.75) return 3; // 50-75%
-    return 4; // 75-100%
+    // Divide scroll progress into 5 phases
+    if (scrollProgress < 0.2) return 1;  // 0-20%
+    if (scrollProgress < 0.4) return 2;  // 20-40%
+    if (scrollProgress < 0.6) return 3; // 40-60%
+    if (scrollProgress < 0.8) return 4; // 60-80%
+    return 5; // 80-100%
   };
 
   // ===== ANIMATION CALCULATIONS =====
   const textContent = getTextContent();
   const wavePhase = getWavePhase();
   const textPhase = getTextPhase();
+  const imagePhase = getImagePhase();
   const waveTransform = getWaveTransform();
   const textTransform = getTextTransform();
+  const imageTransform = getImageTransform();
+  const imageContent = getImageContent();
 
   return (
     <div ref={heroRef} className={`relative w-full h-screen bg-[#716106] overflow-hidden ${className}`}>
@@ -419,55 +535,63 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         />
       </div>
 
-      {/* Phase Images */}
-      {textPhase >= 1 && (
-        <div className="absolute inset-0 z-5 transition-all duration-500 ease-out">
-          {textPhase === 1 && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] max-w-[600px] h-[40%] max-h-[300px]">
-              <Image
-                src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png"
-                alt="Ebdaa Falcon Logo"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-          )}
-          {textPhase === 2 && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
-              <Image
-                src="/gallery/logistic .jpg"
-                alt="Logistic Image"
-                fill
-                className="object-contain rounded-lg"
-                priority
-              />
-            </div>
-          )}
-          {textPhase === 3 && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
-              <Image
-                src="/gallery/oil extraction.jpg"
-                alt="Oil Station"
-                fill
-                className="object-contain rounded-lg"
-                priority
-              />
-            </div>
-          )}
-          {textPhase === 4 && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px]">
-              <Image
-                src="/gallery/water purification1.jpg"
-                alt="Water Desalination"
-                fill
-                className="object-contain rounded-lg"
-                priority
-              />
-            </div>
-          )}
-        </div>
-      )}
+      {/* Animated Images */}
+      <div 
+        className="absolute inset-0 z-5 transition-all duration-500 ease-out"
+        style={{
+          transform: `translate(${imageTransform.x}%, ${imageTransform.y}%) rotate(${imageTransform.rotation}deg) scale(${imageTransform.scale})`,
+          opacity: imageTransform.opacity
+        }}
+      >
+        {/* Background Rectangle for Logo Phase */}
+        {imagePhase === 1 && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px] z-0">
+            <Image
+              src="/Rectangle 43.png"
+              alt="Background Rectangle"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+        )}
+        
+        {/* Main Image - Conditional Styling */}
+        {imagePhase === 1 ? (
+          // Logo Phase - No special styling
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px] z-10">
+            <Image
+              src={imageContent.src}
+              alt={imageContent.alt}
+              fill
+              className={imageContent.className}
+              priority
+            />
+          </div>
+        ) : (
+          // Other Phases - Apply special styling
+          <div 
+            className="absolute transition-all duration-500 ease-out z-10"
+            style={{
+              width: '706px',
+              height: '241px',
+              top: '-70px',
+              left: '52px',
+              borderRadius: '47px',
+              boxShadow: '0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 255, 255, 0.2), 0 0 90px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.1)',
+              border: '2px solid rgba(255, 255, 255, 0.4)'
+            }}
+          >
+            <Image
+              src={imageContent.src}
+              alt={imageContent.alt}
+              fill
+              className="object-cover rounded-[47px]"
+              priority
+            />
+          </div>
+        )}
+      </div>
 
       {/* Text Content */}
       <div 

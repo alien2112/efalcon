@@ -231,8 +231,8 @@ export default function OurWorkPage() {
                       <div className="flex items-center text-sm text-gray-600">
                         <span className="font-medium">Active Regions:</span>
                         <span className="ml-2">Middle East & Africa</span>
-                      </div>
-                    </div>
+          </div>
+        </div>
         </div>
                 </FadeInOnScroll>
 
@@ -320,7 +320,7 @@ export default function OurWorkPage() {
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6">
                 Project Highlights
               </h2>
-            </div>
+          </div>
           </FadeInOnScroll>
 
           {/* Highlights Carousel */}
@@ -338,8 +338,8 @@ export default function OurWorkPage() {
                       }`}
                     />
                   ))}
-                </div>
-              </div>
+          </div>
+        </div>
 
               {/* Highlight Cards */}
               <div className="grid md:grid-cols-3 gap-8">
@@ -400,15 +400,15 @@ export default function OurWorkPage() {
                               hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
                             }`}>
                               {highlight.stats.year}
-                            </div>
+            </div>
                             <div className="text-xs text-gray-600">Year</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </FadeInOnScroll>
-                ))}
+            </div>
+          </div>
+        </div>
               </div>
+                  </FadeInOnScroll>
+            ))}
+          </div>
             </div>
           </ParallaxWrapper>
         </div>
@@ -453,7 +453,7 @@ export default function OurWorkPage() {
                       placeholder="Your Name"
                       required
                     />
-                  </div>
+      </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
