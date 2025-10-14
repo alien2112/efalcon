@@ -312,9 +312,9 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           size: 0.8,
           opacity: 1.0
         };
-      case 3: // Phase 3: Oil Station - Text moves to center
+      case 3: // Phase 3: Oil Station - Text moves to center (mobile: shift right)
         return {
-          x: -30,
+          x: isMobile ? 18 : -30,
           y: 25,
           angle: 0,
           size: 1.0,
@@ -323,7 +323,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
       case 4: // Phase 4: Water Desalination - Text stays in center
         return {
           x: 30,
-          y: 30,
+          y: isMobile ? 16 : 30, // mobile: slightly higher
           angle: 0,
           size: 1.2,
           opacity: 1.0
@@ -418,9 +418,9 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           opacity: 0.7,
           rotation: 0
         };
-      case 2: // Phase 2: Logistic Image - Image grows and becomes more visible
+      case 2: // Phase 2: Logistic Image - Image grows and becomes more visible (mobile: go left)
         return {
-          x: 30,
+          x: isMobile ? -26 : 30,
           y: 20,
           scale: 1.0,
           opacity: 1.0,
@@ -434,10 +434,10 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           opacity: 1.0,
           rotation: 0
         };
-      case 4: // Phase 4: Water Desalination - Image final position
+      case 4: // Phase 4: Water Desalination - Image final position (mobile: higher and a little left)
         return {
-          x: 48,
-          y: 50,
+          x: isMobile ? 34 : 48,
+          y: isMobile ? 28 : 50,
           scale: 1.1,
           opacity: 1.0,
           rotation: 0
