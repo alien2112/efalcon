@@ -314,7 +314,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         };
       case 3: // Phase 3: Oil Station - Text moves to center (mobile: shift right)
         return {
-          x: isMobile ? 18 : -30,
+          x: isMobile ? 0 : -30,
           y: 25,
           angle: 0,
           size: 1.0,
@@ -322,7 +322,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         };
       case 4: // Phase 4: Water Desalination - Text stays in center
         return {
-          x: 30,
+          x:  isMobile ? 12 : 30,
           y: isMobile ? 16 : 30, // mobile: slightly higher
           angle: 0,
           size: 1.2,
