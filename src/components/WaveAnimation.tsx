@@ -420,8 +420,8 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         };
       case 2: // Phase 2: Logistic Image - Image grows and becomes more visible (mobile: go left)
         return {
-          x: isMobile ? -40 : 30,
-          y: isMobile ? 5 : 20,
+          x: isMobile ? 0 : 30,
+          y: isMobile ? 10 : 20,
           scale: 1.0,
           opacity: 1.0,
           rotation: 0
@@ -436,16 +436,16 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         };
       case 4: // Phase 4: Water Desalination - Image final position (mobile: higher and a little left)
         return {
-          x: isMobile ? 20 : 48,
-          y: isMobile ? -5 : 50,
+          x: isMobile ? 0 : 48,
+          y: isMobile ? 20 : 50,
           scale: 1.1,
           opacity: 1.0,
           rotation: 0
         };
       case 5: // Phase 5: Extra Phase - Image final position
         return {
-          x: 48,
-          y: 50,
+          x: isMobile ? 0 : 48,
+          y: isMobile ? 20 : 50,
           scale: 1.1,
           opacity: 1.0,
           rotation: 0
@@ -616,8 +616,8 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           <h1 
             className={`font-['Alfa_Slab_One:Regular',_sans-serif] leading-[1.2] text-white tracking-[-1.44px] max-w-[1024px] transition-all duration-500 ease-out ${
               textContent.isTrustText 
-                ? 'text-[64px] md:text-[96px]' 
-                : 'text-[48px] md:text-[72px]'
+                ? 'text-[48px] md:text-[72px]'
+                : 'text-[36px] md:text-[56px]'
             }`}
           >
             {textContent.title}
@@ -625,14 +625,14 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           
           {/* Subtitle (for Phase 1) */}
           {textContent.subtitle && (
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] leading-[1.2] text-white tracking-[-1.44px] transition-all duration-500 ease-out">
+            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[36px] leading-[1.2] text-white tracking-[-1.44px] transition-all duration-500 ease-out">
               {textContent.subtitle}
             </h2>
           )}
           
           {/* Description */}
           {textContent.showDescription && (
-            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] leading-[1.5] text-white max-w-[768px] transition-all duration-500 ease-out">
+            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] md:text-[16px] leading-[1.5] text-white max-w-[768px] transition-all duration-500 ease-out">
               {textContent.description}
             </p>
           )}
