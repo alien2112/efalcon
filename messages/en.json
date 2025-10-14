@@ -223,14 +223,6 @@
       "paragraph1": "Ebdaa Falcon is a company that deals with international companies in the field of oil and gas, petroleum derivatives, sea ports and logistics services. We aim to reach the highest levels of excellence and superior service that meets your needs.",
       "paragraph2": "We are involved in storing, transporting and trading petroleum products. We represent international companies in the field of oil and gas derivatives, alternative energies and water desalination."
     },
-    "leadership": {
-      "title": "Leadership",
-      "description": "Our leadership team brings decades of experience across energy, logistics, and finance.",
-      "ceo": {
-        "title": "Chief Executive Officer",
-        "description": "Leading with vision, integrity, and operational excellence."
-      }
-    },
     "coreValues": {
       "title": "Our Core Values",
       "subtitle": "The principles that guide our decisions and shape our company culture.",
@@ -335,7 +327,8 @@
       "description": "Ebdaa Falcon is led by a forward-looking management team committed to excellence and strategic growth.",
       "ceo": {
         "name": "Mosaed M. Al-Jhail",
-        "title": "Chairman of the Board & Chief Executive Officer"
+        "title": "Chairman of the Board & Chief Executive Officer",
+        "description": "Leading with vision, integrity, and operational excellence."
       }
     }
   },
