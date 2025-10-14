@@ -79,15 +79,15 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
   // Determine navbar background based on page and scroll state
   const getNavbarBackground = () => {
     if (isHomePage) {
-      // Home page: original styling
+      // Home page: lighter styling
       return scrolled 
-        ? 'bg-[rgba(8,8,8,0.85)] border-[rgba(255,255,255,0.2)]' 
-        : 'bg-[rgba(113,97,6,0.1)] border-[rgba(255,255,255,0.1)]';
+        ? 'bg-[rgba(255,255,255,0.95)] border-[rgba(0,0,0,0.1)]' 
+        : 'bg-[rgba(255,255,255,0.8)] border-[rgba(0,0,0,0.05)]';
     } else {
-      // Other pages: black transparent
+      // Other pages: light transparent
       return scrolled 
-        ? 'bg-[rgba(0,0,0,0.9)] border-[rgba(255,255,255,0.2)]' 
-        : 'bg-[rgba(0,0,0,0.7)] border-[rgba(255,255,255,0.1)]';
+        ? 'bg-[rgba(255,255,255,0.95)] border-[rgba(0,0,0,0.1)]' 
+        : 'bg-[rgba(255,255,255,0.8)] border-[rgba(0,0,0,0.05)]';
     }
   };
 
@@ -118,8 +118,8 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
                     onMouseLeave={() => setHoveredItem(null)}
                     className={`font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 relative py-2 px-4 ${
                       currentSection === item.id 
-                        ? 'text-white' 
-                        : 'text-[#cecfd2] hover:text-white'
+                        ? 'text-black' 
+                        : 'text-gray-700 hover:text-black'
                     }`}
                   >
                     {item.label}
@@ -131,13 +131,13 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
                     
                     {/* Hover Indicator */}
                     {hoveredItem === item.id && currentSection !== item.id && (
-                      <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-white/60 to-white/40 rounded-full animate-pulse"></div>
+                      <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#716106]/60 to-[#716106]/40 rounded-full animate-pulse"></div>
                     )}
                   </button>
                   
                   {/* Hover Background Effect */}
                   {hoveredItem === item.id && (
-                    <div className="absolute inset-0 bg-white/5 rounded-lg -z-10 animate-pulse"></div>
+                    <div className="absolute inset-0 bg-[#716106]/5 rounded-lg -z-10 animate-pulse"></div>
                   )}
                 </div>
               ))}
@@ -155,7 +155,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
                       onMouseLeave={() => setHoveredItem(null)}
                       aria-label="Connect with us" 
                       className="hidden md:flex relative h-[44px] w-[150px] rounded-[50px] hover:opacity-90 transition-all duration-300 hover:scale-105 group" 
-                      style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}
+                      style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(113, 97, 6) 0%, rgb(113, 97, 6) 100%)" }}
                     >
                 {/* Particle Background */}
                 <div className="absolute inset-[-15%_19.76%_-13.01%_-3.89%] pointer-events-none">
@@ -201,11 +201,11 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
             <button
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               onClick={() => setMenuOpen(v => !v)}
-              className="md:hidden relative h-10 w-10 grid place-items-center rounded-full hover:bg-white/10 transition-all duration-300"
+              className="md:hidden relative h-10 w-10 grid place-items-center rounded-full hover:bg-gray-100 transition-all duration-300"
             >
-              <span className={`block h-0.5 w-6 bg-white transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`}></span>
-              <span className={`block h-0.5 w-6 bg-white my-1 transition-all duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-              <span className={`block h-0.5 w-6 bg-white transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`}></span>
+              <span className={`block h-0.5 w-6 bg-gray-700 transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`}></span>
+              <span className={`block h-0.5 w-6 bg-gray-700 my-1 transition-all duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+              <span className={`block h-0.5 w-6 bg-gray-700 transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`}></span>
             </button>
           </div>
         </div>
@@ -227,7 +227,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
       aria-modal="true"
       aria-hidden={!menuOpen}
     >
-      <div className="h-full rounded-l-xl border border-white/10 bg-[rgba(8,8,8,0.97)] p-4 shadow-2xl backdrop-blur-md">
+      <div className="h-full rounded-l-xl border border-gray-200 bg-white/95 p-4 shadow-2xl backdrop-blur-md">
         <nav className="flex flex-col space-y-2">
           {navItems.map((item) => (
             <button
@@ -238,8 +238,8 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
               }}
               className={`px-3 py-3 rounded-lg text-left transition-all duration-300 block ${
                 currentSection === item.id 
-                  ? 'text-white bg-white/20 border-l-4 border-[#FFD700]' 
-                  : 'text-white/90 hover:bg-white/10 hover:text-white'
+                  ? 'text-black bg-[#716106]/10 border-l-4 border-[#716106]' 
+                  : 'text-gray-700 hover:bg-gray-100 hover:text-black'
               }`}
             >
               {item.label}
@@ -254,7 +254,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
               setMenuOpen(false);
             }}
             className="mt-3 relative h-[44px] rounded-[50px] hover:opacity-90 transition-all duration-300 flex items-center justify-center"
-            style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}
+            style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(113, 97, 6) 0%, rgb(113, 97, 6) 100%)" }}
           >
             <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-white tracking-[0.56px] text-center">{t('navigation.connectUs')}</span>
             <span aria-hidden className="absolute border border-solid border-white inset-0 pointer-events-none rounded-[50px]" />

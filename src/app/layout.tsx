@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Footer } from '@/components/Footer';
 import { FloatingActions } from '@/components/FloatingActions';
+import { ResponsiveScrollProgressIndicator } from '@/components/ScrollProgressIndicator';
 import './globals.css';
 
 export const metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html suppressHydrationWarning>
       <body className="antialiased">
         <LanguageProvider>
+          <ResponsiveScrollProgressIndicator />
           {children}
           <Footer />
           <FloatingActions />
