@@ -118,6 +118,26 @@
           "4": "Advanced Risk Management",
           "5": "Comprehensive Logistics Network"
         }
+      },
+      "renewable-energy-desalination": {
+        "title": "Alternative Energy & Water Desalination",
+        "summary": "Sustainable solar and wind energy solutions alongside advanced water desalination systems for clean energy and fresh water supply.",
+        "content": "Our alternative energy and water desalination services provide comprehensive renewable energy solutions including solar and wind power generation, hybrid energy systems, and advanced reverse osmosis desalination technology.",
+        "detailedContent": "We specialize in designing and implementing sustainable energy infrastructure that combines solar panels, wind turbines, and hybrid energy systems with state-of-the-art water desalination facilities. Our solutions include reverse osmosis desalination plants, sustainable infrastructure design, and comprehensive energy management systems.",
+        "features": {
+          "solarandwindintegrations": "Solar and Wind Energy Integration",
+          "hybridenergysystems": "Hybrid Energy Systems",
+          "reverseosmosisdesalination": "Reverse Osmosis Desalination",
+          "sustainableinfrastructuredesign": "Sustainable Infrastructure Design"
+        },
+        "benefits": {
+          "0": "Reduced Carbon Footprint",
+          "1": "Sustainable Energy Production",
+          "2": "Clean Water Supply",
+          "3": "Cost-Effective Operations",
+          "4": "Environmental Compliance",
+          "5": "Long-term Energy Security"
+        }
       }
     },
     "whereUsed": "Where Are Our Services Used?",
