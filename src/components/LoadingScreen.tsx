@@ -67,6 +67,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
             fill
             className="object-contain animate-pulse"
             priority
+            quality={90}
           />
         </div>
 

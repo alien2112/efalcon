@@ -144,6 +144,7 @@ export function Footer() {
                       width={48} 
                       height={48}
                       className="rounded-lg"
+                      quality={90}
                     />
                   </motion.div>
                   <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] bg-gradient-to-r from-[#716106] to-[#8B7A0A] bg-clip-text text-transparent">

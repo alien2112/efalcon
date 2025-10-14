@@ -39,6 +39,8 @@ export function VisionSection() {
                     width={600}
                     height={400}
                     className="w-full h-auto object-cover"
+                    priority
+                    quality={85}
                   />
                 </div>
               </div>
@@ -61,6 +63,8 @@ export function VisionSection() {
                     width={400}
                     height={500}
                     className="w-full h-auto object-cover"
+                    priority
+                    quality={85}
                   />
                 </div>
               </div>

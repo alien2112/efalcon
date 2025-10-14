@@ -288,6 +288,9 @@ export function AboutUsPage() {
                 alt="Saudi Vision 2030 Leaders"
                 fill
                 className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                quality={85}
               />
               <motion.div 
                 className="absolute bottom-4 left-4 bg-black/60 text-white p-4 rounded-lg backdrop-blur-sm"
@@ -355,6 +358,9 @@ export function AboutUsPage() {
                 alt="Mosaed M. Al-Jhail Chairman"
                 fill
                 className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                quality={85}
               />
             </motion.div>
 
@@ -545,6 +551,8 @@ export function AboutUsPage() {
                     width={120}
                     height={120}
                     className="mx-auto mb-6"
+                    priority
+                    quality={90}
                   />
                   <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-2xl mb-4">
                     {t('aboutUs.whoWeAre.title') || 'Excellence in Energy & Logistics'}

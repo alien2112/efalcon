@@ -575,6 +575,8 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
               fill
               className={imageContent.className}
               priority
+              quality={85}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
             />
           </div>
         ) : (
@@ -598,6 +600,8 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
               fill
               className={isMobile ? 'object-cover rounded-[24px]' : 'object-cover rounded-[47px]'}
               priority
+              quality={85}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
             />
           </div>
         )}

@@ -105,6 +105,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
                 priority
+                quality={90}
               />
             </button>
 
