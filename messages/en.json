@@ -201,6 +201,87 @@
       "title": "About Ebdaa Falcon",
       "subtitle": "Pioneering Excellence in Energy & Logistics"
     },
+    "ourStory": {
+      "title": "Our Story",
+      "description": "Founded with a vision to revolutionize energy and logistics services, Ebdaa Falcon has grown into a trusted partner for companies worldwide, delivering innovative solutions and exceptional service quality.",
+      "tabs": {
+        "overview": "Overview",
+        "mission": "Mission",
+        "vision": "Vision"
+      },
+      "mission": {
+        "title": "Our Mission",
+        "description": "Our mission is to provide superior, integrated services that meet the evolving needs of our clients. We are a premier provider of logistics services and a representative for global companies in petroleum derivatives, alternative energies, and water desalination."
+      },
+      "vision": {
+        "title": "Our Vision",
+        "description": "Inspired by the ambition of Saudi Vision 2030, Ebdaa Falcon is dedicated to pioneering integrated solutions in energy and logistics, driving progress, and building a sustainable future."
+      }
+    },
+    "companyOverview": {
+      "title": "Company Overview",
+      "paragraph1": "Ebdaa Falcon is a company that deals with international companies in the field of oil and gas, petroleum derivatives, sea ports and logistics services. We aim to reach the highest levels of excellence and superior service that meets your needs.",
+      "paragraph2": "We are involved in storing, transporting and trading petroleum products. We represent international companies in the field of oil and gas derivatives, alternative energies and water desalination."
+    },
+    "leadership": {
+      "title": "Leadership",
+      "description": "Our leadership team brings decades of experience across energy, logistics, and finance.",
+      "ceo": {
+        "title": "Chief Executive Officer",
+        "description": "Leading with vision, integrity, and operational excellence."
+      }
+    },
+    "coreValues": {
+      "title": "Our Core Values",
+      "subtitle": "The principles that guide our decisions and shape our company culture.",
+      "excellence": {
+        "title": "Excellence",
+        "description": "We strive for the highest levels of excellence in all our operations and services."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "Embracing innovative solutions to meet evolving industry demands."
+      },
+      "integrity": {
+        "title": "Integrity",
+        "description": "Maintaining the highest standards of integrity in all our business practices."
+      },
+      "partnership": {
+        "title": "Partnership",
+        "description": "Building strong, lasting partnerships with clients and stakeholders."
+      },
+      "cta": {
+        "title": "Get to Know Us Better",
+        "description": "Ready to work with us? Let's discuss how we can help achieve your goals.",
+        "button": "Contact Us Today →"
+      }
+    },
+    "achievements": {
+      "title": "Our Achievements",
+      "subtitle": "Numbers that reflect our commitment to excellence and growth in the energy and logistics sectors.",
+      "stats": {
+        "countriesServed": {
+          "number": "11+",
+          "label": "Countries Served",
+          "description": "Active presence across multiple continents"
+        },
+        "projectsCompleted": {
+          "number": "150+",
+          "label": "Projects Completed",
+          "description": "Successful energy and logistics projects"
+        },
+        "annualGrowth": {
+          "number": "25%",
+          "label": "Annual Growth",
+          "description": "Consistent year-over-year expansion"
+        },
+        "clientSatisfaction": {
+          "number": "98%",
+          "label": "Client Satisfaction",
+          "description": "High satisfaction rate from our clients"
+        }
+      }
+    },
     "purpose": {
       "title": "Our Purpose",
       "quote": "\"My first goal is for our country to be a successful and pioneering model in the world at all levels, and I will work with you to achieve that.\"",
@@ -236,6 +317,7 @@
     },
     "globalPresence": {
       "title": "Our Global Presence",
+      "subtitle": "Interactive 3D globe showing our key regions and partnerships.",
       "description": "Headquartered in Riyadh, Kingdom of Saudi Arabia, Ebdaa Falcon has a significant international footprint. Our operations and partnerships extend to:",
       "countries": [
         "Iraq",
@@ -444,6 +526,11 @@
       "readMore": "Read More",
       "loadMore": "Load More Posts"
     },
+    "cta": {
+      "title": "Stay Updated with Our Latest Insights",
+      "subtitle": "Discover the latest trends, innovations, and insights in energy and logistics sectors.",
+      "button": "Get in Touch"
+    },
     "categories": {
       "title": "Explore Categories",
       "subtitle": "Browse our content by topic and stay informed about your areas of interest",
@@ -506,6 +593,15 @@
         "title": "Message Sent Successfully!",
         "message": "Thank you for contacting us. We'll get back to you within 24 hours."
       }
+    },
+    "map": {
+      "title": "Our Location",
+      "subtitle": "Find us easily on the map below.",
+      "contactDetails": "Contact Details",
+      "address": "King Fahed Road, Riyadh",
+      "hours": "Sunday - Thursday: 8:00 AM - 5:00 PM",
+      "phone": "+966 56 514 5666",
+      "getDirections": "Get Directions"
     },
     "info": {
       "title": "Contact Information",

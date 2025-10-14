@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface BannerProps {
   title: string;
@@ -27,6 +28,10 @@ export function Banner({
     animationDelay: string;
     animationDuration: string;
   }>>([]);
+
+  // Parallax scroll effect
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
 
   useEffect(() => {
     // Generate particles only on client side
@@ -87,13 +92,24 @@ export function Banner({
         {/* Center Content */}
         <div className="flex-1 flex items-center justify-center">
           <div className="max-w-7xl mx-auto px-4 md:px-8 text-center">
-            <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[64px] lg:text-[72px] text-white mb-6 leading-tight">
+            <motion.h1 
+              className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[64px] lg:text-[72px] text-white mb-6 leading-tight"
+              style={{ y }}
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            >
               {title}
-            </h1>
+            </motion.h1>
             {subtitle && (
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[18px] md:text-[22px] text-white/90 max-w-4xl mx-auto leading-relaxed">
+              <motion.p 
+                className="font-['ADLaM_Display:Regular',_sans-serif] text-[18px] md:text-[22px] text-white/90 max-w-4xl mx-auto leading-relaxed"
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+              >
                 {subtitle}
-              </p>
+              </motion.p>
             )}
           </div>
         </div>

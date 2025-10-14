@@ -224,7 +224,16 @@ export function AnimatedBlogPosts() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-[#f8f9fa] to-white">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-[#f8f9fa] to-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/10 via-transparent to-[#716106]/5"></div>
+        <div className="absolute top-0 left-0 w-full h-full" style={{
+          backgroundImage: `radial-gradient(circle at 20% 20%, rgba(113, 97, 6, 0.1) 0%, transparent 50%),
+                           radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                           radial-gradient(circle at 40% 60%, rgba(113, 97, 6, 0.05) 0%, transparent 50%)`,
+        }}></div>
+      </div>
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <motion.div 
@@ -459,7 +468,7 @@ export function AnimatedBlogPosts() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
               >
-                Stay Updated with Our Latest Insights
+                {t('blog.cta.title') || 'Stay Updated with Our Latest Insights'}
               </motion.h3>
               <motion.p 
                 className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] mb-6 max-w-[600px] mx-auto"
@@ -467,7 +476,7 @@ export function AnimatedBlogPosts() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.4 }}
               >
-                Discover the latest trends, innovations, and insights in energy and logistics sectors.
+                {t('blog.cta.subtitle') || 'Discover the latest trends, innovations, and insights in energy and logistics sectors.'}
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -478,7 +487,7 @@ export function AnimatedBlogPosts() {
                   href="/contact-us"
                   className="inline-block bg-white text-[#716106] px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 shadow-lg"
                 >
-                  Get in Touch
+                  {t('blog.cta.button') || 'Get in Touch'}
                 </Link>
               </motion.div>
             </div>

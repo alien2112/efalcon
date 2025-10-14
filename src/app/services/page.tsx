@@ -129,7 +129,7 @@ export default function ServicesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Navigation */}
       <Navigation currentSection="services" onNavigate={() => {}} />
 
@@ -146,7 +146,16 @@ export default function ServicesPage() {
         </div>
 
       {/* Services Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/10 via-transparent to-[#716106]/5"></div>
+          <div className="absolute top-0 left-0 w-full h-full" style={{
+            backgroundImage: `radial-gradient(circle at 20% 20%, rgba(113, 97, 6, 0.1) 0%, transparent 50%),
+                             radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                             radial-gradient(circle at 40% 60%, rgba(113, 97, 6, 0.05) 0%, transparent 50%)`,
+          }}></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
@@ -183,7 +192,7 @@ export default function ServicesPage() {
           {/* Service Content */}
           {currentCategory && (
             <ParallaxWrapper speed={0.2} direction="up">
-              <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
+              <div className="grid lg:grid-cols-[1fr_2fr] gap-6 items-start">
                 {/* Service Info */}
                 <FadeInOnScroll direction="left" delay={0.6}>
                   <div className="space-y-6">
@@ -239,19 +248,21 @@ export default function ServicesPage() {
                             {service.description}
                           </p>
                           {service.downloadUrl && (
-                            <a
-                              href={service.downloadUrl}
-                              download
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.open(service.downloadUrl, '_blank');
+                              }}
                               className={`inline-flex items-center transition-all duration-300 transform hover:scale-105 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] ${
                                 hoveredService === service.id 
                                   ? 'text-[#8B7A0A] scale-105' 
                                   : 'text-[#716106] hover:text-[#8B7A0A]'
                               }`}
-                              onClick={(e) => e.stopPropagation()}
                             >
                               <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-12" />
                               {t('services.downloadSpecs') || 'Download Specifications'}
-                            </a>
+                            </button>
                           )}
                         </div>
                       </Link>
@@ -265,7 +276,13 @@ export default function ServicesPage() {
       </section>
 
       {/* Applications Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-[#716106]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#716106]/20 to-transparent rounded-full blur-xl"></div>
+          <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-[#FFD700]/20 to-transparent rounded-full blur-lg"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#716106]/15 to-transparent rounded-full blur-2xl"></div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
@@ -294,7 +311,7 @@ export default function ServicesPage() {
               </div>
 
               {/* Application Cards */}
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-3 gap-4">
                 {applications.map((application, index) => (
                   <FadeInOnScroll key={application.id} direction="up" delay={0.1 * index}>
                     <Link 
@@ -338,7 +355,15 @@ export default function ServicesPage() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/5 via-transparent to-[#FFD700]/5"></div>
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 30% 30%, rgba(113, 97, 6, 0.08) 0%, transparent 50%),
+                             radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%)`,
+          }}></div>
+        </div>
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">

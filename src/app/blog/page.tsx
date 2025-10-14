@@ -9,7 +9,7 @@ export default function BlogPage() {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Navigation */}
       <Navigation currentSection="blog" onNavigate={() => {}} />
       
