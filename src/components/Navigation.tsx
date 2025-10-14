@@ -174,8 +174,8 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
                 </div>
                 
                 {/* Button Text */}
-                <div className="relative flex items-center justify-center h-full">
-                  <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-white tracking-[0.56px] transition-all duration-300 group-hover:text-[#FFD700]">
+                <div className="relative flex items-center justify-center h-full w-full">
+                  <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-white tracking-[0.56px] transition-all duration-300 group-hover:text-[#FFD700] text-center">
                     CONNECT US
                   </p>
                 </div>
@@ -245,7 +245,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
             className="mt-3 relative h-[44px] rounded-[50px] hover:opacity-90 transition-all duration-300 flex items-center justify-center"
             style={{ backgroundImage: "linear-gradient(rgba(18, 40, 55, 0) 175%, rgba(81, 69, 0, 0.5) 140%), linear-gradient(90deg, rgb(8, 8, 8) 0%, rgb(8, 8, 8) 100%)" }}
           >
-            <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-white tracking-[0.56px]">CONNECT US</span>
+            <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-white tracking-[0.56px] text-center">CONNECT US</span>
             <span aria-hidden className="absolute border border-solid border-white inset-0 pointer-events-none rounded-[50px]" />
           </button>
         </nav>
