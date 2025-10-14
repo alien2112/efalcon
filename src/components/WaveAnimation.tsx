@@ -322,16 +322,16 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         };
       case 4: // Phase 4: Water Desalination - Text stays in center
         return {
-          x:  isMobile ? 35 : 30,
-          y: isMobile ? 20 : 30, // mobile: slightly higher
+          x:  isMobile ? 10 : 30,
+          y: isMobile ? 0 : 30, // mobile: slightly higher
           angle: 0,
           size: 1.2,
           opacity: 1.0
         };
       case 5: // Phase 5: Extra Phase - Text final position
         return {
-          x: 30,
-          y: 30,
+          x:  isMobile ? 25 : 30,
+          y: isMobile ? 20 : 30, // mobile: slightly higher
           angle: 0,
           size: 1.2,
           opacity: 1.0
