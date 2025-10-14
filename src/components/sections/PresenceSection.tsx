@@ -4,6 +4,7 @@
 import dynamic from 'next/dynamic';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Use the same real globe library as AboutSection
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
@@ -38,13 +39,16 @@ const PARTNERSHIP_COUNTRIES: Marker[] = [
   { id: 'my', name: 'Malaysia', lat: 4.2105, lng: 101.9758, level: 'partnership' }
 ];
 
-const STATUS_LABELS = {
-  active: 'Strong Presence',
-  expanding: 'Expanding',
-  partnership: 'Partnership'
-};
+// Status labels will be handled by translation system
 
 export function PresenceSection() {
+  const { t } = useLanguage();
+  
+  const STATUS_LABELS = {
+    active: t('about.statusLabels.active'),
+    expanding: t('about.statusLabels.expanding'),
+    partnership: t('about.statusLabels.partnership')
+  };
   const [size, setSize] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
   const containerRef = useRef<HTMLDivElement | null>(null);
   const globeRef = useRef<{
@@ -81,18 +85,51 @@ export function PresenceSection() {
   }, [size.w, size.h]);
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <>
+      {/* Enhanced Presence Section */}
+      <section className="relative py-20 md:py-32 overflow-hidden">
+        {/* Rich Background with Multiple Layers */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#716106] via-[#8B7A1A] to-[#716106]">
+          {/* Subtle Pattern Overlay */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-white/3 to-transparent"></div>
+          </div>
+          
+          {/* Geometric Decorative Elements */}
+          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-yellow-400/10 to-transparent rounded-full blur-xl"></div>
+          <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-yellow-300/15 to-transparent rounded-full blur-lg"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-yellow-500/8 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-10 right-1/3 w-28 h-28 bg-gradient-to-tl from-yellow-400/12 to-transparent rounded-full blur-xl"></div>
+          
+          {/* Subtle Grid Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '50px 50px'
+            }}></div>
+          </div>
+          
+          {/* Animated Light Streaks */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute -top-10 -left-10 w-96 h-1 bg-gradient-to-r from-transparent via-yellow-300/20 to-transparent rotate-12 animate-pulse"></div>
+            <div className="absolute top-1/3 -right-10 w-80 h-1 bg-gradient-to-r from-transparent via-yellow-400/15 to-transparent -rotate-12 animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute bottom-1/4 -left-10 w-72 h-1 bg-gradient-to-r from-transparent via-yellow-300/10 to-transparent rotate-6 animate-pulse" style={{animationDelay: '2s'}}></div>
+          </div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}
         <FadeInOnScroll direction="up" delay={0.2}>
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#716106] mb-4">
-              Our Presence Around The World
+            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-white mb-4">
+              {t('about.title')}
             </h2>
-            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-3xl mx-auto">
-              Ebdaa Falcon operates across multiple regions, proudly serving clients and partners worldwide. 
-              Through strategic partnerships and integrated energy and logistics solutions, we deliver excellence 
-              that creates a global impact while supporting local growth.
+            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-white/90 max-w-3xl mx-auto">
+              {t('about.description')}
             </p>
           </div>
         </FadeInOnScroll>
@@ -151,24 +188,24 @@ export function PresenceSection() {
           {/* Country Information Panel */}
           <FadeInOnScroll direction="right" delay={0.4}>
             <div className="order-1 lg:order-2">
-              <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 md:p-8">
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 md:p-8">
                 {/* Legend */}
                 <div className="mb-6">
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106] mb-4">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-white mb-4">
                     Presence Status
                   </h3>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                      <span className="text-sm font-medium text-gray-700">Strong Presence</span>
+                      <span className="text-sm font-medium text-gray-700">{t('about.presence.strongPresence')}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full bg-cyan-400"></div>
-                      <span className="text-sm font-medium text-gray-700">Expanding</span>
+                      <span className="text-sm font-medium text-gray-700">{t('about.presence.expanding')}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full bg-pink-400"></div>
-                      <span className="text-sm font-medium text-gray-700">Partnership</span>
+                      <span className="text-sm font-medium text-gray-700">{t('about.presence.partnerships')}</span>
                     </div>
                   </div>
                 </div>
@@ -181,11 +218,7 @@ export function PresenceSection() {
                     </h4>
                     <div className="space-y-2 text-sm text-gray-600">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium">Coordinates:</span>
-                        <span>{activeCountry.lat.toFixed(2)}, {activeCountry.lng.toFixed(2)}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">Status:</span>
+                        <span className="font-medium">{t('about.status')}:</span>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                           activeCountry.level === 'active' ? 'bg-green-100 text-green-800' :
                           activeCountry.level === 'expanding' ? 'bg-yellow-100 text-yellow-800' :
@@ -201,16 +234,16 @@ export function PresenceSection() {
                 {/* Key Statistics */}
                 <div className="mt-6 pt-6 border-t">
                   <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106] mb-4">
-                    Global Reach
+                    {t('about.globalReach')}
                   </h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-[#716106]">11</div>
-                      <div className="text-xs text-gray-600">Countries</div>
+                      <div className="text-xs text-gray-600">{t('about.countries')}</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-[#716106]">4</div>
-                      <div className="text-xs text-gray-600">Continents</div>
+                      <div className="text-xs text-gray-600">{t('about.continents')}</div>
                     </div>
                   </div>
                 </div>
@@ -223,7 +256,7 @@ export function PresenceSection() {
         <FadeInOnScroll direction="up" delay={0.6}>
           <div className="mt-12 md:mt-16">
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
                 <div className="flex items-center mb-4">
                   <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
                     <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -231,15 +264,15 @@ export function PresenceSection() {
                     </svg>
                   </div>
                   <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106]">
-                    Strong Presence
+                    {t('about.presence.strongPresenceTitle')}
                   </h3>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Saudi Arabia, Iraq, Egypt, and Tunisia with established operations and local partnerships.
+                  {t('about.presence.strongPresence')}
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
                 <div className="flex items-center mb-4">
                   <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
                     <svg className="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -247,15 +280,15 @@ export function PresenceSection() {
                     </svg>
                   </div>
                   <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106]">
-                    Expanding Reach
+                    {t('about.presence.expandingTitle')}
                   </h3>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Morocco, Mauritania, Nigeria, and Indonesia with growing operations and new opportunities.
+                  {t('about.presence.expanding')}
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
                 <div className="flex items-center mb-4">
                   <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -263,11 +296,11 @@ export function PresenceSection() {
                     </svg>
                   </div>
                   <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106]">
-                    Strategic Partnerships
+                    {t('about.presence.partnershipsTitle')}
                   </h3>
                 </div>
                 <p className="text-sm text-gray-600">
-                  USA, Europe, and Malaysia with collaborative ventures and joint initiatives.
+                  {t('about.presence.partnerships')}
                 </p>
               </div>
             </div>
@@ -275,5 +308,46 @@ export function PresenceSection() {
         </FadeInOnScroll>
       </div>
     </section>
+
+    {/* Elegant Wave Separator */}
+    <div className="relative w-full h-24 md:h-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#716106] to-white">
+        {/* Animated Wave */}
+        <svg 
+          className="absolute bottom-0 w-full h-16 md:h-20 text-white" 
+          viewBox="0 0 1200 120" 
+          preserveAspectRatio="none"
+        >
+          <path 
+            d="M0,60 C300,120 600,0 900,60 C1050,90 1200,30 1200,60 L1200,120 L0,120 Z" 
+            fill="currentColor"
+            className="animate-pulse"
+          />
+        </svg>
+        
+        {/* Secondary Wave */}
+        <svg 
+          className="absolute bottom-0 w-full h-12 md:h-16 text-white/80" 
+          viewBox="0 0 1200 120" 
+          preserveAspectRatio="none"
+          style={{animationDelay: '0.5s'}}
+        >
+          <path 
+            d="M0,80 C400,40 800,100 1200,80 L1200,120 L0,120 Z" 
+            fill="currentColor"
+            className="animate-pulse"
+          />
+        </svg>
+        
+        {/* Floating Particles */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-4 left-1/4 w-2 h-2 bg-yellow-300/60 rounded-full animate-bounce" style={{animationDelay: '0s'}}></div>
+          <div className="absolute top-8 right-1/3 w-1 h-1 bg-yellow-400/80 rounded-full animate-bounce" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-6 left-2/3 w-1.5 h-1.5 bg-yellow-300/70 rounded-full animate-bounce" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-10 right-1/4 w-1 h-1 bg-yellow-400/60 rounded-full animate-bounce" style={{animationDelay: '0.5s'}}></div>
+        </div>
+      </div>
+    </div>
+    </>
   );
 }

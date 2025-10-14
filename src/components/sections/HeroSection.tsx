@@ -1,11 +1,13 @@
 'use client';
 
-import { WaveAnimation } from '@/components/WaveAnimation';
+import { HeroSlider } from '@/components/sections/HeroSlider';
 
 interface HeroSectionProps {
   onAnimationComplete?: () => void;
 }
 
 export function HeroSection({ onAnimationComplete }: HeroSectionProps) {
-  return <WaveAnimation onAnimationComplete={onAnimationComplete} />;
+  return (
+    <HeroSlider onReady={onAnimationComplete} />
+  );
 }

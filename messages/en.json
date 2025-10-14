@@ -11,12 +11,21 @@
     "aboutUs": "ABOUT US",
     "blog": "BLOG",
     "contactUs": "CONTACT US",
-    "connectUs": "CONNECT US"
+    "connectUs": "CONNECT US",
+    "home": "HOME",
+    "backToServices": "Back to Services",
+    "backToOurWork": "Back to Our Work"
   },
   "hero": {
     "title": "Petroleum Derivatives and Logistics Services",
     "trustTitle": "TRUST US",
-    "description": "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We also provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards."
+    "description": "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We also provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
+    "logisticTitle": "INTEGRATED LOGISTIC SOLUTION",
+    "logisticDescription": "Provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.",
+    "oilTitle": "LEADERS IN OIL AND GAS",
+    "oilDescription": "Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products.",
+    "waterTitle": "Water Desalination",
+    "waterDescription": "Desalination is the process of converting salt water into pure fresh water. It is suitable for drinking and daily use."
   },
   "vision": {
     "title": "OUR VISION",
@@ -26,6 +35,94 @@
   "services": {
     "title": "Our Services",
     "subtitle": "Driving Excellence in Energy, Logistics & Sustainability",
+    "description": "We provide integrated solutions across oil & gas, logistics, and renewable energy sectors, delivering excellence through strategic partnerships and innovative approaches.",
+    "categories": {
+      "oilGas": "Oil & Gas Solutions",
+      "oilGasDescription": "Comprehensive petroleum storage, trading, and distribution solutions with state-of-the-art facilities and strategic partnerships.",
+      "oilGasServices": {
+        "petroleumDerivatives": "Petroleum Derivatives and Logistics Services",
+        "petroleumDerivativesDescription": "Integrated solutions in storage, transportation, and trading of petroleum derivatives",
+        "motorOils": "Motor Oils",
+        "motorOilsDescription": "High-quality Saudi-made motor oils engineered for durability and peak performance"
+      },
+      "logistics": "Logistics & Marine Services",
+      "logisticsDescription": "Integrated logistics solutions across marine ports and inland operations with comprehensive handling and distribution services.",
+      "logisticsServices": {
+        "logisticsMarine": "Logistics & Marine Services",
+        "logisticsMarineDescription": "World-class logistics across marine ports and inland operations to keep supply chains moving",
+        "renewableEnergy": "Alternative Energy & Water Desalination",
+        "renewableEnergyDescription": "Sustainable solar and wind energy solutions alongside advanced water desalination systems"
+      }
+    },
+    "applications": {
+      "energySector": "Energy Sector",
+      "energySectorDescription": "Comprehensive energy solutions for power generation, oil refineries, and petrochemical facilities.",
+      "industrialManufacturing": "Industrial Manufacturing",
+      "industrialManufacturingDescription": "Specialized logistics and supply chain solutions for heavy manufacturing industries.",
+      "renewableEnergy": "Renewable Energy",
+      "renewableEnergyDescription": "Supporting the transition to sustainable energy with innovative logistics and storage solutions."
+    },
+    "contactForm": {
+      "title": "Get In Touch",
+      "subtitle": "Send us a message and we'll get back to you as soon as possible",
+      "fields": {
+        "inquiryType": "Inquiry Type",
+        "name": "Full Name",
+        "email": "Email Address",
+        "subject": "Subject",
+        "message": "Message"
+      },
+      "placeholders": {
+        "name": "Enter your full name",
+        "email": "Enter your email address",
+        "subject": "Enter message subject",
+        "message": "Enter your message here..."
+      },
+      "options": {
+        "general": "General Inquiry"
+      },
+      "send": "Send Message"
+    },
+    "detail": {
+      "overview": "Overview",
+      "detailedInformation": "Detailed Information",
+      "whyEbdaaFalcon": "Why Ebdaa Falcon",
+      "whyEbdaaFalconList": {
+        "experiencedOperations": "Experienced Operations Team",
+        "safetyCompliance": "Safety & Compliance First",
+        "provenPartnerNetwork": "Proven Partner Network",
+        "saudiVisionAligned": "Aligned with Saudi Vision 2030"
+      },
+      "keyBenefits": "Key Benefits",
+      "serviceGallery": "Service Gallery",
+      "includes": "includes",
+      "asPartOf": "as part of our comprehensive offering",
+      "projectGallery": "Project Gallery",
+      "featureDescription": "{serviceTitle} includes: {feature} as part of our comprehensive offering.",
+      "oil-gas-solutions": {
+        "title": "Oil & Gas Solutions",
+        "summary": "Comprehensive petroleum storage, trading, and logistics solutions with advanced safety systems and strategic partnerships.",
+        "content": "Our oil and gas solutions provide comprehensive petroleum storage, trading, and logistics services with advanced safety systems, strategic partnerships, and cutting-edge technology to ensure optimal performance and reliability.",
+        "detailedContent": "We offer state-of-the-art petroleum storage facilities, automated trading systems, comprehensive logistics networks, and strategic partnerships across multiple regions. Our solutions include advanced safety monitoring, real-time market analysis, and integrated supply chain management.",
+        "features": {
+          "bulkstoragefacilities": "Bulk Storage Facilities",
+          "import/exportoperations": "Import/Export Operations",
+          "blendinganddistribution": "Blending and Distribution",
+          "tradingandriskmanagement": "Trading and Risk Management"
+        },
+        "benefits": {
+          "0": "Enhanced Storage Capacity",
+          "1": "Improved Safety Standards",
+          "2": "Reduced Operational Costs",
+          "3": "Strategic Market Access",
+          "4": "Advanced Risk Management",
+          "5": "Comprehensive Logistics Network"
+        }
+      }
+    },
+    "whereUsed": "Where Are Our Services Used?",
+    "learnMore": "Learn more about",
+    "downloadSpecs": "Download Specifications",
     "defaultServices": {
       "petroleumStorage": {
         "title": "Petroleum Storage & Trading",
@@ -43,6 +140,22 @@
   },
   "work": {
     "title": "Our Work",
+    "detail": {
+      "overview": "Project Overview",
+      "detailedInformation": "Detailed Information",
+      "whyEbdaaFalcon": "Why Ebdaa Falcon",
+      "whyEbdaaFalconList": {
+        "experiencedOperations": "Experienced Project Management Team",
+        "safetyCompliance": "Safety & Compliance First",
+        "provenPartnerNetwork": "Proven Partner Network",
+        "saudiVisionAligned": "Aligned with Saudi Vision 2030"
+      },
+      "downloadProject": "Download Project Details",
+      "keyBenefits": "Key Benefits",
+      "projectGallery": "Project Gallery",
+      "includes": "includes",
+      "asPartOf": "as part of our comprehensive project delivery"
+    },
     "defaultWork": {
       "petroleumStorage": {
         "title": "Petroleum Products Storage",
@@ -68,8 +181,20 @@
     "presence": {
       "strongPresence": "Strong presence in Saudi Arabia, Iraq, Egypt, and Tunisia",
       "expanding": "Expanding across Morocco, Mauritania, Nigeria, and Indonesia",
-      "partnerships": "Active partnerships in USA, Europe, and Malaysia"
-    }
+      "partnerships": "Active partnerships in USA, Europe, and Malaysia",
+      "strongPresenceTitle": "Strong Presence",
+      "expandingTitle": "Expanding Reach",
+      "partnershipsTitle": "Strategic Partnerships"
+    },
+    "statusLabels": {
+      "active": "Strong Presence",
+      "expanding": "Expanding",
+      "partnership": "Partnership"
+    },
+    "globalReach": "Global Reach",
+    "countries": "Countries",
+    "continents": "Continents",
+    "status": "Status"
   },
   "aboutUs": {
     "hero": {
@@ -138,11 +263,173 @@
     "readyToStart": "Ready to Start Your Project?",
     "getInTouchDescription": "Let's discuss how we can help bring your energy and logistics vision to life.",
     "getInTouch": "Get In Touch",
-    "client": "Client"
+    "client": "Client",
+    "portfolio": "Our Portfolio",
+    "portfolioDescription": "We showcase our expertise through successful projects that demonstrate our commitment to excellence, innovation, and sustainable solutions across diverse industries and regions.",
+    "projectsCompleted": "Projects Completed",
+    "activeRegions": "Active Regions",
+    "regions": "Middle East & Africa",
+    "details": "Details",
+    "projectHighlights": "Project Highlights",
+    "projects": "Projects",
+    "countries": "Countries",
+    "year": "Year",
+    "interested": "Interested in Our Work?",
+    "interestedDescription": "Let's discuss how we can help bring your project to life with our expertise and innovative solutions.",
+    "categories": {
+      "oilGasProjects": {
+        "name": "Oil & Gas Projects",
+        "description": "Comprehensive projects for petroleum storage, trading, and distribution across strategic locations."
+      },
+      "oil-gas-projects": {
+        "name": "Oil & Gas Projects",
+        "description": "Comprehensive projects for petroleum storage, trading, and distribution across strategic locations."
+      },
+      "logisticsProjects": {
+        "name": "Logistics Projects",
+        "description": "Integrated logistics solutions across marine ports and inland operations."
+      },
+      "logistics-projects": {
+        "name": "Logistics Projects",
+        "description": "Integrated logistics solutions across marine ports and inland operations."
+      }
+    },
+    "projects": {
+      "petroleumStorageFacility": {
+        "title": "Petroleum Storage Facility",
+        "description": "Modern storage facility with advanced safety systems and capacity management.",
+        "location": "Saudi Arabia"
+      },
+      "petroleum-storage-facility": {
+        "title": "Petroleum Storage Facility",
+        "description": "Modern storage facility with advanced safety systems and capacity management.",
+        "location": "Saudi Arabia",
+        "content": "Our petroleum storage facility represents the pinnacle of modern storage technology, featuring advanced safety systems, automated monitoring, and comprehensive capacity management. This facility serves as a strategic distribution hub for petroleum products across the region.",
+        "detailedContent": "The facility includes multiple storage tanks with varying capacities, automated loading and unloading systems, comprehensive safety monitoring, and emergency response protocols. Our team ensures 24/7 operations with strict adherence to international safety standards.",
+        "features": {
+          "0": "Advanced Storage Systems",
+          "1": "Safety Compliance",
+          "2": "Quality Monitoring"
+        },
+        "featureDescription": {
+          "0": "Petroleum Storage Facility includes: Advanced storage systems as part of our comprehensive project delivery.",
+          "1": "Petroleum Storage Facility includes: Safety compliance as part of our comprehensive project delivery.",
+          "2": "Petroleum Storage Facility includes: Quality monitoring as part of our comprehensive project delivery."
+        },
+        "benefits": {
+          "0": "Increased Storage Capacity",
+          "1": "Enhanced Safety Standards",
+          "2": "Improved Efficiency"
+        }
+      },
+      "tradingOperations": {
+        "title": "Trading Operations Center",
+        "description": "Strategic trading hub for petroleum products with real-time market analysis.",
+        "location": "United Arab Emirates"
+      },
+      "trading-operations": {
+        "title": "Trading Operations Center",
+        "description": "Strategic trading hub for petroleum products with real-time market analysis.",
+        "location": "United Arab Emirates",
+        "content": "Our trading operations center serves as a strategic hub for petroleum product trading, featuring real-time market analysis, automated trading systems, and comprehensive risk management protocols.",
+        "detailedContent": "The center includes advanced trading platforms, real-time market data feeds, automated risk management systems, and a team of experienced traders and analysts working around the clock to optimize trading opportunities.",
+        "features": {
+          "0": "Real-time Market Analysis",
+          "1": "Automated Trading Systems",
+          "2": "Risk Management"
+        },
+        "featureDescription": {
+          "0": "Trading Operations Center includes: Real-time market analysis as part of our comprehensive project delivery.",
+          "1": "Trading Operations Center includes: Automated trading systems as part of our comprehensive project delivery.",
+          "2": "Trading Operations Center includes: Risk management as part of our comprehensive project delivery."
+        },
+        "benefits": {
+          "0": "Enhanced Trading Efficiency",
+          "1": "Reduced Market Risk",
+          "2": "Improved Profit Margins"
+        }
+      },
+      "refineryIntegration": {
+        "title": "Refinery Integration Project",
+        "description": "Comprehensive refinery integration with advanced processing capabilities.",
+        "location": "Saudi Arabia"
+      },
+      "refinery-integration": {
+        "title": "Refinery Integration Project",
+        "description": "Comprehensive refinery integration with advanced processing capabilities.",
+        "location": "Saudi Arabia",
+        "content": "Our refinery integration project represents a comprehensive approach to modern refinery operations, featuring advanced processing capabilities, integrated systems, and optimized production workflows.",
+        "detailedContent": "The project includes state-of-the-art processing units, integrated control systems, advanced monitoring technologies, and comprehensive maintenance protocols to ensure optimal performance and reliability.",
+        "features": {
+          "0": "Advanced Processing Units",
+          "1": "Integrated Control Systems",
+          "2": "Optimized Workflows"
+        },
+        "featureDescription": {
+          "0": "Refinery Integration Project includes: Advanced processing units as part of our comprehensive project delivery.",
+          "1": "Refinery Integration Project includes: Integrated control systems as part of our comprehensive project delivery.",
+          "2": "Refinery Integration Project includes: Optimized workflows as part of our comprehensive project delivery."
+        },
+        "benefits": {
+          "0": "Increased Production Capacity",
+          "1": "Enhanced Process Efficiency",
+          "2": "Reduced Operational Costs"
+        }
+      }
+    },
+    "highlights": {
+      "energySectorProjects": {
+        "title": "Energy Sector Projects",
+        "description": "Comprehensive energy solutions for power generation, refineries, and petrochemical facilities across multiple countries."
+      },
+      "logisticsExpansion": {
+        "title": "Logistics Expansion",
+        "description": "Strategic expansion of logistics networks and marine operations to support growing regional demand."
+      },
+      "sustainabilityInitiatives": {
+        "title": "Sustainability Initiatives",
+        "description": "Supporting the transition to sustainable energy with innovative logistics and storage solutions."
+      }
+    },
+    "form": {
+      "projectType": "Project Type",
+      "name": "Name",
+      "email": "Email",
+      "projectDescription": "Project Description",
+      "placeholders": {
+        "name": "Your name",
+        "email": "your.email@example.com",
+        "projectDescription": "Please describe your project requirements..."
+      },
+      "options": {
+        "oilGas": "Oil & Gas Projects"
+      },
+      "startDiscussion": "Start Discussion"
+    }
   },
   "footer": {
     "copyright": "© 2025 Ebdaa Falcon. All rights reserved.",
-    "tagline": "Excellence in Energy, Logistics & Sustainability"
+    "tagline": "Excellence in Energy, Logistics & Sustainability",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "getInTouch": "Get In Touch",
+    "links": {
+      "home": "Home",
+      "aboutUs": "About Us",
+      "services": "Services",
+      "ourWork": "Our Work",
+      "blog": "Blog",
+      "contact": "Contact",
+      "faqs": "FAQs",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "careers": "Careers"
+    },
+    "contact": {
+      "email": "info@ebdaafalcon.com",
+      "phone": "+966 56 514 5666",
+      "address": "King Fahed Road, Riyadh"
+    }
   },
   "blog": {
     "hero": {
@@ -182,6 +469,7 @@
       "title": "Get In Touch",
       "subtitle": "Send us a message and we'll get back to you as soon as possible",
       "fields": {
+        "inquiryType": "Inquiry Type",
         "name": "Full Name",
         "email": "Email Address",
         "phone": "Phone Number",
@@ -199,7 +487,20 @@
         "subject": "Enter message subject",
         "message": "Enter your message here..."
       },
+      "options": {
+        "general": "General Inquiry",
+        "product": "Products & Sales",
+        "procurement": "Procurement & Contracts",
+        "media": "Media Relations",
+        "support": "Technical Support",
+        "partnership": "Partnership",
+        "careers": "Careers",
+        "marinePorts": "Marine Ports",
+        "waterDesalination": "Water Desalination",
+        "alternativeEnergy": "Alternative Energy"
+      },
       "submit": "Send Message",
+      "send": "Send Message",
       "submitting": "Sending...",
       "success": {
         "title": "Message Sent Successfully!",
@@ -209,6 +510,12 @@
     "info": {
       "title": "Contact Information",
       "subtitle": "Reach out to us through any of the following channels",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "addressValue": "King Fahed Road, Riyadh",
+      "hours": "Business Hours",
+      "hoursValue": "Sunday - Thursday: 8:00 AM - 5:00 PM",
       "cta": {
         "title": "Ready to Start Your Project?",
         "description": "Let's discuss how we can help bring your energy and logistics vision to life.",
@@ -239,6 +546,11 @@
       "copyright": "© 2025 Ebdaa Falcon. All rights reserved.",
       "tagline": "Excellence in Energy, Logistics & Sustainability"
     }
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "goHome": "Go Home"
   },
   "admin": {
     "login": {

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface WorkImage {
   _id: string;
@@ -15,6 +16,7 @@ interface WorkImage {
 }
 
 export function WorkSection() {
+  const { t } = useLanguage();
   const [workImages, setWorkImages] = useState<WorkImage[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -152,7 +154,7 @@ export function WorkSection() {
         {/* Section Title */}
         <FadeInOnScroll direction="up" delay={0.2}>
           <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[56px] md:text-[96px] leading-[1.2] text-center text-white mb-16">
-            Our Work
+            {t('work.title') || 'Our Work'}
           </h2>
         </FadeInOnScroll>
 

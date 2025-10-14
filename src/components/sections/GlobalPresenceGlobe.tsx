@@ -3,6 +3,7 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // react-globe.gl needs window; use dynamic import to avoid SSR
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
@@ -15,18 +16,30 @@ type Point = {
 };
 
 const COUNTRIES: Point[] = [
-  { id: 'sa', name: 'Saudi Arabia', lat: 23.8859, lng: 45.0792 },
-  { id: 'ae', name: 'UAE', lat: 23.4241, lng: 53.8478 },
-  { id: 'kw', name: 'Kuwait', lat: 29.3117, lng: 47.4818 },
-  { id: 'bh', name: 'Bahrain', lat: 26.0667, lng: 50.5577 },
-  { id: 'qa', name: 'Qatar', lat: 25.3548, lng: 51.1839 },
-  { id: 'om', name: 'Oman', lat: 21.4735, lng: 55.9754 },
-  { id: 'jo', name: 'Jordan', lat: 31.24, lng: 36.51 },
-  { id: 'eg', name: 'Egypt', lat: 26.8206, lng: 30.8025 }
+  { id: 'sa', name: 'saudi-arabia', lat: 23.8859, lng: 45.0792 },
+  { id: 'ae', name: 'uae', lat: 23.4241, lng: 53.8478 },
+  { id: 'kw', name: 'kuwait', lat: 29.3117, lng: 47.4818 },
+  { id: 'bh', name: 'bahrain', lat: 26.0667, lng: 50.5577 },
+  { id: 'qa', name: 'qatar', lat: 25.3548, lng: 51.1839 },
+  { id: 'om', name: 'oman', lat: 21.4735, lng: 55.9754 },
+  { id: 'jo', name: 'jordan', lat: 31.24, lng: 36.51 },
+  { id: 'eg', name: 'egypt', lat: 26.8206, lng: 30.8025 }
 ];
 
 export function GlobalPresenceGlobe() {
+  const { t, language } = useLanguage();
   const points = useMemo(() => COUNTRIES.map(c => ({ ...c, size: 0.8 })), []);
+  
+  // Create translated country names
+  const getCountryName = (countryKey: string) => {
+    return t(`aboutUs.globalPresence.countries.${countryKey}`) || countryKey;
+  };
+  
+  const translatedPoints = useMemo(() => 
+    points.map(point => ({
+      ...point,
+      translatedName: getCountryName(point.name)
+    })), [points, t, language]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const globeRef = useRef<{
     pointOfView: (view: { lat: number; lng: number; altitude: number }, ms?: number) => void;
@@ -59,8 +72,8 @@ export function GlobalPresenceGlobe() {
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center mb-10 md:mb-14">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#716106] mb-4">Global Presence</h2>
-          <p className="font-['Alice:Regular',_sans-serif] text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">Interactive 3D globe showing our key regions and partnerships.</p>
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#716106] mb-4">{t('aboutUs.globalPresence.title') || 'Global Presence'}</h2>
+          <p className="font-['Alice:Regular',_sans-serif] text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">{t('aboutUs.globalPresence.subtitle') || 'Interactive 3D globe showing our key regions and partnerships.'}</p>
         </div>
 
         <div className="grid lg:grid-cols-[1.6fr_1fr] gap-10 items-center">
@@ -83,21 +96,37 @@ export function GlobalPresenceGlobe() {
                 backgroundColor="rgba(0,0,0,0)"
                 globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
                 bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-                pointsData={points as unknown as object[]}
+                pointsData={translatedPoints as unknown as object[]}
                 pointLat={((d: any) => (d as Point).lat) as unknown as any}
                 pointLng={((d: any) => (d as Point).lng) as unknown as any}
                 pointAltitude={() => 0.01}
                 pointColor={() => '#FFD700'}
                 pointRadius={((d: any) => (d as { size: number }).size * 0.2) as unknown as any}
-                labelsData={points as unknown as object[]}
+                labelsData={translatedPoints as unknown as object[]}
                 labelLat={((d: any) => (d as Point).lat) as unknown as any}
                 labelLng={((d: any) => (d as Point).lng) as unknown as any}
-                labelText={((d: any) => (d as Point).name) as unknown as any}
-                labelSize={() => 1.6}
-                labelColor={() => 'white'}
-                labelDotRadius={() => 0.4}
+                labelText={((d: any) => {
+                  const point = d as Point;
+                  // Always show English names on the globe for consistency
+                  const englishNames: Record<string, string> = {
+                    'saudi-arabia': 'Saudi Arabia',
+                    'uae': 'UAE',
+                    'kuwait': 'Kuwait',
+                    'bahrain': 'Bahrain',
+                    'qatar': 'Qatar',
+                    'oman': 'Oman',
+                    'jordan': 'Jordan',
+                    'egypt': 'Egypt'
+                  };
+                  return englishNames[point.name] || point.name;
+                }) as unknown as any}
+                labelSize={1.6}
+                labelColor="white"
+                labelDotRadius={0.4}
+                labelAltitude={0.02}
                 atmosphereAltitude={0.15}
-                enablePointerInteraction
+                enablePointerInteraction={true}
+                onLabelClick={() => {}}
               />
             </div>
           </div>
@@ -110,7 +139,20 @@ export function GlobalPresenceGlobe() {
                     onClick={() => flyTo(c.lat, c.lng, 1.0)}
                     className="w-full text-left font-['Alice:Regular',_sans-serif] text-gray-800 bg-white border border-gray-200 rounded-md px-3 py-2 hover:border-[#716106] hover:bg-white"
                   >
-                    {c.name}
+                    {(() => {
+                      // Always show English names for consistency
+                      const englishNames: Record<string, string> = {
+                        'saudi-arabia': 'Saudi Arabia',
+                        'uae': 'UAE',
+                        'kuwait': 'Kuwait',
+                        'bahrain': 'Bahrain',
+                        'qatar': 'Qatar',
+                        'oman': 'Oman',
+                        'jordan': 'Jordan',
+                        'egypt': 'Egypt'
+                      };
+                      return englishNames[c.name] || c.name;
+                    })()}
                   </button>
                 </li>
               ))}

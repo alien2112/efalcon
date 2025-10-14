@@ -1,13 +1,15 @@
 'use client';
 
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
 
 export function VisionSection() {
+  const { t } = useLanguage();
   return (
     <div className="relative w-full overflow-hidden">
       {/* Top Section: OUR VISION */}
-      <div className="relative bg-[#716106] py-20 md:py-32 mt-16 md:mt-24">
+      <div className="relative bg-[#716106] py-20 md:py-32">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
@@ -19,10 +21,10 @@ export function VisionSection() {
             <FadeInOnScroll direction="left" delay={0.2}>
               <div className="space-y-6">
                 <h2 className="font-bold text-white text-4xl md:text-6xl lg:text-7xl leading-tight">
-                  OUR VISION
+                  {t('vision.title')}
                 </h2>
                 <p className="text-white text-lg md:text-xl leading-relaxed">
-                  My foremost goal is for our nation to be a successful model and a leader in the world at all levels, and I will work with you to achieve that. - The Custodian of the Two Holy Mosques, King Salman bin Abdulaziz Al Saud
+                  {t('vision.leftDescription')}
                 </p>
               </div>
             </FadeInOnScroll>
@@ -71,7 +73,7 @@ export function VisionSection() {
                   Ebdaa Falcon Company
                 </h2>
                 <p className="text-white text-lg md:text-xl leading-relaxed">
-                  Is a company that has been deals with international companies in the field of oil and gas, Petroleum derivatives, sea ports and logistics services. It aims reach to the highest levels of excellence And the superior service that meets your needs. Is involved in storing, transporting and trading petroleum products. It is the first company in logistics services. We represent international companies in the field of oil and gas derivatives, alternative energies and water desalination. - Mosaed M. Al-Jhail Chairman of Board & Chief Executive
+                  {t('vision.rightDescription')}
                 </p>
               </div>
             </FadeInOnScroll>

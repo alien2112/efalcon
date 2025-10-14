@@ -7,6 +7,7 @@ import { ChevronRight, Download, ArrowRight } from 'lucide-react';
 import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Service {
   id: string;
@@ -24,99 +25,90 @@ interface ServiceCategory {
   services: Service[];
 }
 
-const serviceCategories: ServiceCategory[] = [
-  {
-    id: 'oil-gas',
-    name: 'Oil & Gas Solutions',
-    description: 'Comprehensive petroleum storage, trading, and distribution solutions with state-of-the-art facilities and strategic partnerships.',
-    services: [
-      {
-        id: 'petroleum-storage',
-        name: 'Petroleum Storage',
-        description: 'Advanced storage facilities for crude oil and refined products',
-        category: 'oil-gas',
-        downloadUrl: '/documents/petroleum-storage.pdf',
-        imageUrl: '/gallery/oil%20extraction.jpg'
-      },
-      {
-        id: 'trading-solutions',
-        name: 'Trading Solutions',
-        description: 'Strategic petroleum products trading and market solutions',
-        category: 'oil-gas',
-        downloadUrl: '/documents/trading-solutions.pdf',
-        imageUrl: '/gallery/solar%20panels.jpg'
-      },
-      {
-        id: 'refined-products',
-        name: 'Refined Products',
-        description: 'High-quality refined petroleum products and derivatives',
-        category: 'oil-gas',
-        downloadUrl: '/documents/refined-products.pdf',
-        imageUrl: '/gallery/wind%20genrators.jpg'
-      }
-    ]
-  },
-  {
-    id: 'logistics',
-    name: 'Logistics & Marine Services',
-    description: 'Integrated logistics solutions across marine ports and inland operations with comprehensive handling and distribution services.',
-    services: [
-      {
-        id: 'marine-operations',
-        name: 'Marine Operations',
-        description: 'Comprehensive port logistics and handling services',
-        category: 'logistics',
-        downloadUrl: '/documents/marine-operations.pdf',
-        imageUrl: '/gallery/logistic%20.jpg'
-      },
-      {
-        id: 'inland-transportation',
-        name: 'Inland Transportation',
-        description: 'Reliable inland logistics and distribution networks',
-        category: 'logistics',
-        downloadUrl: '/documents/inland-transportation.pdf',
-        imageUrl: '/gallery/electric.jpg'
-      },
-      {
-        id: 'warehousing',
-        name: 'Warehousing Solutions',
-        description: 'Modern warehousing and storage facilities',
-        category: 'logistics',
-        downloadUrl: '/documents/warehousing.pdf',
-        imageUrl: '/gallery/wind%20genrators.jpg'
-      }
-    ]
-  }
-];
+// Service categories will be defined inside the component to access translations
 
-const applications = [
-  {
-    id: 'energy-sector',
-    title: 'Energy Sector',
-    description: 'Comprehensive energy solutions for power generation, oil refineries, and petrochemical facilities.',
-    imageUrl: '/gallery/oil%20extraction.jpg'
-  },
-  {
-    id: 'industrial-manufacturing',
-    title: 'Industrial Manufacturing',
-    description: 'Specialized logistics and supply chain solutions for heavy manufacturing industries.',
-    imageUrl: '/gallery/logistic%20.jpg'
-  },
-  {
-    id: 'renewable-energy',
-    title: 'Renewable Energy',
-    description: 'Supporting the transition to sustainable energy with innovative logistics and storage solutions.',
-    imageUrl: '/gallery/solar%20panels.jpg'
-  }
-];
+// Applications will be defined inside the component to access translations
 
 export default function ServicesPage() {
+  const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('oil-gas');
   const [currentApplication, setCurrentApplication] = useState(0);
   const [hoveredService, setHoveredService] = useState<string | null>(null);
   const [hoveredApplication, setHoveredApplication] = useState<string | null>(null);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  // Define service categories with translations
+  const serviceCategories: ServiceCategory[] = [
+    {
+      id: 'oil-gas',
+      name: t('services.categories.oilGas') || 'Oil & Gas Solutions',
+      description: t('services.categories.oilGasDescription') || 'Comprehensive petroleum storage, trading, and distribution solutions with state-of-the-art facilities and strategic partnerships.',
+      services: [
+        {
+          id: 'oil-gas-solutions',
+          name: t('services.categories.oilGasServices.petroleumDerivatives') || 'Petroleum Derivatives and Logistics Services',
+          description: t('services.categories.oilGasServices.petroleumDerivativesDescription') || 'Integrated solutions in storage, transportation, and trading of petroleum derivatives',
+          category: 'oil-gas',
+          downloadUrl: '/documents/petroleum-storage.pdf',
+          imageUrl: '/gallery/oil%20extraction.jpg'
+        },
+        {
+          id: 'engine-oils',
+          name: t('services.categories.oilGasServices.motorOils') || 'Motor Oils',
+          description: t('services.categories.oilGasServices.motorOilsDescription') || 'High-quality Saudi-made motor oils engineered for durability and peak performance',
+          category: 'oil-gas',
+          downloadUrl: '/documents/motor-oils.pdf',
+          imageUrl: '/gallery/engine%20oil1.jpg'
+        }
+      ]
+    },
+    {
+      id: 'logistics',
+      name: t('services.categories.logistics') || 'Logistics & Marine Services',
+      description: t('services.categories.logisticsDescription') || 'Integrated logistics solutions across marine ports and inland operations with comprehensive handling and distribution services.',
+      services: [
+        {
+          id: 'logistics-marine-services',
+          name: t('services.categories.logisticsServices.logisticsMarine') || 'Logistics & Marine Services',
+          description: t('services.categories.logisticsServices.logisticsMarineDescription') || 'World-class logistics across marine ports and inland operations to keep supply chains moving',
+          category: 'logistics',
+          downloadUrl: '/documents/logistics-services.pdf',
+          imageUrl: '/gallery/logistic%20.jpg'
+        },
+        {
+          id: 'renewable-energy-desalination',
+          name: t('services.categories.logisticsServices.renewableEnergy') || 'Alternative Energy & Water Desalination',
+          description: t('services.categories.logisticsServices.renewableEnergyDescription') || 'Sustainable solar and wind energy solutions alongside advanced water desalination systems',
+          category: 'logistics',
+          downloadUrl: '/documents/renewable-energy.pdf',
+          imageUrl: '/gallery/solar%20panels.jpg'
+        }
+      ]
+    }
+  ];
+
+  // Define applications with translations
+  const applications = [
+    {
+      id: 'oil-gas-solutions',
+      title: t('services.applications.energySector') || 'Energy Sector',
+      description: t('services.applications.energySectorDescription') || 'Comprehensive energy solutions for power generation, oil refineries, and petrochemical facilities.',
+      imageUrl: '/gallery/oil%20extraction.jpg'
+    },
+    {
+      id: 'logistics-marine-services',
+      title: t('services.applications.industrialManufacturing') || 'Industrial Manufacturing',
+      description: t('services.applications.industrialManufacturingDescription') || 'Specialized logistics and supply chain solutions for heavy manufacturing industries.',
+      imageUrl: '/gallery/logistic%20.jpg'
+    },
+    {
+      id: 'renewable-energy-desalination',
+      title: t('services.applications.renewableEnergy') || 'Renewable Energy',
+      description: t('services.applications.renewableEnergyDescription') || 'Supporting the transition to sustainable energy with innovative logistics and storage solutions.',
+      imageUrl: '/gallery/solar%20panels.jpg'
+    }
+  ];
 
   const currentCategory = serviceCategories.find(cat => cat.id === activeCategory);
 
@@ -144,11 +136,11 @@ export default function ServicesPage() {
       {/* Banner */}
       <div className="pt-[103px]">
         <Banner
-          title="Our Services"
-          subtitle="Ebdaa Falcon delivers comprehensive energy, logistics, and sustainability solutions with world-class service standards and strategic partnerships across multiple industries."
+          title={t('services.title') || 'Our Services'}
+          subtitle={t('services.subtitle') || 'Ebdaa Falcon delivers comprehensive energy, logistics, and sustainability solutions with world-class service standards and strategic partnerships across multiple industries.'}
           breadcrumbs={[
-            { label: 'Home', href: '/' },
-            { label: 'Services' }
+            { label: t('navigation.home') || 'Home', href: '/' },
+            { label: t('navigation.services') || 'Services' }
           ]}
         />
         </div>
@@ -159,12 +151,11 @@ export default function ServicesPage() {
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6 text-center">
-                Our Services
-            </h2>
+                {t('services.title') || 'Our Services'}
+              </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
-                We provide integrated solutions across oil & gas, logistics, and renewable energy sectors, 
-                delivering excellence through strategic partnerships and innovative approaches.
-            </p>
+                {t('services.description') || 'We provide integrated solutions across oil & gas, logistics, and renewable energy sectors, delivering excellence through strategic partnerships and innovative approaches.'}
+              </p>
           </div>
           </FadeInOnScroll>
 
@@ -206,7 +197,7 @@ export default function ServicesPage() {
                       href={`/services/${currentCategory.id}`}
                       className="inline-flex items-center text-[#716106] hover:text-[#8B7A0A] transition-colors font-['ADLaM_Display:Regular',_sans-serif] text-[16px]"
                     >
-                      Learn more about {currentCategory.name}
+                      {t('services.learnMore') || 'Learn more about'} {currentCategory.name}
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </div>
@@ -216,9 +207,10 @@ export default function ServicesPage() {
                 <FadeInOnScroll direction="right" delay={0.8}>
                   <div className="grid md:grid-cols-2 gap-6">
                     {currentCategory.services.map((service, index) => (
-                      <div 
+                      <Link 
+                        href={`/services/${service.id}`}
                         key={service.id} 
-                        className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group ${
+                        className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block ${
                           hoveredService === service.id ? 'scale-[1.02] shadow-2xl' : ''
                         }`}
                         onMouseEnter={() => setHoveredService(service.id)}
@@ -255,13 +247,14 @@ export default function ServicesPage() {
                                   ? 'text-[#8B7A0A] scale-105' 
                                   : 'text-[#716106] hover:text-[#8B7A0A]'
                               }`}
+                              onClick={(e) => e.stopPropagation()}
                             >
                               <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-12" />
-                              Download Specifications
+                              {t('services.downloadSpecs') || 'Download Specifications'}
                             </a>
                           )}
-                  </div>
-                </div>
+                        </div>
+                      </Link>
                     ))}
                   </div>
                 </FadeInOnScroll>
@@ -277,7 +270,7 @@ export default function ServicesPage() {
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6">
-                Where Are Our Services Used?
+                {t('services.whereUsed') || 'Where Are Our Services Used?'}
               </h2>
             </div>
           </FadeInOnScroll>
@@ -304,8 +297,9 @@ export default function ServicesPage() {
               <div className="grid md:grid-cols-3 gap-8">
                 {applications.map((application, index) => (
                   <FadeInOnScroll key={application.id} direction="up" delay={0.1 * index}>
-                    <div 
-                      className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group ${
+                    <Link 
+                      href={`/services/${application.id}`}
+                      className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block ${
                         hoveredApplication === application.id ? 'scale-[1.02] shadow-2xl' : ''
                       }`}
                       onMouseEnter={() => setHoveredApplication(application.id)}
@@ -334,7 +328,7 @@ export default function ServicesPage() {
                           {application.description}
                         </p>
                       </div>
-                    </div>
+                    </Link>
                   </FadeInOnScroll>
             ))}
           </div>
@@ -349,10 +343,10 @@ export default function ServicesPage() {
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#716106] mb-6">
-                For Inquiries
-          </h2>
+                {t('contact.form.title') || 'For Inquiries'}
+              </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">
-                Please contact us if you need any additional information about our services.
+                {t('contact.form.subtitle') || 'Please contact us if you need any additional information about our services.'}
               </p>
             </div>
           </FadeInOnScroll>
@@ -363,58 +357,58 @@ export default function ServicesPage() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Select Inquiry Type
+                      {t('contact.form.fields.inquiryType') || 'Select Inquiry Type'}
                     </label>
                     <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400">
-                      <option>General Inquiries</option>
-                      <option>Product & Sales</option>
-                      <option>Procurement & Contracts</option>
-                      <option>Media Relations</option>
-                      <option>Careers</option>
+                      <option>{t('contact.form.options.general') || 'General Inquiries'}</option>
+                      <option>{t('contact.form.options.product') || 'Product & Sales'}</option>
+                      <option>{t('contact.form.options.procurement') || 'Procurement & Contracts'}</option>
+                      <option>{t('contact.form.options.media') || 'Media Relations'}</option>
+                      <option>{t('contact.form.options.careers') || 'Careers'}</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Name
+                      {t('contact.form.fields.name') || 'Name'}
                     </label>
                     <input
                       type="text"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                      placeholder="Your Name"
+                      placeholder={t('contact.form.placeholders.name') || 'Your Name'}
                       required
                     />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t('contact.form.fields.email') || 'Email'}
                   </label>
                   <input
                     type="email"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                    placeholder="your.email@example.com"
+                    placeholder={t('contact.form.placeholders.email') || 'your.email@example.com'}
                     required
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Subject
+                    {t('contact.form.fields.subject') || 'Subject'}
                   </label>
                   <input
                     type="text"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                    placeholder="Message Subject"
+                    placeholder={t('contact.form.placeholders.subject') || 'Message Subject'}
                     required
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Your Message
+                    {t('contact.form.fields.message') || 'Your Message'}
                   </label>
                   <textarea
                     rows={4}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
-                    placeholder="Please describe your inquiry..."
+                    placeholder={t('contact.form.placeholders.message') || 'Please describe your inquiry...'}
                     required
                   />
                 </div>
@@ -431,18 +425,18 @@ export default function ServicesPage() {
                     {isFormSubmitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                        Sending...
+                        {t('contact.form.sending') || 'Sending...'}
                       </>
                     ) : formSubmitted ? (
                       <>
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        Message Sent!
+                        {t('contact.form.sent') || 'Message Sent!'}
                       </>
                     ) : (
                       <>
-                        Send
+                        {t('contact.form.send') || 'Send'}
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </>
                     )}

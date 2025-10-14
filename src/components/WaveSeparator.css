@@ -1,0 +1,34 @@
+/* Additional CSS for the wave separator - add to globals.css if needed */
+.wave-separator {
+  position: relative;
+  width: 100%;
+  height: 6rem; /* 96px */
+}
+
+@media (min-width: 768px) {
+  .wave-separator {
+    height: 8rem; /* 128px */
+  }
+}
+
+.wave-separator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #716106;
+  clip-path: polygon(0 60%, 25% 40%, 50% 60%, 75% 40%, 100% 60%, 100% 100%, 0 100%);
+}
+
+.wave-separator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(113, 97, 6, 0.2), rgba(113, 97, 6, 0.4));
+  pointer-events: none;
+}

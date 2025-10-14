@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
 
 interface ServiceImage {
@@ -16,6 +17,7 @@ interface ServiceImage {
 }
 
 export function ServicesSection() {
+  const { t } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [services, setServices] = useState<ServiceImage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -109,14 +111,14 @@ export function ServicesSection() {
         {/* Section Title */}
         <FadeInOnScroll direction="up" delay={0.2}>
           <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[72px] leading-[1.2] text-center text-white mb-8">
-            Our Services
+            {t('services.title') || 'Our Services'}
           </h2>
         </FadeInOnScroll>
 
         {/* Subtitle */}
         <FadeInOnScroll direction="up" delay={0.4}>
           <p className="font-['Alegreya_Sans_SC:Regular',_sans-serif] text-[32px] md:text-[72px] leading-[1.2] text-center text-white mb-16">
-            Driving Excellence in Energy, Logistics & Sustainability
+            {t('services.subtitle') || 'Driving Excellence in Energy, Logistics & Sustainability'}
           </p>
         </FadeInOnScroll>
 
@@ -156,7 +158,14 @@ export function ServicesSection() {
 
               {/* Main center image */}
               {services.length > 0 && (
-                <Link href={`/services`} className="relative z-10 rounded-[16px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-[300px] md:w-[762px] h-[250px] md:h-[444px] block group">
+                <Link href={`/services/${(() => {
+                  const title = services[currentSlide].title.toLowerCase();
+                  if (title.includes('petroleum') || title.includes('trading')) return 'oil-gas-solutions';
+                  if (title.includes('logistics')) return 'logistics-marine-services';
+                  if (title.includes('international') || title.includes('renewable') || title.includes('energy')) return 'renewable-energy-desalination';
+                  if (title.includes('engine') || title.includes('motor')) return 'engine-oils';
+                  return encodeURIComponent(title.replace(/\s+/g,'-'));
+                })()}`} className="relative z-10 rounded-[16px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-[300px] md:w-[762px] h-[250px] md:h-[444px] block group">
                   <Image
                     src={services[currentSlide].imageUrl}
                     alt={services[currentSlide].title}

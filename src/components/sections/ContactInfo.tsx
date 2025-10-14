@@ -1,171 +1,224 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useRef, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Phone, Mail, MapPin, Clock, ExternalLink } from 'lucide-react';
 
 interface ContactInfoItem {
   id: string;
-  icon: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
-  titleAr: string;
   value: string;
-  valueAr: string;
   link?: string;
+  color: string;
 }
 
 export function ContactInfo() {
-  const [infoItems, setInfoItems] = useState<ContactInfoItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { t, language } = useLanguage();
   const infoRef = useRef<HTMLDivElement>(null);
 
-  const sampleInfoItems: ContactInfoItem[] = [
+  const sampleInfoItems: ContactInfoItem[] = useMemo(() => [
     {
       id: '1',
-      icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',
-      title: 'Phone',
-      titleAr: 'الهاتف',
+      icon: Phone,
+      title: t('contact.info.phone') || 'Phone',
       value: '+966 56 514 5666',
-      valueAr: '+966 56 514 5666',
-      link: 'tel:+966565145666'
+      link: 'tel:+966565145666',
+      color: 'from-blue-500 to-blue-600'
     },
     {
       id: '2',
-      icon: 'M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-      title: 'Email',
-      titleAr: 'البريد الإلكتروني',
+      icon: Mail,
+      title: t('contact.info.email') || 'Email',
       value: 'info@ebdaafalcon.com',
-      valueAr: 'info@ebdaafalcon.com',
-      link: 'mailto:info@ebdaafalcon.com'
+      link: 'mailto:info@ebdaafalcon.com',
+      color: 'from-green-500 to-green-600'
     },
     {
       id: '3',
-      icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
-      title: 'Address',
-      titleAr: 'العنوان',
-      value: 'King Fahed Road, Riyadh',
-      valueAr: 'طريق الملك فهد، الرياض'
+      icon: MapPin,
+      title: t('contact.info.address') || 'Address',
+      value: t('contact.info.addressValue') || 'King Fahed Road, Riyadh',
+      color: 'from-purple-500 to-purple-600'
     },
     {
       id: '4',
-      icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
-      title: 'Business Hours',
-      titleAr: 'ساعات العمل',
-      value: 'Sunday - Thursday: 8:00 AM - 5:00 PM',
-      valueAr: 'الأحد - الخميس: 8:00 صباحاً - 5:00 مساءً'
+      icon: Clock,
+      title: t('contact.info.hours') || 'Business Hours',
+      value: t('contact.info.hoursValue') || 'Sunday - Thursday: 8:00 AM - 5:00 PM',
+      color: 'from-orange-500 to-orange-600'
     }
-  ];
+  ], [t]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setInfoItems(sampleInfoItems);
-      setIsLoading(false);
-    }, 600);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
 
-    return () => clearTimeout(timer);
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
-    <section ref={infoRef} className="py-16 md:py-24 bg-white">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#716106] mb-4">
-            Contact Information
-          </h2>
-          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">
-            Reach us through the details below. We&apos;re here to help.
-          </p>
-        </div>
+    <motion.div 
+      ref={infoRef}
+      className="space-y-8"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      {/* Header */}
+      <motion.div 
+        className={`text-center mb-12 ${language === 'ar' ? 'text-right' : 'text-left'}`}
+        variants={itemVariants}
+      >
+        <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#716106] mb-4">
+          {t('contact.info.title') || 'Contact Information'}
+        </h2>
+        <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          {t('contact.info.subtitle') || "Reach us through the details below. We're here to help."}
+        </p>
+      </motion.div>
 
-        {/* Loading State */}
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[...Array(4)].map((_, index) => (
-              <div key={index} className="bg-gray-100 rounded-lg p-6 animate-pulse">
-                <div className="w-12 h-12 bg-gray-200 rounded-lg mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded"></div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {infoItems.map((item, index) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group"
-                style={{
-                  animationDelay: `${index * 0.1}s`,
-                  animation: 'fadeInUp 0.6s ease-out forwards'
-                }}
-              >
-                {/* Icon */}
-                <div className="w-12 h-12 bg-[#716106] rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-[#5a4f05] transition-colors duration-300">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                  </svg>
-                </div>
-
-                {/* Content */}
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-[#716106] mb-2 group-hover:text-[#5a4f05] transition-colors">
-                  {item.title}
-                </h3>
-
-                {item.link ? (
-                  <a
-                    href={item.link}
-                    className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 hover:text-[#716106] transition-colors"
-                  >
-                    {item.value}
-                  </a>
-                ) : (
-                  <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600">
+      {/* Contact Cards */}
+      <motion.div 
+        className="space-y-6"
+        variants={containerVariants}
+      >
+        {sampleInfoItems.map((item) => (
+          <motion.div
+            key={item.id}
+            variants={cardVariants}
+            whileHover={{ y: -5, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="group cursor-pointer"
+          >
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group-hover:border-gray-200">
+              <div className="flex items-start gap-4">
+                <motion.div 
+                  className={`w-14 h-14 bg-gradient-to-r ${item.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                  whileHover={{ rotate: 5 }}
+                >
+                  <item.icon className="w-7 h-7 text-white" />
+                </motion.div>
+                
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-gray-800 mb-2 group-hover:text-[#716106] transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[15px] text-gray-600 leading-relaxed break-words">
                     {item.value}
                   </p>
+                </div>
+                
+                {item.link && (
+                  <motion.div
+                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <ExternalLink className="w-5 h-5 text-[#716106]" />
+                  </motion.div>
                 )}
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* Additional Info */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-[#716106] to-[#5a4f05] rounded-lg p-8 md:p-12 text-white">
-            <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] mb-4">
-              Need More Details?
-            </h3>
-            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] mb-6 max-w-[600px] mx-auto">
-              Call or email us and our team will assist you promptly.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="tel:+966565145666"
-                className="bg-white text-[#716106] px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 hover:scale-105 transform"
-              >
-                Call Us
-              </a>
-              <a
-                href="mailto:info@ebdaafalcon.com"
-                className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-[#716106] transition-colors duration-300 hover:scale-105 transform"
-              >
-                Email Us
-              </a>
+              
+              {item.link && (
+                <a
+                  href={item.link}
+                  className="absolute inset-0 rounded-2xl"
+                  aria-label={`Contact us via ${item.title}`}
+                />
+              )}
             </div>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* CTA Section */}
+      <motion.div 
+        className="mt-16"
+        variants={itemVariants}
+      >
+        <div className="bg-gradient-to-r from-[#716106] to-[#8B7A0A] rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-30" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0)`,
+            backgroundSize: '20px 20px'
+          }}></div>
+          
+          <div className="relative z-10 text-center">
+            <motion.h3 
+              className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              {t('contact.info.cta.title') || 'Need More Details?'}
+            </motion.h3>
+            
+            <motion.p 
+              className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] mb-8 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              {t('contact.info.cta.description') || 'Call or email us and our team will assist you promptly.'}
+            </motion.p>
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <motion.a
+                href="tel:+966565145666"
+                className="bg-white text-[#716106] px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100 transition-colors duration-300 hover:scale-105 transform shadow-lg"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {t('contact.info.cta.call') || 'Call Us'}
+              </motion.a>
+              
+              <motion.a
+                href="mailto:info@ebdaafalcon.com"
+                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold hover:bg-white hover:text-[#716106] transition-colors duration-300 hover:scale-105 transform"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {t('contact.info.cta.email') || 'Email Us'}
+              </motion.a>
+            </motion.div>
           </div>
         </div>
-      </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-    </section>
+      </motion.div>
+    </motion.div>
   );
 }

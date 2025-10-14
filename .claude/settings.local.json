@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(del next-intl.config.ts)",
+      "Bash(del srcmiddleware.ts)",
+      "Bash(npm run dev)",
+      "Bash(del srccomponentsLocaleAttributes.tsx)",
+      "Bash(del srcapppage.tsx)",
+      "Bash(del srcappservicespage.tsx)",
+      "Bash(taskkill:*)",
+      "Bash(kill:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

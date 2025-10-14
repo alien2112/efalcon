@@ -1,38 +1,29 @@
 'use client';
 
-import { useLocale } from 'next-intl';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function LanguageSwitcher() {
-  const locale = useLocale();
-  const pathname = usePathname();
-
-  const switchLanguage = (newLocale: string) => {
-    // Remove the current locale from the pathname
-    const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
-    return `/${newLocale}${pathWithoutLocale}`;
-  };
+  const { language, setLanguage } = useLanguage();
 
   return (
     <div className="flex items-center gap-2">
-      <Link
-        href={switchLanguage('en')}
+      <button
+        onClick={() => setLanguage('en')}
         className={`font-['ADLaM_Display:Regular',_sans-serif] text-[14px] transition-colors ${
-          locale === 'en' ? 'text-white' : 'text-[#cecfd2] hover:text-white'
+          language === 'en' ? 'text-white' : 'text-[#cecfd2] hover:text-white'
         }`}
       >
         EN
-      </Link>
+      </button>
       <span className="text-[#cecfd2]">|</span>
-      <Link
-        href={switchLanguage('ar')}
+      <button
+        onClick={() => setLanguage('ar')}
         className={`font-['ADLaM_Display:Regular',_sans-serif] text-[14px] transition-colors ${
-          locale === 'ar' ? 'text-white' : 'text-[#cecfd2] hover:text-white'
+          language === 'ar' ? 'text-white' : 'text-[#cecfd2] hover:text-white'
         }`}
       >
         AR
-      </Link>
+      </button>
     </div>
   );
 }

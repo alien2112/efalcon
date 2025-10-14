@@ -8,6 +8,7 @@ import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface WorkProject {
   id: string;
@@ -29,76 +30,76 @@ interface WorkCategory {
 
 const workCategories: WorkCategory[] = [
   {
-    id: 'oil-gas-projects',
-    name: 'Oil & Gas Projects',
-    description: 'Comprehensive petroleum storage, trading, and distribution projects with state-of-the-art facilities and strategic partnerships.',
+    id: 'oilGasProjects',
+    name: 'oilGasProjects',
+    description: 'oilGasProjects',
     projects: [
       {
-        id: 'petroleum-storage-facility',
-        title: 'Petroleum Storage Facility',
-        description: 'Advanced storage facilities for crude oil and refined products with cutting-edge safety systems.',
-        category: 'oil-gas-projects',
+        id: 'petroleumStorageFacility',
+        title: 'petroleumStorageFacility',
+        description: 'petroleumStorageFacility',
+        category: 'oilGasProjects',
         imageUrl: '/gallery/oil%20extraction.jpg',
         downloadUrl: '/documents/petroleum-storage-project.pdf',
         year: '2023',
-        location: 'Saudi Arabia'
+        location: 'petroleumStorageFacility'
       },
       {
-        id: 'trading-operations',
-        title: 'Trading Operations Center',
-        description: 'Strategic petroleum products trading and market solutions with real-time monitoring systems.',
-        category: 'oil-gas-projects',
+        id: 'tradingOperations',
+        title: 'tradingOperations',
+        description: 'tradingOperations',
+        category: 'oilGasProjects',
         imageUrl: '/gallery/solar%20panels.jpg',
         downloadUrl: '/documents/trading-operations.pdf',
         year: '2023',
-        location: 'UAE'
+        location: 'tradingOperations'
       },
       {
-        id: 'refinery-integration',
-        title: 'Refinery Integration Project',
-        description: 'High-quality refined petroleum products and derivatives processing facility.',
-        category: 'oil-gas-projects',
+        id: 'refineryIntegration',
+        title: 'refineryIntegration',
+        description: 'refineryIntegration',
+        category: 'oilGasProjects',
         imageUrl: '/gallery/wind%20genrators.jpg',
         downloadUrl: '/documents/refinery-integration.pdf',
         year: '2022',
-        location: 'Iraq'
+        location: 'refineryIntegration'
       }
     ]
   },
   {
-    id: 'logistics-projects',
-    name: 'Logistics & Marine Projects',
-    description: 'Integrated logistics solutions across marine ports and inland operations with comprehensive handling and distribution services.',
+    id: 'logisticsProjects',
+    name: 'logisticsProjects',
+    description: 'logisticsProjects',
     projects: [
       {
-        id: 'marine-port-expansion',
-        title: 'Marine Port Expansion',
-        description: 'Comprehensive port logistics and handling services with modern infrastructure.',
-        category: 'logistics-projects',
+        id: 'marinePortExpansion',
+        title: 'marinePortExpansion',
+        description: 'marinePortExpansion',
+        category: 'logisticsProjects',
         imageUrl: '/gallery/logistic%20.jpg',
         downloadUrl: '/documents/marine-port-expansion.pdf',
         year: '2023',
-        location: 'Egypt'
+        location: 'marinePortExpansion'
       },
       {
-        id: 'inland-transportation-network',
-        title: 'Inland Transportation Network',
-        description: 'Reliable inland logistics and distribution networks connecting major industrial zones.',
-        category: 'logistics-projects',
+        id: 'inlandTransportationNetwork',
+        title: 'inlandTransportationNetwork',
+        description: 'inlandTransportationNetwork',
+        category: 'logisticsProjects',
         imageUrl: '/gallery/electric.jpg',
         downloadUrl: '/documents/inland-transportation.pdf',
         year: '2022',
-        location: 'Morocco'
+        location: 'inlandTransportationNetwork'
       },
       {
-        id: 'warehousing-solutions',
-        title: 'Modern Warehousing Solutions',
-        description: 'State-of-the-art warehousing and storage facilities with automated systems.',
-        category: 'logistics-projects',
+        id: 'warehousingSolutions',
+        title: 'warehousingSolutions',
+        description: 'warehousingSolutions',
+        category: 'logisticsProjects',
         imageUrl: '/gallery/wind%20genrators.jpg',
         downloadUrl: '/documents/warehousing-solutions.pdf',
         year: '2023',
-        location: 'Tunisia'
+        location: 'warehousingSolutions'
       }
     ]
   }
@@ -106,30 +107,36 @@ const workCategories: WorkCategory[] = [
 
 const projectHighlights = [
   {
-    id: 'energy-sector',
-    title: 'Energy Sector Projects',
-    description: 'Comprehensive energy solutions for power generation, oil refineries, and petrochemical facilities across multiple countries.',
+    id: 'energySectorProjects',
+    title: 'energySectorProjects',
+    description: 'energySectorProjects',
     imageUrl: '/gallery/oil%20extraction.jpg',
     stats: { projects: 15, countries: 8, year: '2023' }
   },
   {
-    id: 'logistics-expansion',
-    title: 'Logistics Expansion',
-    description: 'Strategic expansion of logistics networks and marine operations to support growing regional demand.',
+    id: 'logisticsExpansion',
+    title: 'logisticsExpansion',
+    description: 'logisticsExpansion',
     imageUrl: '/gallery/logistic%20.jpg',
     stats: { projects: 12, countries: 6, year: '2023' }
   },
   {
-    id: 'sustainability-initiatives',
-    title: 'Sustainability Initiatives',
-    description: 'Supporting the transition to sustainable energy with innovative logistics and storage solutions.',
+    id: 'sustainabilityInitiatives',
+    title: 'sustainabilityInitiatives',
+    description: 'sustainabilityInitiatives',
     imageUrl: '/gallery/solar%20panels.jpg',
     stats: { projects: 8, countries: 4, year: '2023' }
   }
 ];
 
+// Helper function to convert camelCase to kebab-case
+const toKebabCase = (str: string) => {
+  return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+};
+
 export default function OurWorkPage() {
-  const [activeCategory, setActiveCategory] = useState('oil-gas-projects');
+  const { t } = useLanguage();
+  const [activeCategory, setActiveCategory] = useState('oilGasProjects');
   const [currentHighlight, setCurrentHighlight] = useState(0);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [hoveredHighlight, setHoveredHighlight] = useState<string | null>(null);
@@ -162,11 +169,11 @@ export default function OurWorkPage() {
       {/* Banner */}
       <div className="pt-[103px]">
         <Banner
-          title="Our Work"
-          subtitle="Ebdaa Falcon delivers excellence through strategic projects across energy, logistics, and sustainability sectors, creating lasting impact through innovative solutions and world-class execution."
+          title={t('ourWorkPage.title') || 'Our Work'}
+          subtitle={t('ourWorkPage.subtitle') || 'Ebdaa Falcon delivers excellence through strategic projects across energy, logistics, and sustainability sectors, creating lasting impact through innovative solutions and world-class execution.'}
           breadcrumbs={[
-            { label: 'Home', href: '/' },
-            { label: 'Our Work' }
+            { label: t('navigation.home') || 'Home', href: '/' },
+            { label: t('navigation.ourWork') || 'Our Work' }
           ]}
           backgroundImage="/ourworkbanner.jpg"
         />
@@ -178,11 +185,10 @@ export default function OurWorkPage() {
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6 text-center">
-                Our Portfolio
+                {t('ourWorkPage.portfolio') || 'Our Portfolio'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
-                We showcase our expertise through successful projects that demonstrate our commitment to excellence, 
-                innovation, and sustainable solutions across diverse industries and regions.
+                {t('ourWorkPage.portfolioDescription') || 'We showcase our expertise through successful projects that demonstrate our commitment to excellence, innovation, and sustainable solutions across diverse industries and regions.'}
               </p>
             </div>
           </FadeInOnScroll>
@@ -201,7 +207,7 @@ export default function OurWorkPage() {
                         : 'text-gray-600 hover:text-[#716106] hover:bg-white hover:shadow-md'
                     }`}
                   >
-                    {category.name}
+                    {t(`ourWorkPage.categories.${category.id}.name`) || category.name}
                   </button>
                 ))}
           </div>
@@ -216,22 +222,22 @@ export default function OurWorkPage() {
                 <FadeInOnScroll direction="left" delay={0.6}>
                   <div className="space-y-6">
                     <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-[#716106]">
-                      {currentCategory.name}
+                      {t(`ourWorkPage.categories.${currentCategory.id}.name`) || currentCategory.name}
                     </h3>
                     <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 leading-relaxed">
-                      {currentCategory.description}
+                      {t(`ourWorkPage.categories.${currentCategory.id}.description`) || currentCategory.description}
                     </p>
                     <div className="space-y-2">
                       <div className="flex items-center text-sm text-gray-600">
-                        <span className="font-medium">Projects Completed:</span>
+                        <span className="font-medium">{t('ourWorkPage.projectsCompleted') || 'Projects Completed'}:</span>
                         <span className="ml-2 font-bold text-[#716106]">
                           <AnimatedCounter end={currentCategory.projects.length} duration={2} />
                         </span>
                       </div>
                       <div className="flex items-center text-sm text-gray-600">
-                        <span className="font-medium">Active Regions:</span>
-                        <span className="ml-2">Middle East & Africa</span>
-          </div>
+                        <span className="font-medium">{t('ourWorkPage.activeRegions') || 'Active Regions'}:</span>
+                        <span className="ml-2">{t('ourWorkPage.regions') || 'Middle East & Africa'}</span>
+                      </div>
         </div>
         </div>
                 </FadeInOnScroll>
@@ -240,13 +246,16 @@ export default function OurWorkPage() {
                 <FadeInOnScroll direction="right" delay={0.8}>
                   <div className="grid md:grid-cols-2 gap-6">
                     {currentCategory.projects.map((project, index) => (
-                      <div 
+                      <div
                         key={project.id} 
-                        className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group ${
+                        className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block cursor-pointer ${
                           hoveredProject === project.id ? 'scale-105' : ''
                         }`}
                         onMouseEnter={() => setHoveredProject(project.id)}
                         onMouseLeave={() => setHoveredProject(null)}
+                        onClick={() => {
+                          window.location.href = `/our-work/${toKebabCase(project.id)}`;
+                        }}
                       >
                         <div className="relative h-48">
                           <Image
@@ -273,7 +282,7 @@ export default function OurWorkPage() {
                         <div className="p-6">
                           <div className="flex justify-between items-start mb-3">
                             <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-[#716106]">
-                              {project.title}
+                              {t(`ourWorkPage.projects.${toKebabCase(project.id)}.title`)}
                             </h4>
                             <span className={`text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded transition-all duration-300 ${
                               hoveredProject === project.id ? 'bg-[#716106] text-white' : ''
@@ -282,14 +291,19 @@ export default function OurWorkPage() {
                             </span>
                           </div>
                           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
-                            {project.description}
+                            {t(`ourWorkPage.projects.${toKebabCase(project.id)}.description`)}
                           </p>
                           <div className="flex justify-between items-center">
-                            <span className="text-xs text-gray-500">{project.location}</span>
+                            <span className="text-xs text-gray-500">{t(`ourWorkPage.projects.${toKebabCase(project.id)}.location`)}</span>
                             {project.downloadUrl && (
                               <a
                                 href={project.downloadUrl}
                                 download
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  e.preventDefault();
+                                  window.open(project.downloadUrl, '_blank');
+                                }}
                                 className={`inline-flex items-center transition-all duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[12px] ${
                                   hoveredProject === project.id 
                                     ? 'text-[#8B7A0A] scale-110' 
@@ -297,7 +311,7 @@ export default function OurWorkPage() {
                                 }`}
                               >
                                 <Download className="w-3 h-3 mr-1" />
-                                Details
+                                {t('ourWorkPage.details') || 'Details'}
                               </a>
                             )}
                           </div>
@@ -318,7 +332,7 @@ export default function OurWorkPage() {
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6">
-                Project Highlights
+                {t('ourWorkPage.projectHighlights') || 'Project Highlights'}
               </h2>
           </div>
           </FadeInOnScroll>
@@ -367,10 +381,10 @@ export default function OurWorkPage() {
                       </div>
                       <div className="p-6">
                         <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] text-[#716106] mb-3">
-                          {highlight.title}
+                          {t(`ourWorkPage.highlights.${highlight.id}.title`) || highlight.title}
                         </h3>
                         <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed mb-4">
-                          {highlight.description}
+                          {t(`ourWorkPage.highlights.${highlight.id}.description`) || highlight.description}
                         </p>
                         <div className="grid grid-cols-3 gap-2 text-center">
                           <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
@@ -381,7 +395,7 @@ export default function OurWorkPage() {
                             }`}>
                               <AnimatedCounter end={highlight.stats.projects} duration={1.5} delay={index * 0.1} />
                             </div>
-                            <div className="text-xs text-gray-600">Projects</div>
+                            <div className="text-xs text-gray-600">{t('ourWorkPage.projects') || 'Projects'}</div>
                           </div>
                           <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
                             hoveredHighlight === highlight.id ? 'bg-[#716106]/10' : ''
@@ -391,7 +405,7 @@ export default function OurWorkPage() {
                             }`}>
                               <AnimatedCounter end={highlight.stats.countries} duration={1.5} delay={index * 0.1 + 0.2} />
                             </div>
-                            <div className="text-xs text-gray-600">Countries</div>
+                            <div className="text-xs text-gray-600">{t('ourWorkPage.countries') || 'Countries'}</div>
                           </div>
                           <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
                             hoveredHighlight === highlight.id ? 'bg-[#716106]/10' : ''
@@ -401,7 +415,7 @@ export default function OurWorkPage() {
                             }`}>
                               {highlight.stats.year}
             </div>
-                            <div className="text-xs text-gray-600">Year</div>
+                            <div className="text-xs text-gray-600">{t('ourWorkPage.year') || 'Year'}</div>
             </div>
           </div>
         </div>
@@ -420,10 +434,10 @@ export default function OurWorkPage() {
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#716106] mb-6">
-                Interested in Our Work?
+                {t('ourWorkPage.interested') || 'Interested in Our Work?'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">
-                Let&apos;s discuss how we can help bring your project to life with our expertise and innovative solutions.
+                {t('ourWorkPage.interestedDescription') || "Let's discuss how we can help bring your project to life with our expertise and innovative solutions."}
               </p>
             </div>
           </FadeInOnScroll>
@@ -434,46 +448,46 @@ export default function OurWorkPage() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Project Type
+                      {t('ourWorkPage.form.projectType') || 'Project Type'}
                     </label>
                     <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400">
-                      <option>Oil & Gas Projects</option>
-                      <option>Logistics & Marine</option>
-                      <option>Sustainability Initiatives</option>
-                      <option>General Consultation</option>
+                      <option>{t('ourWorkPage.form.options.oilGas') || 'Oil & Gas Projects'}</option>
+                      <option>{t('ourWorkPage.form.options.logistics') || 'Logistics & Marine'}</option>
+                      <option>{t('ourWorkPage.form.options.sustainability') || 'Sustainability Initiatives'}</option>
+                      <option>{t('ourWorkPage.form.options.consultation') || 'General Consultation'}</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Name
+                      {t('ourWorkPage.form.name') || 'Name'}
                     </label>
                     <input
                       type="text"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                      placeholder="Your Name"
+                      placeholder={t('ourWorkPage.form.placeholders.name') || 'Your Name'}
                       required
                     />
       </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t('ourWorkPage.form.email') || 'Email'}
                   </label>
                   <input
                     type="email"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                    placeholder="your.email@example.com"
+                    placeholder={t('ourWorkPage.form.placeholders.email') || 'your.email@example.com'}
                     required
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Project Description
+                    {t('ourWorkPage.form.projectDescription') || 'Project Description'}
                   </label>
                   <textarea
                     rows={4}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
-                    placeholder="Please describe your project requirements..."
+                    placeholder={t('ourWorkPage.form.placeholders.projectDescription') || 'Please describe your project requirements...'}
                     required
                   />
                 </div>
@@ -490,18 +504,18 @@ export default function OurWorkPage() {
                     {isFormSubmitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                        Sending...
+                        {t('ourWorkPage.form.sending') || 'Sending...'}
                       </>
                     ) : formSubmitted ? (
                       <>
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        Message Sent!
+                        {t('ourWorkPage.form.sent') || 'Message Sent!'}
                       </>
                     ) : (
                       <>
-                        Start Project Discussion
+                        {t('ourWorkPage.form.startDiscussion') || 'Start Project Discussion'}
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </>
                     )}

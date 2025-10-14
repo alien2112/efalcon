@@ -6,8 +6,10 @@ import { useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import { Navigation } from '@/components/Navigation';
 import { services } from '@/lib/services';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ServiceDetailPage() {
+  const { t } = useLanguage();
   const params = useParams<{ slug: string }>();
   const service = useMemo(() => services.find(s => s.slug === params.slug), [params.slug]);
   const isMotorOil = service?.slug === 'engine-oils';
@@ -17,8 +19,8 @@ export default function ServiceDetailPage() {
       <div className="size-full overflow-y-auto overflow-x-hidden">
         <Navigation currentSection="services" onNavigate={() => {}} />
         <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-24 text-white">
-          <h1 className="text-2xl mb-4">Service not found</h1>
-          <Link href="/services" className="underline">Back to Services</Link>
+          <h1 className="text-2xl mb-4">{t('notFound.title') || 'Service not found'}</h1>
+          <Link href="/services" className="underline">{t('notFound.goBack') || 'Back to Services'}</Link>
         </div>
       </div>
     );
@@ -34,8 +36,8 @@ export default function ServiceDetailPage() {
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
           <div>
-            <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px] mb-3">{service.title}</h1>
-            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[18px] max-w-[900px] mx-auto">{service.summary}</p>
+            <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px] mb-3">{t(`services.detail.${service.slug}.title`) || service.title}</h1>
+            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[18px] max-w-[900px] mx-auto">{t(`services.detail.${service.slug}.summary`) || service.summary}</p>
           </div>
         </div>
       </section>
@@ -46,8 +48,10 @@ export default function ServiceDetailPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {service.features.map((f) => (
               <div key={f} className="bg-white border border-gray-200 rounded-[14px] p-5 shadow-sm">
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[18px] md:text-[20px]">{f}</h3>
-                <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">{service.title} includes: {f} as part of our comprehensive offering.</p>
+                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[18px] md:text-[20px]">{t(`services.detail.${service.slug}.features.${f.toLowerCase().replace(/\s/g, '')}`) || f}</h3>
+                <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
+                  {(t(`services.detail.${service.slug}.title`) || service.title)} {t('services.detail.includes') || 'includes'}: {(t(`services.detail.${service.slug}.features.${f.toLowerCase().replace(/\s/g, '')}`) || f)} {t('services.detail.asPartOf') || 'as part of our comprehensive offering'}.
+                </p>
               </div>
             ))}
           </div>
@@ -60,25 +64,25 @@ export default function ServiceDetailPage() {
           {/* Detailed Content */}
           <div className="grid md:grid-cols-3 gap-8 items-start mb-12">
             <div className="md:col-span-2 bg-white border border-gray-200 rounded-[16px] p-6 md:p-10">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-4">Overview</h2>
-              <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed mb-6">{service.content}</p>
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#716106] mb-4">Detailed Information</h3>
-              <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed">{service.detailedContent}</p>
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-4">{t('services.detail.overview') || 'Overview'}</h2>
+              <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed mb-6">{t(`services.detail.${service.slug}.content`) || service.content}</p>
+              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#716106] mb-4">{t('services.detail.detailedInformation') || 'Detailed Information'}</h3>
+              <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed">{t(`services.detail.${service.slug}.detailedContent`) || service.detailedContent}</p>
             </div>
             <aside className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-8">
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[22px] text-[#716106] mb-3">Why Ebdaa Falcon</h3>
+              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[22px] text-[#716106] mb-3">{t('services.detail.whyEbdaaFalcon') || 'Why Ebdaa Falcon'}</h3>
               <ul className="list-disc pl-5 space-y-2 font-['Alice:Regular',_sans-serif] text-gray-700">
-                <li>Experienced operations team</li>
-                <li>Safety and compliance first</li>
-                <li>Proven partner network</li>
-                <li>Saudi Vision 2030 aligned</li>
+                <li>{t('services.detail.whyEbdaaFalconList.experiencedOperations') || 'Experienced operations team'}</li>
+                <li>{t('services.detail.whyEbdaaFalconList.safetyCompliance') || 'Safety and compliance first'}</li>
+                <li>{t('services.detail.whyEbdaaFalconList.provenPartnerNetwork') || 'Proven partner network'}</li>
+                <li>{t('services.detail.whyEbdaaFalconList.saudiVisionAligned') || 'Saudi Vision 2030 aligned'}</li>
               </ul>
             </aside>
           </div>
 
           {/* Benefits Section */}
           <div className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-10 mb-12">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-6 text-center">Key Benefits</h2>
+            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-6 text-center">{t('services.detail.keyBenefits') || 'Key Benefits'}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {service.benefits.map((benefit, index) => (
                 <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
@@ -87,7 +91,7 @@ export default function ServiceDetailPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px]">{benefit}</span>
+                  <span className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px]">{t(`services.detail.${service.slug}.benefits.${index}`) || benefit}</span>
                 </div>
               ))}
             </div>
@@ -95,7 +99,7 @@ export default function ServiceDetailPage() {
 
           {/* Image Gallery */}
           <div className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-10">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-6 text-center">Service Gallery</h2>
+            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-6 text-center">{t('services.detail.serviceGallery') || 'Service Gallery'}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {service.galleryImages.map((image, index) => (
                 <div key={index} className="group relative h-[200px] md:h-[250px] rounded-[12px] overflow-hidden border border-gray-200">
@@ -119,7 +123,7 @@ export default function ServiceDetailPage() {
           </div>
 
           <div className="max-w-[1280px] mx-auto px-4 md:px-8 mt-8">
-            <Link href="/services" className="text-[#716106] underline font-['ADLaM_Display:Regular',_sans-serif]">← Back to Services</Link>
+            <Link href="/services" className="text-[#716106] underline font-['ADLaM_Display:Regular',_sans-serif]">← {t('navigation.backToServices') || 'Back to Services'}</Link>
           </div>
         </div>
       </section>

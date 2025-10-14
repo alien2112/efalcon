@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BlogPost {
   id: string;
@@ -18,6 +19,7 @@ interface BlogPost {
 }
 
 export function BlogPosts() {
+  const { t } = useLanguage();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visiblePosts, setVisiblePosts] = useState(6);
@@ -127,8 +129,8 @@ export function BlogPosts() {
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#716106] mb-4">Latest Articles</h2>
-          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">Insights and updates from the energy and logistics sectors.</p>
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#716106] mb-4">{t('blog.posts.title') || 'Latest Articles'}</h2>
+          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">{t('blog.posts.subtitle') || 'Insights and updates from the energy and logistics sectors.'}</p>
         </div>
 
         {/* Loading State */}
@@ -209,7 +211,7 @@ export function BlogPosts() {
                       href={`/blog/${post.id}`}
                       className="inline-flex items-center text-[#716106] font-medium hover:text-[#5a4f05] transition-colors group-hover:underline"
                     >
-                      Read more
+                      {t('blog.posts.readMore') || 'Read more'}
                       <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
@@ -226,7 +228,7 @@ export function BlogPosts() {
                   onClick={loadMorePosts}
                   className="bg-[#716106] text-white px-8 py-3 rounded-full font-medium hover:bg-[#5a4f05] transition-colors duration-300 hover:scale-105 transform"
                 >
-                  Load more
+                  {t('blog.posts.loadMore') || 'Load more'}
                 </button>
               </div>
             )}

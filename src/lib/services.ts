@@ -44,8 +44,8 @@ export const services: ServiceItem[] = [
   },
   {
     slug: 'oil-gas-solutions',
-    title: 'Petroleum Derivatives and Logistics Services',
-    summary: 'Integrated solutions in storage, transportation, and trading of petroleum derivatives.',
+    title: 'Oil & Gas Solutions',
+    summary: 'Comprehensive petroleum storage, trading, and logistics solutions with advanced safety systems and strategic partnerships.',
     imageUrl: '/gallery/oil%20extraction.jpg',
     features: [
       'Bulk storage facilities',
@@ -54,8 +54,8 @@ export const services: ServiceItem[] = [
       'Trading and risk management'
     ],
     content:
-      'From storage terminals to international trading operations, we deliver end-to-end solutions that ensure product integrity, supply reliability, and operational efficiency across the energy value chain.',
-    detailedContent: 'Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products. We provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards. Our comprehensive approach covers the complete petroleum value chain from procurement to delivery.',
+      'Our oil and gas solutions provide comprehensive petroleum storage, trading, and logistics services with advanced safety systems, strategic partnerships, and cutting-edge technology to ensure optimal performance and reliability.',
+    detailedContent: 'We offer state-of-the-art petroleum storage facilities, automated trading systems, comprehensive logistics networks, and strategic partnerships across multiple regions. Our solutions include advanced safety monitoring, real-time market analysis, and integrated supply chain management.',
     galleryImages: [
       '/gallery/oil%20extraction.jpg',
       '/gallery/logistic%20.jpg',
@@ -65,12 +65,12 @@ export const services: ServiceItem[] = [
       '/gallery/product-img-7.jpg'
     ],
     benefits: [
-      'State-of-the-art storage facilities',
-      'International trading expertise',
-      'Marine port operations',
-      'Customs and documentation',
-      'Risk management solutions',
-      'Supply chain optimization'
+      'Enhanced Storage Capacity',
+      'Improved Safety Standards',
+      'Reduced Operational Costs',
+      'Strategic Market Access',
+      'Advanced Risk Management',
+      'Comprehensive Logistics Network'
     ]
   },
   {
