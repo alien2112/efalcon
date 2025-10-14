@@ -119,6 +119,46 @@
           "5": "Comprehensive Logistics Network"
         }
       },
+      "logistics-marine-services": {
+        "title": "Logistics & Marine Services",
+        "summary": "World-class logistics across marine ports and inland operations to keep supply chains moving.",
+        "content": "We operate across marine and inland logistics to deliver reliability at scale. Our capabilities span port operations, documentation, inland transportation, and worldwide freight coordination.",
+        "detailedContent": "Our logistics and marine services provide comprehensive solutions for complex supply chain requirements. We handle everything from port operations and customs clearance to inland transportation and global freight coordination. Our experienced team ensures seamless operations across marine ports and inland facilities, maintaining the highest standards of efficiency and reliability.",
+        "features": {
+          "porthandlingandstevedoring": "Port handling and stevedoring",
+          "customsanddocumentation": "Customs and documentation",
+          "inlandtransportanddistribution": "Inland transport and distribution",
+          "globalfreightcoordination": "Global freight coordination"
+        },
+        "benefits": {
+          "0": "Expert port operations",
+          "1": "Customs clearance services",
+          "2": "Inland transportation network",
+          "3": "Global freight coordination",
+          "4": "Documentation management",
+          "5": "Supply chain optimization"
+        }
+      },
+      "engine-oils": {
+        "title": "Motor Oils",
+        "summary": "High-quality Saudi-made motor oils engineered for durability and peak performance.",
+        "content": "Our motor oils are specially formulated to provide superior protection and performance for both gasoline and diesel engines. We offer a comprehensive range of synthetic and mineral formulations designed to meet the demanding requirements of modern engines.",
+        "detailedContent": "Our motor oil products are manufactured using advanced technology and premium base oils to ensure optimal engine protection and performance. We provide both synthetic and mineral formulations, each engineered for specific applications and operating conditions. Our oils are designed to provide extended engine protection, high-temperature stability, and fuel efficiency optimization while maintaining excellent viscosity characteristics across a wide temperature range.",
+        "features": {
+          "syntheticandmineralformulations": "Synthetic and mineral formulations",
+          "extendedengineprotection": "Extended engine protection",
+          "high-temperaturestability": "High-temperature stability",
+          "fuelefficiencyoptimization": "Fuel efficiency optimization"
+        },
+        "benefits": {
+          "0": "Superior engine protection",
+          "1": "Enhanced fuel efficiency",
+          "2": "Extended oil change intervals",
+          "3": "High-temperature performance",
+          "4": "Cold-start protection",
+          "5": "Reduced engine wear"
+        }
+      },
       "renewable-energy-desalination": {
         "title": "Alternative Energy & Water Desalination",
         "summary": "Sustainable solar and wind energy solutions alongside advanced water desalination systems for clean energy and fresh water supply.",
