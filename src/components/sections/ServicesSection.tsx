@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -19,83 +19,34 @@ interface ServiceImage {
 export function ServicesSection() {
   const { t } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [services, setServices] = useState<ServiceImage[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchServicesImages = async () => {
-      try {
-        const response = await fetch('/api/admin/services-images');
-        const result = await response.json();
-        
-        if (result.success) {
-          const sortedServices = (result.data || []).sort((a: ServiceImage, b: ServiceImage) => a.order - b.order);
-          setServices(sortedServices);
-        } else {
-          // Fallback to default services if API fails
-          setServices([
-            {
-              _id: '1',
-              title: "Petroleum Storage & Trading",
-              description: "Comprehensive storage solutions and strategic trading of petroleum products",
-              imageUrl: "/gallery/oil%20extraction.webp",
-              order: 1,
-              isActive: true
-            },
-            {
-              _id: '2',
-              title: "Logistics Solutions",
-              description: "Integrated logistics across marine ports and inland operations",
-              imageUrl: "/gallery/logistic%20.webp",
-              order: 2,
-              isActive: true
-            },
-            {
-              _id: '3',
-              title: "International Partnerships",
-              description: "Representing global partners with world-class service standards",
-              imageUrl: "/gallery/solar%20panels.webp",
-              order: 3,
-              isActive: true
-            }
-          ]);
-        }
-      } catch (error) {
-        console.error('Error fetching services images:', error);
-        // Fallback to default services
-        setServices([
-          {
-            _id: '1',
-            title: "Petroleum Storage & Trading",
-            description: "Comprehensive storage solutions and strategic trading of petroleum products",
-            imageUrl: "/gallery/oil%20extraction.webp",
-            order: 1,
-            isActive: true
-          },
-          {
-            _id: '2',
-            title: "Logistics Solutions",
-            description: "Integrated logistics across marine ports and inland operations",
-            imageUrl: "/gallery/logistic%20.webp",
-            order: 2,
-            isActive: true
-          },
-          {
-            _id: '3',
-            title: "International Partnerships",
-            description: "Representing global partners with world-class service standards",
-            imageUrl: "/gallery/solar%20panels.webp",
-            order: 3,
-            isActive: true
-          }
-        ]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchServicesImages();
-  }, []);
+  
+  // Use fallback services directly for better performance
+  const services: ServiceImage[] = [
+    {
+      _id: '1',
+      title: "Petroleum Storage & Trading",
+      description: "Comprehensive storage solutions and strategic trading of petroleum products",
+      imageUrl: "/gallery/oil%20extraction.webp",
+      order: 1,
+      isActive: true
+    },
+    {
+      _id: '2',
+      title: "Logistics Solutions",
+      description: "Integrated logistics across marine ports and inland operations",
+      imageUrl: "/gallery/logistic%20.webp",
+      order: 2,
+      isActive: true
+    },
+    {
+      _id: '3',
+      title: "International Partnerships",
+      description: "Representing global partners with world-class service standards",
+      imageUrl: "/gallery/solar%20panels.webp",
+      order: 3,
+      isActive: true
+    }
+  ];
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % services.length);

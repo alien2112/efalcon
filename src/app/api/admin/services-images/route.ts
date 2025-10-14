@@ -14,10 +14,15 @@ export async function GET() {
       .sort({ order: 1, createdAt: -1 })
       .toArray();
 
-    return NextResponse.json<ApiResponse<ServiceImage[]>>({
+    const response = NextResponse.json<ApiResponse<ServiceImage[]>>({
       success: true,
       data: images
     });
+
+    // Add caching headers
+    response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+    
+    return response;
 
   } catch (error) {
     console.error('Error fetching services images:', error);

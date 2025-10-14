@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
@@ -17,136 +16,42 @@ interface WorkImage {
 
 export function WorkSection() {
   const { t } = useLanguage();
-  const [workImages, setWorkImages] = useState<WorkImage[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchWorkImages = async () => {
-      try {
-        const response = await fetch('/api/admin/work-images');
-        const result = await response.json();
-        
-        if (result.success) {
-          const sortedImages = (result.data || []).sort((a: WorkImage, b: WorkImage) => a.order - b.order);
-          if (sortedImages.length > 0) {
-            setWorkImages(sortedImages);
-          } else {
-            setWorkImages([
-              {
-                _id: '1',
-                title: "Petroleum Products Storage",
-                description: "State-of-the-art facilities for safe and efficient petroleum storage",
-                imageUrl: "/gallery/oil%20extraction.webp",
-                order: 1,
-                isActive: true
-              },
-              {
-                _id: '2',
-                title: "Marine Port Operations",
-                description: "Comprehensive port logistics and handling services",
-                imageUrl: "/gallery/logistic%20.webp",
-                order: 2,
-                isActive: true
-              },
-              {
-                _id: '3',
-                title: "Inland Transportation",
-                description: "Reliable inland logistics and distribution networks",
-                imageUrl: "/gallery/electric.webp",
-                order: 3,
-                isActive: true
-              },
-              {
-                _id: '4',
-                title: "Trading Solutions",
-                description: "Strategic petroleum products trading and market solutions",
-                imageUrl: "/gallery/wind%20genrators.webp",
-                order: 4,
-                isActive: true
-              }
-            ]);
-          }
-        } else {
-          // Fallback to default products if API fails
-          setWorkImages([
-            {
-              _id: '1',
-              title: "Petroleum Products Storage",
-              description: "State-of-the-art facilities for safe and efficient petroleum storage",
-              imageUrl: "/gallery/oil%20extraction.webp",
-              order: 1,
-              isActive: true
-            },
-            {
-              _id: '2',
-              title: "Marine Port Operations",
-              description: "Comprehensive port logistics and handling services",
-              imageUrl: "/gallery/logistic%20.webp",
-              order: 2,
-              isActive: true
-            },
-            {
-              _id: '3',
-              title: "Inland Transportation",
-              description: "Reliable inland logistics and distribution networks",
-              imageUrl: "/gallery/electric.webp",
-              order: 3,
-              isActive: true
-            },
-            {
-              _id: '4',
-              title: "Trading Solutions",
-              description: "Strategic petroleum products trading and market solutions",
-              imageUrl: "/gallery/wind%20genrators.webp",
-              order: 4,
-              isActive: true
-            }
-          ]);
-        }
-      } catch (error) {
-        console.error('Error fetching work images:', error);
-        // Fallback to default products
-        setWorkImages([
-          {
-            _id: '1',
-            title: "Petroleum Products Storage",
-            description: "State-of-the-art facilities for safe and efficient petroleum storage",
-            imageUrl: "/gallery/oil%20extraction.webp",
-            order: 1,
-            isActive: true
-          },
-          {
-            _id: '2',
-            title: "Marine Port Operations",
-            description: "Comprehensive port logistics and handling services",
-            imageUrl: "/gallery/logistic%20.webp",
-            order: 2,
-            isActive: true
-          },
-          {
-            _id: '3',
-            title: "Inland Transportation",
-            description: "Reliable inland logistics and distribution networks",
-            imageUrl: "/gallery/electric.webp",
-            order: 3,
-            isActive: true
-          },
-          {
-            _id: '4',
-            title: "Trading Solutions",
-            description: "Strategic petroleum products trading and market solutions",
-            imageUrl: "/gallery/wind%20genrators.webp",
-            order: 4,
-            isActive: true
-          }
-        ]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWorkImages();
-  }, []);
+  
+  // Use fallback work images directly for better performance
+  const workImages: WorkImage[] = [
+    {
+      _id: '1',
+      title: "Petroleum Products Storage",
+      description: "State-of-the-art facilities for safe and efficient petroleum storage",
+      imageUrl: "/gallery/oil%20extraction.webp",
+      order: 1,
+      isActive: true
+    },
+    {
+      _id: '2',
+      title: "Marine Port Operations",
+      description: "Comprehensive port logistics and handling services",
+      imageUrl: "/gallery/logistic%20.webp",
+      order: 2,
+      isActive: true
+    },
+    {
+      _id: '3',
+      title: "Inland Transportation",
+      description: "Reliable inland logistics and distribution networks",
+      imageUrl: "/gallery/electric.webp",
+      order: 3,
+      isActive: true
+    },
+    {
+      _id: '4',
+      title: "Trading Solutions",
+      description: "Strategic petroleum products trading and market solutions",
+      imageUrl: "/gallery/wind%20genrators.webp",
+      order: 4,
+      isActive: true
+    }
+  ];
 
   return (
     <div className="relative w-full bg-[#716106] py-20 md:py-32 overflow-hidden">
