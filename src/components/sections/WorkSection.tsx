@@ -36,7 +36,7 @@ export function WorkSection() {
                 _id: '1',
                 title: "Petroleum Products Storage",
                 description: "State-of-the-art facilities for safe and efficient petroleum storage",
-                imageUrl: "/gallery/oil%20extraction.jpg",
+                imageUrl: "/gallery/oil%20extraction.webp",
                 order: 1,
                 isActive: true
               },
@@ -44,7 +44,7 @@ export function WorkSection() {
                 _id: '2',
                 title: "Marine Port Operations",
                 description: "Comprehensive port logistics and handling services",
-                imageUrl: "/gallery/logistic%20.jpg",
+                imageUrl: "/gallery/logistic%20.webp",
                 order: 2,
                 isActive: true
               },
@@ -52,7 +52,7 @@ export function WorkSection() {
                 _id: '3',
                 title: "Inland Transportation",
                 description: "Reliable inland logistics and distribution networks",
-                imageUrl: "/gallery/electric.jpg",
+                imageUrl: "/gallery/electric.webp",
                 order: 3,
                 isActive: true
               },
@@ -60,7 +60,7 @@ export function WorkSection() {
                 _id: '4',
                 title: "Trading Solutions",
                 description: "Strategic petroleum products trading and market solutions",
-                imageUrl: "/gallery/wind%20genrators.jpg",
+                imageUrl: "/gallery/wind%20genrators.webp",
                 order: 4,
                 isActive: true
               }
@@ -73,7 +73,7 @@ export function WorkSection() {
               _id: '1',
               title: "Petroleum Products Storage",
               description: "State-of-the-art facilities for safe and efficient petroleum storage",
-              imageUrl: "/gallery/oil%20extraction.jpg",
+              imageUrl: "/gallery/oil%20extraction.webp",
               order: 1,
               isActive: true
             },
@@ -81,7 +81,7 @@ export function WorkSection() {
               _id: '2',
               title: "Marine Port Operations",
               description: "Comprehensive port logistics and handling services",
-              imageUrl: "/gallery/logistic%20.jpg",
+              imageUrl: "/gallery/logistic%20.webp",
               order: 2,
               isActive: true
             },
@@ -89,7 +89,7 @@ export function WorkSection() {
               _id: '3',
               title: "Inland Transportation",
               description: "Reliable inland logistics and distribution networks",
-              imageUrl: "/gallery/electric.jpg",
+              imageUrl: "/gallery/electric.webp",
               order: 3,
               isActive: true
             },
@@ -97,7 +97,7 @@ export function WorkSection() {
               _id: '4',
               title: "Trading Solutions",
               description: "Strategic petroleum products trading and market solutions",
-              imageUrl: "/gallery/wind%20genrators.jpg",
+              imageUrl: "/gallery/wind%20genrators.webp",
               order: 4,
               isActive: true
             }
@@ -111,7 +111,7 @@ export function WorkSection() {
             _id: '1',
             title: "Petroleum Products Storage",
             description: "State-of-the-art facilities for safe and efficient petroleum storage",
-            imageUrl: "/gallery/oil%20extraction.jpg",
+            imageUrl: "/gallery/oil%20extraction.webp",
             order: 1,
             isActive: true
           },
@@ -119,7 +119,7 @@ export function WorkSection() {
             _id: '2',
             title: "Marine Port Operations",
             description: "Comprehensive port logistics and handling services",
-            imageUrl: "/gallery/logistic%20.jpg",
+            imageUrl: "/gallery/logistic%20.webp",
             order: 2,
             isActive: true
           },
@@ -127,7 +127,7 @@ export function WorkSection() {
             _id: '3',
             title: "Inland Transportation",
             description: "Reliable inland logistics and distribution networks",
-            imageUrl: "/gallery/electric.jpg",
+            imageUrl: "/gallery/electric.webp",
             order: 3,
             isActive: true
           },
@@ -135,7 +135,7 @@ export function WorkSection() {
             _id: '4',
             title: "Trading Solutions",
             description: "Strategic petroleum products trading and market solutions",
-            imageUrl: "/gallery/wind%20genrators.jpg",
+            imageUrl: "/gallery/wind%20genrators.webp",
             order: 4,
             isActive: true
           }

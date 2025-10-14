@@ -22,7 +22,7 @@ export default function AboutUsPageRoute() {
             { label: t('navigation.home') || 'Home', href: '/' },
             { label: t('navigation.aboutUs') || 'About Us' }
           ]}
-          backgroundImage="/about%20us%20banner%20.jpg"
+          backgroundImage="/about%20us%20banner%20.webp"
         />
       </div>
 

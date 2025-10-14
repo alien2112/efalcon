@@ -19,7 +19,7 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
     <Banner 
       title={t('contact.hero.contactTitle') || 'Contact Us'}
       subtitle={t('contact.hero.contactSubtitle') || "We'd love to hear from you"}
-      backgroundImage="/ourservicesbanner.png"
+      backgroundImage="/ourservicesbanner.webp"
     />
   );
 }

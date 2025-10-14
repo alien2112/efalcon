@@ -51,7 +51,7 @@ export default function ServicesPage() {
           description: t('services.categories.oilGasServices.petroleumDerivativesDescription') || 'Integrated solutions in storage, transportation, and trading of petroleum derivatives',
           category: 'oil-gas',
           downloadUrl: '/documents/petroleum-storage.pdf',
-          imageUrl: '/gallery/oil%20extraction.jpg'
+          imageUrl: '/gallery/oil%20extraction.webp'
         },
         {
           id: 'engine-oils',
@@ -59,7 +59,7 @@ export default function ServicesPage() {
           description: t('services.categories.oilGasServices.motorOilsDescription') || 'High-quality Saudi-made motor oils engineered for durability and peak performance',
           category: 'oil-gas',
           downloadUrl: '/documents/motor-oils.pdf',
-          imageUrl: '/gallery/engine%20oil1.jpg'
+          imageUrl: '/gallery/engine%20oil1.webp'
         }
       ]
     },
@@ -74,7 +74,7 @@ export default function ServicesPage() {
           description: t('services.categories.logisticsServices.logisticsMarineDescription') || 'World-class logistics across marine ports and inland operations to keep supply chains moving',
           category: 'logistics',
           downloadUrl: '/documents/logistics-services.pdf',
-          imageUrl: '/gallery/logistic%20.jpg'
+          imageUrl: '/gallery/logistic%20.webp'
         },
         {
           id: 'renewable-energy-desalination',
@@ -82,7 +82,7 @@ export default function ServicesPage() {
           description: t('services.categories.logisticsServices.renewableEnergyDescription') || 'Sustainable solar and wind energy solutions alongside advanced water desalination systems',
           category: 'logistics',
           downloadUrl: '/documents/renewable-energy.pdf',
-          imageUrl: '/gallery/solar%20panels.jpg'
+          imageUrl: '/gallery/solar%20panels.webp'
         }
       ]
     }
@@ -94,19 +94,19 @@ export default function ServicesPage() {
       id: 'oil-gas-solutions',
       title: t('services.applications.energySector') || 'Energy Sector',
       description: t('services.applications.energySectorDescription') || 'Comprehensive energy solutions for power generation, oil refineries, and petrochemical facilities.',
-      imageUrl: '/gallery/oil%20extraction.jpg'
+      imageUrl: '/gallery/oil%20extraction.webp'
     },
     {
       id: 'logistics-marine-services',
       title: t('services.applications.industrialManufacturing') || 'Industrial Manufacturing',
       description: t('services.applications.industrialManufacturingDescription') || 'Specialized logistics and supply chain solutions for heavy manufacturing industries.',
-      imageUrl: '/gallery/logistic%20.jpg'
+      imageUrl: '/gallery/logistic%20.webp'
     },
     {
       id: 'renewable-energy-desalination',
       title: t('services.applications.renewableEnergy') || 'Renewable Energy',
       description: t('services.applications.renewableEnergyDescription') || 'Supporting the transition to sustainable energy with innovative logistics and storage solutions.',
-      imageUrl: '/gallery/solar%20panels.jpg'
+      imageUrl: '/gallery/solar%20panels.webp'
     }
   ];
 

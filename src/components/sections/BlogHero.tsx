@@ -79,7 +79,7 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
             variants={imageVariants}
           >
             <Image
-              src="/blog%20banner.jpg"
+              src="/blog%20banner.webp"
               alt="Blog Banner"
               fill
               className="object-cover"

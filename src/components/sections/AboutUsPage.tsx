@@ -284,7 +284,7 @@ export function AboutUsPage() {
               transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <Image
-                src="/vision.png"
+                src="/vision.webp"
                 alt="Saudi Vision 2030 Leaders"
                 fill
                 className="object-cover"
@@ -354,7 +354,7 @@ export function AboutUsPage() {
               transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <Image
-                src="/vision2.png"
+                src="/vision2.webp"
                 alt="Mosaed M. Al-Jhail Chairman"
                 fill
                 className="object-cover"
@@ -546,7 +546,7 @@ export function AboutUsPage() {
               <div className="bg-[#716106] rounded-lg p-8 text-white">
                 <div className="text-center">
                   <Image 
-                    src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png"
+                    src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp"
                     alt="Ebdaa Falcon Logo"
                     width={120}
                     height={120}

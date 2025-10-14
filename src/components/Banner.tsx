@@ -20,7 +20,7 @@ export function Banner({
   title, 
   subtitle, 
   breadcrumbs = [], 
-  backgroundImage = '/ourservicesbanner.png' 
+  backgroundImage = '/ourservicesbanner.webp' 
 }: BannerProps) {
   const [particles, setParticles] = useState<Array<{
     left: string;

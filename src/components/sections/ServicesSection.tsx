@@ -38,7 +38,7 @@ export function ServicesSection() {
               _id: '1',
               title: "Petroleum Storage & Trading",
               description: "Comprehensive storage solutions and strategic trading of petroleum products",
-              imageUrl: "/gallery/oil%20extraction.jpg",
+              imageUrl: "/gallery/oil%20extraction.webp",
               order: 1,
               isActive: true
             },
@@ -46,7 +46,7 @@ export function ServicesSection() {
               _id: '2',
               title: "Logistics Solutions",
               description: "Integrated logistics across marine ports and inland operations",
-              imageUrl: "/gallery/logistic%20.jpg",
+              imageUrl: "/gallery/logistic%20.webp",
               order: 2,
               isActive: true
             },
@@ -54,7 +54,7 @@ export function ServicesSection() {
               _id: '3',
               title: "International Partnerships",
               description: "Representing global partners with world-class service standards",
-              imageUrl: "/gallery/solar%20panels.jpg",
+              imageUrl: "/gallery/solar%20panels.webp",
               order: 3,
               isActive: true
             }
@@ -68,7 +68,7 @@ export function ServicesSection() {
             _id: '1',
             title: "Petroleum Storage & Trading",
             description: "Comprehensive storage solutions and strategic trading of petroleum products",
-            imageUrl: "/gallery/oil%20extraction.jpg",
+            imageUrl: "/gallery/oil%20extraction.webp",
             order: 1,
             isActive: true
           },
@@ -76,7 +76,7 @@ export function ServicesSection() {
             _id: '2',
             title: "Logistics Solutions",
             description: "Integrated logistics across marine ports and inland operations",
-            imageUrl: "/gallery/logistic%20.jpg",
+            imageUrl: "/gallery/logistic%20.webp",
             order: 2,
             isActive: true
           },
@@ -84,7 +84,7 @@ export function ServicesSection() {
             _id: '3',
             title: "International Partnerships",
             description: "Representing global partners with world-class service standards",
-            imageUrl: "/gallery/solar%20panels.jpg",
+            imageUrl: "/gallery/solar%20panels.webp",
             order: 3,
             isActive: true
           }

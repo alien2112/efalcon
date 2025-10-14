@@ -139,7 +139,7 @@ export function Footer() {
                     transition={{ duration: 0.6, ease: "easeInOut" }}
                   >
                     <Image 
-                      src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png" 
+                      src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp" 
                       alt="Ebdaa Falcon Logo" 
                       width={48} 
                       height={48}

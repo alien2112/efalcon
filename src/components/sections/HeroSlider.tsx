@@ -15,7 +15,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500 }: HeroSliderProps) {
   const slides = useMemo(
     () => [
       {
-        src: '/gallery/logistic .jpg',
+        src: '/gallery/logistic .webp',
         alt: 'Logistic Image',
         title: t('hero.logisticTitle') || 'INTEGRATED LOGISTIC SOLUTION',
         description: t('hero.logisticDescription') || 
@@ -23,7 +23,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500 }: HeroSliderProps) {
         variant: 'image' as const
       },
       {
-        src: '/gallery/oil extraction.jpg',
+        src: '/gallery/oil extraction.webp',
         alt: 'Oil Station',
         title: t('hero.oilTitle') || 'LEADERS IN OIL AND GAS',
         description: t('hero.oilDescription') || 
@@ -31,7 +31,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500 }: HeroSliderProps) {
         variant: 'image' as const
       },
       {
-        src: '/gallery/water purification1.jpg',
+        src: '/gallery/water purification1.webp',
         alt: 'Water Desalination',
         title: t('hero.waterTitle') || 'Water Desalination',
         description: t('hero.waterDescription') || 

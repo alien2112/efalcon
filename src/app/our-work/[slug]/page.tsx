@@ -13,73 +13,73 @@ const workProjects = [
     id: 'petroleumStorageFacility',
     slug: 'petroleum-storage-facility',
     translationKey: 'petroleum-storage-facility',
-    imageUrl: '/gallery/oil%20extraction.jpg',
+    imageUrl: '/gallery/oil%20extraction.webp',
     downloadUrl: '/documents/petroleum-storage-project.pdf',
     year: '2023',
     category: 'oilGasProjects',
     features: ['0', '1', '2'],
     benefits: ['0', '1', '2'],
-    galleryImages: ['/gallery/oil%20extraction.jpg', '/gallery/engine%20oil%20.jpg', '/gallery/engine%20oil%201%20detial.jpg']
+    galleryImages: ['/gallery/oil%20extraction.webp', '/gallery/engine%20oil%20.webp', '/gallery/engine%20oil%201%20detial.webp']
   },
   {
     id: 'tradingOperations',
     slug: 'trading-operations',
     translationKey: 'trading-operations',
-    imageUrl: '/gallery/solar%20panels.jpg',
+    imageUrl: '/gallery/solar%20panels.webp',
     downloadUrl: '/documents/trading-operations.pdf',
     year: '2023',
     category: 'oilGasProjects',
     features: ['0', '1', '2'],
     benefits: ['0', '1', '2'],
-    galleryImages: ['/gallery/solar%20panels.jpg', '/gallery/wind%20genrators.jpg', '/gallery/electric.jpg']
+    galleryImages: ['/gallery/solar%20panels.webp', '/gallery/wind%20genrators.webp', '/gallery/electric.webp']
   },
   {
     id: 'refineryIntegration',
     slug: 'refinery-integration',
     translationKey: 'refinery-integration',
-    imageUrl: '/gallery/wind%20genrators.jpg',
+    imageUrl: '/gallery/wind%20genrators.webp',
     downloadUrl: '/documents/refinery-integration.pdf',
     year: '2022',
     category: 'oilGasProjects',
     features: ['0', '1', '2'],
     benefits: ['0', '1', '2'],
-    galleryImages: ['/gallery/wind%20genrators.jpg', '/gallery/oil%20extraction.jpg', '/gallery/logistic%20.jpg']
+    galleryImages: ['/gallery/wind%20genrators.webp', '/gallery/oil%20extraction.webp', '/gallery/logistic%20.webp']
   },
   {
     id: 'marinePortExpansion',
     slug: 'marine-port-expansion',
     translationKey: 'marine-port-expansion',
-    imageUrl: '/gallery/logistic%20.jpg',
+    imageUrl: '/gallery/logistic%20.webp',
     downloadUrl: '/documents/marine-port-expansion.pdf',
     year: '2023',
     category: 'logisticsProjects',
     features: ['0', '1', '2'],
     benefits: ['0', '1', '2'],
-    galleryImages: ['/gallery/logistic%20.jpg', '/gallery/electric.jpg', '/gallery/solar%20panels.jpg']
+    galleryImages: ['/gallery/logistic%20.webp', '/gallery/electric.webp', '/gallery/solar%20panels.webp']
   },
   {
     id: 'inlandTransportationNetwork',
     slug: 'inland-transportation-network',
     translationKey: 'inland-transportation-network',
-    imageUrl: '/gallery/electric.jpg',
+    imageUrl: '/gallery/electric.webp',
     downloadUrl: '/documents/inland-transportation.pdf',
     year: '2022',
     category: 'logisticsProjects',
     features: ['0', '1', '2'],
     benefits: ['0', '1', '2'],
-    galleryImages: ['/gallery/electric.jpg', '/gallery/wind%20genrators.jpg', '/gallery/oil%20extraction.jpg']
+    galleryImages: ['/gallery/electric.webp', '/gallery/wind%20genrators.webp', '/gallery/oil%20extraction.webp']
   },
   {
     id: 'warehousingSolutions',
     slug: 'warehousing-solutions',
     translationKey: 'warehousing-solutions',
-    imageUrl: '/gallery/wind%20genrators.jpg',
+    imageUrl: '/gallery/wind%20genrators.webp',
     downloadUrl: '/documents/warehousing-solutions.pdf',
     year: '2023',
     category: 'logisticsProjects',
     features: ['0', '1', '2'],
     benefits: ['0', '1', '2'],
-    galleryImages: ['/gallery/wind%20genrators.jpg', '/gallery/logistic%20.jpg', '/gallery/electric.jpg']
+    galleryImages: ['/gallery/wind%20genrators.webp', '/gallery/logistic%20.webp', '/gallery/electric.webp']
   }
 ];
 

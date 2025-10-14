@@ -39,7 +39,7 @@ const workCategories: WorkCategory[] = [
         title: 'petroleumStorageFacility',
         description: 'petroleumStorageFacility',
         category: 'oilGasProjects',
-        imageUrl: '/gallery/oil%20extraction.jpg',
+        imageUrl: '/gallery/oil%20extraction.webp',
         downloadUrl: '/documents/petroleum-storage-project.pdf',
         year: '2023',
         location: 'petroleumStorageFacility'
@@ -49,7 +49,7 @@ const workCategories: WorkCategory[] = [
         title: 'tradingOperations',
         description: 'tradingOperations',
         category: 'oilGasProjects',
-        imageUrl: '/gallery/solar%20panels.jpg',
+        imageUrl: '/gallery/solar%20panels.webp',
         downloadUrl: '/documents/trading-operations.pdf',
         year: '2023',
         location: 'tradingOperations'
@@ -59,7 +59,7 @@ const workCategories: WorkCategory[] = [
         title: 'refineryIntegration',
         description: 'refineryIntegration',
         category: 'oilGasProjects',
-        imageUrl: '/gallery/wind%20genrators.jpg',
+        imageUrl: '/gallery/wind%20genrators.webp',
         downloadUrl: '/documents/refinery-integration.pdf',
         year: '2022',
         location: 'refineryIntegration'
@@ -76,7 +76,7 @@ const workCategories: WorkCategory[] = [
         title: 'marinePortExpansion',
         description: 'marinePortExpansion',
         category: 'logisticsProjects',
-        imageUrl: '/gallery/logistic%20.jpg',
+        imageUrl: '/gallery/logistic%20.webp',
         downloadUrl: '/documents/marine-port-expansion.pdf',
         year: '2023',
         location: 'marinePortExpansion'
@@ -86,7 +86,7 @@ const workCategories: WorkCategory[] = [
         title: 'inlandTransportationNetwork',
         description: 'inlandTransportationNetwork',
         category: 'logisticsProjects',
-        imageUrl: '/gallery/electric.jpg',
+        imageUrl: '/gallery/electric.webp',
         downloadUrl: '/documents/inland-transportation.pdf',
         year: '2022',
         location: 'inlandTransportationNetwork'
@@ -96,7 +96,7 @@ const workCategories: WorkCategory[] = [
         title: 'warehousingSolutions',
         description: 'warehousingSolutions',
         category: 'logisticsProjects',
-        imageUrl: '/gallery/wind%20genrators.jpg',
+        imageUrl: '/gallery/wind%20genrators.webp',
         downloadUrl: '/documents/warehousing-solutions.pdf',
         year: '2023',
         location: 'warehousingSolutions'
@@ -110,21 +110,21 @@ const projectHighlights = [
     id: 'energySectorProjects',
     title: 'energySectorProjects',
     description: 'energySectorProjects',
-    imageUrl: '/gallery/oil%20extraction.jpg',
+    imageUrl: '/gallery/oil%20extraction.webp',
     stats: { projects: 15, countries: 8, year: '2023' }
   },
   {
     id: 'logisticsExpansion',
     title: 'logisticsExpansion',
     description: 'logisticsExpansion',
-    imageUrl: '/gallery/logistic%20.jpg',
+    imageUrl: '/gallery/logistic%20.webp',
     stats: { projects: 12, countries: 6, year: '2023' }
   },
   {
     id: 'sustainabilityInitiatives',
     title: 'sustainabilityInitiatives',
     description: 'sustainabilityInitiatives',
-    imageUrl: '/gallery/solar%20panels.jpg',
+    imageUrl: '/gallery/solar%20panels.webp',
     stats: { projects: 8, countries: 4, year: '2023' }
   }
 ];
@@ -175,7 +175,7 @@ export default function OurWorkPage() {
             { label: t('navigation.home') || 'Home', href: '/' },
             { label: t('navigation.ourWork') || 'Our Work' }
           ]}
-          backgroundImage="/ourworkbanner.jpg"
+          backgroundImage="/ourworkbanner.webp"
         />
       </div>
 

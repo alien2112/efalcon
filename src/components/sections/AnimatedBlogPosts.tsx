@@ -36,7 +36,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2025-01-15',
       category: 'Sustainable Energy',
-      imageUrl: '/images/2e61064ba29556dd56f0911170063156e2b7a103.png',
+      imageUrl: '/images/2e61064ba29556dd56f0911170063156e2b7a103.webp',
       readTime: '5 min read',
       tags: ['renewable energy', 'sustainability', 'middle east']
     },
@@ -48,7 +48,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2025-01-12',
       category: 'Logistics Services',
-      imageUrl: '/images/5992bbb553331fc55d07d245c68d3a2d7b8fea26.png',
+      imageUrl: '/images/5992bbb553331fc55d07d245c68d3a2d7b8fea26.webp',
       readTime: '7 min read',
       tags: ['logistics', 'marine ports', 'innovation']
     },
@@ -60,7 +60,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2025-01-10',
       category: 'Government Policy',
-      imageUrl: '/images/665db4c10244e78f94bf59a54bb37d716103ac23.png',
+      imageUrl: '/images/665db4c10244e78f94bf59a54bb37d716103ac23.webp',
       readTime: '8 min read',
       tags: ['vision 2030', 'policy', 'energy']
     },
@@ -72,7 +72,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2025-01-08',
       category: 'Water Technology',
-      imageUrl: '/images/999718f4c2f82d26b7f5fe8222338d676599195f.png',
+      imageUrl: '/images/999718f4c2f82d26b7f5fe8222338d676599195f.webp',
       readTime: '6 min read',
       tags: ['water desalination', 'technology', 'sustainability']
     },
@@ -84,7 +84,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2025-01-05',
       category: 'International Partnerships',
-      imageUrl: '/images/de677a78167b5a290392b1d450bcb146fab1dd5e.png',
+      imageUrl: '/images/de677a78167b5a290392b1d450bcb146fab1dd5e.webp',
       readTime: '9 min read',
       tags: ['partnerships', 'international', 'energy']
     },
@@ -96,7 +96,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2025-01-03',
       category: 'Sustainable Transportation',
-      imageUrl: '/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png',
+      imageUrl: '/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp',
       readTime: '7 min read',
       tags: ['transportation', 'sustainability', 'logistics']
     },
@@ -108,7 +108,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2025-01-01',
       category: 'Digital Innovation',
-      imageUrl: '/images/14a6fa02ae183cbb256e0b4da2b46e17d3c07cee.png',
+      imageUrl: '/images/14a6fa02ae183cbb256e0b4da2b46e17d3c07cee.webp',
       readTime: '6 min read',
       tags: ['digital transformation', 'infrastructure', 'innovation']
     },
@@ -120,7 +120,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2024-12-28',
       category: 'Clean Energy',
-      imageUrl: '/images/2e61064ba29556dd56f0911170063156e2b7a103.png',
+      imageUrl: '/images/2e61064ba29556dd56f0911170063156e2b7a103.webp',
       readTime: '8 min read',
       tags: ['green hydrogen', 'clean energy', 'future']
     },
@@ -132,7 +132,7 @@ export function AnimatedBlogPosts() {
       author: 'Ebdaa Falcon Team',
       date: '2024-12-25',
       category: 'Smart Technology',
-      imageUrl: '/images/5992bbb553331fc55d07d245c68d3a2d7b8fea26.png',
+      imageUrl: '/images/5992bbb553331fc55d07d245c68d3a2d7b8fea26.webp',
       readTime: '7 min read',
       tags: ['smart ports', 'automation', 'efficiency']
     }

@@ -163,7 +163,7 @@ export function SophisticatedLoadingScreen({ isVisible, onComplete }: Sophistica
               {/* Logo */}
               <div className="relative w-32 h-32 bg-white/5 backdrop-blur-sm rounded-full border border-white/20 flex items-center justify-center">
                 <Image
-                  src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png"
+                  src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp"
                   alt="Ebdaa Falcon Logo"
                   width={80}
                   height={80}

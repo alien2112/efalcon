@@ -37,7 +37,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     author: 'Ebdaa Falcon Team',
     date: '2025-01-15',
     category: 'Sustainable Energy',
-    imageUrl: '/images/2e61064ba29556dd56f0911170063156e2b7a103.png',
+    imageUrl: '/images/2e61064ba29556dd56f0911170063156e2b7a103.webp',
     readTime: '5 min read',
     tags: ['renewable energy', 'sustainability', 'middle east']
   };

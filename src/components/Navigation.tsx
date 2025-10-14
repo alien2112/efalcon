@@ -100,7 +100,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
             {/* Logo */}
             <button onClick={() => handleNavigation(`/`)} className="h-[76px] w-[191px] relative group">
               <Image 
-                src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png" 
+                src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp" 
                 alt="Ebdaa Falcon Logo"
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"

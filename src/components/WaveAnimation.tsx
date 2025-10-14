@@ -468,37 +468,37 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
     switch (phase) {
       case 1: // Phase 1: Logo
         return {
-          src: "/logofirstsection.png",
+          src: "/logofirstsection.webp",
           alt: "Ebdaa Falcon Logo",
           className: "object-contain"
         };
       case 2: // Phase 2: Logistic Image
         return {
-          src: "/gallery/logistic .jpg",
+          src: "/gallery/logistic .webp",
           alt: "Logistic Image",
           className: "object-contain rounded-lg"
         };
       case 3: // Phase 3: Oil Station
         return {
-          src: "/gallery/oil extraction.jpg",
+          src: "/gallery/oil extraction.webp",
           alt: "Oil Station",
           className: "object-contain rounded-lg"
         };
       case 4: // Phase 4: Water Desalination
         return {
-          src: "/gallery/water purification1.jpg",
+          src: "/gallery/water purification1.webp",
           alt: "Water Desalination",
           className: "object-contain rounded-lg"
         };
       case 5: // Phase 5: Extra Phase
         return {
-          src: "/gallery/water purification1.jpg",
+          src: "/gallery/water purification1.webp",
           alt: "Water Desalination",
           className: "object-contain rounded-lg"
         };
       default:
         return {
-          src: "/logofirstsection.png",
+          src: "/logofirstsection.webp",
           alt: "Ebdaa Falcon Logo",
           className: "object-contain"
         };
@@ -536,7 +536,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         }}
       >
         <Image
-          src="/images/14a6fa02ae183cbb256e0b4da2b46e17d3c07cee.png"
+          src="/images/14a6fa02ae183cbb256e0b4da2b46e17d3c07cee.webp"
           alt="Animated Wave"
           fill
           className="object-contain"
@@ -556,7 +556,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         {imagePhase === 1 && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[84%] md:w-[80%] max-w-[800px] h-[56%] md:h-[60%] max-h-[400px] z-0">
             <Image
-              src="/Rectangle 43.png"
+              src="/Rectangle 43.webp"
               alt="Background Rectangle"
               fill
               className="object-contain"

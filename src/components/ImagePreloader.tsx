@@ -33,12 +33,12 @@ export function ImagePreloader({ images }: ImagePreloaderProps) {
 
 // Critical images that should be preloaded
 export const CRITICAL_IMAGES = [
-  '/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png', // Logo
-  '/vision.png',
-  '/vision2.png',
-  '/logofirstsection.png',
-  '/about%20us%20banner%20.jpg',
-  '/blog%20banner.jpg',
-  '/ourworkbanner.jpg',
-  '/ourservicesbanner.png',
+  '/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp', // Logo
+  '/vision.webp',
+  '/vision2.webp',
+  '/logofirstsection.webp',
+  '/about%20us%20banner%20.webp',
+  '/blog%20banner.webp',
+  '/ourworkbanner.webp',
+  '/ourservicesbanner.webp',
 ];

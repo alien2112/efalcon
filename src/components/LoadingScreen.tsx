@@ -62,7 +62,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
         {/* Company Logo */}
         <div className="mb-8 relative w-[200px] h-[80px] md:w-[300px] md:h-[120px]">
           <Image
-            src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png"
+            src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp"
             alt="Ebdaa Falcon Logo"
             fill
             className="object-contain animate-pulse"

@@ -34,7 +34,7 @@ export function VisionSection() {
               <div className="relative">
                 <div className="relative rounded-lg overflow-hidden shadow-2xl border-4 border-yellow-400">
                   <Image 
-                    src="/vision.png"
+                    src="/vision.webp"
                     alt="Vision 2030 and Saudi Leadership"
                     width={600}
                     height={400}
@@ -58,7 +58,7 @@ export function VisionSection() {
               <div className="relative order-2 lg:order-1">
                 <div className="relative rounded-lg overflow-hidden shadow-2xl border-4 border-yellow-300">
                   <Image 
-                    src="/vision2.png"
+                    src="/vision2.webp"
                     alt="Mosaed M. Al-Jhail Chairman"
                     width={400}
                     height={500}
