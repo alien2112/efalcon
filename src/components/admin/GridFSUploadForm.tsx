@@ -110,7 +110,7 @@ export function GridFSUploadForm() {
       <h2 className="text-2xl font-bold mb-6">GridFS Image Upload</h2>
       
       {/* Upload Form */}
-      <form onSubmit={handleUpload} className="bg-white p-6 rounded-lg shadow-md mb-6">
+      <form onSubmit={handleUpload} className="bg-gray-50 p-6 rounded-lg shadow-md mb-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-sm font-medium mb-2">File</label>
@@ -195,7 +195,7 @@ export function GridFSUploadForm() {
       )}
 
       {/* Uploaded Images List */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="bg-gray-50 p-6 rounded-lg shadow-md">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold">Uploaded Images</h3>
           <button

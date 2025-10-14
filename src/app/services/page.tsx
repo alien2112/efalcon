@@ -146,7 +146,7 @@ export default function ServicesPage() {
         </div>
 
       {/* Services Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/10 via-transparent to-[#716106]/5"></div>
@@ -219,7 +219,7 @@ export default function ServicesPage() {
                       <Link 
                         href={`/services/${service.id}`}
                         key={service.id} 
-                        className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block ${
+                        className={`bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block ${
                           hoveredService === service.id ? 'scale-[1.02] shadow-2xl' : ''
                         }`}
                         onMouseEnter={() => setHoveredService(service.id)}
@@ -316,7 +316,7 @@ export default function ServicesPage() {
                   <FadeInOnScroll key={application.id} direction="up" delay={0.1 * index}>
                     <Link 
                       href={`/services/${application.id}`}
-                      className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block ${
+                      className={`bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block ${
                         hoveredApplication === application.id ? 'scale-[1.02] shadow-2xl' : ''
                       }`}
                       onMouseEnter={() => setHoveredApplication(application.id)}
@@ -355,7 +355,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/5 via-transparent to-[#FFD700]/5"></div>

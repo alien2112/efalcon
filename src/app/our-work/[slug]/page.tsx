@@ -122,11 +122,11 @@ export default function WorkDetailPage() {
       </section>
 
       {/* Key features */}
-      <section className="bg-white py-12 md:py-16">
+      <section className="bg-gray-50 py-12 md:py-16">
         <div className="max-w-[1280px] mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-3 gap-6">
             {project.features.map((featureIndex) => (
-              <div key={featureIndex} className="bg-white border border-gray-200 rounded-[14px] p-5 shadow-sm">
+              <div key={featureIndex} className="bg-gray-50 border border-gray-200 rounded-[14px] p-5 shadow-sm">
                 <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[18px] md:text-[20px]">{t(`ourWorkPage.projects.${project.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`}</h3>
                 <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
                   {(t(`ourWorkPage.projects.${project.translationKey}.title`) || project.id)} {t('work.detail.includes') || 'includes'}: {(t(`ourWorkPage.projects.${project.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`)} {t('work.detail.asPartOf') || 'as part of our comprehensive project delivery'}.
@@ -142,13 +142,13 @@ export default function WorkDetailPage() {
         <div className="max-w-[1280px] mx-auto px-4 md:px-8">
           {/* Detailed Content */}
           <div className="grid md:grid-cols-3 gap-8 items-start mb-12">
-            <div className="md:col-span-2 bg-white border border-gray-200 rounded-[16px] p-6 md:p-10">
+            <div className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-10">
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-4">{t('work.detail.overview') || 'Project Overview'}</h2>
               <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed mb-6">{t(`ourWorkPage.projects.${project.translationKey}.content`) || 'Project content not available.'}</p>
               <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#716106] mb-4">{t('work.detail.detailedInformation') || 'Detailed Information'}</h3>
               <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed">{t(`ourWorkPage.projects.${project.translationKey}.detailedContent`) || 'Detailed project information not available.'}</p>
             </div>
-            <aside className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-8">
+            <aside className="bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-8">
               <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[22px] text-[#716106] mb-3">{t('work.detail.whyEbdaaFalcon') || 'Why Ebdaa Falcon'}</h3>
               <ul className="list-disc pl-5 space-y-2 font-['Alice:Regular',_sans-serif] text-gray-700">
                 <li>{t('work.detail.whyEbdaaFalconList.experiencedOperations') || 'Experienced Project Management Team'}</li>
@@ -175,7 +175,7 @@ export default function WorkDetailPage() {
           </div>
 
           {/* Benefits Section */}
-          <div className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-10 mb-12">
+          <div className="bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-10 mb-12">
             <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-6 text-center">{t('work.detail.keyBenefits') || 'Key Benefits'}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {project.benefits.map((benefitIndex) => (
@@ -192,7 +192,7 @@ export default function WorkDetailPage() {
           </div>
 
           {/* Image Gallery */}
-          <div className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-10">
+          <div className="bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-10">
             <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-6 text-center">{t('work.detail.projectGallery') || 'Project Gallery'}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {project.galleryImages.map((image, index) => (
