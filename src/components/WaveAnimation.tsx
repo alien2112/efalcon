@@ -39,8 +39,16 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
 
   // ===== IMAGE ANIMATION STATE =====
   const [imageProgress, setImageProgress] = useState(0);
+  
+  // ===== RESPONSIVE STATE =====
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Determine initial device width and subscribe to resizes for responsiveness
+    const updateIsMobile = () => setIsMobile(window.innerWidth <= 768);
+    updateIsMobile();
+    window.addEventListener('resize', updateIsMobile);
+
     let touchStartY = 0;
     let touchStartTime = 0;
 
@@ -196,6 +204,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('resize', updateIsMobile);
       
       // Clean up timers (auto-progression removed)
     };
@@ -520,7 +529,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
     <div ref={heroRef} className={`relative w-full h-screen bg-[#716106] overflow-hidden ${className}`}>
       {/* Animated Wave */}
       <div 
-        className="absolute top-0 left-0 w-[300%] h-[120%] transition-all duration-500 ease-out z-20"
+        className={`absolute top-0 left-0 transition-all duration-500 ease-out z-20 ${isMobile ? 'w-[220%] h-[110%]' : 'w-[300%] h-[120%]'}`}
         style={{
           transform: `translate(${waveTransform.x}%, ${waveTransform.y}%) rotate(${waveTransform.angle}deg) scale(${waveTransform.size})`,
           opacity: waveTransform.opacity
@@ -545,7 +554,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
       >
         {/* Background Rectangle for Logo Phase */}
         {imagePhase === 1 && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px] z-0">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[84%] md:w-[80%] max-w-[800px] h-[56%] md:h-[60%] max-h-[400px] z-0">
             <Image
               src="/Rectangle 43.png"
               alt="Background Rectangle"
@@ -559,7 +568,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         {/* Main Image - Conditional Styling */}
         {imagePhase === 1 ? (
           // Logo Phase - No special styling
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[800px] h-[60%] max-h-[400px] z-10">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[84%] md:w-[80%] max-w-[800px] h-[56%] md:h-[60%] max-h-[400px] z-10">
             <Image
               src={imageContent.src}
               alt={imageContent.alt}
@@ -573,11 +582,12 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           <div 
             className="absolute transition-all duration-500 ease-out z-10"
             style={{
-              width: '706px',
-              height: '241px',
-              top: '-70px',
-              left: '52px',
-              borderRadius: '47px',
+              width: isMobile ? '88vw' : '706px',
+              height: isMobile ? '50vw' : '241px',
+              top: isMobile ? '12px' : '-70px',
+              left: isMobile ? '50%' : '52px',
+              transform: isMobile ? 'translateX(-50%)' : undefined,
+              borderRadius: isMobile ? '24px' : '47px',
               boxShadow: '0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 255, 255, 0.2), 0 0 90px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.1)',
               border: '2px solid rgba(255, 255, 255, 0.4)'
             }}
@@ -586,7 +596,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
               src={imageContent.src}
               alt={imageContent.alt}
               fill
-              className="object-cover rounded-[47px]"
+              className={isMobile ? 'object-cover rounded-[24px]' : 'object-cover rounded-[47px]'}
               priority
             />
           </div>
