@@ -63,6 +63,20 @@ export function GlobalPresenceGlobe() {
     globeRef.current.pointOfView({ lat: 23.8859, lng: 45.0792, altitude: 1.2 }, 0);
   }, [size.w, size.h]);
 
+  // Enable pinch-to-zoom and panning for touch devices via OrbitControls
+  useEffect(() => {
+    const globeAny = globeRef.current as unknown as { controls?: () => any } | null;
+    const controls = globeAny && typeof globeAny.controls === 'function' ? globeAny.controls() : null;
+    if (!controls) return;
+    controls.enableZoom = true;
+    controls.enablePan = true;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.zoomSpeed = 0.5;
+    controls.minDistance = 120;
+    controls.maxDistance = 400;
+  }, [size.w, size.h]);
+
   const flyTo = (lat: number, lng: number, altitude = 1.1) => {
     if (!globeRef.current) return;
     globeRef.current.pointOfView({ lat, lng, altitude }, 1200);
@@ -72,7 +86,7 @@ export function GlobalPresenceGlobe() {
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center mb-10 md:mb-14">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#716106] mb-4">{t('aboutUs.globalPresence.title') || 'Global Presence'}</h2>
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#EFC132] mb-4">{t('aboutUs.globalPresence.title') || 'Global Presence'}</h2>
           <p className="font-['Alice:Regular',_sans-serif] text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">{t('aboutUs.globalPresence.subtitle') || 'Interactive 3D globe showing our key regions and partnerships.'}</p>
         </div>
 
@@ -87,7 +101,7 @@ export function GlobalPresenceGlobe() {
               backgroundPosition: '0 0, 1px 1px'
             }}
           >
-            <div ref={containerRef} className="relative aspect-[16/9] md:aspect-[21/9]">
+            <div ref={containerRef} className="relative aspect-[16/9] md:aspect-[21/9]" style={{ touchAction: 'none' }}>
               {/* globe component rendered client-side; casts keep TS quiet */}
               <Globe
                 ref={globeRef as unknown as any}
@@ -137,7 +151,7 @@ export function GlobalPresenceGlobe() {
                 <li key={c.id}>
                   <button
                     onClick={() => flyTo(c.lat, c.lng, 1.0)}
-                    className="w-full text-left font-['Alice:Regular',_sans-serif] text-gray-800 bg-white border border-gray-200 rounded-md px-3 py-2 hover:border-[#716106] hover:bg-white"
+                    className="w-full text-left font-['Alice:Regular',_sans-serif] text-gray-800 bg-white border border-gray-200 rounded-md px-3 py-2 hover:border-[#EFC132] hover:bg-white"
                   >
                     {(() => {
                       // Always show English names for consistency

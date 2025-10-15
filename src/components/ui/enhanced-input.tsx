@@ -61,7 +61,7 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
       } else if (success) {
         classes += ' border-green-500 focus:ring-2 focus:ring-green-500/20';
       } else {
-        classes += ' border-gray-300 focus:ring-2 focus:ring-[#716106]/20 focus:border-[#716106] hover:border-gray-400';
+        classes += ' border-gray-300 focus:ring-2 focus:ring-[#EFC132]/20 focus:border-[#EFC132] hover:border-gray-400';
       }
       
       if (disabled) {
@@ -79,7 +79,7 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
               error ? 'text-red-600' : success ? 'text-green-600' : 'text-gray-700'
             }`}
             animate={{
-              color: isFocused ? '#716106' : error ? '#dc2626' : success ? '#16a34a' : '#374151'
+              color: isFocused ? '#EFC132' : error ? '#dc2626' : success ? '#16a34a' : '#374151'
             }}
           >
             {label}
@@ -109,7 +109,7 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
           
           {/* Focus indicator */}
           <motion.div
-            className="absolute inset-0 rounded-lg border-2 border-[#716106] pointer-events-none"
+            className="absolute inset-0 rounded-lg border-2 border-[#EFC132] pointer-events-none"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{
               opacity: isFocused ? 1 : 0,

@@ -20,7 +20,7 @@ export function LoadingSpinner({
   };
 
   const colorClasses = {
-    primary: 'border-[#716106]',
+    primary: 'border-[#EFC132]',
     white: 'border-white',
     gray: 'border-gray-400'
   };
@@ -48,7 +48,7 @@ export function LoadingDots({
   className = '' 
 }: LoadingDotsProps) {
   const colorClasses = {
-    primary: 'bg-[#716106]',
+    primary: 'bg-[#EFC132]',
     white: 'bg-white',
     gray: 'bg-gray-400'
   };
@@ -82,7 +82,7 @@ interface LoadingPulseProps {
 export function LoadingPulse({ className = '' }: LoadingPulseProps) {
   return (
     <motion.div
-      className={`bg-[#716106] rounded ${className}`}
+      className={`bg-[#EFC132] rounded ${className}`}
       animate={{
         opacity: [0.5, 1, 0.5],
         scale: [1, 1.05, 1]

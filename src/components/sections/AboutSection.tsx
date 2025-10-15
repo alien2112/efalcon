@@ -73,8 +73,22 @@ export function AboutSection() {
     globeRef.current.pointOfView({ lat: 23.8859, lng: 45.0792, altitude: 1.2 }, 0);
   }, [size.w, size.h]);
 
+  // Enable touch pinch-zoom/pan via underlying OrbitControls
+  useEffect(() => {
+    const globeAny = globeRef.current as unknown as { controls?: () => any } | null;
+    const controls = globeAny && typeof globeAny.controls === 'function' ? globeAny.controls() : null;
+    if (!controls) return;
+    controls.enableZoom = true;
+    controls.enablePan = true;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.zoomSpeed = 0.5;
+    controls.minDistance = 120;
+    controls.maxDistance = 400;
+  }, [size.w, size.h]);
+
   return (
-    <div className="relative w-full bg-[#716106] py-20 md:py-32 overflow-hidden">
+    <div className="relative w-full bg-[#EFC132] py-20 md:py-32 overflow-hidden">
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 md:px-8">
         {/* Section Title */}
         <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[96px] leading-[1.2] text-center text-white mb-12 md:mb-16">
@@ -116,7 +130,7 @@ export function AboutSection() {
             }}
           >
             {/* Make the globe visually larger with a squarer aspect and taller container */}
-            <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1]">
+            <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1]" style={{ touchAction: 'none' }}>
               <Globe
                 ref={globeRef as unknown as any}
                 height={size.h}

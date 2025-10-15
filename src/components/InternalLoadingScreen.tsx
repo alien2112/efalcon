@@ -56,7 +56,7 @@ export function InternalLoadingScreen({ isVisible, onComplete }: InternalLoading
           >
             {/* Logo/Icon */}
             <motion.div
-              className="w-16 h-16 mx-auto mb-6 bg-[#716106] rounded-full flex items-center justify-center"
+              className="w-16 h-16 mx-auto mb-6 bg-[#EFC132] rounded-full flex items-center justify-center"
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             >
@@ -79,7 +79,7 @@ export function InternalLoadingScreen({ isVisible, onComplete }: InternalLoading
             {/* Progress Bar */}
             <div className="w-full bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-[#716106] to-[#8B7A0A] rounded-full"
+                className="h-full bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
@@ -102,7 +102,7 @@ export function InternalLoadingScreen({ isVisible, onComplete }: InternalLoading
               {[0, 1, 2].map((index) => (
                 <motion.div
                   key={index}
-                  className="w-2 h-2 bg-[#716106] rounded-full"
+                  className="w-2 h-2 bg-[#EFC132] rounded-full"
                   animate={{
                     scale: [1, 1.5, 1],
                     opacity: [0.5, 1, 0.5]

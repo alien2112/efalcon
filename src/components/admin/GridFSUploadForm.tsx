@@ -9,18 +9,28 @@ interface UploadedImage {
   contentType: string;
   metadata: {
     title: string;
+    titleAr: string;
     description: string;
+    descriptionAr: string;
     order: number;
     isActive: boolean;
+    showTitle: boolean;
+    showDescription: boolean;
+    page?: string;
   };
 }
 
 export function GridFSUploadForm() {
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState('');
+  const [titleAr, setTitleAr] = useState('');
   const [description, setDescription] = useState('');
+  const [descriptionAr, setDescriptionAr] = useState('');
   const [order, setOrder] = useState(1);
   const [isActive, setIsActive] = useState(true);
+  const [showTitle, setShowTitle] = useState(true);
+  const [showDescription, setShowDescription] = useState(true);
+  const [page, setPage] = useState('home');
   const [uploading, setUploading] = useState(false);
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [message, setMessage] = useState('');
@@ -46,9 +56,14 @@ export function GridFSUploadForm() {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('title', title);
+      formData.append('titleAr', titleAr);
       formData.append('description', description);
+      formData.append('descriptionAr', descriptionAr);
       formData.append('order', order.toString());
       formData.append('isActive', isActive.toString());
+      formData.append('showTitle', showTitle.toString());
+      formData.append('showDescription', showDescription.toString());
+      formData.append('page', page);
 
       const response = await fetch('/api/gridfs/images', {
         method: 'POST',
@@ -61,9 +76,14 @@ export function GridFSUploadForm() {
         setMessage('Image uploaded successfully!');
         setFile(null);
         setTitle('');
+        setTitleAr('');
         setDescription('');
+        setDescriptionAr('');
         setOrder(1);
         setIsActive(true);
+        setShowTitle(true);
+        setShowDescription(true);
+        setPage('home');
         // Refresh the list
         fetchImages();
       } else {
@@ -123,23 +143,60 @@ export function GridFSUploadForm() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Title</label>
+            <label className="block text-sm font-medium mb-2">Page</label>
+            <select
+              value={page}
+              onChange={(e) => setPage(e.target.value)}
+              className="w-full p-2 border rounded"
+            >
+              <option value="home">Home</option>
+              <option value="about">About</option>
+              <option value="services">Services</option>
+              <option value="work">Work</option>
+              <option value="blog">Blog</option>
+              <option value="contact">Contact</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Title (English)</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full p-2 border rounded"
-              required
+              placeholder="Enter English title"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Description</label>
+            <label className="block text-sm font-medium mb-2">Title (Arabic)</label>
             <input
               type="text"
+              value={titleAr}
+              onChange={(e) => setTitleAr(e.target.value)}
+              className="w-full p-2 border rounded"
+              placeholder="أدخل العنوان بالعربية"
+              dir="rtl"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Description (English)</label>
+            <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full p-2 border rounded"
-              required
+              rows={3}
+              placeholder="Enter English description"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Description (Arabic)</label>
+            <textarea
+              value={descriptionAr}
+              onChange={(e) => setDescriptionAr(e.target.value)}
+              className="w-full p-2 border rounded"
+              rows={3}
+              placeholder="أدخل الوصف بالعربية"
+              dir="rtl"
             />
           </div>
           <div>
@@ -155,15 +212,37 @@ export function GridFSUploadForm() {
           </div>
         </div>
         
-        <div className="flex items-center mb-4">
-          <input
-            type="checkbox"
-            id="isActive"
-            checked={isActive}
-            onChange={(e) => setIsActive(e.target.checked)}
-            className="mr-2"
-          />
-          <label htmlFor="isActive">Active</label>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="isActive"
+              checked={isActive}
+              onChange={(e) => setIsActive(e.target.checked)}
+              className="mr-2"
+            />
+            <label htmlFor="isActive">Active</label>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="showTitle"
+              checked={showTitle}
+              onChange={(e) => setShowTitle(e.target.checked)}
+              className="mr-2"
+            />
+            <label htmlFor="showTitle">Show Title</label>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="showDescription"
+              checked={showDescription}
+              onChange={(e) => setShowDescription(e.target.checked)}
+              className="mr-2"
+            />
+            <label htmlFor="showDescription">Show Description</label>
+          </div>
         </div>
 
         <button
@@ -217,10 +296,23 @@ export function GridFSUploadForm() {
                 />
               </div>
               <h4 className="font-medium">{image.metadata.title}</h4>
+              {image.metadata.titleAr && (
+                <h4 className="font-medium text-right" dir="rtl">{image.metadata.titleAr}</h4>
+              )}
               <p className="text-sm text-gray-600">{image.metadata.description}</p>
+              {image.metadata.descriptionAr && (
+                <p className="text-sm text-gray-600 text-right" dir="rtl">{image.metadata.descriptionAr}</p>
+              )}
               <p className="text-xs text-gray-500">Order: {image.metadata.order}</p>
+              <p className="text-xs text-gray-500">Page: {image.metadata.page || 'home'}</p>
               <p className="text-xs text-gray-500">
                 Status: {image.metadata.isActive ? 'Active' : 'Inactive'}
+              </p>
+              <p className="text-xs text-gray-500">
+                Show Title: {image.metadata.showTitle ? 'Yes' : 'No'}
+              </p>
+              <p className="text-xs text-gray-500">
+                Show Description: {image.metadata.showDescription ? 'Yes' : 'No'}
               </p>
               <button
                 onClick={() => deleteImage(image._id)}

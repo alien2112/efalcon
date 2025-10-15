@@ -100,7 +100,7 @@ export function ContactInfo() {
         className={`text-center mb-12 ${language === 'ar' ? 'text-right' : 'text-left'}`}
         variants={itemVariants}
       >
-        <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#716106] mb-4">
+        <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#EFC132] mb-4">
           {t('contact.info.title') || 'Contact Information'}
         </h2>
         <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -131,7 +131,7 @@ export function ContactInfo() {
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-gray-800 mb-2 group-hover:text-[#716106] transition-colors duration-300">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-gray-800 mb-2 group-hover:text-[#EFC132] transition-colors duration-300">
                     {item.title}
                   </h3>
                   <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[15px] text-gray-600 leading-relaxed break-words">
@@ -144,7 +144,7 @@ export function ContactInfo() {
                     className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     whileHover={{ scale: 1.1 }}
                   >
-                    <ExternalLink className="w-5 h-5 text-[#716106]" />
+                    <ExternalLink className="w-5 h-5 text-[#EFC132]" />
                   </motion.div>
                 )}
               </div>
@@ -166,7 +166,7 @@ export function ContactInfo() {
         className="mt-16"
         variants={itemVariants}
       >
-        <div className="bg-gradient-to-r from-[#716106] to-[#8B7A0A] rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+        <div className="bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-30" style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0)`,
@@ -200,7 +200,7 @@ export function ContactInfo() {
             >
               <motion.a
                 href="tel:+966565145666"
-                className="bg-white text-[#716106] px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100 transition-colors duration-300 hover:scale-105 transform shadow-lg"
+                className="bg-white text-[#EFC132] px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100 transition-colors duration-300 hover:scale-105 transform shadow-lg"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -209,7 +209,7 @@ export function ContactInfo() {
               
               <motion.a
                 href="mailto:info@ebdaafalcon.com"
-                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold hover:bg-white hover:text-[#716106] transition-colors duration-300 hover:scale-105 transform"
+                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold hover:bg-white hover:text-[#EFC132] transition-colors duration-300 hover:scale-105 transform"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >

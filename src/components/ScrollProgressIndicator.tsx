@@ -57,7 +57,7 @@ export function ScrollProgressIndicator() {
       >
         {/* Main gradient progress bar */}
         <div 
-          className="absolute inset-0 bg-gradient-to-r from-[#716106] via-[#FFD700] to-[#FFA500] transition-all duration-150 ease-out"
+          className="absolute inset-0 bg-gradient-to-r from-[#EFC132] via-[#FFD700] to-[#FFA500] transition-all duration-150 ease-out"
           style={{
             boxShadow: '0 0 8px rgba(255, 215, 0, 0.6), 0 0 16px rgba(255, 165, 0, 0.3)',
           }}
@@ -140,7 +140,7 @@ export function MobileScrollProgressIndicator() {
       >
         {/* Main gradient progress bar */}
         <div 
-          className="absolute inset-0 bg-gradient-to-r from-[#716106] to-[#FFD700] transition-all duration-150 ease-out"
+          className="absolute inset-0 bg-gradient-to-r from-[#EFC132] to-[#FFD700] transition-all duration-150 ease-out"
           style={{
             boxShadow: '0 0 4px rgba(255, 215, 0, 0.5)',
           }}

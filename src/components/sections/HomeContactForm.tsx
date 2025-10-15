@@ -192,8 +192,8 @@ export function HomeContactForm() {
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#716106] to-[#8B7A0A] rounded-2xl blur-lg opacity-30"></div>
-            <div className="relative bg-gradient-to-r from-[#716106] to-[#8B7A0A] rounded-2xl px-8 py-4 shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-2xl blur-lg opacity-30"></div>
+            <div className="relative bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-2xl px-8 py-4 shadow-xl">
               <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-white">
                 {t('contact.hero.contactTitle') || 'Connect With Us'}
               </h2>
@@ -264,7 +264,7 @@ export function HomeContactForm() {
                     <CheckCircle className="w-10 h-10 text-white" />
                   </motion.div>
                   <motion.h3 
-                    className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] text-[#716106] mb-4"
+                    className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] text-[#EFC132] mb-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
@@ -308,7 +308,7 @@ export function HomeContactForm() {
                             onFocus={() => setFocusedField('name')}
                             onBlur={() => setFocusedField(null)}
                             required
-                            className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.name ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
+                            className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.name ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
                             placeholder={t('contact.form.placeholders.name') || 'Your full name'}
                             dir={language === 'ar' ? 'rtl' : 'ltr'}
                           />
@@ -345,7 +345,7 @@ export function HomeContactForm() {
                             onFocus={() => setFocusedField('email')}
                             onBlur={() => setFocusedField(null)}
                             required
-                            className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.email ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
+                            className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.email ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
                             placeholder={t('contact.form.placeholders.email') || 'you@example.com'}
                             dir={language === 'ar' ? 'rtl' : 'ltr'}
                           />
@@ -380,7 +380,7 @@ export function HomeContactForm() {
                           onChange={handleInputChange}
                           onFocus={() => setFocusedField('phone')}
                           onBlur={() => setFocusedField(null)}
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200`}
+                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200`}
                           placeholder="+966 11 123 4567"
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         />
@@ -398,7 +398,7 @@ export function HomeContactForm() {
                           onChange={handleInputChange}
                           onFocus={() => setFocusedField('company')}
                           onBlur={() => setFocusedField(null)}
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200`}
+                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200`}
                           placeholder={t('contact.form.placeholders.company') || 'Company name'}
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         />
@@ -418,7 +418,7 @@ export function HomeContactForm() {
                           onChange={handleInputChange}
                           onFocus={() => setFocusedField('service')}
                           onBlur={() => setFocusedField(null)}
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 appearance-none cursor-pointer`}
+                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 appearance-none cursor-pointer`}
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         >
                           <option value="">{t('contact.form.placeholders.service') || 'Select a service'}</option>
@@ -451,7 +451,7 @@ export function HomeContactForm() {
                           onFocus={() => setFocusedField('subject')}
                           onBlur={() => setFocusedField(null)}
                           required
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.subject ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
+                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.subject ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
                           placeholder={t('contact.form.placeholders.subject') || 'How can we help?'}
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         />
@@ -486,7 +486,7 @@ export function HomeContactForm() {
                           onBlur={() => setFocusedField(null)}
                           required
                           rows={6}
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
+                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
                           placeholder={t('contact.form.placeholders.message') || 'Tell us about your project...'}
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         />
@@ -514,14 +514,14 @@ export function HomeContactForm() {
                       <motion.button
                         type="submit"
                         disabled={isSubmitting}
-                        className="group relative bg-gradient-to-r from-[#716106] to-[#8B7A0A] text-white px-12 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                        className="group relative bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white px-12 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                         whileHover={{ scale: 1.02, y: -2 }}
                         whileTap={{ scale: 0.98 }}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#8B7A0A] to-[#716106] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#8B7A0A] to-[#EFC132] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div className="relative flex items-center justify-center gap-3">
                           {isSubmitting ? (
                             <>

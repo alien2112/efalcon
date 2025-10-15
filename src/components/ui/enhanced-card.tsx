@@ -86,7 +86,7 @@ export function EnhancedCard({
       {/* Hover glow effect */}
       {hoverable && (
         <motion.div
-          className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#716106]/5 to-[#8B7A0A]/5 pointer-events-none"
+          className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#EFC132]/5 to-[#8B7A0A]/5 pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.3 }}

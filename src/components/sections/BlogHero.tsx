@@ -5,12 +5,87 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+interface BannerImage {
+  _id: string;
+  filename: string;
+  contentType: string;
+  metadata: {
+    title: string;
+    description: string;
+    order: number;
+    isActive: boolean;
+    page?: string;
+  };
+}
+
 interface BlogHeroProps {
   onAnimationComplete?: () => void;
 }
 
 export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
   const { t } = useLanguage();
+  const [bannerImages, setBannerImages] = useState<BannerImage[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Fetch banner images
+  useEffect(() => {
+    const fetchBannerImages = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('/api/gridfs/images');
+        const result = await response.json();
+        
+        if (result.success) {
+          // Filter images for the blog page and sort by order
+          const pageImages = result.data
+            .filter((img: BannerImage) => 
+              img.metadata.isActive && 
+              (img.metadata.page === 'blog' || (!img.metadata.page && 'blog' === 'home'))
+            )
+            .sort((a: BannerImage, b: BannerImage) => 
+              (a.metadata.order || 0) - (b.metadata.order || 0)
+            );
+          
+          setBannerImages(pageImages);
+        }
+      } catch (error) {
+        console.error('Error fetching banner images:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBannerImages();
+  }, []);
+
+  // Auto-rotate through images if multiple are available
+  useEffect(() => {
+    if (bannerImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex(prev => (prev + 1) % bannerImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [bannerImages.length]);
+
+  // Determine which image to show
+  const getCurrentImage = () => {
+    if (bannerImages.length > 0) {
+      const currentImage = bannerImages[currentImageIndex];
+      return {
+        src: `/api/gridfs/images/${currentImage._id}`,
+        alt: currentImage.metadata.title
+      };
+    }
+    return {
+      src: '/blog%20banner.webp',
+      alt: 'Blog Banner'
+    };
+  };
+
+  const currentImage = getCurrentImage();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -79,8 +154,8 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
             variants={imageVariants}
           >
             <Image
-              src="/blog%20banner.webp"
-              alt="Blog Banner"
+              src={currentImage.src}
+              alt={currentImage.alt}
               fill
               className="object-cover"
               priority
@@ -112,6 +187,21 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
           </motion.p>
         </motion.div>
       </div>
+
+      {/* Image indicators if multiple images */}
+      {bannerImages.length > 1 && (
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-10">
+          {bannerImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`w-2 h-2 rounded-full transition-colors ${
+                index === currentImageIndex ? 'bg-white' : 'bg-white/50'
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }

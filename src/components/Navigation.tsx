@@ -98,12 +98,12 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
         <div className="max-w-[1280px] w-full">
           <div className="flex items-center justify-between px-8">
             {/* Logo */}
-            <button onClick={() => handleNavigation(`/`)} className="h-[76px] w-[191px] relative group">
+            <button onClick={() => handleNavigation(`/`)} className="h-[76px] w-[191px] relative group overflow-hidden rounded-md">
               <Image 
-                src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp" 
+                src="/images/95eb61c3ac3249a169d62775cfc3315b24c65966.png" 
                 alt="Ebdaa Falcon Logo"
                 fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-contain transition-transform duration-300 group-hover:scale-105"
                 priority
                 quality={90}
               />
@@ -132,13 +132,13 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
                     
                     {/* Hover Indicator */}
                     {hoveredItem === item.id && currentSection !== item.id && (
-                      <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#716106]/60 to-[#716106]/40 rounded-full animate-pulse"></div>
+                      <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#EFC132]/60 to-[#EFC132]/40 rounded-full animate-pulse"></div>
                     )}
                   </button>
                   
                   {/* Hover Background Effect */}
                   {hoveredItem === item.id && (
-                    <div className="absolute inset-0 bg-[#716106]/5 rounded-lg -z-10 animate-pulse"></div>
+                    <div className="absolute inset-0 bg-[#EFC132]/5 rounded-lg -z-10 animate-pulse"></div>
                   )}
                 </div>
               ))}
@@ -239,7 +239,7 @@ export function Navigation({ currentSection, onNavigate }: NavigationProps) {
               }}
               className={`px-3 py-3 rounded-lg text-left transition-all duration-300 block ${
                 currentSection === item.id 
-                  ? 'text-black bg-[#716106]/10 border-l-4 border-[#716106]' 
+                  ? 'text-black bg-[#EFC132]/10 border-l-4 border-[#EFC132]' 
                   : 'text-gray-700 hover:bg-gray-100 hover:text-black'
               }`}
             >

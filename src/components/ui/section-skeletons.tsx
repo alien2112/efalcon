@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function ServicesSectionSkeleton() {
   return (
-    <div className="relative w-full bg-[#716106] py-20 md:py-32 overflow-hidden">
+    <div className="relative w-full bg-[#EFC132] py-20 md:py-32 overflow-hidden">
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Title Skeleton */}
         <div className="text-center mb-8">
@@ -57,7 +57,7 @@ export function ServicesSectionSkeleton() {
 
 export function WorkSectionSkeleton() {
   return (
-    <div className="relative w-full bg-[#716106] py-20 md:py-32 overflow-hidden">
+    <div className="relative w-full bg-[#EFC132] py-20 md:py-32 overflow-hidden">
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Title Skeleton */}
         <div className="text-center mb-16">

@@ -84,55 +84,70 @@ export function PresenceSection() {
     globeRef.current.pointOfView({ lat: 23.8859, lng: 45.0792, altitude: 1.2 }, 0);
   }, [size.w, size.h]);
 
+  // Enable mobile pinch-to-zoom and pan via OrbitControls
+  useEffect(() => {
+    const globeAny = globeRef.current as unknown as { controls?: () => any } | null;
+    const controls = globeAny && typeof globeAny.controls === 'function' ? globeAny.controls() : null;
+    if (!controls) return;
+    controls.enableZoom = true;
+    controls.enablePan = true;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.zoomSpeed = 0.5;
+    // Set reasonable distances for a nice UX; values tuned for react-globe.gl scale
+    controls.minDistance = 120;
+    controls.maxDistance = 400;
+  }, [size.w, size.h]);
+
   return (
     <>
-      {/* Enhanced Presence Section */}
+      {/* Presence Section with Rich Gold Gradient */}
       <section className="relative py-20 md:py-32 overflow-hidden">
-        {/* Rich Background with Multiple Layers */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#716106] via-[#8B7A1A] to-[#716106]">
-          {/* Subtle Pattern Overlay */}
+        {/* Gold Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700] via-[#B8860B] to-[#FFB300]">
+          {/* Shimmering Overlay */}
           <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-white/3 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-white/5 to-transparent"></div>
           </div>
-          
-          {/* Geometric Decorative Elements */}
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-yellow-400/10 to-transparent rounded-full blur-xl"></div>
-          <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-yellow-300/15 to-transparent rounded-full blur-lg"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-yellow-500/8 to-transparent rounded-full blur-2xl"></div>
-          <div className="absolute bottom-10 right-1/3 w-28 h-28 bg-gradient-to-tl from-yellow-400/12 to-transparent rounded-full blur-xl"></div>
-          
-          {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: '50px 50px'
-            }}></div>
-          </div>
-          
-          {/* Animated Light Streaks */}
+
+          {/* Soft Gold Glow Elements */}
+          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#FFD700]/20 to-transparent rounded-full blur-xl"></div>
+          <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-[#FFC107]/20 to-transparent rounded-full blur-lg"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#FFB300]/15 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-10 right-1/3 w-28 h-28 bg-gradient-to-tl from-[#FFD700]/10 to-transparent rounded-full blur-xl"></div>
+
+          {/* Fine Grid Pattern */}
+          <div className="absolute inset-0 opacity-5" style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}></div>
+
+          {/* Animated Light Shimmers */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -top-10 -left-10 w-96 h-1 bg-gradient-to-r from-transparent via-yellow-300/20 to-transparent rotate-12 animate-pulse"></div>
-            <div className="absolute top-1/3 -right-10 w-80 h-1 bg-gradient-to-r from-transparent via-yellow-400/15 to-transparent -rotate-12 animate-pulse" style={{animationDelay: '1s'}}></div>
-            <div className="absolute bottom-1/4 -left-10 w-72 h-1 bg-gradient-to-r from-transparent via-yellow-300/10 to-transparent rotate-6 animate-pulse" style={{animationDelay: '2s'}}></div>
+            <div className="absolute -top-10 -left-10 w-96 h-1 bg-gradient-to-r from-transparent via-[#FFF3B0]/30 to-transparent rotate-12 animate-pulse"></div>
+            <div className="absolute top-1/3 -right-10 w-80 h-1 bg-gradient-to-r from-transparent via-[#FFD700]/25 to-transparent -rotate-12 animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute bottom-1/4 -left-10 w-72 h-1 bg-gradient-to-r from-transparent via-[#FFECB3]/20 to-transparent rotate-6 animate-pulse" style={{ animationDelay: '2s' }}></div>
           </div>
         </div>
 
+        {/* Foreground Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
-        {/* Section Header */}
-        <FadeInOnScroll direction="up" delay={0.2}>
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-white mb-4">
-              {t('about.title')}
-            </h2>
-            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-white/90 max-w-3xl mx-auto">
-              {t('about.description')}
-            </p>
-          </div>
-        </FadeInOnScroll>
+          <FadeInOnScroll direction="up" delay={0.2}>
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-white mb-4">
+                {t('about.title')}
+              </h2>
+              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-white/90 max-w-3xl mx-auto">
+                {t('about.description')}
+              </p>
+            </div>
+          </FadeInOnScroll>
+
+
 
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 items-start">
           {/* Real 3D Globe */}
@@ -148,7 +163,7 @@ export function PresenceSection() {
                   backgroundPosition: '0 0, 1px 1px'
                 }}
               >
-                <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1]">
+                <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1]" style={{ touchAction: 'none' }}>
                   <Globe
                     ref={globeRef as unknown as any}
                     height={size.h}
@@ -160,12 +175,7 @@ export function PresenceSection() {
                     pointLat={((d: any) => (d as Marker).lat) as unknown as any}
                     pointLng={((d: any) => (d as Marker).lng) as unknown as any}
                     pointAltitude={() => 0.02}
-                    pointColor={((d: any) => {
-                      const level = (d as Marker & { size: number }).level;
-                      if (level === 'active') return '#FFD700'; // gold
-                      if (level === 'expanding') return '#00E5FF'; // cyan
-                      return '#FF4D8D'; // magenta
-                    }) as unknown as any}
+                    pointColor={(() => '#EFC132') as unknown as any}
                     pointRadius={((d: any) => (d as { size: number }).size * 0.28) as unknown as any}
                     labelsData={points as unknown as object[]}
                     labelLat={((d: any) => (d as Marker).lat) as unknown as any}
@@ -196,15 +206,15 @@ export function PresenceSection() {
                   </h3>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-[#EFC132]"></div>
                       <span className="text-sm font-medium text-gray-700">{t('about.presence.strongPresence')}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-cyan-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-[#EFC132]"></div>
                       <span className="text-sm font-medium text-gray-700">{t('about.presence.expanding')}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-pink-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-[#EFC132]"></div>
                       <span className="text-sm font-medium text-gray-700">{t('about.presence.partnerships')}</span>
                     </div>
                   </div>
@@ -213,17 +223,13 @@ export function PresenceSection() {
                 {/* Selected Country Info */}
                 {activeCountry && (
                   <div className="border-t pt-6">
-                    <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-xl text-[#716106] mb-2">
+                    <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-xl text-[#EFC132] mb-2">
                       {activeCountry.name}
                     </h4>
                     <div className="space-y-2 text-sm text-gray-600">
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{t('about.status')}:</span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          activeCountry.level === 'active' ? 'bg-green-100 text-green-800' :
-                          activeCountry.level === 'expanding' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-blue-100 text-blue-800'
-                        }`}>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium bg-[#EFC132]/10 text-[#EFC132]` }>
                           {STATUS_LABELS[activeCountry.level]}
                         </span>
                       </div>
@@ -233,16 +239,16 @@ export function PresenceSection() {
 
                 {/* Key Statistics */}
                 <div className="mt-6 pt-6 border-t">
-                  <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106] mb-4">
+                  <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#EFC132] mb-4">
                     {t('about.globalReach')}
                   </h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#716106]">11</div>
+                      <div className="text-2xl font-bold text-[#EFC132]">11</div>
                       <div className="text-xs text-gray-600">{t('about.countries')}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#716106]">4</div>
+                      <div className="text-2xl font-bold text-[#EFC132]">4</div>
                       <div className="text-xs text-gray-600">{t('about.continents')}</div>
                     </div>
                   </div>
@@ -263,7 +269,7 @@ export function PresenceSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106]">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#EFC132]">
                     {t('about.presence.strongPresenceTitle')}
                   </h3>
                 </div>
@@ -279,7 +285,7 @@ export function PresenceSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106]">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#EFC132]">
                     {t('about.presence.expandingTitle')}
                   </h3>
                 </div>
@@ -295,7 +301,7 @@ export function PresenceSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                   </div>
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#716106]">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-lg text-[#EFC132]">
                     {t('about.presence.partnershipsTitle')}
                   </h3>
                 </div>
@@ -311,7 +317,7 @@ export function PresenceSection() {
 
     {/* Elegant Wave Separator */}
     <div className="relative w-full h-24 md:h-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#716106] to-white">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#EFC132] to-white">
         {/* Animated Wave */}
         <svg 
           className="absolute bottom-0 w-full h-16 md:h-20 text-white" 

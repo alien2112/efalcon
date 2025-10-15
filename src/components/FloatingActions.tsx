@@ -37,7 +37,7 @@ export function FloatingActions() {
       <button
         onClick={scrollTop}
         aria-label="Scroll to top"
-        className={`transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'} bg-gradient-to-r from-[#716106] to-[#8B7A0A] text-white hover:shadow-xl transition-all duration-300 group shadow-lg rounded-full w-10 h-10 flex items-center justify-center`}
+        className={`transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'} bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white hover:shadow-xl transition-all duration-300 group shadow-lg rounded-full w-10 h-10 flex items-center justify-center`}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" className="group-hover:animate-bounce">
           <path d="M12 5.828l5.364 5.364-1.414 1.414L13 9.657V20h-2V9.657L8.05 12.606 6.636 11.192 12 5.828z"/>

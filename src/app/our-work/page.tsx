@@ -176,6 +176,9 @@ export default function OurWorkPage() {
             { label: t('navigation.ourWork') || 'Our Work' }
           ]}
           backgroundImage="/ourworkbanner.webp"
+          page="work"
+          useDynamicImages={true}
+          isSlider={true}
         />
       </div>
 
@@ -183,7 +186,7 @@ export default function OurWorkPage() {
       <section className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/10 via-transparent to-[#716106]/5"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/10 via-transparent to-[#EFC132]/5"></div>
           <div className="absolute top-0 left-0 w-full h-full" style={{
             backgroundImage: `radial-gradient(circle at 25% 25%, rgba(113, 97, 6, 0.1) 0%, transparent 50%),
                              radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
@@ -193,7 +196,7 @@ export default function OurWorkPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6 text-center">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center">
                 {t('ourWorkPage.portfolio') || 'Our Portfolio'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
@@ -212,8 +215,8 @@ export default function OurWorkPage() {
                     onClick={() => setActiveCategory(category.id)}
                     className={`px-6 py-3 rounded-md font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                       activeCategory === category.id
-                        ? 'bg-[#716106] text-white shadow-lg scale-105'
-                        : 'text-gray-600 hover:text-[#716106] hover:bg-white hover:shadow-md'
+                        ? 'bg-[#EFC132] text-white shadow-lg scale-105'
+                        : 'text-gray-600 hover:text-[#EFC132] hover:bg-white hover:shadow-md'
                     }`}
                   >
                     {t(`ourWorkPage.categories.${category.id}.name`) || category.name}
@@ -230,7 +233,7 @@ export default function OurWorkPage() {
                 {/* Work Info */}
                 <FadeInOnScroll direction="left" delay={0.6}>
                   <div className="space-y-6">
-                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-[#716106]">
+                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-[#EFC132]">
                       {t(`ourWorkPage.categories.${currentCategory.id}.name`) || currentCategory.name}
                     </h3>
                     <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 leading-relaxed">
@@ -239,7 +242,7 @@ export default function OurWorkPage() {
                     <div className="space-y-2">
                       <div className="flex items-center text-sm text-gray-600">
                         <span className="font-medium">{t('ourWorkPage.projectsCompleted') || 'Projects Completed'}:</span>
-                        <span className="ml-2 font-bold text-[#716106]">
+                        <span className="ml-2 font-bold text-[#EFC132]">
                           <AnimatedCounter end={currentCategory.projects.length} duration={2} />
                         </span>
                       </div>
@@ -290,11 +293,11 @@ export default function OurWorkPage() {
                         </div>
                         <div className="p-6">
                           <div className="flex justify-between items-start mb-3">
-                            <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-[#716106]">
+                            <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-[#EFC132]">
                               {t(`ourWorkPage.projects.${toKebabCase(project.id)}.title`)}
                             </h4>
                             <span className={`text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded transition-all duration-300 ${
-                              hoveredProject === project.id ? 'bg-[#716106] text-white' : ''
+                              hoveredProject === project.id ? 'bg-[#EFC132] text-white' : ''
                             }`}>
                               {project.year}
                             </span>
@@ -316,7 +319,7 @@ export default function OurWorkPage() {
                                 className={`inline-flex items-center transition-all duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[12px] ${
                                   hoveredProject === project.id 
                                     ? 'text-[#8B7A0A] scale-110' 
-                                    : 'text-[#716106] hover:text-[#8B7A0A]'
+                                    : 'text-[#EFC132] hover:text-[#8B7A0A]'
                                 }`}
                               >
                                 <Download className="w-3 h-3 mr-1" />
@@ -336,18 +339,18 @@ export default function OurWorkPage() {
       </section>
 
       {/* Project Highlights Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-[#716106]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#716106]/20 to-transparent rounded-full blur-xl"></div>
+          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#EFC132]/20 to-transparent rounded-full blur-xl"></div>
           <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-[#FFD700]/20 to-transparent rounded-full blur-lg"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#716106]/15 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#EFC132]/15 to-transparent rounded-full blur-2xl"></div>
           <div className="absolute bottom-10 right-1/3 w-28 h-28 bg-gradient-to-tl from-[#FFD700]/15 to-transparent rounded-full blur-xl"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6">
                 {t('ourWorkPage.projectHighlights') || 'Project Highlights'}
               </h2>
           </div>
@@ -364,7 +367,7 @@ export default function OurWorkPage() {
                       key={index}
                       onClick={() => setCurrentHighlight(index)}
                       className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
-                        currentHighlight === index ? 'bg-[#716106] scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                        currentHighlight === index ? 'bg-[#EFC132] scale-125' : 'bg-gray-300 hover:bg-gray-400'
                       }`}
                     />
                   ))}
@@ -396,7 +399,7 @@ export default function OurWorkPage() {
                         }`} />
                       </div>
                       <div className="p-6">
-                        <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] text-[#716106] mb-3">
+                        <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] text-[#EFC132] mb-3">
                           {t(`ourWorkPage.highlights.${highlight.id}.title`) || highlight.title}
                         </h3>
                         <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed mb-4">
@@ -404,30 +407,30 @@ export default function OurWorkPage() {
                         </p>
                         <div className="grid grid-cols-3 gap-2 text-center">
                           <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
-                            hoveredHighlight === highlight.id ? 'bg-[#716106]/10' : ''
+                            hoveredHighlight === highlight.id ? 'bg-[#EFC132]/10' : ''
                           }`}>
                             <div className={`text-lg font-bold transition-colors duration-300 ${
-                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
+                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
                             }`}>
                               <AnimatedCounter end={highlight.stats.projects} duration={1.5} delay={index * 0.1} />
                             </div>
                             <div className="text-xs text-gray-600">{t('ourWorkPage.projects') || 'Projects'}</div>
                           </div>
                           <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
-                            hoveredHighlight === highlight.id ? 'bg-[#716106]/10' : ''
+                            hoveredHighlight === highlight.id ? 'bg-[#EFC132]/10' : ''
                           }`}>
                             <div className={`text-lg font-bold transition-colors duration-300 ${
-                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
+                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
                             }`}>
                               <AnimatedCounter end={highlight.stats.countries} duration={1.5} delay={index * 0.1 + 0.2} />
                             </div>
                             <div className="text-xs text-gray-600">{t('ourWorkPage.countries') || 'Countries'}</div>
                           </div>
                           <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
-                            hoveredHighlight === highlight.id ? 'bg-[#716106]/10' : ''
+                            hoveredHighlight === highlight.id ? 'bg-[#EFC132]/10' : ''
                           }`}>
                             <div className={`text-lg font-bold transition-colors duration-300 ${
-                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
+                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
                             }`}>
                               {highlight.stats.year}
             </div>
@@ -448,7 +451,7 @@ export default function OurWorkPage() {
       <section className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/5 via-transparent to-[#FFD700]/5"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/5 via-transparent to-[#FFD700]/5"></div>
           <div className="absolute inset-0" style={{
             backgroundImage: `radial-gradient(circle at 30% 30%, rgba(113, 97, 6, 0.08) 0%, transparent 50%),
                              radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%)`,
@@ -457,7 +460,7 @@ export default function OurWorkPage() {
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#716106] mb-6">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#EFC132] mb-6">
                 {t('ourWorkPage.interested') || 'Interested in Our Work?'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">
@@ -474,7 +477,7 @@ export default function OurWorkPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       {t('ourWorkPage.form.projectType') || 'Project Type'}
                     </label>
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400">
+                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400">
                       <option>{t('ourWorkPage.form.options.oilGas') || 'Oil & Gas Projects'}</option>
                       <option>{t('ourWorkPage.form.options.logistics') || 'Logistics & Marine'}</option>
                       <option>{t('ourWorkPage.form.options.sustainability') || 'Sustainability Initiatives'}</option>
@@ -487,7 +490,7 @@ export default function OurWorkPage() {
                     </label>
                     <input
                       type="text"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
                       placeholder={t('ourWorkPage.form.placeholders.name') || 'Your Name'}
                       required
                     />
@@ -499,7 +502,7 @@ export default function OurWorkPage() {
                   </label>
                   <input
                     type="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
                     placeholder={t('ourWorkPage.form.placeholders.email') || 'your.email@example.com'}
                     required
                   />
@@ -510,7 +513,7 @@ export default function OurWorkPage() {
                   </label>
                   <textarea
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
                     placeholder={t('ourWorkPage.form.placeholders.projectDescription') || 'Please describe your project requirements...'}
                     required
                   />
@@ -522,7 +525,7 @@ export default function OurWorkPage() {
                     className={`px-8 py-3 rounded-lg font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center ${
                       formSubmitted 
                         ? 'bg-green-600 text-white' 
-                        : 'bg-[#716106] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
+                        : 'bg-[#EFC132] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
                     }`}
                   >
                     {isFormSubmitting ? (

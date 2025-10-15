@@ -1,46 +1,36 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { GridFSUtils } from '@/lib/gridfs';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const { id } = params;
-
-    if (!id) {
-      return new NextResponse('Image ID required', { status: 400 });
+    const fileId = params.id;
+    if (!fileId) {
+      return new Response('Missing id', { status: 400 });
     }
 
-    // Check if file exists
-    const fileExists = await GridFSUtils.fileExists(id);
-    if (!fileExists) {
-      return new NextResponse('Image not found', { status: 404 });
-    }
+    // Fetch file buffer and basic metadata
+    const buffer = await GridFSUtils.downloadFile(fileId);
+    // We don't have contentType from download, list metadata instead
+    const files = await GridFSUtils.listFiles();
+    const meta = files.find((f) => f._id.toString() === fileId);
+    const contentType = meta?.contentType || 'application/octet-stream';
 
-    // Get file info
-    const fileInfo = await GridFSUtils.getFileInfo(id);
-    if (!fileInfo) {
-      return new NextResponse('Image not found', { status: 404 });
-    }
+    // Generate ETag for caching
+    const crypto = require('crypto');
+    const etag = crypto.createHash('md5').update(buffer).digest('hex');
 
-    // Get file stream
-    const stream = await GridFSUtils.getFileStream(id);
-
-    // Set appropriate headers
-    const headers = new Headers();
-    headers.set('Content-Type', fileInfo.contentType);
-    headers.set('Content-Length', fileInfo.length.toString());
-    headers.set('Cache-Control', 'public, max-age=31536000, immutable');
-
-    // Return the file stream
-    return new NextResponse(stream as any, {
+    return new Response(buffer, {
       status: 200,
-      headers
+      headers: {
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=86400, immutable',
+        'ETag': etag,
+        'Vary': 'Accept-Encoding'
+      }
     });
-
-  } catch (error) {
-    console.error('Error serving image:', error);
-    return new NextResponse('Internal Server Error', { status: 500 });
+  } catch (e) {
+    return new Response('Not found', { status: 404 });
   }
 }
+
+ 

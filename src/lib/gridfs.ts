@@ -13,6 +13,7 @@ export interface GridFSFile {
     description?: string;
     order?: number;
     isActive?: boolean;
+    page?: string;
   };
 }
 

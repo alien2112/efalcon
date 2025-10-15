@@ -30,7 +30,7 @@ export function GlobalPresenceMap() {
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center mb-10 md:mb-14">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#716106] mb-4">Global Presence</h2>
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#EFC132] mb-4">Global Presence</h2>
           <p className="font-['Alice:Regular',_sans-serif] text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">We collaborate with partners across key markets to deliver impact at scale.</p>
         </div>
 
@@ -46,7 +46,7 @@ export function GlobalPresenceMap() {
                   key={m.id}
                   style={{ left: `${m.left}%`, top: `${m.top}%` }}
                   className={`absolute -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 md:w-4 md:h-4 rounded-full border transition-all ${
-                    activeId === m.id ? 'bg-[#716106] border-white shadow-[0_0_0_6px_rgba(113,97,6,0.25)]' : 'bg-white border-[#716106] hover:bg-[#716106] hover:border-white'
+                    activeId === m.id ? 'bg-[#EFC132] border-white shadow-[0_0_0_6px_rgba(113,97,6,0.25)]' : 'bg-white border-[#EFC132] hover:bg-[#EFC132] hover:border-white'
                   }`}
                   onMouseEnter={() => setActiveId(m.id)}
                   onFocus={() => setActiveId(m.id)}
@@ -76,7 +76,7 @@ export function GlobalPresenceMap() {
                     onFocus={() => setActiveId(m.id)}
                     onClick={() => setActiveId(m.id)}
                     className={`w-full text-left px-3 py-2 rounded-md border transition-colors font-['Alice:Regular',_sans-serif] ${
-                      activeId === m.id ? 'bg-[#716106] text-white border-[#716106]' : 'bg-white text-gray-800 border-gray-200 hover:border-[#716106]'
+                      activeId === m.id ? 'bg-[#EFC132] text-white border-[#EFC132]' : 'bg-white text-gray-800 border-gray-200 hover:border-[#EFC132]'
                     }`}
                   >
                     {m.name}

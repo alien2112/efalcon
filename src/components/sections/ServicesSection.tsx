@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -14,14 +14,34 @@ interface ServiceImage {
   imageUrl: string;
   order: number;
   isActive: boolean;
+  slug?: string;
+}
+
+interface FeaturedService {
+  _id: string;
+  title: {
+    en: string;
+    ar: string;
+  };
+  summary: {
+    en: string;
+    ar: string;
+  };
+  imageUrl: string;
+  slug: string;
+  order: number;
+  isActive: boolean;
+  isFeatured: boolean;
 }
 
 export function ServicesSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
+  const [loading, setLoading] = useState(true);
   
-  // Use fallback services directly for better performance
-  const services: ServiceImage[] = [
+  // Fallback services
+  const fallbackServices: ServiceImage[] = [
     {
       _id: '1',
       title: "Petroleum Storage & Trading",
@@ -48,6 +68,38 @@ export function ServicesSection() {
     }
   ];
 
+  useEffect(() => {
+    const fetchFeaturedServices = async () => {
+      try {
+        const response = await fetch('/api/services/featured');
+        const result = await response.json();
+        
+        if (result.success && result.data.length > 0) {
+          setFeaturedServices(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching featured services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedServices();
+  }, []);
+
+  // Combine featured services with fallback services
+  const services = featuredServices.length > 0 
+    ? featuredServices.map(service => ({
+        _id: service._id,
+        title: service.title[language],
+        description: service.summary[language],
+        imageUrl: service.imageUrl,
+        slug: service.slug,
+        order: service.order,
+        isActive: service.isActive
+      }))
+    : fallbackServices;
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % services.length);
   };
@@ -57,7 +109,7 @@ export function ServicesSection() {
   };
 
   return (
-    <div className="relative w-full bg-[#716106] py-20 md:py-32 overflow-hidden">
+    <div className="relative w-full bg-[#EFC132] py-20 md:py-32 overflow-hidden">
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Title */}
         <FadeInOnScroll direction="up" delay={0.2}>
@@ -109,7 +161,7 @@ export function ServicesSection() {
 
               {/* Main center image */}
               {services.length > 0 && (
-                <Link href={`/services/${(() => {
+                <Link href={`/services/${services[currentSlide].slug || (() => {
                   const title = services[currentSlide].title.toLowerCase();
                   if (title.includes('petroleum') || title.includes('trading')) return 'oil-gas-solutions';
                   if (title.includes('logistics')) return 'logistics-marine-services';
@@ -150,7 +202,7 @@ export function ServicesSection() {
                   {services[currentSlide].description}
                 </p>
               <div className="mt-6">
-                <Link href={`/services/${(() => {
+                <Link href={`/services/${services[currentSlide].slug || (() => {
                   const title = services[currentSlide].title.toLowerCase();
                   if (title.includes('petroleum') || title.includes('trading')) return 'oil-gas-solutions';
                   if (title.includes('logistics')) return 'logistics-marine-services';

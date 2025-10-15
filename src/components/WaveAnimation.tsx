@@ -526,7 +526,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
   const imageContent = getImageContent();
 
   return (
-    <div ref={heroRef} className={`relative w-full h-screen bg-[#716106] overflow-hidden ${className}`}>
+    <div ref={heroRef} className={`relative w-full h-screen bg-[#EFC132] overflow-hidden ${className}`}>
       {/* Animated Wave */}
       <div 
         className={`absolute top-0 left-0 transition-all duration-500 ease-out z-20 ${isMobile ? 'w-[220%] h-[110%]' : 'w-[300%] h-[120%]'}`}

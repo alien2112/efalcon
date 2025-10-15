@@ -227,7 +227,7 @@ export function AnimatedBlogPosts() {
     <section className="py-16 md:py-24 bg-gradient-to-b from-[#f8f9fa] to-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/10 via-transparent to-[#716106]/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/10 via-transparent to-[#EFC132]/5"></div>
         <div className="absolute top-0 left-0 w-full h-full" style={{
           backgroundImage: `radial-gradient(circle at 20% 20%, rgba(113, 97, 6, 0.1) 0%, transparent 50%),
                            radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
@@ -242,7 +242,7 @@ export function AnimatedBlogPosts() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#716106] mb-4">
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-4">
             {t('blog.posts.title') || 'Latest Articles'}
           </h2>
           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">
@@ -323,7 +323,7 @@ export function AnimatedBlogPosts() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: index * 0.1 + 0.3 }}
                     >
-                      <span className="bg-[#716106] text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+                      <span className="bg-[#EFC132] text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
                         {post.category}
                       </span>
                     </motion.div>
@@ -354,7 +354,7 @@ export function AnimatedBlogPosts() {
 
                     {/* Title */}
                     <motion.h3 
-                      className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[20px] text-[#716106] mb-3 line-clamp-2 group-hover:text-[#5a4f05] transition-colors"
+                      className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[20px] text-[#EFC132] mb-3 line-clamp-2 group-hover:text-[#5a4f05] transition-colors"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 + 0.5 }}
@@ -382,7 +382,7 @@ export function AnimatedBlogPosts() {
                       {post.tags.slice(0, 3).map((tag, tagIndex) => (
                         <motion.span 
                           key={tagIndex}
-                          className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs hover:bg-[#716106] hover:text-white transition-colors"
+                          className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs hover:bg-[#EFC132] hover:text-white transition-colors"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -399,7 +399,7 @@ export function AnimatedBlogPosts() {
                     >
                       <Link 
                         href={`/blog/${post.id}`}
-                        className="inline-flex items-center text-[#716106] font-medium hover:text-[#5a4f05] transition-colors group-hover:underline"
+                        className="inline-flex items-center text-[#EFC132] font-medium hover:text-[#5a4f05] transition-colors group-hover:underline"
                       >
                         {t('blog.posts.readMore') || 'Read more'}
                         <motion.svg 
@@ -437,7 +437,7 @@ export function AnimatedBlogPosts() {
             >
               <motion.button
                 onClick={loadMorePosts}
-                className="bg-[#716106] text-white px-8 py-3 rounded-full font-medium hover:bg-[#5a4f05] transition-colors duration-300 shadow-lg"
+                className="bg-[#EFC132] text-white px-8 py-3 rounded-full font-medium hover:bg-[#5a4f05] transition-colors duration-300 shadow-lg"
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
@@ -455,7 +455,7 @@ export function AnimatedBlogPosts() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
         >
-          <div className="bg-gradient-to-r from-[#716106] to-[#5a4f05] rounded-2xl p-8 md:p-12 text-white overflow-hidden relative">
+          <div className="bg-gradient-to-r from-[#EFC132] to-[#5a4f05] rounded-2xl p-8 md:p-12 text-white overflow-hidden relative">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
@@ -485,7 +485,7 @@ export function AnimatedBlogPosts() {
               >
                 <Link 
                   href="/contact-us"
-                  className="inline-block bg-white text-[#716106] px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 shadow-lg"
+                  className="inline-block bg-white text-[#EFC132] px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 shadow-lg"
                 >
                   {t('blog.cta.button') || 'Get in Touch'}
                 </Link>

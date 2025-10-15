@@ -96,7 +96,7 @@ export function Footer() {
   ];
 
   const supportLinks = [
-    { name: t('footer.links.faqs') || 'FAQs', href: '#' },
+    { name: t('footer.links.faqs') || 'FAQs', href: '/faqs' },
     { name: t('footer.links.privacyPolicy') || 'Privacy Policy', href: '#' },
     { name: t('footer.links.terms') || 'Terms of Service', href: '#' },
     { name: t('footer.links.careers') || 'Careers', href: '#' }
@@ -112,9 +112,9 @@ export function Footer() {
     >
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#716106]/20 to-transparent"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-l from-[#716106]/10 to-transparent rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#716106]/5 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-[#EFC132]/20 to-transparent"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-l from-[#EFC132]/10 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#EFC132]/5 to-transparent rounded-full blur-2xl"></div>
         </div>
 
         {/* Dot Pattern Overlay */}
@@ -147,7 +147,7 @@ export function Footer() {
                       quality={90}
                     />
                   </motion.div>
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] bg-gradient-to-r from-[#716106] to-[#8B7A0A] bg-clip-text text-transparent">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] bg-clip-text text-transparent">
                     Ebdaa Falcon
                   </h3>
         </div>
@@ -182,7 +182,7 @@ export function Footer() {
                 className="lg:col-span-1"
                 variants={itemVariants}
               >
-                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#716106]">
+                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#EFC132]">
                   {t('footer.quickLinks') || 'Quick Links'}
                 </h4>
                 <ul className="space-y-3">
@@ -194,7 +194,7 @@ export function Footer() {
                       >
                         <span className="relative">
                           {link.name}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#716106] to-[#8B7A0A] group-hover:w-full transition-all duration-300"></span>
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] group-hover:w-full transition-all duration-300"></span>
                         </span>
                       </Link>
                     </motion.li>
@@ -207,7 +207,7 @@ export function Footer() {
                 className="lg:col-span-1"
                 variants={itemVariants}
               >
-                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#716106]">
+                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#EFC132]">
                   {t('footer.support') || 'Support'}
                 </h4>
                 <ul className="space-y-3">
@@ -219,7 +219,7 @@ export function Footer() {
                       >
                         <span className="relative">
                           {link.name}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#716106] to-[#8B7A0A] group-hover:w-full transition-all duration-300"></span>
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] group-hover:w-full transition-all duration-300"></span>
                         </span>
                       </Link>
                     </motion.li>
@@ -232,7 +232,7 @@ export function Footer() {
                 className="lg:col-span-1"
                 variants={itemVariants}
               >
-                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#716106]">
+                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#EFC132]">
                   {t('footer.getInTouch') || 'Get in Touch'}
                 </h4>
                 <div className="space-y-4">
@@ -241,7 +241,7 @@ export function Footer() {
                     whileHover={{ x: 5 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="p-2 bg-gradient-to-r from-[#716106] to-[#8B7A0A] rounded-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="p-2 bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-lg group-hover:scale-110 transition-transform duration-300">
                       <Mail className="w-4 h-4 text-white" />
                     </div>
                     <a 
@@ -257,7 +257,7 @@ export function Footer() {
                     whileHover={{ x: 5 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="p-2 bg-gradient-to-r from-[#716106] to-[#8B7A0A] rounded-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="p-2 bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-lg group-hover:scale-110 transition-transform duration-300">
                       <Phone className="w-4 h-4 text-white" />
         </div>
                     <a 
@@ -273,7 +273,7 @@ export function Footer() {
                     whileHover={{ x: 5 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="p-2 bg-gradient-to-r from-[#716106] to-[#8B7A0A] rounded-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="p-2 bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-lg group-hover:scale-110 transition-transform duration-300">
                       <MapPin className="w-4 h-4 text-white" />
                     </div>
                     <span className="text-gray-300 font-['ADLaM_Display:Regular',_sans-serif] text-[15px]">
@@ -291,7 +291,7 @@ export function Footer() {
             variants={itemVariants}
           >
             {/* Gradient Border */}
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#716106] to-transparent"></div>
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#EFC132] to-transparent"></div>
             
             <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">

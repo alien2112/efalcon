@@ -109,7 +109,7 @@ export function AchievementCard({
       {/* Icon with animation */}
       <motion.div
         className={`mx-auto mb-4 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
-          isHovered ? 'bg-[#716106] text-white scale-110' : 'bg-gray-100 text-[#716106]'
+          isHovered ? 'bg-[#EFC132] text-white scale-110' : 'bg-gray-100 text-[#EFC132]'
         }`}
         animate={{
           rotate: isHovered ? 360 : 0,
@@ -123,11 +123,11 @@ export function AchievementCard({
       {/* Animated number */}
       <motion.h3
         className={`font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] mb-2 transition-colors duration-300 ${
-          isHovered ? 'text-[#8B7A0A]' : 'text-[#716106]'
+          isHovered ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
         }`}
         animate={{
           scale: isHovered ? 1.1 : 1,
-          color: isHovered ? '#8B7A0A' : '#716106'
+          color: isHovered ? '#8B7A0A' : '#EFC132'
         }}
         transition={{ duration: 0.3 }}
       >
@@ -169,7 +169,7 @@ export function AchievementCard({
 
       {/* Hover glow effect */}
       <motion.div
-        className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#716106]/5 to-[#8B7A0A]/5 pointer-events-none"
+        className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#EFC132]/5 to-[#8B7A0A]/5 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}

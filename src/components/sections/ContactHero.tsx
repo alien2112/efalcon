@@ -20,6 +20,9 @@ export function ContactHero({ onAnimationComplete }: ContactHeroProps) {
       title={t('contact.hero.contactTitle') || 'Contact Us'}
       subtitle={t('contact.hero.contactSubtitle') || "We'd love to hear from you"}
       backgroundImage="/ourservicesbanner.webp"
+      page="contact"
+      useDynamicImages={true}
+      isSlider={true}
     />
   );
 }

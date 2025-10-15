@@ -8,6 +8,6 @@ interface HeroSectionProps {
 
 export function HeroSection({ onAnimationComplete }: HeroSectionProps) {
   return (
-    <HeroSlider onReady={onAnimationComplete} />
+    <HeroSlider onReady={onAnimationComplete} page="home" />
   );
 }

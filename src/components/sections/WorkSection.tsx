@@ -1,6 +1,8 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Search } from 'lucide-react';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -12,13 +14,33 @@ interface WorkImage {
   imageUrl: string;
   order: number;
   isActive: boolean;
+  slug?: string;
+}
+
+interface FeaturedProject {
+  _id: string;
+  title: {
+    en: string;
+    ar: string;
+  };
+  summary: {
+    en: string;
+    ar: string;
+  };
+  imageUrl: string;
+  slug: string;
+  order: number;
+  isActive: boolean;
+  isFeatured: boolean;
 }
 
 export function WorkSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [featuredProjects, setFeaturedProjects] = useState<FeaturedProject[]>([]);
+  const [loading, setLoading] = useState(true);
   
-  // Use fallback work images directly for better performance
-  const workImages: WorkImage[] = [
+  // Fallback work images
+  const fallbackWorkImages: WorkImage[] = [
     {
       _id: '1',
       title: "Petroleum Products Storage",
@@ -53,8 +75,40 @@ export function WorkSection() {
     }
   ];
 
+  useEffect(() => {
+    const fetchFeaturedProjects = async () => {
+      try {
+        const response = await fetch('/api/projects/featured');
+        const result = await response.json();
+        
+        if (result.success && result.data.length > 0) {
+          setFeaturedProjects(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching featured projects:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedProjects();
+  }, []);
+
+  // Combine featured projects with fallback work images
+  const workImages = featuredProjects.length > 0 
+    ? featuredProjects.map(project => ({
+        _id: project._id,
+        title: project.title[language],
+        description: project.summary[language],
+        imageUrl: project.imageUrl,
+        slug: project.slug,
+        order: project.order,
+        isActive: project.isActive
+      }))
+    : fallbackWorkImages;
+
   return (
-    <div className="relative w-full bg-[#716106] py-20 md:py-32 overflow-hidden">
+    <div className="relative w-full bg-[#EFC132] py-20 md:py-32 overflow-hidden">
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Title */}
         <FadeInOnScroll direction="up" delay={0.2}>
@@ -68,7 +122,10 @@ export function WorkSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {workImages.map((item, index) => (
               <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
-                <div className="group relative rounded-[20px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.35)] border border-white/10 bg-black/20 transition-transform duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
+                <Link 
+                  href={item.slug ? `/our-work/${item.slug}` : '#'}
+                  className="group relative rounded-[20px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.35)] border border-white/10 bg-black/20 transition-transform duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.45)] block"
+                >
                   {/* Thumbnail */}
                   <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
                     <Image
@@ -101,7 +158,7 @@ export function WorkSection() {
 
                   {/* Hover border highlight */}
                   <div className="pointer-events-none absolute inset-0 rounded-[20px] border border-white/0 group-hover:border-white/25 transition-colors duration-300" />
-                </div>
+                </Link>
               </FadeInOnScroll>
             ))}
           </div>

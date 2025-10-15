@@ -39,9 +39,14 @@ export const POST = withAuth(async (request: NextRequest) => {
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const title = formData.get('title') as string;
+    const titleAr = formData.get('titleAr') as string;
     const description = formData.get('description') as string;
+    const descriptionAr = formData.get('descriptionAr') as string;
     const order = parseInt(formData.get('order') as string);
     const isActive = formData.get('isActive') === 'true';
+    const showTitle = formData.get('showTitle') === 'true';
+    const showDescription = formData.get('showDescription') === 'true';
+    const page = formData.get('page') as string;
 
     if (!file) {
       return NextResponse.json({
@@ -50,10 +55,10 @@ export const POST = withAuth(async (request: NextRequest) => {
       }, { status: 400 });
     }
 
-    if (!title || !description || isNaN(order)) {
+    if (isNaN(order)) {
       return NextResponse.json({
         success: false,
-        error: 'Title, description, and order are required'
+        error: 'Order is required'
       }, { status: 400 });
     }
 
@@ -63,10 +68,15 @@ export const POST = withAuth(async (request: NextRequest) => {
       file.name,
       file.type,
       {
-        title,
-        description,
+        title: title || file.name,
+        titleAr: titleAr || '',
+        description: description || '',
+        descriptionAr: descriptionAr || '',
         order,
-        isActive
+        isActive,
+        showTitle,
+        showDescription,
+        page: page || 'home'
       }
     );
 
@@ -76,7 +86,17 @@ export const POST = withAuth(async (request: NextRequest) => {
         _id: fileId,
         filename: file.name,
         contentType: file.type,
-        metadata: { title, description, order, isActive }
+        metadata: { 
+          title: title || file.name, 
+          titleAr: titleAr || '', 
+          description: description || '', 
+          descriptionAr: descriptionAr || '', 
+          order, 
+          isActive, 
+          showTitle, 
+          showDescription, 
+          page: page || 'home' 
+        }
       },
       message: 'Image uploaded successfully'
     });
@@ -91,9 +111,22 @@ export const POST = withAuth(async (request: NextRequest) => {
 });
 
 // PUT - Update image metadata (Admin only)
+// Note: GridFS doesn't support direct metadata updates,
+// so we need to use a workaround with the files collection
 export const PUT = withAuth(async (request: NextRequest) => {
   try {
-    const { _id, title, description, order, isActive } = await request.json();
+    const { 
+      _id, 
+      title, 
+      titleAr, 
+      description, 
+      descriptionAr, 
+      order, 
+      isActive, 
+      showTitle, 
+      showDescription, 
+      page 
+    } = await request.json();
 
     if (!_id) {
       return NextResponse.json({
@@ -102,19 +135,48 @@ export const PUT = withAuth(async (request: NextRequest) => {
       }, { status: 400 });
     }
 
-    // Note: GridFS doesn't support updating metadata directly
-    // We would need to delete and re-upload the file
-    // For now, we'll return an error suggesting to re-upload
+    // Get the database connection
+    const clientPromise = (await import('@/lib/mongodb')).default;
+    const client = await clientPromise;
+    const db = client.db(process.env.MONGODB_DB || 'petrowebsite');
+    const filesCollection = db.collection('images.files');
+
+    // Update the metadata in the files collection
+    const updateFields: any = {};
+    if (title !== undefined) updateFields['metadata.title'] = title;
+    if (titleAr !== undefined) updateFields['metadata.titleAr'] = titleAr;
+    if (description !== undefined) updateFields['metadata.description'] = description;
+    if (descriptionAr !== undefined) updateFields['metadata.descriptionAr'] = descriptionAr;
+    if (order !== undefined) updateFields['metadata.order'] = order;
+    if (isActive !== undefined) updateFields['metadata.isActive'] = isActive;
+    if (showTitle !== undefined) updateFields['metadata.showTitle'] = showTitle;
+    if (showDescription !== undefined) updateFields['metadata.showDescription'] = showDescription;
+    if (page !== undefined) updateFields['metadata.page'] = page;
+
+    const { ObjectId } = await import('mongodb');
+    const result = await filesCollection.updateOne(
+      { _id: new ObjectId(_id) },
+      { $set: updateFields }
+    );
+
+    if (result.matchedCount === 0) {
+      return NextResponse.json({
+        success: false,
+        error: 'Image not found'
+      }, { status: 404 });
+    }
+
     return NextResponse.json({
-      success: false,
-      error: 'GridFS metadata updates require file re-upload. Please delete and re-upload the file.'
-    }, { status: 400 });
+      success: true,
+      message: 'Image metadata updated successfully',
+      data: { _id, ...updateFields }
+    });
 
   } catch (error) {
     console.error('Error updating image:', error);
     return NextResponse.json({
       success: false,
-      error: 'Failed to update image'
+      error: 'Failed to update image: ' + (error as Error).message
     }, { status: 500 });
   }
 });

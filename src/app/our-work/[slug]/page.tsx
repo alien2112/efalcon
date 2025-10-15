@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Navigation } from '@/components/Navigation';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -83,10 +83,108 @@ const workProjects = [
   }
 ];
 
+interface DynamicProject {
+  _id: string;
+  title: {
+    en: string;
+    ar: string;
+  };
+  summary: {
+    en: string;
+    ar: string;
+  };
+  description: {
+    en: string;
+    ar: string;
+  };
+  imageUrl: string;
+  galleryImages: string[];
+  technologies: {
+    en: string[];
+    ar: string[];
+  };
+  features: {
+    en: string[];
+    ar: string[];
+  };
+  challenges: {
+    en: string[];
+    ar: string[];
+  };
+  solutions: {
+    en: string[];
+    ar: string[];
+  };
+  results: {
+    en: string[];
+    ar: string[];
+  };
+  client: {
+    en: string;
+    ar: string;
+  };
+  location: {
+    en: string;
+    ar: string;
+  };
+  duration: {
+    en: string;
+    ar: string;
+  };
+  budget: {
+    en: string;
+    ar: string;
+  };
+  slug: string;
+  order: number;
+  isActive: boolean;
+  isFeatured: boolean;
+}
+
 export default function WorkDetailPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const params = useParams<{ slug: string }>();
-  const project = useMemo(() => workProjects.find(p => p.slug === params.slug), [params.slug]);
+  const [dynamicProject, setDynamicProject] = useState<DynamicProject | null>(null);
+  const [loading, setLoading] = useState(true);
+  
+  const staticProject = useMemo(() => workProjects.find(p => p.slug === params.slug), [params.slug]);
+
+  useEffect(() => {
+    const fetchDynamicProject = async () => {
+      if (staticProject) {
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/api/projects/${params.slug}`);
+        const result = await response.json();
+        
+        if (result.success) {
+          setDynamicProject(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching project:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDynamicProject();
+  }, [params.slug, staticProject]);
+
+  const project = staticProject || dynamicProject;
+
+  if (loading) {
+    return (
+      <div className="size-full overflow-y-auto overflow-x-hidden">
+        <Navigation currentSection="work" onNavigate={() => {}} />
+        <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-24 text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#EFC132] mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
 
   if (!project) {
     return (
@@ -106,16 +204,40 @@ export default function WorkDetailPage() {
 
       {/* Hero banner using project image */}
       <section className="relative w-full h-[40vh] md:h-[52vh] overflow-hidden">
-        <Image src={project.imageUrl} alt={t(`ourWorkPage.projects.${project.id}.title`) || project.id} fill className="object-cover" priority />
+        <Image 
+          src={staticProject ? staticProject.imageUrl : project.imageUrl} 
+          alt={staticProject 
+            ? (t(`ourWorkPage.projects.${staticProject.id}.title`) || staticProject.id)
+            : project.title[language]
+          } 
+          fill 
+          className="object-cover" 
+          priority 
+        />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
           <div>
-            <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px] mb-3">{t(`ourWorkPage.projects.${project.id}.title`) || project.id}</h1>
-            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[18px] max-w-[900px] mx-auto">{t(`ourWorkPage.projects.${project.id}.description`) || 'Project description not available.'}</p>
+            <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px] mb-3">
+              {staticProject 
+                ? (t(`ourWorkPage.projects.${staticProject.id}.title`) || staticProject.id)
+                : project.title[language]
+              }
+            </h1>
+            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[18px] max-w-[900px] mx-auto">
+              {staticProject 
+                ? (t(`ourWorkPage.projects.${staticProject.id}.description`) || 'Project description not available.')
+                : project.summary[language]
+              }
+            </p>
             <div className="flex items-center justify-center gap-4 mt-4 text-white/80">
-              <span>{project.year}</span>
+              <span>{staticProject ? staticProject.year : project.duration[language]}</span>
               <span>•</span>
-              <span>{t(`ourWorkPage.projects.${project.id}.location`) || 'Location not specified'}</span>
+              <span>
+                {staticProject 
+                  ? (t(`ourWorkPage.projects.${staticProject.id}.location`) || 'Location not specified')
+                  : project.location[language]
+                }
+              </span>
             </div>
           </div>
         </div>
@@ -125,14 +247,29 @@ export default function WorkDetailPage() {
       <section className="bg-gray-50 py-12 md:py-16">
         <div className="max-w-[1280px] mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-3 gap-6">
-            {project.features.map((featureIndex) => (
-              <div key={featureIndex} className="bg-gray-50 border border-gray-200 rounded-[14px] p-5 shadow-sm">
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#716106] text-[18px] md:text-[20px]">{t(`ourWorkPage.projects.${project.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`}</h3>
-                <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
-                  {(t(`ourWorkPage.projects.${project.translationKey}.title`) || project.id)} {t('work.detail.includes') || 'includes'}: {(t(`ourWorkPage.projects.${project.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`)} {t('work.detail.asPartOf') || 'as part of our comprehensive project delivery'}.
-                </p>
-              </div>
-            ))}
+            {staticProject ? (
+              staticProject.features.map((featureIndex) => (
+                <div key={featureIndex} className="bg-gray-50 border border-gray-200 rounded-[14px] p-5 shadow-sm">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#EFC132] text-[18px] md:text-[20px]">
+                    {t(`ourWorkPage.projects.${staticProject.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`}
+                  </h3>
+                  <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
+                    {(t(`ourWorkPage.projects.${staticProject.translationKey}.title`) || staticProject.id)} {t('work.detail.includes') || 'includes'}: {(t(`ourWorkPage.projects.${staticProject.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`)} {t('work.detail.asPartOf') || 'as part of our comprehensive project delivery'}.
+                  </p>
+                </div>
+              ))
+            ) : (
+              project.features[language].map((feature, index) => (
+                <div key={index} className="bg-gray-50 border border-gray-200 rounded-[14px] p-5 shadow-sm">
+                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#EFC132] text-[18px] md:text-[20px]">
+                    {feature}
+                  </h3>
+                  <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
+                    {project.title[language]} includes: {feature} as part of our comprehensive project delivery.
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -143,13 +280,27 @@ export default function WorkDetailPage() {
           {/* Detailed Content */}
           <div className="grid md:grid-cols-3 gap-8 items-start mb-12">
             <div className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-10">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-4">{t('work.detail.overview') || 'Project Overview'}</h2>
-              <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed mb-6">{t(`ourWorkPage.projects.${project.translationKey}.content`) || 'Project content not available.'}</p>
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#716106] mb-4">{t('work.detail.detailedInformation') || 'Detailed Information'}</h3>
-              <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed">{t(`ourWorkPage.projects.${project.translationKey}.detailedContent`) || 'Detailed project information not available.'}</p>
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#EFC132] mb-4">
+                {t('work.detail.overview') || 'Project Overview'}
+              </h2>
+              <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed mb-6">
+                {staticProject 
+                  ? (t(`ourWorkPage.projects.${staticProject.translationKey}.content`) || 'Project content not available.')
+                  : project.description[language]
+                }
+              </p>
+              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#EFC132] mb-4">
+                {t('work.detail.detailedInformation') || 'Detailed Information'}
+              </h3>
+              <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed">
+                {staticProject 
+                  ? (t(`ourWorkPage.projects.${staticProject.translationKey}.detailedContent`) || 'Detailed project information not available.')
+                  : project.description[language]
+                }
+              </p>
             </div>
             <aside className="bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-8">
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[22px] text-[#716106] mb-3">{t('work.detail.whyEbdaaFalcon') || 'Why Ebdaa Falcon'}</h3>
+              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[22px] text-[#EFC132] mb-3">{t('work.detail.whyEbdaaFalcon') || 'Why Ebdaa Falcon'}</h3>
               <ul className="list-disc pl-5 space-y-2 font-['Alice:Regular',_sans-serif] text-gray-700">
                 <li>{t('work.detail.whyEbdaaFalconList.experiencedOperations') || 'Experienced Project Management Team'}</li>
                 <li>{t('work.detail.whyEbdaaFalconList.safetyCompliance') || 'Safety & Compliance First'}</li>
@@ -162,7 +313,7 @@ export default function WorkDetailPage() {
                   <a
                     href={project.downloadUrl}
                     download
-                    className="inline-flex items-center text-[#716106] font-medium hover:text-[#5a4f05] transition-colors"
+                    className="inline-flex items-center text-[#EFC132] font-medium hover:text-[#5a4f05] transition-colors"
                   >
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -176,30 +327,54 @@ export default function WorkDetailPage() {
 
           {/* Benefits Section */}
           <div className="bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-10 mb-12">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-6 text-center">{t('work.detail.keyBenefits') || 'Key Benefits'}</h2>
+            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#EFC132] mb-6 text-center">
+              {t('work.detail.keyBenefits') || 'Key Benefits'}
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {project.benefits.map((benefitIndex) => (
-                <div key={benefitIndex} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-                  <div className="w-8 h-8 bg-[#716106] rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+              {staticProject ? (
+                staticProject.benefits.map((benefitIndex) => (
+                  <div key={benefitIndex} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                    <div className="w-8 h-8 bg-[#EFC132] rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px]">
+                      {t(`ourWorkPage.projects.${staticProject.translationKey}.benefits.${benefitIndex}`)}
+                    </span>
                   </div>
-                  <span className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px]">{t(`ourWorkPage.projects.${project.translationKey}.benefits.${benefitIndex}`)}</span>
-                </div>
-              ))}
+                ))
+              ) : (
+                project.results[language].map((result, index) => (
+                  <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                    <div className="w-8 h-8 bg-[#EFC132] rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px]">
+                      {result}
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
           {/* Image Gallery */}
           <div className="bg-gray-50 border border-gray-200 rounded-[16px] p-6 md:p-10">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#716106] mb-6 text-center">{t('work.detail.projectGallery') || 'Project Gallery'}</h2>
+            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#EFC132] mb-6 text-center">
+              {t('work.detail.projectGallery') || 'Project Gallery'}
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {project.galleryImages.map((image, index) => (
+              {(staticProject ? staticProject.galleryImages : project.galleryImages).map((image, index) => (
                 <div key={index} className="group relative h-[200px] md:h-[250px] rounded-[12px] overflow-hidden border border-gray-200">
                   <Image
                     src={image}
-                    alt={`${t(`ourWorkPage.projects.${project.translationKey}.title`)} - Image ${index + 1}`} 
+                    alt={staticProject 
+                      ? `${t(`ourWorkPage.projects.${staticProject.translationKey}.title`)} - Image ${index + 1}`
+                      : `${project.title[language]} - Image ${index + 1}`
+                    } 
                     fill 
                     className="object-cover group-hover:scale-105 transition-transform duration-300" 
                   />
@@ -217,7 +392,7 @@ export default function WorkDetailPage() {
           </div>
 
           <div className="max-w-[1280px] mx-auto px-4 md:px-8 mt-8">
-            <Link href="/our-work" className="text-[#716106] underline font-['ADLaM_Display:Regular',_sans-serif]">← {t('navigation.backToOurWork') || 'Back to Our Work'}</Link>
+            <Link href="/our-work" className="text-[#EFC132] underline font-['ADLaM_Display:Regular',_sans-serif]">← {t('navigation.backToOurWork') || 'Back to Our Work'}</Link>
           </div>
         </div>
       </section>

@@ -47,7 +47,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   if (!isVisible) return null;
 
   return (
-    <div className={`fixed inset-0 z-50 bg-[#716106] flex items-center justify-center transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`fixed inset-0 z-50 bg-[#EFC132] flex items-center justify-center transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>

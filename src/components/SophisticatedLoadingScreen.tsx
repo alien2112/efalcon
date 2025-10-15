@@ -98,7 +98,7 @@ export function SophisticatedLoadingScreen({ isVisible, onComplete }: Sophistica
                 className="absolute w-64 h-64 rounded-full opacity-20"
                 style={{
                   background: `radial-gradient(circle, ${
-                    i === 0 ? '#FFD700' : i === 1 ? '#FFA500' : '#716106'
+                    i === 0 ? '#FFD700' : i === 1 ? '#FFA500' : '#EFC132'
                   } 0%, transparent 70%)`,
                   left: `${30 + i * 25}%`,
                   top: `${20 + i * 20}%`,
@@ -176,7 +176,7 @@ export function SophisticatedLoadingScreen({ isVisible, onComplete }: Sophistica
               <motion.div
                 className="absolute inset-0 w-32 h-32 rounded-full border-2 border-transparent"
                 style={{
-                  borderImage: 'linear-gradient(45deg, #FFD700, #FFA500, #716106, #FFD700) 1',
+                  borderImage: 'linear-gradient(45deg, #FFD700, #FFA500, #EFC132, #FFD700) 1',
                   borderImageSlice: 1,
                 }}
                 animate={{ rotate: 360 }}
@@ -246,7 +246,7 @@ export function SophisticatedLoadingScreen({ isVisible, onComplete }: Sophistica
                 
                 {/* Progress Fill */}
                 <motion.div
-                  className="h-full bg-gradient-to-r from-[#FFD700] via-[#FFA500] to-[#716106] rounded-full relative overflow-hidden"
+                  className="h-full bg-gradient-to-r from-[#FFD700] via-[#FFA500] to-[#EFC132] rounded-full relative overflow-hidden"
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.3, ease: "easeOut" }}

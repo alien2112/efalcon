@@ -21,7 +21,7 @@ export function ContactMap() {
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#716106] mb-4">
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-4">
             {t('contact.map.title') || 'Our Location'}
           </h2>
           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">
@@ -59,12 +59,12 @@ export function ContactMap() {
           {/* Map Info Overlay */}
           <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 md:max-w-sm">
             <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-xl p-4 md:p-6 border border-white/20">
-              <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[16px] md:text-[18px] text-[#716106] mb-3">
+              <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[16px] md:text-[18px] text-[#EFC132] mb-3">
                 {t('contact.map.contactDetails') || 'Contact Details'}
               </h4>
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                  <svg className="w-4 h-4 text-[#716106] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#EFC132] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[13px] md:text-[14px] text-gray-600">
@@ -72,7 +72,7 @@ export function ContactMap() {
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <svg className="w-4 h-4 text-[#716106] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#EFC132] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[13px] md:text-[14px] text-gray-600">
@@ -80,12 +80,12 @@ export function ContactMap() {
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <svg className="w-4 h-4 text-[#716106] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-[#EFC132] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <a 
                     href="tel:+966565145666"
-                    className="font-['ADLaM_Display:Regular',_sans-serif] text-[13px] md:text-[14px] text-gray-600 hover:text-[#716106] transition-colors"
+                    className="font-['ADLaM_Display:Regular',_sans-serif] text-[13px] md:text-[14px] text-gray-600 hover:text-[#EFC132] transition-colors"
                   >
                     {t('contact.map.phone') || '+966 56 514 5666'}
                   </a>
@@ -95,7 +95,7 @@ export function ContactMap() {
                 href="https://www.google.com/maps/dir/?api=1&destination=King+Fahd+Rd%2C+Riyadh%2C+Saudi+Arabia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 w-full bg-[#716106] text-white py-2 px-4 rounded-lg font-medium hover:bg-[#5a4f05] transition-colors text-center block text-[13px] md:text-[14px]"
+                className="mt-3 w-full bg-[#EFC132] text-white py-2 px-4 rounded-lg font-medium hover:bg-[#5a4f05] transition-colors text-center block text-[13px] md:text-[14px]"
               >
                 {t('contact.map.getDirections') || 'Get Directions'}
               </a>

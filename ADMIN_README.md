@@ -1,6 +1,7 @@
-# Admin Dashboard - Petro Website
+# Admin Panel Documentation
 
-This admin dashboard allows administrators to manage images for the Petro website's Vision, Services, and Work sections.
+## Overview
+The admin panel provides a comprehensive interface for managing banner images across all pages of the website. It supports both Arabic and English languages and uses GridFS for efficient image storage.
 
 ## Features
 
@@ -9,177 +10,148 @@ This admin dashboard allows administrators to manage images for the Petro websit
 - Password hashing with bcrypt
 - Session management with localStorage
 
-### 🖼️ Image Management
-- **Vision Images**: Manage images for left and right boxes in the vision section
-- **Services Images**: Manage slider images for the services carousel
-- **Work Images**: Manage 4 images for the work section grid
+### 🖼️ Banner Management
+- Upload banner images for different pages (Home, About, Services, Work, Blog, Contact)
+- Set display order and active/inactive status
+- Delete unwanted images
+- Real-time preview of uploaded images
 
-### 📊 Admin Dashboard Features
-- Tabbed interface for different image categories
-- Add, edit, and delete images
-- Image preview with thumbnails
-- Form validation and error handling
-- Real-time updates
+### 🌐 Multi-language Support
+- Full Arabic and English support
+- Dynamic language switching
+- RTL support for Arabic
+
+### 📁 GridFS Integration
+- Efficient image storage using MongoDB GridFS
+- Automatic image optimization
+- Secure image serving with proper headers
 
 ## Setup Instructions
 
-### 1. Database Setup
-The MongoDB connection is already configured with:
-- **URL**: `mongodb+srv://eslamabdaltif:petroloneone@cluster0.khjzlvu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
-- **Database**: `petrowebsite`
+### 1. Create Admin User
+Run the admin creation script to set up the initial admin user:
 
-### 2. Admin User Creation
-An admin user has been created with:
-- **Username**: `admin`
-- **Password**: `admin123`
-
-⚠️ **Important**: Change the password after first login!
-
-### 3. Environment Variables
-The following environment variables are set in `.env.local`:
-```
-MONGODB_URI=mongodb+srv://eslamabdaltif:petroloneone@cluster0.khjzlvu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-MONGODB_DB=petrowebsite
-JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+```bash
+node scripts/create-admin.js
 ```
 
-## Usage
+**Default Credentials:**
+- Username: `admin`
+- Password: `admin123`
 
-### Accessing the Admin Dashboard
-1. Navigate to `/admin` in your browser
-2. Login with the admin credentials
-3. Use the tabbed interface to manage different image categories
+⚠️ **Important:** Change the password after first login!
 
-### Managing Images
+### 2. Access Admin Panel
+Navigate to `/admin` in your browser to access the login page.
 
-#### Vision Images
-- **Left Position**: Image for the left box in vision section
-- **Right Position**: Image for the right box in vision section
-- Only one active image per position allowed
-
-#### Services Images
-- Images appear in the services carousel slider
-- Order determines the sequence (1, 2, 3, etc.)
-- Multiple images can be active
-
-#### Work Images
-- Images for the 4-box work section grid
-- Order must be between 1-4
-- Only one active image per order position
-
-### Image Requirements
-- **Image URL**: Must be a valid URL to an image
-- **Title**: Descriptive title for the image
-- **Description**: Text content displayed with the image
-- **Order/Position**: Determines placement in the UI
+### 3. Manage Banner Images
+1. Login with your admin credentials
+2. Select the page you want to manage (Home, About, Services, etc.)
+3. Click "Add Banner Image" to upload new images
+4. Set the display order and active status
+5. Use the delete button to remove unwanted images
 
 ## API Endpoints
 
 ### Authentication
 - `POST /api/admin/login` - Admin login
 
-### Vision Images
-- `GET /api/admin/vision-images` - Fetch all vision images
-- `POST /api/admin/vision-images` - Create new vision image (Admin only)
-- `PUT /api/admin/vision-images` - Update vision image (Admin only)
-- `DELETE /api/admin/vision-images?_id={id}` - Delete vision image (Admin only)
+### Image Management
+- `GET /api/gridfs/images` - List all images
+- `POST /api/gridfs/images` - Upload new image (Admin only)
+- `DELETE /api/gridfs/images?_id={id}` - Delete image (Admin only)
+- `GET /api/gridfs/images/{id}` - Serve image file
 
-### Services Images
-- `GET /api/admin/services-images` - Fetch all services images
-- `POST /api/admin/services-images` - Create new service image (Admin only)
-- `PUT /api/admin/services-images` - Update service image (Admin only)
-- `DELETE /api/admin/services-images?_id={id}` - Delete service image (Admin only)
+## File Structure
 
-### Work Images
-- `GET /api/admin/work-images` - Fetch all work images
-- `POST /api/admin/work-images` - Create new work image (Admin only)
-- `PUT /api/admin/work-images` - Update work image (Admin only)
-- `DELETE /api/admin/work-images?_id={id}` - Delete work image (Admin only)
-
-## Database Schema
-
-### Admin Users Collection
-```typescript
-interface AdminUser {
-  _id?: string;
-  username: string;
-  password: string; // hashed
-  email: string;
-  createdAt: Date;
-  lastLogin?: Date;
-}
+```
+src/
+├── app/
+│   ├── admin/
+│   │   ├── page.tsx              # Admin login page
+│   │   └── dashboard/
+│   │       └── page.tsx          # Admin dashboard
+│   └── api/
+│       ├── admin/
+│       │   └── login/
+│       │       └── route.ts      # Login API
+│       └── gridfs/
+│           └── images/
+│               ├── route.ts       # Image CRUD API
+│               └── [id]/
+│                   └── route.ts  # Image serving API
+├── components/
+│   ├── Banner.tsx                # Dynamic banner component
+│   └── sections/
+│       └── HeroSlider.tsx        # Home page slider
+└── lib/
+    ├── auth.ts                   # Authentication utilities
+    ├── gridfs.ts                 # GridFS utilities
+    └── mongodb.ts                # MongoDB connection
 ```
 
-### Vision Images Collection
-```typescript
-interface VisionImage {
-  _id?: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  position: 'left' | 'right';
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-```
+## Usage Examples
 
-### Services Images Collection
-```typescript
-interface ServiceImage {
-  _id?: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  order: number;
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-```
+### Adding Banner Images
+1. Go to Admin Dashboard
+2. Select the target page (e.g., "Services")
+3. Click "Add Banner Image"
+4. Upload image file
+5. Set title, description, and display order
+6. Mark as active/inactive
+7. Click "Upload Image"
 
-### Work Images Collection
-```typescript
-interface WorkImage {
-  _id?: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  order: number; // 1-4
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-```
+### Managing Existing Images
+- **Reorder**: Change the display order number
+- **Hide/Show**: Toggle active status
+- **Delete**: Remove image permanently
 
 ## Security Features
 
 - JWT token-based authentication
 - Password hashing with bcrypt
-- Protected API routes
+- Admin-only API endpoints
+- Secure image serving with proper headers
 - Input validation and sanitization
-- Error handling and logging
-
-## Development
-
-### Running the Development Server
-```bash
-npm run dev
-```
-
-### Creating Additional Admin Users
-Run the script to create additional admin users:
-```bash
-node scripts/create-admin.js
-```
 
 ## Troubleshooting
 
 ### Common Issues
-1. **Login fails**: Check username/password combination
-2. **Images not loading**: Verify image URLs are accessible
-3. **Database connection issues**: Check MongoDB connection string
-4. **Permission errors**: Ensure admin user has proper authentication
 
-### Support
-For technical support or questions about the admin dashboard, contact the development team.
+1. **Login Failed**
+   - Verify admin user exists in database
+   - Check username/password combination
+   - Ensure MongoDB connection is working
+
+2. **Image Upload Failed**
+   - Check file size limits
+   - Verify image format (JPG, PNG, WebP)
+   - Ensure GridFS bucket is properly configured
+
+3. **Images Not Displaying**
+   - Check if images are marked as active
+   - Verify page parameter matches
+   - Check browser console for errors
+
+### Database Queries
+
+To manually check admin users:
+```javascript
+db.admin_users.find()
+```
+
+To check uploaded images:
+```javascript
+db.images.files.find()
+```
+
+## Environment Variables
+
+Ensure these environment variables are set:
+- `MONGODB_URI` - MongoDB connection string
+- `MONGODB_DB` - Database name
+- `JWT_SECRET` - JWT signing secret
+
+## Support
+
+For technical support or questions about the admin panel, please contact the development team.

@@ -23,6 +23,9 @@ export default function AboutUsPageRoute() {
             { label: t('navigation.aboutUs') || 'About Us' }
           ]}
           backgroundImage="/about%20us%20banner%20.webp"
+          page="about"
+          useDynamicImages={true}
+          isSlider={true}
         />
       </div>
 

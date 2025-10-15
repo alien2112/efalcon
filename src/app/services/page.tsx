@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, Download, ArrowRight } from 'lucide-react';
@@ -8,14 +8,40 @@ import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { services as staticServices } from '@/lib/services';
 
-interface Service {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  downloadUrl?: string;
+interface DynamicService {
+  _id: string;
+  slug: string;
+  title: {
+    en: string;
+    ar: string;
+  };
+  summary: {
+    en: string;
+    ar: string;
+  };
   imageUrl: string;
+  features: {
+    en: string[];
+    ar: string[];
+  };
+  content: {
+    en: string;
+    ar: string;
+  };
+  detailedContent: {
+    en: string;
+    ar: string;
+  };
+  galleryImages: string[];
+  benefits: {
+    en: string[];
+    ar: string[];
+  };
+  category: string;
+  isActive: boolean;
+  order: number;
 }
 
 interface ServiceCategory {
@@ -30,13 +56,34 @@ interface ServiceCategory {
 // Applications will be defined inside the component to access translations
 
 export default function ServicesPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('oil-gas');
   const [currentApplication, setCurrentApplication] = useState(0);
   const [hoveredService, setHoveredService] = useState<string | null>(null);
   const [hoveredApplication, setHoveredApplication] = useState<string | null>(null);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [dynamicServices, setDynamicServices] = useState<DynamicService[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch dynamic services
+  useEffect(() => {
+    const fetchDynamicServices = async () => {
+      try {
+        const response = await fetch('/api/services');
+        const result = await response.json();
+        if (result.success) {
+          setDynamicServices(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching dynamic services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDynamicServices();
+  }, []);
 
   // Define service categories with translations
   const serviceCategories: ServiceCategory[] = [
@@ -142,6 +189,9 @@ export default function ServicesPage() {
             { label: t('navigation.home') || 'Home', href: '/' },
             { label: t('navigation.services') || 'Services' }
           ]}
+          page="services"
+          useDynamicImages={true}
+          isSlider={true}
         />
         </div>
 
@@ -149,7 +199,7 @@ export default function ServicesPage() {
       <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/10 via-transparent to-[#716106]/5"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/10 via-transparent to-[#EFC132]/5"></div>
           <div className="absolute top-0 left-0 w-full h-full" style={{
             backgroundImage: `radial-gradient(circle at 20% 20%, rgba(113, 97, 6, 0.1) 0%, transparent 50%),
                              radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
@@ -159,7 +209,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6 text-center">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center">
                 {t('services.title') || 'Our Services'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
@@ -178,8 +228,8 @@ export default function ServicesPage() {
                     onClick={() => setActiveCategory(category.id)}
                     className={`px-6 py-3 rounded-md font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                       activeCategory === category.id
-                        ? 'bg-[#716106] text-white shadow-lg scale-105'
-                        : 'text-gray-600 hover:text-[#716106] hover:bg-white hover:shadow-md'
+                        ? 'bg-[#EFC132] text-white shadow-lg scale-105'
+                        : 'text-gray-600 hover:text-[#EFC132] hover:bg-white hover:shadow-md'
                     }`}
                   >
                     {category.name}
@@ -196,7 +246,7 @@ export default function ServicesPage() {
                 {/* Service Info */}
                 <FadeInOnScroll direction="left" delay={0.6}>
                   <div className="space-y-6">
-                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-[#716106]">
+                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-[#EFC132]">
                       {currentCategory.name}
                     </h3>
                     <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 leading-relaxed">
@@ -204,7 +254,7 @@ export default function ServicesPage() {
                     </p>
                     <Link
                       href={`/services/${currentCategory.id}`}
-                      className="inline-flex items-center text-[#716106] hover:text-[#8B7A0A] transition-colors font-['ADLaM_Display:Regular',_sans-serif] text-[16px]"
+                      className="inline-flex items-center text-[#EFC132] hover:text-[#8B7A0A] transition-colors font-['ADLaM_Display:Regular',_sans-serif] text-[16px]"
                     >
                       {t('services.learnMore') || 'Learn more about'} {currentCategory.name}
                       <ArrowRight className="w-4 h-4 ml-2" />
@@ -240,7 +290,7 @@ export default function ServicesPage() {
                         </div>
                         <div className="p-6">
                           <h4 className={`font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 transition-colors duration-300 ${
-                            hoveredService === service.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
+                            hoveredService === service.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
                           }`}>
                             {service.name}
                           </h4>
@@ -257,7 +307,7 @@ export default function ServicesPage() {
                               className={`inline-flex items-center transition-all duration-300 transform hover:scale-105 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] ${
                                 hoveredService === service.id 
                                   ? 'text-[#8B7A0A] scale-105' 
-                                  : 'text-[#716106] hover:text-[#8B7A0A]'
+                                  : 'text-[#EFC132] hover:text-[#8B7A0A]'
                               }`}
                             >
                               <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-12" />
@@ -275,18 +325,70 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Dynamic Services Section */}
+      {!loading && dynamicServices.length > 0 && (
+        <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            <FadeInOnScroll direction="up" delay={0.2}>
+              <div className="text-center mb-12">
+                <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6">
+                  {t('services.additionalServices') || 'Additional Services'}
+                </h2>
+                <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
+                  {t('services.additionalServicesDescription') || 'Explore our expanded range of specialized services designed to meet your unique requirements.'}
+                </p>
+              </div>
+            </FadeInOnScroll>
+
+            <FadeInOnScroll direction="up" delay={0.4}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {dynamicServices.map((service) => (
+                  <Link 
+                    href={`/services/${service.slug}`}
+                    key={service._id} 
+                    className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
+                        src={service.imageUrl}
+                        alt={service.title[language]}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                    <div className="p-6">
+                      <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300">
+                        {service.title[language]}
+                      </h4>
+                      <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
+                        {service.summary[language]}
+                      </p>
+                      <div className="flex items-center text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[14px]">
+                        {t('services.learnMore') || 'Learn More'}
+                        <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </FadeInOnScroll>
+          </div>
+        </section>
+      )}
+
       {/* Applications Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-[#716106]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#716106]/20 to-transparent rounded-full blur-xl"></div>
+          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#EFC132]/20 to-transparent rounded-full blur-xl"></div>
           <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-[#FFD700]/20 to-transparent rounded-full blur-lg"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#716106]/15 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#EFC132]/15 to-transparent rounded-full blur-2xl"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#716106] mb-6">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6">
                 {t('services.whereUsed') || 'Where Are Our Services Used?'}
               </h2>
             </div>
@@ -303,7 +405,7 @@ export default function ServicesPage() {
                       key={index}
                       onClick={() => setCurrentApplication(index)}
                       className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
-                        currentApplication === index ? 'bg-[#716106] scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                        currentApplication === index ? 'bg-[#EFC132] scale-125' : 'bg-gray-300 hover:bg-gray-400'
                       }`}
                     />
                   ))}
@@ -337,7 +439,7 @@ export default function ServicesPage() {
                       </div>
                       <div className="p-6">
                         <h3 className={`font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 transition-colors duration-300 ${
-                          hoveredApplication === application.id ? 'text-[#8B7A0A]' : 'text-[#716106]'
+                          hoveredApplication === application.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
                         }`}>
                           {application.title}
                         </h3>
@@ -358,7 +460,7 @@ export default function ServicesPage() {
       <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#716106]/5 via-transparent to-[#FFD700]/5"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/5 via-transparent to-[#FFD700]/5"></div>
           <div className="absolute inset-0" style={{
             backgroundImage: `radial-gradient(circle at 30% 30%, rgba(113, 97, 6, 0.08) 0%, transparent 50%),
                              radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%)`,
@@ -367,7 +469,7 @@ export default function ServicesPage() {
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#716106] mb-6">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#EFC132] mb-6">
                 {t('contact.form.title') || 'For Inquiries'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">
@@ -384,7 +486,7 @@ export default function ServicesPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       {t('contact.form.fields.inquiryType') || 'Select Inquiry Type'}
                     </label>
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400">
+                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400">
                       <option>{t('contact.form.options.general') || 'General Inquiries'}</option>
                       <option>{t('contact.form.options.product') || 'Product & Sales'}</option>
                       <option>{t('contact.form.options.procurement') || 'Procurement & Contracts'}</option>
@@ -398,7 +500,7 @@ export default function ServicesPage() {
                     </label>
                     <input
                       type="text"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
                       placeholder={t('contact.form.placeholders.name') || 'Your Name'}
                       required
                     />
@@ -410,7 +512,7 @@ export default function ServicesPage() {
                   </label>
                   <input
                     type="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
                     placeholder={t('contact.form.placeholders.email') || 'your.email@example.com'}
                     required
                   />
@@ -421,7 +523,7 @@ export default function ServicesPage() {
                   </label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
                     placeholder={t('contact.form.placeholders.subject') || 'Message Subject'}
                     required
                   />
@@ -432,7 +534,7 @@ export default function ServicesPage() {
                   </label>
                   <textarea
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#716106] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
                     placeholder={t('contact.form.placeholders.message') || 'Please describe your inquiry...'}
                     required
                   />
@@ -444,7 +546,7 @@ export default function ServicesPage() {
                     className={`px-8 py-3 rounded-lg font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center ${
                       formSubmitted 
                         ? 'bg-green-600 text-white' 
-                        : 'bg-[#716106] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
+                        : 'bg-[#EFC132] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
                     }`}
                   >
                     {isFormSubmitting ? (

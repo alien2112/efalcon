@@ -129,7 +129,7 @@ export function BlogPosts() {
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#716106] mb-4">{t('blog.posts.title') || 'Latest Articles'}</h2>
+          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-4">{t('blog.posts.title') || 'Latest Articles'}</h2>
           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">{t('blog.posts.subtitle') || 'Insights and updates from the energy and logistics sectors.'}</p>
         </div>
 
@@ -170,7 +170,7 @@ export function BlogPosts() {
                       className="object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute top-4 left-4">
-                      <span className="bg-[#716106] text-white px-3 py-1 rounded-full text-sm font-medium">
+                      <span className="bg-[#EFC132] text-white px-3 py-1 rounded-full text-sm font-medium">
                         {post.category}
                       </span>
                     </div>
@@ -186,7 +186,7 @@ export function BlogPosts() {
                       <span>{post.readTime}</span>
                     </div>
 
-                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[20px] text-[#716106] mb-3 line-clamp-2 group-hover:text-[#5a4f05] transition-colors">
+                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[20px] text-[#EFC132] mb-3 line-clamp-2 group-hover:text-[#5a4f05] transition-colors">
                       {post.title}
                     </h3>
 
@@ -209,7 +209,7 @@ export function BlogPosts() {
                     {/* Read More Button */}
                     <Link 
                       href={`/blog/${post.id}`}
-                      className="inline-flex items-center text-[#716106] font-medium hover:text-[#5a4f05] transition-colors group-hover:underline"
+                      className="inline-flex items-center text-[#EFC132] font-medium hover:text-[#5a4f05] transition-colors group-hover:underline"
                     >
                       {t('blog.posts.readMore') || 'Read more'}
                       <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -226,7 +226,7 @@ export function BlogPosts() {
               <div className="text-center">
                 <button
                   onClick={loadMorePosts}
-                  className="bg-[#716106] text-white px-8 py-3 rounded-full font-medium hover:bg-[#5a4f05] transition-colors duration-300 hover:scale-105 transform"
+                  className="bg-[#EFC132] text-white px-8 py-3 rounded-full font-medium hover:bg-[#5a4f05] transition-colors duration-300 hover:scale-105 transform"
                 >
                   {t('blog.posts.loadMore') || 'Load more'}
                 </button>

@@ -46,8 +46,8 @@ export function WaveSeparator({
     >
       <defs>
         <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#716106" />
-          <stop offset="100%" stopColor="#716106" />
+          <stop offset="0%" stopColor="#EFC132" />
+          <stop offset="100%" stopColor="#EFC132" />
         </linearGradient>
         <filter id="glow">
           <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
@@ -71,7 +71,7 @@ export function WaveSeparator({
       {/* Secondary wave for depth */}
       <motion.path
         d="M0,80 C200,40 400,120 600,80 C800,40 1000,120 1200,80 L1200,120 L0,120 Z"
-        fill="#716106"
+        fill="#EFC132"
         fillOpacity="0.3"
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
@@ -98,8 +98,8 @@ export function WaveSeparator({
     >
       <defs>
         <linearGradient id="curveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#716106" />
-          <stop offset="100%" stopColor="#716106" />
+          <stop offset="0%" stopColor="#EFC132" />
+          <stop offset="100%" stopColor="#EFC132" />
         </linearGradient>
       </defs>
       
@@ -123,8 +123,8 @@ export function WaveSeparator({
     >
       <defs>
         <linearGradient id="angledGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#716106" />
-          <stop offset="100%" stopColor="#716106" />
+          <stop offset="0%" stopColor="#EFC132" />
+          <stop offset="100%" stopColor="#EFC132" />
         </linearGradient>
       </defs>
       
@@ -154,7 +154,7 @@ export function WaveSeparator({
     <div className={`relative w-full h-24 md:h-32 ${className}`}>
       {/* Animated background gradient */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-[#716106]/20 to-[#716106]/40"
+        className="absolute inset-0 bg-gradient-to-b from-transparent via-[#EFC132]/20 to-[#EFC132]/40"
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? 1 : 0 }}
         transition={{ duration: 0.8, delay: 0.1 }}
@@ -217,14 +217,14 @@ export function CSSWaveSeparator({ className = '' }: { className?: string }) {
     <div className={`relative w-full h-24 md:h-32 ${className}`}>
       {/* CSS clip-path wave */}
       <div 
-        className="absolute inset-0 bg-[#716106]"
+        className="absolute inset-0 bg-[#EFC132]"
         style={{
           clipPath: 'polygon(0 60%, 25% 40%, 50% 60%, 75% 40%, 100% 60%, 100% 100%, 0 100%)',
         }}
       />
       
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#716106]/20 to-[#716106]/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#EFC132]/20 to-[#EFC132]/40" />
     </div>
   );
 }

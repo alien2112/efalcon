@@ -1,6 +1,6 @@
 import { MongoClient, Db } from 'mongodb';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://eslamabdaltif:petroloneone@cluster0.khjzlvu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://eslamabdaltif:oneone2@cluster0.afyc9bd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const MONGODB_DB = process.env.MONGODB_DB || 'petrowebsite';
 
 if (!MONGODB_URI) {
@@ -18,13 +18,45 @@ if (process.env.NODE_ENV === 'development') {
   };
 
   if (!globalWithMongo._mongoClientPromise) {
-    client = new MongoClient(MONGODB_URI);
+    client = new MongoClient(MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+      maxPoolSize: 10,
+      minPoolSize: 5,
+      maxIdleTimeMS: 30000,
+      retryWrites: true,
+      retryReads: true,
+      // Try with different TLS configuration
+      tls: true,
+      tlsAllowInvalidCertificates: true,
+      tlsAllowInvalidHostnames: true,
+      // Additional options for Windows compatibility
+      family: 4, // Use IPv4
+      useUnifiedTopology: true,
+    });
     globalWithMongo._mongoClientPromise = client.connect();
   }
   clientPromise = globalWithMongo._mongoClientPromise;
 } else {
   // In production mode, it's best to not use a global variable.
-  client = new MongoClient(MONGODB_URI);
+  client = new MongoClient(MONGODB_URI, {
+    serverSelectionTimeoutMS: 10000,
+    connectTimeoutMS: 10000,
+    socketTimeoutMS: 45000,
+    maxPoolSize: 10,
+    minPoolSize: 5,
+    maxIdleTimeMS: 30000,
+    retryWrites: true,
+    retryReads: true,
+    // Try with different TLS configuration
+    tls: true,
+    tlsAllowInvalidCertificates: true,
+    tlsAllowInvalidHostnames: true,
+    // Additional options for Windows compatibility
+    family: 4, // Use IPv4
+    useUnifiedTopology: true,
+  });
   clientPromise = client.connect();
 }
 
@@ -33,6 +65,12 @@ export default clientPromise;
 export async function getDatabase(): Promise<Db> {
   const client = await clientPromise;
   return client.db(MONGODB_DB);
+}
+
+export async function connectToDatabase() {
+  const client = await clientPromise;
+  const db = client.db(MONGODB_DB);
+  return { client, db };
 }
 
 // Database collections

@@ -566,6 +566,94 @@
       "address": "King Fahed Road, Riyadh"
     }
   },
+  "faqs": {
+    "hero": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answers about our services, operations, and how to work with us"
+    },
+    "intro": {
+      "title": "Have questions? We’ve got answers.",
+      "description": "Below are the most common questions about our petroleum derivatives, logistics, renewable energy and water desalination services."
+    },
+    "groups": {
+      "general": "General",
+      "services": "Services",
+      "projects": "Projects & Delivery",
+      "support": "Support & Contact"
+    },
+    "items": [
+      {
+        "group": "general",
+        "q": "What industries do you serve?",
+        "a": "We serve energy, logistics, manufacturing, and infrastructure sectors across the Middle East and beyond."
+      },
+      {
+        "group": "general",
+        "q": "Where are you located?",
+        "a": "We are headquartered in Riyadh, Saudi Arabia, with active operations and partners across the region."
+      },
+      {
+        "group": "services",
+        "q": "What services do you provide?",
+        "a": "We provide petroleum storage and trading, logistics and marine services, motor oils, alternative energy solutions, and water desalination."
+      },
+      {
+        "group": "services",
+        "q": "Do you offer tailored solutions?",
+        "a": "Yes. We design solutions based on your technical, regulatory, and timeline requirements with clear SLAs."
+      },
+      {
+        "group": "services",
+        "q": "Can you integrate with our existing logistics systems?",
+        "a": "Yes. We integrate with popular TMS/WMS and provide secure APIs for data exchange."
+      },
+      {
+        "group": "services",
+        "q": "Do you support international shipping and customs?",
+        "a": "We handle port operations, documentation, customs clearance, and global freight coordination."
+      },
+      {
+        "group": "projects",
+        "q": "How do projects typically start?",
+        "a": "Projects begin with a discovery call, followed by requirements scoping, proposal, and a structured kickoff plan."
+      },
+      {
+        "group": "projects",
+        "q": "What are typical delivery timelines?",
+        "a": "Timelines vary by scope. After scoping, we share a milestone plan with dependencies and risk mitigation."
+      },
+      {
+        "group": "projects",
+        "q": "What does your project handover include?",
+        "a": "Handover includes documentation, training, safety protocols, and an agreed support plan."
+      },
+      {
+        "group": "projects",
+        "q": "How do you manage safety and compliance?",
+        "a": "We adhere to international standards and local regulations with routine audits and certifications."
+      },
+      {
+        "group": "support",
+        "q": "How can I request a quotation?",
+        "a": "Use the contact form or email us at info@ebdaafalcon.com with your scope, location, and target timeline."
+      },
+      {
+        "group": "support",
+        "q": "Do you provide after‑delivery support?",
+        "a": "Yes. We provide warranty, maintenance options, and training as part of our engagement."
+      },
+      {
+        "group": "support",
+        "q": "How do I get technical support?",
+        "a": "Contact our support team via the contact form or email; SLAs are defined per contract."
+      },
+      {
+        "group": "support",
+        "q": "Can I schedule a site visit?",
+        "a": "Yes. Share your location and preferred dates and we’ll coordinate with our operations team."
+      }
+    ]
+  },
   "blog": {
     "hero": {
       "title": "Petroleum Derivatives and Logistics Services",
@@ -755,6 +843,28 @@
         "operationFailed": "Operation failed",
         "deleteFailed": "Delete failed",
         "deleteConfirm": "Are you sure you want to delete this image?"
+      },
+      "bannerManagement": {
+        "title": "Banner Management",
+        "addBannerImage": "Add Banner Image",
+        "noImages": "No banner images",
+        "noImagesDescription": "Get started by uploading a new banner image.",
+        "imageFile": "Image File",
+        "displayOrder": "Display Order",
+        "active": "Active (visible on website)",
+        "uploading": "Uploading...",
+        "uploadImage": "Upload Image",
+        "hide": "Hide",
+        "show": "Show",
+        "delete": "Delete",
+        "pages": {
+          "home": "Home Page",
+          "about": "About Us",
+          "services": "Services",
+          "work": "Our Work",
+          "blog": "Blog",
+          "contact": "Contact Us"
+        }
       }
     }
   }

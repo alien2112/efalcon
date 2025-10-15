@@ -23,7 +23,7 @@ export default function GlobalError({
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Something went wrong</h2>
             <button 
               onClick={reset}
-              className="bg-[#716106] text-white px-6 py-3 rounded-lg hover:bg-[#5a4d05] transition-colors"
+              className="bg-[#EFC132] text-white px-6 py-3 rounded-lg hover:bg-[#5a4d05] transition-colors"
             >
               Try again
             </button>

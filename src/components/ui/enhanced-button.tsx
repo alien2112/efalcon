@@ -29,9 +29,9 @@ export function EnhancedButton({
   const baseClasses = 'relative overflow-hidden rounded-lg font-[\'ADLaM_Display:Regular\',_sans-serif] transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none';
   
   const variantClasses = {
-    primary: 'bg-[#716106] text-white hover:bg-[#8B7A0A] hover:shadow-lg',
+    primary: 'bg-[#EFC132] text-white hover:bg-[#8B7A0A] hover:shadow-lg',
     secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md',
-    outline: 'border-2 border-[#716106] text-[#716106] hover:bg-[#716106] hover:text-white'
+    outline: 'border-2 border-[#EFC132] text-[#EFC132] hover:bg-[#EFC132] hover:text-white'
   };
   
   const sizeClasses = {
@@ -42,7 +42,7 @@ export function EnhancedButton({
 
   const getStatusClasses = () => {
     if (success) return 'bg-green-600 text-white';
-    if (loading) return 'bg-[#716106] text-white';
+    if (loading) return 'bg-[#EFC132] text-white';
     return '';
   };
 

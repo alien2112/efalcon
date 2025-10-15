@@ -210,7 +210,7 @@ export function ContactForm() {
               <CheckCircle className="w-12 h-12 text-white" />
             </motion.div>
             <motion.h3 
-              className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] text-[#716106] mb-6"
+              className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] text-[#EFC132] mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -239,7 +239,7 @@ export function ContactForm() {
               className={`text-center mb-12 ${language === 'ar' ? 'text-right' : 'text-left'}`}
               variants={itemVariants}
             >
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#716106] mb-4">
+              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#EFC132] mb-4">
                 {t('contact.form.title') || 'Get in Touch'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -262,7 +262,7 @@ export function ContactForm() {
                   >
                     <label htmlFor={field.name} className={`block font-['ADLaM_Display:Regular',_sans-serif] text-[14px] font-semibold text-gray-700 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                       <div className="flex items-center gap-2">
-                        <field.icon className="w-4 h-4 text-[#716106]" />
+                        <field.icon className="w-4 h-4 text-[#EFC132]" />
                         {field.label} {field.required && <span className="text-red-500">*</span>}
                       </div>
                     </label>
@@ -276,7 +276,7 @@ export function ContactForm() {
                         onFocus={() => setFocusedField(field.name)}
                         onBlur={() => setFocusedField(null)}
                         required={field.required}
-                        className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors[field.name] ? 'border-red-400 bg-red-50' : 'border-gray-200'} ${focusedField === field.name ? 'ring-4 ring-[#716106]/20 border-[#716106]' : ''}`}
+                        className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors[field.name] ? 'border-red-400 bg-red-50' : 'border-gray-200'} ${focusedField === field.name ? 'ring-4 ring-[#EFC132]/20 border-[#EFC132]' : ''}`}
                         placeholder={field.placeholder}
                         dir={language === 'ar' ? 'rtl' : 'ltr'}
                       />
@@ -302,7 +302,7 @@ export function ContactForm() {
               <motion.div variants={itemVariants} className="space-y-2">
                 <label htmlFor="service" className={`block font-['ADLaM_Display:Regular',_sans-serif] text-[14px] font-semibold text-gray-700 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                   <div className="flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4 text-[#716106]" />
+                    <MessageSquare className="w-4 h-4 text-[#EFC132]" />
                     {t('contact.form.fields.service') || 'Service'}
                   </div>
                 </label>
@@ -314,7 +314,7 @@ export function ContactForm() {
                     onChange={handleInputChange}
                     onFocus={() => setFocusedField('service')}
                     onBlur={() => setFocusedField(null)}
-                    className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 appearance-none cursor-pointer`}
+                    className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 appearance-none cursor-pointer`}
                     dir={language === 'ar' ? 'rtl' : 'ltr'}
                   >
                     <option value="">{t('contact.form.placeholders.service') || 'Select a service'}</option>
@@ -336,7 +336,7 @@ export function ContactForm() {
               <motion.div variants={itemVariants} className="space-y-2">
                 <label htmlFor="message" className={`block font-['ADLaM_Display:Regular',_sans-serif] text-[14px] font-semibold text-gray-700 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                   <div className="flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4 text-[#716106]" />
+                    <MessageSquare className="w-4 h-4 text-[#EFC132]" />
                     {t('contact.form.fields.message') || 'Message'} <span className="text-red-500">*</span>
                   </div>
                 </label>
@@ -350,7 +350,7 @@ export function ContactForm() {
                     onBlur={() => setFocusedField(null)}
                     required
                     rows={6}
-                    className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#716106]/20 focus:border-[#716106] transition-all duration-300 bg-gray-50 hover:bg-white resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50' : 'border-gray-200'} ${focusedField === 'message' ? 'ring-4 ring-[#716106]/20 border-[#716106]' : ''}`}
+                    className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50' : 'border-gray-200'} ${focusedField === 'message' ? 'ring-4 ring-[#EFC132]/20 border-[#EFC132]' : ''}`}
                     placeholder={t('contact.form.placeholders.message') || 'Tell us about your project...'}
                     dir={language === 'ar' ? 'rtl' : 'ltr'}
                   />
@@ -378,14 +378,14 @@ export function ContactForm() {
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group relative bg-gradient-to-r from-[#716106] to-[#8B7A0A] text-white px-16 py-5 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                  className="group relative bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white px-16 py-5 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#8B7A0A] to-[#716106] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#8B7A0A] to-[#EFC132] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative flex items-center justify-center gap-3">
                     {isSubmitting ? (
                       <>

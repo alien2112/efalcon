@@ -134,7 +134,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               variants={itemVariants}
             >
               <div className="flex items-center gap-2 mb-4">
-                <span className="bg-[#716106] text-white px-3 py-1 rounded-full text-sm font-medium">
+                <span className="bg-[#EFC132] text-white px-3 py-1 rounded-full text-sm font-medium">
                   {blogPost.category}
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -168,7 +168,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             >
               <Link 
                 href="/blog"
-                className="inline-flex items-center text-[#716106] font-medium hover:text-[#5a4f05] transition-colors"
+                className="inline-flex items-center text-[#EFC132] font-medium hover:text-[#5a4f05] transition-colors"
               >
                 <svg className="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />

@@ -4,15 +4,36 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+interface BannerImage {
+  _id: string;
+  filename: string;
+  contentType: string;
+  metadata: {
+    title: string;
+    titleAr: string;
+    description: string;
+    descriptionAr: string;
+    order: number;
+    isActive: boolean;
+    showTitle: boolean;
+    showDescription: boolean;
+    page?: string;
+  };
+}
+
 interface HeroSliderProps {
   onReady?: () => void;
   autoplayMs?: number;
+  page?: string; // Which page this slider is for
 }
 
-export function HeroSlider({ onReady, autoplayMs = 4500 }: HeroSliderProps) {
+export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSliderProps) {
   const { t, language } = useLanguage();
+  const [bannerImages, setBannerImages] = useState<BannerImage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  const slides = useMemo(
+  // Default slides as fallback
+  const defaultSlides = useMemo(
     () => [
       {
         src: '/gallery/logistic .webp',
@@ -42,13 +63,61 @@ export function HeroSlider({ onReady, autoplayMs = 4500 }: HeroSliderProps) {
     [t, language]
   );
 
+  // Fetch banner images from API
+  useEffect(() => {
+    const fetchBannerImages = async () => {
+      try {
+        const response = await fetch('/api/gridfs/images');
+        const result = await response.json();
+        
+        if (result.success) {
+          // Filter images for the current page and sort by order
+          const pageImages = result.data
+            .filter((img: BannerImage) => 
+              img.metadata.isActive && 
+              (img.metadata.page === page || (!img.metadata.page && page === 'home'))
+            )
+            .sort((a: BannerImage, b: BannerImage) => 
+              (a.metadata.order || 0) - (b.metadata.order || 0)
+            );
+          
+          setBannerImages(pageImages);
+        }
+      } catch (error) {
+        console.error('Error fetching banner images:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBannerImages();
+  }, [page]);
+
+  // Convert banner images to slides format
+  const slides = useMemo(() => {
+    if (bannerImages.length > 0) {
+      return bannerImages.map(img => ({
+        src: `/api/gridfs/images/${img._id}`,
+        alt: language === 'ar' && img.metadata.titleAr ? img.metadata.titleAr : img.metadata.title,
+        title: img.metadata.title,
+        titleAr: img.metadata.titleAr || '',
+        description: img.metadata.description,
+        descriptionAr: img.metadata.descriptionAr || '',
+        showTitle: img.metadata.showTitle !== false,
+        showDescription: img.metadata.showDescription !== false,
+        variant: 'image' as const
+      }));
+    }
+    return defaultSlides;
+  }, [bannerImages, defaultSlides, language]);
+
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (onReady) onReady();
-  }, [onReady]);
+    if (onReady && !isLoading) onReady();
+  }, [onReady, isLoading]);
 
   const goTo = useCallback((nextIndex: number, dir: 1 | -1) => {
     setDirection(dir);
@@ -80,8 +149,36 @@ export function HeroSlider({ onReady, autoplayMs = 4500 }: HeroSliderProps) {
     }
   }, [slides.length, autoplayMs]);
 
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="relative w-full h-screen bg-[#EFC132] flex items-center justify-center">
+        <div className="text-center text-white">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-lg">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show fallback if no slides
+  if (slides.length === 0) {
+    return (
+      <div className="relative w-full h-screen bg-[#EFC132] flex items-center justify-center">
+        <div className="text-center text-white px-4">
+          <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[42px] md:text-[72px] leading-tight mb-4">
+            {t('hero.title') || 'Petroleum Derivatives and Logistics Services'}
+          </h1>
+          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[20px] leading-relaxed max-w-[900px] mx-auto">
+            {t('hero.description') || 'Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products.'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="relative w-full h-screen bg-[#716106] overflow-hidden">
+    <div className="relative w-full h-screen bg-[#EFC132] overflow-hidden">
       {/* Slides */}
       {slides.map((slide, i) => (
         <div
@@ -120,12 +217,24 @@ export function HeroSlider({ onReady, autoplayMs = 4500 }: HeroSliderProps) {
         <div className="max-w-[1024px] mx-auto">
           {/* Title / Logo variant spacing */}
           <>
-            <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[42px] md:text-[72px] leading-tight mb-4">
-              {slides[index].title}
-            </h1>
-            {slides[index].description && (
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[20px] leading-relaxed max-w-[900px] mx-auto">
-                {slides[index].description}
+            {slides[index].showTitle && (
+              <h1 
+                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[42px] md:text-[72px] leading-tight mb-4"
+                dir={language === 'ar' ? 'rtl' : 'ltr'}
+              >
+                {language === 'ar' && slides[index].titleAr 
+                  ? slides[index].titleAr 
+                  : slides[index].title}
+              </h1>
+            )}
+            {slides[index].showDescription && slides[index].description && (
+              <p 
+                className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[20px] leading-relaxed max-w-[900px] mx-auto"
+                dir={language === 'ar' ? 'rtl' : 'ltr'}
+              >
+                {language === 'ar' && slides[index].descriptionAr 
+                  ? slides[index].descriptionAr 
+                  : slides[index].description}
               </p>
             )}
           </>
