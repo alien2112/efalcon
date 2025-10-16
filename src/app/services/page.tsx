@@ -97,7 +97,6 @@ export default function ServicesPage() {
           name: t('services.categories.oilGasServices.petroleumDerivatives') || 'Petroleum Derivatives and Logistics Services',
           description: t('services.categories.oilGasServices.petroleumDerivativesDescription') || 'Integrated solutions in storage, transportation, and trading of petroleum derivatives',
           category: 'oil-gas',
-          downloadUrl: '/documents/petroleum-storage.pdf',
           imageUrl: '/gallery/oil%20extraction.webp'
         },
         {
@@ -105,7 +104,6 @@ export default function ServicesPage() {
           name: t('services.categories.oilGasServices.motorOils') || 'Motor Oils',
           description: t('services.categories.oilGasServices.motorOilsDescription') || 'High-quality Saudi-made motor oils engineered for durability and peak performance',
           category: 'oil-gas',
-          downloadUrl: '/documents/motor-oils.pdf',
           imageUrl: '/gallery/engine%20oil1.webp'
         }
       ]
@@ -120,7 +118,6 @@ export default function ServicesPage() {
           name: t('services.categories.logisticsServices.logisticsMarine') || 'Logistics & Marine Services',
           description: t('services.categories.logisticsServices.logisticsMarineDescription') || 'World-class logistics across marine ports and inland operations to keep supply chains moving',
           category: 'logistics',
-          downloadUrl: '/documents/logistics-services.pdf',
           imageUrl: '/gallery/logistic%20.webp'
         },
         {
@@ -128,7 +125,6 @@ export default function ServicesPage() {
           name: t('services.categories.logisticsServices.renewableEnergy') || 'Alternative Energy & Water Desalination',
           description: t('services.categories.logisticsServices.renewableEnergyDescription') || 'Sustainable solar and wind energy solutions alongside advanced water desalination systems',
           category: 'logistics',
-          downloadUrl: '/documents/renewable-energy.pdf',
           imageUrl: '/gallery/solar%20panels.webp'
         }
       ]
@@ -266,47 +262,48 @@ export default function ServicesPage() {
                 <FadeInOnScroll direction="right" delay={0.8}>
                   <div className="grid md:grid-cols-2 gap-6">
                     {currentCategory.services.map((service, index) => (
-                      <Link 
-                        href={`/services/${service.id}`}
-                        key={service.id} 
-                        className={`bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block ${
+                      <div
+                        key={service.id}
+                        className={`bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group ${
                           hoveredService === service.id ? 'scale-[1.02] shadow-2xl' : ''
                         }`}
                         onMouseEnter={() => setHoveredService(service.id)}
                         onMouseLeave={() => setHoveredService(null)}
                       >
-                        <div className="relative h-48 overflow-hidden">
-                          <Image
-                            src={service.imageUrl}
-                            alt={service.name}
-                            fill
-                            className={`object-cover transition-transform duration-300 ${
-                              hoveredService === service.id ? 'scale-110' : 'group-hover:scale-105'
-                            }`}
-                          />
-                          <div className={`absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent transition-opacity duration-300 ${
-                            hoveredService === service.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                          }`} />
-                        </div>
+                        <Link href={`/services/${service.id}`} className="block">
+                          <div className="relative h-48 overflow-hidden">
+                            <Image
+                              src={service.imageUrl}
+                              alt={service.name}
+                              fill
+                              className={`object-cover transition-transform duration-300 ${
+                                hoveredService === service.id ? 'scale-110' : 'group-hover:scale-105'
+                              }`}
+                            />
+                            <div className={`absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent transition-opacity duration-300 ${
+                              hoveredService === service.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                            }`} />
+                          </div>
+                        </Link>
                         <div className="p-6">
-                          <h4 className={`font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 transition-colors duration-300 ${
-                            hoveredService === service.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
-                          }`}>
-                            {service.name}
-                          </h4>
+                          <Link href={`/services/${service.id}`}>
+                            <h4 className={`font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 transition-colors duration-300 cursor-pointer ${
+                              hoveredService === service.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
+                            }`}>
+                              {service.name}
+                            </h4>
+                          </Link>
                           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
                             {service.description}
                           </p>
                           {service.downloadUrl && (
                             <button
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
+                              onClick={() => {
                                 window.open(service.downloadUrl, '_blank');
                               }}
                               className={`inline-flex items-center transition-all duration-300 transform hover:scale-105 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] ${
-                                hoveredService === service.id 
-                                  ? 'text-[#8B7A0A] scale-105' 
+                                hoveredService === service.id
+                                  ? 'text-[#8B7A0A] scale-105'
                                   : 'text-[#EFC132] hover:text-[#8B7A0A]'
                               }`}
                             >
@@ -315,7 +312,7 @@ export default function ServicesPage() {
                             </button>
                           )}
                         </div>
-                      </Link>
+                      </div>
                     ))}
                   </div>
                 </FadeInOnScroll>
@@ -343,33 +340,52 @@ export default function ServicesPage() {
             <FadeInOnScroll direction="up" delay={0.4}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {dynamicServices.map((service) => (
-                  <Link 
-                    href={`/services/${service.slug}`}
-                    key={service._id} 
-                    className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block"
+                  <div
+                    key={service._id}
+                    className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group"
                   >
-                    <div className="relative h-48 overflow-hidden">
-                      <Image
-                        src={service.imageUrl}
-                        alt={service.title[language]}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
+                    <Link href={`/services/${service.slug}`} className="block">
+                      <div className="relative h-48 overflow-hidden">
+                        <Image
+                          src={service.imageUrl}
+                          alt={service.title[language]}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                    </Link>
                     <div className="p-6">
-                      <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300">
-                        {service.title[language]}
-                      </h4>
+                      <Link href={`/services/${service.slug}`}>
+                        <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 cursor-pointer">
+                          {service.title[language]}
+                        </h4>
+                      </Link>
                       <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
                         {service.summary[language]}
                       </p>
-                      <div className="flex items-center text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[14px]">
-                        {t('services.learnMore') || 'Learn More'}
-                        <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                      </div>
+                      {(service as any).pdfUrl && (
+                        <button
+                          onClick={() => {
+                            const pdfUrl = (service as any).pdfUrl;
+                            if (pdfUrl) {
+                              window.open(pdfUrl, '_blank');
+                            }
+                          }}
+                          className="inline-flex items-center text-[#EFC132] group-hover:text-[#8B7A0A] transition-all duration-300 transform hover:scale-105 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] mb-3"
+                        >
+                          <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-12" />
+                          {t('services.downloadSpecs') || 'Download Specifications'}
+                        </button>
+                      )}
+                      <Link href={`/services/${service.slug}`}>
+                        <div className="flex items-center text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] cursor-pointer">
+                          {t('services.learnMore') || 'Learn More'}
+                          <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                        </div>
+                      </Link>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </FadeInOnScroll>

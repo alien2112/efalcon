@@ -14,7 +14,6 @@ const workProjects = [
     slug: 'petroleum-storage-facility',
     translationKey: 'petroleum-storage-facility',
     imageUrl: '/gallery/oil%20extraction.webp',
-    downloadUrl: '/documents/petroleum-storage-project.pdf',
     year: '2023',
     category: 'oilGasProjects',
     features: ['0', '1', '2'],
@@ -26,7 +25,6 @@ const workProjects = [
     slug: 'trading-operations',
     translationKey: 'trading-operations',
     imageUrl: '/gallery/solar%20panels.webp',
-    downloadUrl: '/documents/trading-operations.pdf',
     year: '2023',
     category: 'oilGasProjects',
     features: ['0', '1', '2'],
@@ -38,7 +36,6 @@ const workProjects = [
     slug: 'refinery-integration',
     translationKey: 'refinery-integration',
     imageUrl: '/gallery/wind%20genrators.webp',
-    downloadUrl: '/documents/refinery-integration.pdf',
     year: '2022',
     category: 'oilGasProjects',
     features: ['0', '1', '2'],
@@ -50,7 +47,6 @@ const workProjects = [
     slug: 'marine-port-expansion',
     translationKey: 'marine-port-expansion',
     imageUrl: '/gallery/logistic%20.webp',
-    downloadUrl: '/documents/marine-port-expansion.pdf',
     year: '2023',
     category: 'logisticsProjects',
     features: ['0', '1', '2'],
@@ -62,7 +58,6 @@ const workProjects = [
     slug: 'inland-transportation-network',
     translationKey: 'inland-transportation-network',
     imageUrl: '/gallery/electric.webp',
-    downloadUrl: '/documents/inland-transportation.pdf',
     year: '2022',
     category: 'logisticsProjects',
     features: ['0', '1', '2'],
@@ -74,7 +69,6 @@ const workProjects = [
     slug: 'warehousing-solutions',
     translationKey: 'warehousing-solutions',
     imageUrl: '/gallery/wind%20genrators.webp',
-    downloadUrl: '/documents/warehousing-solutions.pdf',
     year: '2023',
     category: 'logisticsProjects',
     features: ['0', '1', '2'],
@@ -311,17 +305,21 @@ export default function WorkDetailPage() {
               
               {((project as any).pdfUrl || (staticProject as any)?.downloadUrl) && (
                 <div className="mt-6 pt-6 border-t border-gray-200">
-                  <a
-                    href={(project as any).pdfUrl || (staticProject as any).downloadUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-[#EFC132] font-medium hover:text-[#5a4f05] transition-colors"
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const pdfUrl = (project as any).pdfUrl || (staticProject as any).downloadUrl;
+                      if (pdfUrl) {
+                        window.open(pdfUrl, '_blank');
+                      }
+                    }}
+                    className="inline-flex items-center text-[#EFC132] font-medium hover:text-[#5a4f05] transition-colors cursor-pointer"
                   >
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     {t('work.detail.downloadProject') || 'Download Project Details'}
-                  </a>
+                  </button>
                 </div>
               )}
             </aside>

@@ -184,15 +184,19 @@ export default function ServiceDetailPage() {
                 <li>{t('services.detail.whyEbdaaFalconList.saudiVisionAligned') || 'Saudi Vision 2030 aligned'}</li>
               </ul>
 
-              {(!staticService ? (service as any).pdfUrl : null) && (
-                <a
-                  href={(service as any).pdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center justify-center px-4 py-2 rounded-md bg-[#EFC132] text-white hover:bg-[#cda61f] transition-colors w-full text-center"
+              {(!staticService && (service as any).pdfUrl) && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const pdfUrl = (service as any).pdfUrl;
+                    if (pdfUrl) {
+                      window.open(pdfUrl, '_blank');
+                    }
+                  }}
+                  className="mt-6 inline-flex items-center justify-center px-4 py-2 rounded-md bg-[#EFC132] text-white hover:bg-[#cda61f] transition-colors w-full text-center cursor-pointer"
                 >
                   {t('common.downloadPdf') || 'Download PDF'}
-                </a>
+                </button>
               )}
             </aside>
           </div>

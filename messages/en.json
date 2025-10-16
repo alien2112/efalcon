@@ -512,6 +512,72 @@
           "1": "Enhanced Process Efficiency",
           "2": "Reduced Operational Costs"
         }
+      },
+      "marine-port-expansion": {
+        "title": "Marine Port Expansion",
+        "description": "Strategic port expansion with modern handling facilities and logistics capabilities.",
+        "location": "Red Sea Coast",
+        "content": "Our marine port expansion project enhances regional logistics infrastructure with modern port facilities, advanced cargo handling systems, and comprehensive logistics integration.",
+        "detailedContent": "The expansion includes new berths, automated cargo handling equipment, expanded storage facilities, and integrated logistics systems to support growing regional trade volumes.",
+        "features": {
+          "0": "Modern Port Facilities",
+          "1": "Advanced Cargo Systems",
+          "2": "Logistics Integration"
+        },
+        "featureDescription": {
+          "0": "Marine Port Expansion includes: Modern port facilities as part of our comprehensive project delivery.",
+          "1": "Marine Port Expansion includes: Advanced cargo systems as part of our comprehensive project delivery.",
+          "2": "Marine Port Expansion includes: Logistics integration as part of our comprehensive project delivery."
+        },
+        "benefits": {
+          "0": "Increased Port Capacity",
+          "1": "Enhanced Cargo Efficiency",
+          "2": "Improved Trade Connectivity"
+        }
+      },
+      "inland-transportation-network": {
+        "title": "Inland Transportation Network",
+        "description": "Comprehensive inland transportation network with integrated distribution hubs.",
+        "location": "Kingdom of Saudi Arabia",
+        "content": "Our inland transportation network provides comprehensive logistics solutions with strategically located distribution hubs, modern fleet management, and integrated tracking systems.",
+        "detailedContent": "The network includes multiple distribution centers, GPS-tracked vehicles, automated routing systems, and real-time monitoring to ensure efficient and reliable inland transportation services.",
+        "features": {
+          "0": "Distribution Hubs",
+          "1": "Fleet Management",
+          "2": "Real-time Tracking"
+        },
+        "featureDescription": {
+          "0": "Inland Transportation Network includes: Distribution hubs as part of our comprehensive project delivery.",
+          "1": "Inland Transportation Network includes: Fleet management as part of our comprehensive project delivery.",
+          "2": "Inland Transportation Network includes: Real-time tracking as part of our comprehensive project delivery."
+        },
+        "benefits": {
+          "0": "Faster Delivery Times",
+          "1": "Reduced Transportation Costs",
+          "2": "Enhanced Supply Chain Visibility"
+        }
+      },
+      "warehousing-solutions": {
+        "title": "Warehousing Solutions",
+        "description": "Modern warehousing facilities with advanced inventory management systems.",
+        "location": "Riyadh Industrial Zone",
+        "content": "Our warehousing solutions offer state-of-the-art facilities with automated inventory management, climate-controlled storage, and comprehensive security systems.",
+        "detailedContent": "The facilities feature automated storage and retrieval systems, real-time inventory tracking, climate control for sensitive products, and 24/7 security monitoring to ensure product safety and accessibility.",
+        "features": {
+          "0": "Automated Systems",
+          "1": "Climate Control",
+          "2": "Security Monitoring"
+        },
+        "featureDescription": {
+          "0": "Warehousing Solutions includes: Automated systems as part of our comprehensive project delivery.",
+          "1": "Warehousing Solutions includes: Climate control as part of our comprehensive project delivery.",
+          "2": "Warehousing Solutions includes: Security monitoring as part of our comprehensive project delivery."
+        },
+        "benefits": {
+          "0": "Optimized Storage Capacity",
+          "1": "Improved Inventory Accuracy",
+          "2": "Enhanced Product Protection"
+        }
       }
     },
     "highlights": {

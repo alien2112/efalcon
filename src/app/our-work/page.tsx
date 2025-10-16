@@ -40,7 +40,6 @@ const workCategories: WorkCategory[] = [
         description: 'petroleumStorageFacility',
         category: 'oilGasProjects',
         imageUrl: '/gallery/oil%20extraction.webp',
-        downloadUrl: '/documents/petroleum-storage-project.pdf',
         year: '2023',
         location: 'petroleumStorageFacility'
       },
@@ -50,7 +49,6 @@ const workCategories: WorkCategory[] = [
         description: 'tradingOperations',
         category: 'oilGasProjects',
         imageUrl: '/gallery/solar%20panels.webp',
-        downloadUrl: '/documents/trading-operations.pdf',
         year: '2023',
         location: 'tradingOperations'
       },
@@ -60,7 +58,6 @@ const workCategories: WorkCategory[] = [
         description: 'refineryIntegration',
         category: 'oilGasProjects',
         imageUrl: '/gallery/wind%20genrators.webp',
-        downloadUrl: '/documents/refinery-integration.pdf',
         year: '2022',
         location: 'refineryIntegration'
       }
@@ -77,7 +74,6 @@ const workCategories: WorkCategory[] = [
         description: 'marinePortExpansion',
         category: 'logisticsProjects',
         imageUrl: '/gallery/logistic%20.webp',
-        downloadUrl: '/documents/marine-port-expansion.pdf',
         year: '2023',
         location: 'marinePortExpansion'
       },
@@ -87,7 +83,6 @@ const workCategories: WorkCategory[] = [
         description: 'inlandTransportationNetwork',
         category: 'logisticsProjects',
         imageUrl: '/gallery/electric.webp',
-        downloadUrl: '/documents/inland-transportation.pdf',
         year: '2022',
         location: 'inlandTransportationNetwork'
       },
@@ -97,7 +92,6 @@ const workCategories: WorkCategory[] = [
         description: 'warehousingSolutions',
         category: 'logisticsProjects',
         imageUrl: '/gallery/wind%20genrators.webp',
-        downloadUrl: '/documents/warehousing-solutions.pdf',
         year: '2023',
         location: 'warehousingSolutions'
       }
@@ -307,25 +301,6 @@ export default function OurWorkPage() {
                           </p>
                           <div className="flex justify-between items-center">
                             <span className="text-xs text-gray-500">{t(`ourWorkPage.projects.${toKebabCase(project.id)}.location`)}</span>
-                            {project.downloadUrl && (
-                              <a
-                                href={project.downloadUrl}
-                                download
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  e.preventDefault();
-                                  window.open(project.downloadUrl, '_blank');
-                                }}
-                                className={`inline-flex items-center transition-all duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[12px] ${
-                                  hoveredProject === project.id 
-                                    ? 'text-[#8B7A0A] scale-110' 
-                                    : 'text-[#EFC132] hover:text-[#8B7A0A]'
-                                }`}
-                              >
-                                <Download className="w-3 h-3 mr-1" />
-                                {t('ourWorkPage.details') || 'Details'}
-                              </a>
-                            )}
                           </div>
                         </div>
                       </div>
