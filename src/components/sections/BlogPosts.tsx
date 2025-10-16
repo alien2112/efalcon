@@ -74,7 +74,7 @@ export function BlogPosts() {
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-4">{t('blog.posts.title') || 'Latest Articles'}</h2>
+          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-4">{t('blog.posts.title') || 'Latest Articles'}</h2>
           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">{t('blog.posts.subtitle') || 'Insights and updates from the energy and logistics sectors.'}</p>
         </div>
 
@@ -131,7 +131,7 @@ export function BlogPosts() {
                       <span>{post.readTime}</span>
                     </div>
 
-                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[20px] text-[#EFC132] mb-3 line-clamp-2 group-hover:text-[#5a4f05] transition-colors">
+                    <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] md:text-[20px] text-[#EFC132] mb-3 line-clamp-2 group-hover:text-[#5a4f05] transition-colors">
                       {post.title}
                     </h3>
 

@@ -190,7 +190,7 @@ export default function OurWorkPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center">
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center">
                 {t('ourWorkPage.portfolio') || 'Our Portfolio'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
@@ -227,7 +227,7 @@ export default function OurWorkPage() {
                 {/* Work Info */}
                 <FadeInOnScroll direction="left" delay={0.6}>
                   <div className="space-y-6">
-                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-[#EFC132]">
+                    <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] text-[#EFC132]">
                       {t(`ourWorkPage.categories.${currentCategory.id}.name`) || currentCategory.name}
                     </h3>
                     <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 leading-relaxed">
@@ -287,7 +287,7 @@ export default function OurWorkPage() {
                         </div>
                         <div className="p-6">
                           <div className="flex justify-between items-start mb-3">
-                            <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-[#EFC132]">
+                            <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] text-[#EFC132]">
                               {t(`ourWorkPage.projects.${toKebabCase(project.id)}.title`)}
                             </h4>
                             <span className={`text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded transition-all duration-300 ${
@@ -325,7 +325,7 @@ export default function OurWorkPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6">
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6">
                 {t('ourWorkPage.projectHighlights') || 'Project Highlights'}
               </h2>
           </div>
@@ -374,7 +374,7 @@ export default function OurWorkPage() {
                         }`} />
                       </div>
                       <div className="p-6">
-                        <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] text-[#EFC132] mb-3">
+                        <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] text-[#EFC132] mb-3">
                           {t(`ourWorkPage.highlights.${highlight.id}.title`) || highlight.title}
                         </h3>
                         <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed mb-4">
@@ -435,7 +435,7 @@ export default function OurWorkPage() {
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#EFC132] mb-6">
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-6">
                 {t('ourWorkPage.interested') || 'Interested in Our Work?'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">

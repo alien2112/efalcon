@@ -196,7 +196,7 @@ export function SophisticatedLoadingScreen({ isVisible, onComplete }: Sophistica
               transition={{ delay: 0.5, duration: 0.8 }}
             >
               <motion.h1
-                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-4xl md:text-5xl text-white mb-2"
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-4xl md:text-5xl text-white mb-2"
                 animate={{
                   textShadow: [
                     '0 0 20px rgba(255, 215, 0, 0.3)',
@@ -213,7 +213,7 @@ export function SophisticatedLoadingScreen({ isVisible, onComplete }: Sophistica
                 إبداع فالكون
               </motion.h1>
               <motion.h2
-                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-2xl md:text-3xl text-white/80"
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-2xl md:text-3xl text-white/80"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8, duration: 0.8 }}

@@ -618,7 +618,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
         <div className="flex flex-col gap-4 items-center text-center">
           {/* Main Title */}
           <h1 
-            className={`font-['Alfa_Slab_One:Regular',_sans-serif] leading-[1.2] text-white tracking-[-1.44px] max-w-[1024px] transition-all duration-500 ease-out ${
+            className={`font-['Alfa_Slab_One:Bold',_sans-serif] font-bold leading-[1.2] text-white tracking-[-1.44px] max-w-[1024px] transition-all duration-500 ease-out ${
               textContent.isTrustText 
                 ? 'text-[48px] md:text-[72px]'
                 : 'text-[36px] md:text-[56px]'
@@ -629,7 +629,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
           
           {/* Subtitle (for Phase 1) */}
           {textContent.subtitle && (
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[36px] leading-[1.2] text-white tracking-[-1.44px] transition-all duration-500 ease-out">
+            <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[36px] leading-[1.2] text-white tracking-[-1.44px] transition-all duration-500 ease-out">
               {textContent.subtitle}
             </h2>
           )}

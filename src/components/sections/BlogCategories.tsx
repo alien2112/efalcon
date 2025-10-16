@@ -90,7 +90,7 @@ export function BlogCategories() {
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-4">{t('blog.categories.title') || 'Categories'}</h2>
+          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-4">{t('blog.categories.title') || 'Categories'}</h2>
           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">{t('blog.categories.subtitle') || 'Browse topics across energy, logistics, sustainability, and more.'}</p>
         </div>
 
@@ -124,7 +124,7 @@ export function BlogCategories() {
                 </div>
 
                 {/* Category Content */}
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] text-[#EFC132] mb-3 group-hover:text-[#5a4f05] transition-colors">
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] text-[#EFC132] mb-3 group-hover:text-[#5a4f05] transition-colors">
                   {language === 'ar' ? category.nameAr : category.name}
                 </h3>
 
@@ -147,7 +147,7 @@ export function BlogCategories() {
         {/* Call to Action */}
         <div className="text-center mt-16">
           <div className="bg-gradient-to-r from-[#EFC132] to-[#5a4f05] rounded-lg p-8 md:p-12 text-white">
-            <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] mb-4">{t('blog.categories.subscribe.title') || 'Subscribe for updates'}</h3>
+            <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[32px] mb-4">{t('blog.categories.subscribe.title') || 'Subscribe for updates'}</h3>
             <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] mb-6 max-w-[600px] mx-auto">{t('blog.categories.subscribe.subtitle') || 'Get the latest insights delivered to your inbox.'}</p>
             <button className="bg-white text-[#EFC132] px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 hover:scale-105 transform">{t('blog.categories.subscribe.button') || 'Subscribe'}</button>
           </div>

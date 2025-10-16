@@ -166,7 +166,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
     return (
       <div className="relative w-full h-screen bg-[#EFC132] flex items-center justify-center">
         <div className="text-center text-white px-4">
-          <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[42px] md:text-[72px] leading-tight mb-4">
+          <h1 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-white text-[42px] md:text-[72px] leading-tight mb-4">
             {t('hero.title') || 'Petroleum Derivatives and Logistics Services'}
           </h1>
           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[20px] leading-relaxed max-w-[900px] mx-auto">
@@ -219,7 +219,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
           <>
             {slides[index].showTitle && (
               <h1 
-                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[42px] md:text-[72px] leading-tight mb-4"
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-white text-[42px] md:text-[72px] leading-tight mb-4"
                 dir={language === 'ar' ? 'rtl' : 'ltr'}
               >
                 {language === 'ar' && slides[index].titleAr 

@@ -18,6 +18,26 @@ export function FloatingActions() {
 
   return (
     <div className="fixed right-4 bottom-4 z-[60] flex flex-col items-end gap-3">
+      {/* Call Button */}
+      <a
+        href="tel:+966565145666"
+        aria-label="Call us"
+        className="group shadow-lg rounded-full p-1 bg-[#25D366] hover:bg-[#128C7E] transition-colors duration-200"
+      >
+        <div className="bg-white rounded-full p-2">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            viewBox="0 0 24 24" 
+            width="24" 
+            height="24" 
+            fill="#25D366"
+            className="group-hover:fill-[#128C7E] transition-colors duration-200"
+          >
+            <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+        </div>
+      </a>
+
       {/* WhatsApp */}
       <a
         href="https://wa.me/966565145666"

@@ -66,7 +66,7 @@ function AchievementCard({
         {icon}
       </motion.div>
       <motion.h3 
-        className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#EFC132] mb-2"
+        className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-2"
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -161,7 +161,7 @@ export function AboutUsPage() {
       >
         <div className="max-w-[1280px] mx-auto px-4 md:px-8 text-center">
           <motion.h2 
-            className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-6"
+            className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-6"
             variants={itemVariants}
           >
             {t('aboutUs.ourStory.title') || 'Our Story'}
@@ -217,7 +217,7 @@ export function AboutUsPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#EFC132] mb-4">
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[32px] text-[#EFC132] mb-4">
                   {t('aboutUs.ourStory.mission.title') || 'Our Mission'}
                 </h3>
                 <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] text-gray-700">
@@ -232,7 +232,7 @@ export function AboutUsPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#EFC132] mb-4">
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[32px] text-[#EFC132] mb-4">
                   {t('aboutUs.ourStory.vision.title') || 'Our Vision'}
                 </h3>
                 <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] text-gray-700">
@@ -257,7 +257,7 @@ export function AboutUsPage() {
             {/* Text Content */}
             <motion.div variants={itemVariants}>
               <motion.h2 
-                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-6"
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-6"
                 variants={itemVariants}
               >
                 {t('aboutUs.companyOverview.title') || 'Company Overview'}
@@ -299,7 +299,7 @@ export function AboutUsPage() {
                 transition={{ delay: 0.8, duration: 0.6 }}
               >
                 <motion.p 
-                  className="font-['Alfa_Slab_One:Regular',_sans-serif] text-xl md:text-2xl"
+                  className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-xl md:text-2xl"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2 }}
@@ -307,7 +307,7 @@ export function AboutUsPage() {
                   VISION رؤية
                 </motion.p>
                 <motion.p 
-                  className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-4xl"
+                  className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-3xl md:text-4xl"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.4 }}
@@ -367,7 +367,7 @@ export function AboutUsPage() {
             {/* Text Content */}
             <motion.div variants={itemVariants}>
               <motion.h2 
-                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-6"
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-6"
                 variants={itemVariants}
               >
                     {t('aboutUs.leadership.title') || 'Leadership'}
@@ -388,7 +388,7 @@ export function AboutUsPage() {
                   whileHover={{ scale: 1.02, boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }}
                   transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                 >
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#EFC132] mb-2">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] md:text-[24px] text-[#EFC132] mb-2">
                     {t('aboutUs.leadership.ceo.title') || 'Chief Executive Officer'}
                   </h3>
                   <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] text-gray-600">
@@ -425,7 +425,7 @@ export function AboutUsPage() {
             variants={itemVariants}
           >
             <motion.h2 
-              className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-4"
+              className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-4"
               variants={itemVariants}
             >
               {t('aboutUs.achievements.title') || 'Our Achievements'}
@@ -514,7 +514,7 @@ export function AboutUsPage() {
         </div>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#EFC132] mb-8 text-center">{t('aboutUs.purpose.title') || 'Our Purpose'}</h2>
+            <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-3xl md:text-5xl text-[#EFC132] mb-8 text-center">{t('aboutUs.purpose.title') || 'Our Purpose'}</h2>
             
             {/* Quote */}
             <div className="bg-[#f8f9fa] border-l-4 border-[#EFC132] p-6 md:p-8 mb-8 rounded-r-lg">
@@ -538,7 +538,7 @@ export function AboutUsPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#EFC132] mb-8">{t('aboutUs.whoWeAre.title') || 'Who We Are'}</h2>
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-3xl md:text-5xl text-[#EFC132] mb-8">{t('aboutUs.whoWeAre.title') || 'Who We Are'}</h2>
               <p className="font-['Alice:Regular',_sans-serif] text-lg md:text-xl text-gray-700 leading-relaxed mb-6">{t('aboutUs.whoWeAre.description') || 'We are a Saudi company dedicated to operational excellence, safety and innovation across energy and logistics value chains.'}</p>
               <p className="font-['Alice:Regular',_sans-serif] text-lg md:text-xl text-gray-700 leading-relaxed">{t('aboutUs.whoWeAre.mission') || 'Our mission is to deliver reliable, sustainable solutions that empower our clients and communities.'}</p>
             </div>
@@ -554,7 +554,7 @@ export function AboutUsPage() {
                     priority
                     quality={90}
                   />
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-2xl mb-4">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-2xl mb-4">
                     {t('aboutUs.whoWeAre.title') || 'Excellence in Energy & Logistics'}
                   </h3>
                   <p className="font-['Alice:Regular',_sans-serif] text-lg">
@@ -571,7 +571,7 @@ export function AboutUsPage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#EFC132] mb-6">{t('aboutUs.whatWeDo.title') || 'What We Do'}</h2>
+            <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-3xl md:text-5xl text-[#EFC132] mb-6">{t('aboutUs.whatWeDo.title') || 'What We Do'}</h2>
             <p className="font-['Alice:Regular',_sans-serif] text-lg md:text-xl text-gray-700 max-w-4xl mx-auto">{t('aboutUs.whatWeDo.subtitle') || 'Integrated solutions across petroleum derivatives, logistics, water technology and alternative energy.'}</p>
           </div>
 
@@ -579,12 +579,12 @@ export function AboutUsPage() {
             {/* Petroleum Products */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-[#EFC132] rounded-lg flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-[#EFC132] rounded-lg flex items-center justify-center mr-4 rtl:ml-4 rtl:mr-0">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                 </div>
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-xl md:text-2xl text-[#EFC132]">{t('aboutUs.whatWeDo.services.petroleumProducts.title') || 'Petroleum Products'}</h3>
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-xl md:text-2xl text-[#EFC132]">{t('aboutUs.whatWeDo.services.petroleumProducts.title') || 'Petroleum Products'}</h3>
               </div>
                 <p className="font-['Alice:Regular',_sans-serif] text-gray-700 leading-relaxed">{t('aboutUs.whatWeDo.services.petroleumProducts.description') || 'Storage, trading and distribution with rigorous quality and safety standards.'}</p>
             </div>
@@ -592,12 +592,12 @@ export function AboutUsPage() {
             {/* Alternative Energy */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-[#EFC132] rounded-lg flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-[#EFC132] rounded-lg flex items-center justify-center mr-4 rtl:ml-4 rtl:mr-0">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
                 </div>
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-xl md:text-2xl text-[#EFC132]">{t('aboutUs.whatWeDo.services.alternativeEnergy.title') || 'Alternative Energy'}</h3>
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-xl md:text-2xl text-[#EFC132]">{t('aboutUs.whatWeDo.services.alternativeEnergy.title') || 'Alternative Energy'}</h3>
               </div>
                 <p className="font-['Alice:Regular',_sans-serif] text-gray-700 leading-relaxed">{t('aboutUs.whatWeDo.services.alternativeEnergy.description') || 'Clean energy solutions supporting national sustainability goals.'}</p>
             </div>
@@ -605,12 +605,12 @@ export function AboutUsPage() {
             {/* Water Desalination */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-[#EFC132] rounded-lg flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-[#EFC132] rounded-lg flex items-center justify-center mr-4 rtl:ml-4 rtl:mr-0">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                   </svg>
                 </div>
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-xl md:text-2xl text-[#EFC132]">{t('aboutUs.whatWeDo.services.waterDesalination.title') || 'Water Desalination'}</h3>
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-xl md:text-2xl text-[#EFC132]">{t('aboutUs.whatWeDo.services.waterDesalination.title') || 'Water Desalination'}</h3>
               </div>
                 <p className="font-['Alice:Regular',_sans-serif] text-gray-700 leading-relaxed">{t('aboutUs.whatWeDo.services.waterDesalination.description') || 'Advanced technologies for reliable fresh water supply.'}</p>
             </div>
@@ -618,12 +618,12 @@ export function AboutUsPage() {
             {/* Falcon Motor Oils */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-[#EFC132] rounded-lg flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-[#EFC132] rounded-lg flex items-center justify-center mr-4 rtl:ml-4 rtl:mr-0">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-xl md:text-2xl text-[#EFC132]">{t('aboutUs.whatWeDo.services.falconMotorOils.title') || 'Falcon Motor Oils'}</h3>
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-xl md:text-2xl text-[#EFC132]">{t('aboutUs.whatWeDo.services.falconMotorOils.title') || 'Falcon Motor Oils'}</h3>
               </div>
                 <p className="font-['Alice:Regular',_sans-serif] text-gray-700 leading-relaxed">{t('aboutUs.whatWeDo.services.falconMotorOils.description') || 'High-performance lubricants engineered for demanding conditions.'}</p>
             </div>
@@ -658,7 +658,7 @@ export function AboutUsPage() {
             variants={itemVariants}
           >
             <motion.h2 
-              className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-4"
+              className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-4"
               variants={itemVariants}
             >
               {t('aboutUs.coreValues.title') || 'Our Core Values'}
@@ -696,7 +696,7 @@ export function AboutUsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                 </svg>
               </motion.div>
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#EFC132] mb-3">
+              <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] md:text-[24px] text-[#EFC132] mb-3">
                 {t('aboutUs.coreValues.excellence.title') || 'Excellence'}
               </h3>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] md:text-[16px] text-gray-600">
@@ -724,7 +724,7 @@ export function AboutUsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </motion.div>
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#EFC132] mb-3">
+              <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] md:text-[24px] text-[#EFC132] mb-3">
                 {t('aboutUs.coreValues.innovation.title') || 'Innovation'}
               </h3>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] md:text-[16px] text-gray-600">
@@ -752,7 +752,7 @@ export function AboutUsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </motion.div>
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#EFC132] mb-3">
+              <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] md:text-[24px] text-[#EFC132] mb-3">
                 {t('aboutUs.coreValues.integrity.title') || 'Integrity'}
               </h3>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] md:text-[16px] text-gray-600">
@@ -780,7 +780,7 @@ export function AboutUsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </motion.div>
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#EFC132] mb-3">
+              <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] md:text-[24px] text-[#EFC132] mb-3">
                 {t('aboutUs.coreValues.partnership.title') || 'Partnership'}
               </h3>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] md:text-[16px] text-gray-600">
@@ -800,7 +800,7 @@ export function AboutUsPage() {
             transition={{ duration: 0.3 }}
           >
             <motion.h3 
-              className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-gray-700 mb-4"
+              className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[32px] text-gray-700 mb-4"
               variants={itemVariants}
             >
               {t('aboutUs.coreValues.cta.title') || 'Get to Know Us Better'}

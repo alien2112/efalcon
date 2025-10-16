@@ -112,7 +112,7 @@ export function WorkSection() {
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Title */}
         <FadeInOnScroll direction="up" delay={0.2}>
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[56px] md:text-[96px] leading-[1.2] text-center text-white mb-16">
+          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[56px] md:text-[96px] leading-[1.2] text-center text-white mb-16">
             {t('work.title') || 'Our Work'}
           </h2>
         </FadeInOnScroll>
@@ -143,7 +143,7 @@ export function WorkSection() {
                   {/* Caption strip */}
                   <div className="absolute inset-x-0 bottom-0 p-0">
                     <div className="bg-white/20 text-white px-4 py-3 md:px-5 md:py-3">
-                      <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[16px] md:text-[18px] tracking-wide">
+                      <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide">
                         {item.title}
                       </h3>
                     </div>

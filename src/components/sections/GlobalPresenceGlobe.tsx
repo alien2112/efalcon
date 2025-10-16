@@ -94,7 +94,7 @@ export function GlobalPresenceGlobe() {
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center mb-10 md:mb-14">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-3xl md:text-5xl text-[#EFC132] mb-4">{t('aboutUs.globalPresence.title') || 'Global Presence'}</h2>
+          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-3xl md:text-5xl text-[#EFC132] mb-4">{t('aboutUs.globalPresence.title') || 'Global Presence'}</h2>
           <p className="font-['Alice:Regular',_sans-serif] text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">{t('aboutUs.globalPresence.subtitle') || 'Interactive 3D globe showing our key regions and partnerships.'}</p>
         </div>
 

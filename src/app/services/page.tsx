@@ -205,7 +205,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center">
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center">
                 {t('services.title') || 'Our Services'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
@@ -242,7 +242,7 @@ export default function ServicesPage() {
                 {/* Service Info */}
                 <FadeInOnScroll direction="left" delay={0.6}>
                   <div className="space-y-6">
-                    <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-[#EFC132]">
+                    <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] text-[#EFC132]">
                       {currentCategory.name}
                     </h3>
                     <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 leading-relaxed">
@@ -287,7 +287,7 @@ export default function ServicesPage() {
                         </Link>
                         <div className="p-6">
                           <Link href={`/services/${service.id}`}>
-                            <h4 className={`font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 transition-colors duration-300 cursor-pointer ${
+                            <h4 className={`font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 transition-colors duration-300 cursor-pointer ${
                               hoveredService === service.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
                             }`}>
                               {service.name}
@@ -328,7 +328,7 @@ export default function ServicesPage() {
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <FadeInOnScroll direction="up" delay={0.2}>
               <div className="text-center mb-12">
-                <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6">
+                <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6">
                   {t('services.additionalServices') || 'Additional Services'}
                 </h2>
                 <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
@@ -357,7 +357,7 @@ export default function ServicesPage() {
                     </Link>
                     <div className="p-6">
                       <Link href={`/services/${service.slug}`}>
-                        <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 cursor-pointer">
+                        <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 cursor-pointer">
                           {service.title[language]}
                         </h4>
                       </Link>
@@ -404,7 +404,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[36px] md:text-[48px] text-[#EFC132] mb-6">
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6">
                 {t('services.whereUsed') || 'Where Are Our Services Used?'}
               </h2>
             </div>
@@ -454,7 +454,7 @@ export default function ServicesPage() {
                         }`} />
                       </div>
                       <div className="p-6">
-                        <h3 className={`font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] mb-3 transition-colors duration-300 ${
+                        <h3 className={`font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 transition-colors duration-300 ${
                           hoveredApplication === application.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
                         }`}>
                           {application.title}
@@ -485,7 +485,7 @@ export default function ServicesPage() {
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#EFC132] mb-6">
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-6">
                 {t('contact.form.title') || 'For Inquiries'}
               </h2>
               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">

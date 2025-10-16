@@ -144,7 +144,7 @@ export function ServicesSection() {
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Title */}
         <FadeInOnScroll direction="up" delay={0.2}>
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[72px] leading-[1.2] text-center text-white mb-8">
+          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[48px] md:text-[72px] leading-[1.2] text-center text-white mb-8">
             {t('services.title') || 'Our Services'}
           </h2>
         </FadeInOnScroll>
@@ -231,7 +231,7 @@ export function ServicesSection() {
             {/* Service Info */}
             {services.length > 0 && (
               <div className="mt-12 text-center">
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[36px] text-white mb-4">
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[36px] text-white mb-4">
                   {services[currentSlide].title}
                 </h3>
                 <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-white max-w-[600px] mx-auto">

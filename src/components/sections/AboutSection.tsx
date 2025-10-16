@@ -91,7 +91,7 @@ export function AboutSection() {
     <div className="relative w-full bg-[#EFC132] py-20 md:py-32 overflow-hidden">
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 md:px-8">
         {/* Section Title */}
-        <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[96px] leading-[1.2] text-center text-white mb-12 md:mb-16">
+        <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[48px] md:text-[96px] leading-[1.2] text-center text-white mb-12 md:mb-16">
           {t('about.title')}
         </h2>
 

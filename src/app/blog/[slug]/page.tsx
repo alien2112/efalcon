@@ -101,7 +101,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
             <motion.div variants={itemVariants}>
               <motion.h1 
-                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[32px] md:text-[48px] lg:text-[56px] leading-tight mb-4"
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-white text-[32px] md:text-[48px] lg:text-[56px] leading-tight mb-4"
                 variants={itemVariants}
               >
                 {blogPost.title}

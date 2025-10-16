@@ -122,7 +122,7 @@ export function AchievementCard({
 
       {/* Animated number */}
       <motion.h3
-        className={`font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] mb-2 transition-colors duration-300 ${
+        className={`font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] mb-2 transition-colors duration-300 ${
           isHovered ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
         }`}
         animate={{

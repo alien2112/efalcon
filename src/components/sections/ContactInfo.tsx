@@ -100,7 +100,7 @@ export function ContactInfo() {
         className={`text-center mb-12 ${language === 'ar' ? 'text-right' : 'text-left'}`}
         variants={itemVariants}
       >
-        <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[40px] text-[#EFC132] mb-4">
+        <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-4">
           {t('contact.info.title') || 'Contact Information'}
         </h2>
         <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -131,10 +131,13 @@ export function ContactInfo() {
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] text-gray-800 mb-2 group-hover:text-[#EFC132] transition-colors duration-300">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] text-gray-800 mb-2 group-hover:text-[#EFC132] transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[15px] text-gray-600 leading-relaxed break-words">
+                  <p 
+                    className="font-['ADLaM_Display:Regular',_sans-serif] text-[15px] text-gray-600 leading-relaxed break-words"
+                    dir={item.id === '1' ? 'ltr' : undefined}
+                  >
                     {item.value}
                   </p>
                 </div>
@@ -175,7 +178,7 @@ export function ContactInfo() {
           
           <div className="relative z-10 text-center">
             <motion.h3 
-              className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] mb-6"
+              className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}

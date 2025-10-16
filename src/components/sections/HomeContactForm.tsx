@@ -194,7 +194,7 @@ export function HomeContactForm() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-2xl blur-lg opacity-30"></div>
             <div className="relative bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] rounded-2xl px-8 py-4 shadow-xl">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] md:text-[36px] text-white">
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] text-white">
                 {t('contact.hero.contactTitle') || 'Connect With Us'}
               </h2>
             </div>
@@ -225,7 +225,7 @@ export function HomeContactForm() {
                 <div className={`w-12 h-12 bg-gradient-to-r ${info.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <info.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[16px] text-gray-800 mb-2">
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] text-gray-800 mb-2">
                   {info.title}
                 </h3>
                 <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed">
@@ -264,7 +264,7 @@ export function HomeContactForm() {
                     <CheckCircle className="w-10 h-10 text-white" />
                   </motion.div>
                   <motion.h3 
-                    className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[28px] text-[#EFC132] mb-4"
+                    className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] text-[#EFC132] mb-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}

@@ -147,7 +147,7 @@ export function Footer() {
                       quality={90}
                     />
                   </motion.div>
-                  <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] bg-clip-text text-transparent">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] bg-clip-text text-transparent">
                     Ebdaa Falcon
                   </h3>
         </div>
@@ -182,7 +182,7 @@ export function Footer() {
                 className="lg:col-span-1"
                 variants={itemVariants}
               >
-                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#EFC132]">
+                <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] mb-6 text-[#EFC132]">
                   {t('footer.quickLinks') || 'Quick Links'}
                 </h4>
                 <ul className="space-y-3">
@@ -207,7 +207,7 @@ export function Footer() {
                 className="lg:col-span-1"
                 variants={itemVariants}
               >
-                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#EFC132]">
+                <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] mb-6 text-[#EFC132]">
                   {t('footer.support') || 'Support'}
                 </h4>
                 <ul className="space-y-3">
@@ -232,7 +232,7 @@ export function Footer() {
                 className="lg:col-span-1"
                 variants={itemVariants}
               >
-                <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] mb-6 text-[#EFC132]">
+                <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] mb-6 text-[#EFC132]">
                   {t('footer.getInTouch') || 'Get in Touch'}
                 </h4>
                 <div className="space-y-4">
@@ -263,6 +263,7 @@ export function Footer() {
                     <a 
                       href="tel:+966565145666" 
                       className="text-gray-300 font-['ADLaM_Display:Regular',_sans-serif] text-[15px] hover:text-white transition-colors duration-300"
+                      dir="ltr"
                     >
                       +966 56 514 5666
                     </a>

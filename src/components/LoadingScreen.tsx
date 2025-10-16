@@ -73,10 +73,10 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
         {/* Company Name */}
         <div className="mb-12">
-          <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-white mb-2">
+          <h1 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-white mb-2">
             إبداع فالكون
           </h1>
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[36px] text-white/90">
+          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[36px] text-white/90">
             EBDAA FALCON
           </h2>
         </div>

@@ -174,7 +174,7 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
       <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
         <motion.div variants={textVariants}>
           <motion.h1 
-            className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[48px] md:text-[72px] leading-tight mb-4"
+            className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-white text-[48px] md:text-[72px] leading-tight mb-4"
             variants={textVariants}
           >
             {t('blog.hero.title') || 'Ebdaa Falcon Blog'}

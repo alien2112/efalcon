@@ -114,7 +114,7 @@ export default function ServiceDetailPage() {
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
           <div>
-            <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px] mb-3">
+            <h1 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-white text-[40px] md:text-[64px] mb-3">
               {staticService 
                 ? (t(`services.detail.${service.slug}.title`) || service.title)
                 : service.title[language]
@@ -136,7 +136,7 @@ export default function ServiceDetailPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {(staticService ? service.features : service.features[language]).map((f, index) => (
               <div key={index} className="bg-white border border-gray-200 rounded-[14px] p-5 shadow-sm">
-                <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[#EFC132] text-[18px] md:text-[20px]">
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[#EFC132] text-[18px] md:text-[20px]">
                   {staticService 
                     ? (t(`services.detail.${service.slug}.features.${f.toLowerCase().replace(/\s/g, '')}`) || f)
                     : f
@@ -160,14 +160,14 @@ export default function ServiceDetailPage() {
           {/* Detailed Content */}
           <div className="grid md:grid-cols-3 gap-8 items-start mb-12">
             <div className="md:col-span-2 bg-white border border-gray-200 rounded-[16px] p-6 md:p-10">
-              <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#EFC132] mb-4">{t('services.detail.overview') || 'Overview'}</h2>
+              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[32px] text-[#EFC132] mb-4">{t('services.detail.overview') || 'Overview'}</h2>
               <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed mb-6">
                 {staticService 
                   ? (t(`services.detail.${service.slug}.content`) || service.content)
                   : service.content[language]
                 }
               </p>
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[20px] md:text-[24px] text-[#EFC132] mb-4">{t('services.detail.detailedInformation') || 'Detailed Information'}</h3>
+              <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] md:text-[24px] text-[#EFC132] mb-4">{t('services.detail.detailedInformation') || 'Detailed Information'}</h3>
               <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed">
                 {staticService 
                   ? (t(`services.detail.${service.slug}.detailedContent`) || service.detailedContent)
@@ -176,7 +176,7 @@ export default function ServiceDetailPage() {
               </p>
             </div>
             <aside className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-8">
-              <h3 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[18px] md:text-[22px] text-[#EFC132] mb-3">{t('services.detail.whyEbdaaFalcon') || 'Why Ebdaa Falcon'}</h3>
+              <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] md:text-[22px] text-[#EFC132] mb-3">{t('services.detail.whyEbdaaFalcon') || 'Why Ebdaa Falcon'}</h3>
               <ul className="list-disc pl-5 space-y-2 font-['Alice:Regular',_sans-serif] text-gray-700">
                 <li>{t('services.detail.whyEbdaaFalconList.experiencedOperations') || 'Experienced operations team'}</li>
                 <li>{t('services.detail.whyEbdaaFalconList.safetyCompliance') || 'Safety and compliance first'}</li>
@@ -203,7 +203,7 @@ export default function ServiceDetailPage() {
 
           {/* Benefits Section */}
           <div className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-10 mb-12">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#EFC132] mb-6 text-center">{t('services.detail.keyBenefits') || 'Key Benefits'}</h2>
+            <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[32px] text-[#EFC132] mb-6 text-center">{t('services.detail.keyBenefits') || 'Key Benefits'}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {(staticService ? service.benefits : service.benefits[language]).map((benefit, index) => (
                 <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
@@ -225,7 +225,7 @@ export default function ServiceDetailPage() {
 
           {/* Image Gallery */}
           <div className="bg-white border border-gray-200 rounded-[16px] p-6 md:p-10">
-            <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[24px] md:text-[32px] text-[#EFC132] mb-6 text-center">{t('services.detail.serviceGallery') || 'Service Gallery'}</h2>
+            <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[32px] text-[#EFC132] mb-6 text-center">{t('services.detail.serviceGallery') || 'Service Gallery'}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {service.galleryImages.map((image, index) => (
                 <div key={index} className="group relative h-[200px] md:h-[250px] rounded-[12px] overflow-hidden border border-gray-200">

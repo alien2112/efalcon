@@ -207,7 +207,7 @@ export function Banner({
             {/* Dynamic Title from Banner Image */}
             {useDynamicImages && currentImage.metadata && (currentImage.metadata.showTitle !== false) && (
               <motion.h1 
-                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[64px] lg:text-[72px] text-white mb-6 leading-tight"
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[48px] md:text-[64px] lg:text-[72px] text-white mb-6 leading-tight"
                 style={{ y }}
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -223,7 +223,7 @@ export function Banner({
             {/* Static Title (fallback) */}
             {(!useDynamicImages || !currentImage.metadata || (currentImage.metadata.showTitle === false)) && (
               <motion.h1 
-                className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[64px] lg:text-[72px] text-white mb-6 leading-tight"
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[48px] md:text-[64px] lg:text-[72px] text-white mb-6 leading-tight"
                 style={{ y }}
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}

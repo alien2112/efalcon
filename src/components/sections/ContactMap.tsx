@@ -21,7 +21,7 @@ export function ContactMap() {
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[32px] md:text-[48px] text-[#EFC132] mb-4">
+          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-4">
             {t('contact.map.title') || 'Our Location'}
           </h2>
           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">
@@ -59,7 +59,7 @@ export function ContactMap() {
           {/* Map Info Overlay */}
           <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 md:max-w-sm">
             <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-xl p-4 md:p-6 border border-white/20">
-              <h4 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[16px] md:text-[18px] text-[#EFC132] mb-3">
+              <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] text-[#EFC132] mb-3">
                 {t('contact.map.contactDetails') || 'Contact Details'}
               </h4>
               <div className="space-y-2">
@@ -86,6 +86,7 @@ export function ContactMap() {
                   <a 
                     href="tel:+966565145666"
                     className="font-['ADLaM_Display:Regular',_sans-serif] text-[13px] md:text-[14px] text-gray-600 hover:text-[#EFC132] transition-colors"
+                    dir="ltr"
                   >
                     {t('contact.map.phone') || '+966 56 514 5666'}
                   </a>
