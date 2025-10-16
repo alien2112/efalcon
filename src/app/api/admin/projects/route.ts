@@ -115,27 +115,25 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
     const { db } = await connectToDatabase();
-    
-    const updateData = {
-      ...body,
-      updatedAt: new Date()
-    };
-    
+
+    const { _id, ...updateData } = body;
+    updateData.updatedAt = new Date();
+
     const result = await db.collection('projects').updateOne(
-      { _id: new ObjectId(body._id) },
+      { _id: new ObjectId(_id) },
       { $set: updateData }
     );
-    
+
     if (result.matchedCount === 0) {
       return NextResponse.json(
         { success: false, error: 'Project not found' },
         { status: 404 }
       );
     }
-    
+
     return NextResponse.json({
       success: true,
-      data: { _id: body._id, ...updateData }
+      data: { _id, ...updateData }
     });
   } catch (error) {
     console.error('Error updating project:', error);

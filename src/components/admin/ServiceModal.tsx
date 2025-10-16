@@ -406,7 +406,7 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
                   </label>
                   <div className="flex items-center gap-2">
                     <input
-                      type="url"
+                      type="text"
                       value={formData.pdfUrl}
                       onChange={(e) => setFormData(prev => ({ ...prev, pdfUrl: e.target.value }))}
                       className="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"

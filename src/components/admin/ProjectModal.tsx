@@ -411,7 +411,7 @@ export function ProjectModal({ isOpen, onClose, onSave, project, categories, loa
             </label>
             <div className="flex items-center gap-2">
               <input
-                type="url"
+                type="text"
                 value={(formData as any).pdfUrl || ''}
                 onChange={(e) => setFormData(prev => ({ ...prev, pdfUrl: e.target.value as any }))}
                 className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
