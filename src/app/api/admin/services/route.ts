@@ -7,41 +7,7 @@ import { ObjectId } from 'mongodb';
 export async function GET(request: NextRequest) {
   try {
     const { db } = await connectToDatabase();
-    let services = await db.collection('services').find({}).sort({ order: 1 }).toArray();
-    
-    // Fallback: if no services collection data, derive from GridFS images.files
-    if (!services || services.length === 0) {
-      const files = await db.collection('images.files')
-        .find({ 'metadata.page': 'services', 'metadata.isActive': { $ne: false } })
-        .sort({ 'metadata.order': 1 })
-        .toArray();
-      const filtered = files.filter((f: any) => {
-        const title = (f.metadata?.title || '').toLowerCase();
-        const description = (f.metadata?.description || '').toLowerCase();
-        // Exclude generic page banner like "Our Services"
-        if (title === 'our services') return false;
-        if (description.includes('comprehensive energy')) return false;
-        return true;
-      });
-      services = filtered.map((f: any) => ({
-        _id: f._id,
-        slug: (f.metadata?.title || f.filename || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
-        title: { en: f.metadata?.title || '', ar: f.metadata?.titleAr || '' },
-        summary: { en: f.metadata?.description || '', ar: f.metadata?.descriptionAr || '' },
-        imageUrl: `/api/gridfs/images/${f._id}`,
-        features: { en: [], ar: [] },
-        content: { en: '', ar: '' },
-        detailedContent: { en: '', ar: '' },
-        galleryImages: [],
-        benefits: { en: [], ar: [] },
-        category: 'uncategorized',
-        isActive: f.metadata?.isActive !== false,
-        isFeatured: false,
-        order: f.metadata?.order || 0,
-        createdAt: f.uploadDate || new Date(),
-        updatedAt: f.uploadDate || new Date(),
-      }));
-    }
+    const services = await db.collection('services').find({}).sort({ order: 1 }).toArray();
     
     return NextResponse.json({
       success: true,

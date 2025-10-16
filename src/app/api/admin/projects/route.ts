@@ -7,50 +7,10 @@ import { ObjectId } from 'mongodb';
 export async function GET(request: NextRequest) {
   try {
     const { db } = await connectToDatabase();
-    let projects = await db.collection('projects')
+    const projects = await db.collection('projects')
       .find({})
       .sort({ order: 1, createdAt: -1 })
       .toArray();
-
-    // Fallback: derive projects from GridFS images.files tagged with page 'work'
-    if (!projects || projects.length === 0) {
-      const files = await db.collection('images.files')
-        .find({ 'metadata.page': { $in: ['work', 'projects'] }, 'metadata.isActive': { $ne: false } })
-        .sort({ 'metadata.order': 1, uploadDate: -1 })
-        .toArray();
-      const filtered = files.filter((f: any) => {
-        const title = (f.metadata?.title || '').toLowerCase();
-        const description = (f.metadata?.description || '').toLowerCase();
-        // Exclude generic page banner like "Our Work"
-        if (title === 'our work') return false;
-        if (description.includes('explore our portfolio')) return false;
-        return true;
-      });
-      projects = filtered.map((f: any) => ({
-        _id: f._id,
-        slug: (f.metadata?.title || f.filename || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
-        title: { en: f.metadata?.title || '', ar: f.metadata?.titleAr || '' },
-        summary: { en: f.metadata?.description || '', ar: f.metadata?.descriptionAr || '' },
-        description: { en: '', ar: '' },
-        imageUrl: `/api/gridfs/images/${f._id}`,
-        galleryImages: [],
-        technologies: { en: [], ar: [] },
-        features: { en: [], ar: [] },
-        challenges: { en: [], ar: [] },
-        solutions: { en: [], ar: [] },
-        results: { en: [], ar: [] },
-        client: { en: '', ar: '' },
-        location: { en: '', ar: '' },
-        duration: { en: '', ar: '' },
-        budget: { en: '', ar: '' },
-        category: 'uncategorized',
-        isActive: f.metadata?.isActive !== false,
-        isFeatured: false,
-        order: f.metadata?.order || 0,
-        createdAt: f.uploadDate || new Date(),
-        updatedAt: f.uploadDate || new Date(),
-      }));
-    }
     
     return NextResponse.json({
       success: true,
