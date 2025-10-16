@@ -33,6 +33,8 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
   const [activeLanguage, setActiveLanguage] = useState<'en' | 'ar'>('en');
   const [errors, setErrors] = useState<any>({});
   const [uploadingPdf, setUploadingPdf] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingGalleryIndex, setUploadingGalleryIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (service) {
@@ -127,6 +129,28 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
     } finally {
       setUploadingPdf(false);
     }
+  };
+
+  const uploadImage = async (file: File, page: string, order = 0) => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : '';
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('title', file.name);
+    fd.append('description', '');
+    fd.append('order', String(order));
+    fd.append('isActive', 'true');
+    fd.append('showTitle', 'false');
+    fd.append('showDescription', 'false');
+    fd.append('page', page);
+    const res = await fetch('/api/gridfs/images', {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      body: fd
+    });
+    const result = await res.json();
+    if (!result.success) throw new Error(result.error || 'Upload failed');
+    const id = result.data?._id || result.data?.id || result.data;
+    return `/api/gridfs/images/${id}`;
   };
 
   const addFeature = (lang: 'en' | 'ar') => {
@@ -336,17 +360,40 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Main Image URL
+                    Main Image
                   </label>
-                  <input
-                    type="url"
-                    value={formData.imageUrl}
-                    onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
-                    className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                      errors.imageUrl ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter image URL"
-                  />
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 min-w-0">
+                      <input
+                        type="text"
+                        readOnly
+                        value={formData.imageUrl}
+                        className={`w-full p-2 border rounded-md bg-gray-50 text-gray-600 ${errors.imageUrl ? 'border-red-500' : 'border-gray-300'}`}
+                        placeholder="No image uploaded"
+                      />
+                    </div>
+                    <label className="inline-flex items-center px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200">
+                      <Upload className="w-4 h-4 mr-2" />
+                      {uploadingImage ? 'Uploading...' : 'Upload'}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const f = e.target.files?.[0];
+                          if (!f) return;
+                          try {
+                            setUploadingImage(true);
+                            const url = await uploadImage(f, 'services', 0);
+                            setFormData(prev => ({ ...prev, imageUrl: url }));
+                          } finally {
+                            setUploadingImage(false);
+                          }
+                        }}
+                        disabled={uploadingImage}
+                      />
+                    </label>
+                  </div>
                   {errors.imageUrl && (
                     <p className="text-red-500 text-xs mt-1">{errors.imageUrl}</p>
                   )}
@@ -508,12 +555,33 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
                     {formData.galleryImages.map((image, index) => (
                       <div key={index} className="flex items-center space-x-2">
                         <input
-                          type="url"
+                          type="text"
+                          readOnly
                           value={image}
-                          onChange={(e) => updateGalleryImage(index, e.target.value)}
-                          className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder={`Enter gallery image URL ${index + 1}`}
+                          className="flex-1 p-2 border border-gray-300 rounded-md bg-gray-50 text-gray-600 focus:outline-none"
+                          placeholder={`No image uploaded (${index + 1})`}
                         />
+                        <label className="inline-flex items-center px-2 py-1 text-xs bg-gray-100 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200">
+                          <Upload className="w-3 h-3 mr-1" />
+                          {uploadingGalleryIndex === index ? 'Uploading...' : 'Upload'}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={async (e) => {
+                              const f = e.target.files?.[0];
+                              if (!f) return;
+                              try {
+                                setUploadingGalleryIndex(index);
+                                const url = await uploadImage(f, 'services', index + 1);
+                                updateGalleryImage(index, url);
+                              } finally {
+                                setUploadingGalleryIndex(null);
+                              }
+                            }}
+                            disabled={uploadingGalleryIndex !== null}
+                          />
+                        </label>
                         <button
                           type="button"
                           onClick={() => removeGalleryImage(index)}
