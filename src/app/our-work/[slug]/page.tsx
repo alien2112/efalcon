@@ -202,7 +202,7 @@ export default function WorkDetailPage() {
         <Image 
           src={staticProject ? staticProject.imageUrl : project.imageUrl} 
           alt={staticProject 
-            ? (t(`ourWorkPage.projects.${staticProject.id}.title`) || staticProject.id)
+            ? (t(`ourWorkPage.projects.${staticProject.translationKey}.title`) || staticProject.id)
             : project.title[language]
           } 
           fill 
@@ -214,13 +214,13 @@ export default function WorkDetailPage() {
           <div>
             <h1 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-white text-[40px] md:text-[64px] mb-3">
               {staticProject 
-                ? (t(`ourWorkPage.projects.${staticProject.id}.title`) || staticProject.id)
+                ? (t(`ourWorkPage.projects.${staticProject.translationKey}.title`) || staticProject.id)
                 : project.title[language]
               }
             </h1>
             <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[18px] max-w-[900px] mx-auto">
               {staticProject 
-                ? (t(`ourWorkPage.projects.${staticProject.id}.description`) || 'Project description not available.')
+                ? (t(`ourWorkPage.projects.${staticProject.translationKey}.description`) || 'Project description not available.')
                 : project.summary[language]
               }
             </p>
@@ -229,7 +229,7 @@ export default function WorkDetailPage() {
               <span>•</span>
               <span>
                 {staticProject 
-                  ? (t(`ourWorkPage.projects.${staticProject.id}.location`) || 'Location not specified')
+                  ? (t(`ourWorkPage.projects.${staticProject.translationKey}.location`) || 'Location not specified')
                   : project.location[language]
                 }
               </span>
