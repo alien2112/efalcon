@@ -36,6 +36,8 @@
     "title": "Our Services",
     "subtitle": "Driving Excellence in Energy, Logistics & Sustainability",
     "description": "We provide integrated solutions across oil & gas, logistics, and renewable energy sectors, delivering excellence through strategic partnerships and innovative approaches.",
+    "additionalServices": "Additional Services",
+    "additionalServicesDescription": "Explore our expanded range of specialized services designed to meet your unique requirements.",
     "categories": {
       "oilGas": "Oil & Gas Solutions",
       "oilGasDescription": "Comprehensive petroleum storage, trading, and distribution solutions with state-of-the-art facilities and strategic partnerships.",

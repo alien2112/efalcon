@@ -1,7 +1,12 @@
 import { MongoClient, Db } from 'mongodb';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://eslamabdaltif:oneone2@cluster0.afyc9bd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://eslamabdaltif:oneone2@cluster0.afyc9bd.mongodb.net/petrowebsite?retryWrites=true&w=majority&appName=Cluster0';
 const MONGODB_DB = process.env.MONGODB_DB || 'petrowebsite';
+
+// Log connection details (remove sensitive password from logs)
+const sanitizedUri = MONGODB_URI.replace(/:[^:@]+@/, ':****@');
+console.log('[MongoDB] Connection URI (sanitized):', sanitizedUri);
+console.log('[MongoDB] Target database:', MONGODB_DB);
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env.local');

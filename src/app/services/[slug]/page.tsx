@@ -40,6 +40,7 @@ interface DynamicService {
   category: string;
   isActive: boolean;
   order: number;
+  pdfUrl?: string;
 }
 
 export default function ServiceDetailPage() {
@@ -182,6 +183,17 @@ export default function ServiceDetailPage() {
                 <li>{t('services.detail.whyEbdaaFalconList.provenPartnerNetwork') || 'Proven partner network'}</li>
                 <li>{t('services.detail.whyEbdaaFalconList.saudiVisionAligned') || 'Saudi Vision 2030 aligned'}</li>
               </ul>
+
+              {(!staticService ? (service as any).pdfUrl : null) && (
+                <a
+                  href={(service as any).pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center justify-center px-4 py-2 rounded-md bg-[#EFC132] text-white hover:bg-[#cda61f] transition-colors w-full text-center"
+                >
+                  {t('common.downloadPdf') || 'Download PDF'}
+                </a>
+              )}
             </aside>
           </div>
 

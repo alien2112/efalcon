@@ -16,6 +16,8 @@ export interface Project {
     ar: string;
   };
   imageUrl: string;
+  // Optional URL to a downloadable PDF document related to the project
+  pdfUrl?: string;
   galleryImages: string[];
   technologies: {
     en: string[];

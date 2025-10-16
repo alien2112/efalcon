@@ -22,6 +22,8 @@ export interface Service {
     en: string;
     ar: string;
   };
+  // Optional URL to a downloadable PDF document related to the service
+  pdfUrl?: string;
   galleryImages: string[];
   benefits: {
     en: string[];

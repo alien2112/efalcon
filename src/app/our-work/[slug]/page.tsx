@@ -139,6 +139,7 @@ interface DynamicProject {
   order: number;
   isActive: boolean;
   isFeatured: boolean;
+  pdfUrl?: string;
 }
 
 export default function WorkDetailPage() {
@@ -308,11 +309,12 @@ export default function WorkDetailPage() {
                 <li>{t('work.detail.whyEbdaaFalconList.saudiVisionAligned') || 'Aligned with Saudi Vision 2030'}</li>
               </ul>
               
-              {project.downloadUrl && (
+              {((project as any).pdfUrl || (staticProject as any)?.downloadUrl) && (
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <a
-                    href={project.downloadUrl}
-                    download
+                    href={(project as any).pdfUrl || (staticProject as any).downloadUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center text-[#EFC132] font-medium hover:text-[#5a4f05] transition-colors"
                   >
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

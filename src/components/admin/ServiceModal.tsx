@@ -18,6 +18,7 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
     title: { en: '', ar: '' },
     summary: { en: '', ar: '' },
     imageUrl: '',
+    pdfUrl: '',
     features: { en: [''], ar: [''] },
     content: { en: '', ar: '' },
     detailedContent: { en: '', ar: '' },
@@ -31,6 +32,7 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
 
   const [activeLanguage, setActiveLanguage] = useState<'en' | 'ar'>('en');
   const [errors, setErrors] = useState<any>({});
+  const [uploadingPdf, setUploadingPdf] = useState(false);
 
   useEffect(() => {
     if (service) {
@@ -38,6 +40,7 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
         title: service.title || { en: '', ar: '' },
         summary: service.summary || { en: '', ar: '' },
         imageUrl: service.imageUrl || '',
+        pdfUrl: (service as any).pdfUrl || '',
         features: service.features || { en: [''], ar: [''] },
         content: service.content || { en: '', ar: '' },
         detailedContent: service.detailedContent || { en: '', ar: '' },
@@ -53,6 +56,7 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
         title: { en: '', ar: '' },
         summary: { en: '', ar: '' },
         imageUrl: '',
+        pdfUrl: '',
         features: { en: [''], ar: [''] },
         content: { en: '', ar: '' },
         detailedContent: { en: '', ar: '' },
@@ -101,6 +105,28 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
     };
 
     await onSave(cleanedData as Service);
+  };
+
+  const handlePdfUpload = async (file: File) => {
+    try {
+      setUploadingPdf(true);
+      const token = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : '';
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('title', `${formData.title.en || file.name}`);
+      fd.append('page', 'services');
+      const res = await fetch('/api/gridfs/files', {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        body: fd
+      });
+      const result = await res.json();
+      if (result.success) {
+        setFormData(prev => ({ ...prev, pdfUrl: result.data.url }));
+      }
+    } finally {
+      setUploadingPdf(false);
+    }
   };
 
   const addFeature = (lang: 'en' | 'ar') => {
@@ -324,6 +350,36 @@ export function ServiceModal({ isOpen, onClose, onSave, service, categories, loa
                   {errors.imageUrl && (
                     <p className="text-red-500 text-xs mt-1">{errors.imageUrl}</p>
                   )}
+                </div>
+
+                {/* PDF Document */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    PDF URL (optional)
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="url"
+                      value={formData.pdfUrl}
+                      onChange={(e) => setFormData(prev => ({ ...prev, pdfUrl: e.target.value }))}
+                      className="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300"
+                      placeholder="/api/gridfs/files/{id} or https://..."
+                    />
+                    <label className="inline-flex items-center px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200">
+                      <Upload className="w-4 h-4 mr-2" />
+                      {uploadingPdf ? 'Uploading...' : 'Upload PDF'}
+                      <input
+                        type="file"
+                        accept="application/pdf"
+                        className="hidden"
+                        onChange={(e) => {
+                          const f = e.target.files?.[0];
+                          if (f) handlePdfUpload(f);
+                        }}
+                        disabled={uploadingPdf}
+                      />
+                    </label>
+                  </div>
                 </div>
 
                 {/* Features */}

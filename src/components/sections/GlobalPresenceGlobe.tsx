@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import dynamic from 'next/dynamic';
+import * as THREE from 'three';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -70,11 +71,18 @@ export function GlobalPresenceGlobe() {
     if (!controls) return;
     controls.enableZoom = true;
     controls.enablePan = true;
+    controls.enableRotate = true;
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.zoomSpeed = 0.5;
     controls.minDistance = 120;
     controls.maxDistance = 400;
+
+    // Ensure two-finger pinch to zoom and pan on mobile
+    if (controls.touches) {
+      controls.touches.ONE = THREE.TOUCH.ROTATE;
+      controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;
+    }
   }, [size.w, size.h]);
 
   const flyTo = (lat: number, lng: number, altitude = 1.1) => {

@@ -18,6 +18,7 @@ export function ProjectModal({ isOpen, onClose, onSave, project, categories, loa
     summary: { en: '', ar: '' },
     description: { en: '', ar: '' },
     imageUrl: '',
+    pdfUrl: '',
     galleryImages: [''],
     technologies: { en: [''], ar: [''] },
     features: { en: [''], ar: [''] },
@@ -46,6 +47,7 @@ export function ProjectModal({ isOpen, onClose, onSave, project, categories, loa
           summary: project.summary || { en: '', ar: '' },
           description: project.description || { en: '', ar: '' },
           imageUrl: project.imageUrl || '',
+          pdfUrl: (project as any).pdfUrl || '',
           galleryImages: project.galleryImages || [''],
           technologies: project.technologies || { en: [''], ar: [''] },
           features: project.features || { en: [''], ar: [''] },
@@ -68,6 +70,7 @@ export function ProjectModal({ isOpen, onClose, onSave, project, categories, loa
           summary: { en: '', ar: '' },
           description: { en: '', ar: '' },
           imageUrl: '',
+          pdfUrl: '',
           galleryImages: [''],
           technologies: { en: [''], ar: [''] },
           features: { en: [''], ar: [''] },
@@ -117,6 +120,28 @@ export function ProjectModal({ isOpen, onClose, onSave, project, categories, loa
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+  const [uploadingPdf, setUploadingPdf] = useState(false);
+  const handlePdfUpload = async (file: File) => {
+    try {
+      setUploadingPdf(true);
+      const token = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : '';
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('title', `${formData.title.en || file.name}`);
+      fd.append('page', 'work');
+      const res = await fetch('/api/gridfs/files', {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        body: fd
+      });
+      const result = await res.json();
+      if (result.success) {
+        setFormData(prev => ({ ...prev, pdfUrl: result.data.url }));
+      }
+    } finally {
+      setUploadingPdf(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -331,6 +356,36 @@ export function ProjectModal({ isOpen, onClose, onSave, project, categories, loa
               placeholder="https://example.com/image.jpg"
             />
             {errors.imageUrl && <p className="text-red-500 text-sm mt-1">{errors.imageUrl}</p>}
+          </div>
+
+          {/* PDF */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              PDF URL (optional)
+            </label>
+            <div className="flex items-center gap-2">
+              <input
+                type="url"
+                value={(formData as any).pdfUrl || ''}
+                onChange={(e) => setFormData(prev => ({ ...prev, pdfUrl: e.target.value as any }))}
+                className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="/api/gridfs/files/{id} or https://..."
+              />
+              <label className="inline-flex items-center px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200">
+                <Upload className="w-4 h-4 mr-2" />
+                {uploadingPdf ? 'Uploading...' : 'Upload PDF'}
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) handlePdfUpload(f);
+                  }}
+                  disabled={uploadingPdf}
+                />
+              </label>
+            </div>
           </div>
 
           {/* Gallery Images */}

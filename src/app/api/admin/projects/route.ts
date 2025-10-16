@@ -7,14 +7,26 @@ import { ObjectId } from 'mongodb';
 export async function GET(request: NextRequest) {
   try {
     console.log('[Projects API] Starting to fetch projects...');
+    console.log('[Projects API] Environment:', process.env.NODE_ENV);
+    console.log('[Projects API] Database name:', process.env.MONGODB_DB || 'petrowebsite');
+
     const { db } = await connectToDatabase();
     console.log('[Projects API] Database connected successfully');
+    console.log('[Projects API] Connected to database:', db.databaseName);
+
+    // List all collections to debug
+    const collections = await db.listCollections().toArray();
+    console.log('[Projects API] Available collections:', collections.map(c => c.name));
 
     const projects = await db.collection('projects')
       .find({})
       .sort({ order: 1, createdAt: -1 })
       .toArray();
     console.log(`[Projects API] Found ${projects.length} projects`);
+
+    if (projects.length > 0) {
+      console.log('[Projects API] Sample project:', JSON.stringify(projects[0]));
+    }
 
     return NextResponse.json({
       success: true,
@@ -50,6 +62,7 @@ export async function POST(request: NextRequest) {
       summary: body.summary,
       description: body.description,
       imageUrl: body.imageUrl,
+      pdfUrl: body.pdfUrl,
       galleryImages: body.galleryImages || [],
       technologies: body.technologies,
       features: body.features,
