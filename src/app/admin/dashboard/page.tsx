@@ -377,7 +377,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const saveEdit = async (id: string) => {
+  const saveEdit = async (id: string, data?: typeof editFormData) => {
     try {
       const token = localStorage.getItem('adminToken');
       const response = await fetch('/api/gridfs/images', {
@@ -388,7 +388,7 @@ export default function AdminDashboard() {
         },
         body: JSON.stringify({
           _id: id,
-          ...editFormData
+          ...(data ?? editFormData)
         })
       });
 
@@ -1788,7 +1788,7 @@ interface BannerModalProps {
   };
   setEditFormData: (data: any) => void;
   onUpload: (formData: FormData) => Promise<void>;
-  onSave: (id: string) => Promise<void>;
+  onSave: (id: string, data?: any) => Promise<void>;
   onCancel: () => void;
   uploading: boolean;
   editingImageId: string | null;
@@ -1886,7 +1886,7 @@ function BannerModal({
     } else {
       setEditFormData(formData);
       if (editingImageId) {
-        await onSave(editingImageId);
+        await onSave(editingImageId, formData);
       }
     }
   };
