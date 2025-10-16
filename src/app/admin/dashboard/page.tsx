@@ -183,9 +183,13 @@ export default function AdminDashboard() {
   const [editingImage, setEditingImage] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState({
     title: '',
+    titleAr: '',
     description: '',
+    descriptionAr: '',
     order: 1,
-    isActive: true
+    isActive: true,
+    showTitle: true,
+    showDescription: true
   });
 
   // Modal functions
@@ -198,9 +202,13 @@ export default function AdminDashboard() {
     setEditingImage(image._id);
     setEditFormData({
       title: image.metadata.title,
+      titleAr: image.metadata.titleAr || '',
       description: image.metadata.description,
+      descriptionAr: image.metadata.descriptionAr || '',
       order: image.metadata.order,
-      isActive: image.metadata.isActive
+      isActive: image.metadata.isActive,
+      showTitle: image.metadata.showTitle ?? true,
+      showDescription: image.metadata.showDescription ?? true
     });
     setModalType('edit');
     setShowModal(true);

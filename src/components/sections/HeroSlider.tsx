@@ -74,7 +74,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
           // Filter images for the current page and sort by order
           const pageImages = result.data
             .filter((img: BannerImage) => 
-              img.metadata.isActive && 
+              (img.metadata.isActive !== false) && 
               (img.metadata.page === page || (!img.metadata.page && page === 'home'))
             )
             .sort((a: BannerImage, b: BannerImage) => 
