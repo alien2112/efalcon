@@ -1861,6 +1861,12 @@ function BannerModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Enforce distinct Arabic fields
+    if (!formData.titleAr?.trim() || !formData.descriptionAr?.trim()) {
+      alert('Please provide Arabic title and description.');
+      return;
+    }
+
     if (type === 'add') {
     if (!formData.file) return;
 
@@ -1936,7 +1942,8 @@ function BannerModal({
               type="text"
               value={formData.titleAr}
               onChange={(e) => setFormData(prev => ({ ...prev, titleAr: e.target.value }))}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
             />
           </div>
           
@@ -1961,7 +1968,8 @@ function BannerModal({
               type="text"
               value={formData.descriptionAr}
               onChange={(e) => setFormData(prev => ({ ...prev, descriptionAr: e.target.value }))}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
             />
           </div>
 

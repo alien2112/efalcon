@@ -205,7 +205,7 @@ export function Banner({
         <div className="flex-1 flex items-center justify-center">
           <div className="max-w-7xl mx-auto px-4 md:px-8 text-center">
             {/* Dynamic Title from Banner Image */}
-            {useDynamicImages && currentImage.metadata && currentImage.metadata.showTitle && (
+            {useDynamicImages && currentImage.metadata && (currentImage.metadata.showTitle !== false) && (
               <motion.h1 
                 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[64px] lg:text-[72px] text-white mb-6 leading-tight"
                 style={{ y }}
@@ -221,7 +221,7 @@ export function Banner({
             )}
             
             {/* Static Title (fallback) */}
-            {(!useDynamicImages || !currentImage.metadata || !currentImage.metadata.showTitle) && (
+            {(!useDynamicImages || !currentImage.metadata || (currentImage.metadata.showTitle === false)) && (
               <motion.h1 
                 className="font-['Alfa_Slab_One:Regular',_sans-serif] text-[48px] md:text-[64px] lg:text-[72px] text-white mb-6 leading-tight"
                 style={{ y }}
@@ -235,7 +235,7 @@ export function Banner({
             )}
             
             {/* Dynamic Description from Banner Image */}
-            {useDynamicImages && currentImage.metadata && currentImage.metadata.showDescription && (
+            {useDynamicImages && currentImage.metadata && (currentImage.metadata.showDescription !== false) && (
               <motion.p 
                 className="font-['ADLaM_Display:Regular',_sans-serif] text-[18px] md:text-[22px] text-white/90 max-w-4xl mx-auto leading-relaxed"
                 initial={{ y: 50, opacity: 0 }}
@@ -250,7 +250,7 @@ export function Banner({
             )}
             
             {/* Static Subtitle (fallback) */}
-            {(!useDynamicImages || !currentImage.metadata || !currentImage.metadata.showDescription) && subtitle && (
+            {(!useDynamicImages || !currentImage.metadata || (currentImage.metadata.showDescription === false)) && subtitle && (
               <motion.p 
                 className="font-['ADLaM_Display:Regular',_sans-serif] text-[18px] md:text-[22px] text-white/90 max-w-4xl mx-auto leading-relaxed"
                 initial={{ y: 50, opacity: 0 }}

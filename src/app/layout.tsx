@@ -9,6 +9,15 @@ import './globals.css';
 export const metadata = {
   title: 'Ebdaa Falcon - Petroleum Derivatives and Logistics Services',
   description: 'Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products.',
+  icons: {
+    icon: [
+      { url: '/logofirstsection.png' },
+      { url: '/logofirstsection.png', rel: 'shortcut icon' },
+    ],
+    apple: [
+      { url: '/logofirstsection.png' },
+    ],
+  },
 };
 
 export default function RootLayout({
