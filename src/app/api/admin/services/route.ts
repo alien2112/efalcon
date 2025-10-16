@@ -6,17 +6,30 @@ import { ObjectId } from 'mongodb';
 // GET /api/admin/services - Get all services
 export async function GET(request: NextRequest) {
   try {
+    console.log('[Services API] Starting to fetch services...');
     const { db } = await connectToDatabase();
+    console.log('[Services API] Database connected successfully');
+
     const services = await db.collection('services').find({}).sort({ order: 1 }).toArray();
-    
+    console.log(`[Services API] Found ${services.length} services`);
+
     return NextResponse.json({
       success: true,
       data: services
     });
   } catch (error) {
-    console.error('Error fetching services:', error);
+    console.error('[Services API] Error fetching services:', error);
+    console.error('[Services API] Error details:', {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch services' },
+      {
+        success: false,
+        error: 'Failed to fetch services',
+        details: error instanceof Error ? error.message : String(error)
+      },
       { status: 500 }
     );
   }

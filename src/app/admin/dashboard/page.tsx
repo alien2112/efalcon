@@ -987,18 +987,24 @@ function ServicesTab({ onEditService, categories, setCategories }: ServicesTabPr
 
   const fetchServices = async () => {
     try {
+      console.log('[ServicesTab] Fetching services...');
       const token = localStorage.getItem('adminToken');
       const response = await fetch('/api/admin/services', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
+      console.log('[ServicesTab] Response status:', response.status);
       const result = await response.json();
+      console.log('[ServicesTab] Response result:', result);
       if (result.success) {
+        console.log(`[ServicesTab] Successfully loaded ${result.data.length} services`);
         setServices(result.data);
+      } else {
+        console.error('[ServicesTab] Failed to load services:', result.error, result.details);
       }
     } catch (error) {
-      console.error('Error fetching services:', error);
+      console.error('[ServicesTab] Error fetching services:', error);
     } finally {
       setLoading(false);
     }
@@ -1215,18 +1221,24 @@ function ProjectsTab({ onEditProject, categories, setCategories }: ProjectsTabPr
 
   const fetchProjects = async () => {
     try {
+      console.log('[ProjectsTab] Fetching projects...');
       const token = localStorage.getItem('adminToken');
       const response = await fetch('/api/admin/projects', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
+      console.log('[ProjectsTab] Response status:', response.status);
       const result = await response.json();
+      console.log('[ProjectsTab] Response result:', result);
       if (result.success) {
+        console.log(`[ProjectsTab] Successfully loaded ${result.data.length} projects`);
         setProjects(result.data);
+      } else {
+        console.error('[ProjectsTab] Failed to load projects:', result.error, result.details);
       }
     } catch (error) {
-      console.error('Error fetching projects:', error);
+      console.error('[ProjectsTab] Error fetching projects:', error);
     } finally {
       setLoading(false);
     }

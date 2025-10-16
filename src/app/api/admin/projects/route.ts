@@ -6,20 +6,33 @@ import { ObjectId } from 'mongodb';
 // GET /api/admin/projects - Get all projects
 export async function GET(request: NextRequest) {
   try {
+    console.log('[Projects API] Starting to fetch projects...');
     const { db } = await connectToDatabase();
+    console.log('[Projects API] Database connected successfully');
+
     const projects = await db.collection('projects')
       .find({})
       .sort({ order: 1, createdAt: -1 })
       .toArray();
-    
+    console.log(`[Projects API] Found ${projects.length} projects`);
+
     return NextResponse.json({
       success: true,
       data: projects
     });
   } catch (error) {
-    console.error('Error fetching projects:', error);
+    console.error('[Projects API] Error fetching projects:', error);
+    console.error('[Projects API] Error details:', {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch projects' },
+      {
+        success: false,
+        error: 'Failed to fetch projects',
+        details: error instanceof Error ? error.message : String(error)
+      },
       { status: 500 }
     );
   }
