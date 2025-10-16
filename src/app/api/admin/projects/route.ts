@@ -18,7 +18,15 @@ export async function GET(request: NextRequest) {
         .find({ 'metadata.page': { $in: ['work', 'projects'] }, 'metadata.isActive': { $ne: false } })
         .sort({ 'metadata.order': 1, uploadDate: -1 })
         .toArray();
-      projects = files.map((f: any) => ({
+      const filtered = files.filter((f: any) => {
+        const title = (f.metadata?.title || '').toLowerCase();
+        const description = (f.metadata?.description || '').toLowerCase();
+        // Exclude generic page banner like "Our Work"
+        if (title === 'our work') return false;
+        if (description.includes('explore our portfolio')) return false;
+        return true;
+      });
+      projects = filtered.map((f: any) => ({
         _id: f._id,
         slug: (f.metadata?.title || f.filename || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
         title: { en: f.metadata?.title || '', ar: f.metadata?.titleAr || '' },
@@ -89,6 +97,20 @@ export async function POST(request: NextRequest) {
     
     const result = await db.collection('projects').insertOne(project);
     
+    // If imageUrl points to a GridFS image, tag it with page: 'work'
+    try {
+      if (project.imageUrl && typeof project.imageUrl === 'string') {
+        const match = project.imageUrl.match(/\/api\/gridfs\/images\/(.+)$/);
+        if (match && match[1]) {
+          const imageId = match[1];
+          await db.collection('images.files').updateOne(
+            { _id: new ObjectId(imageId) },
+            { $set: { 'metadata.page': 'work' } }
+          );
+        }
+      }
+    } catch (_) {}
+
     return NextResponse.json({
       success: true,
       data: { _id: result.insertedId, ...project }

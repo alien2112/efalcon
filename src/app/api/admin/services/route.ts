@@ -15,7 +15,15 @@ export async function GET(request: NextRequest) {
         .find({ 'metadata.page': 'services', 'metadata.isActive': { $ne: false } })
         .sort({ 'metadata.order': 1 })
         .toArray();
-      services = files.map((f: any) => ({
+      const filtered = files.filter((f: any) => {
+        const title = (f.metadata?.title || '').toLowerCase();
+        const description = (f.metadata?.description || '').toLowerCase();
+        // Exclude generic page banner like "Our Services"
+        if (title === 'our services') return false;
+        if (description.includes('comprehensive energy')) return false;
+        return true;
+      });
+      services = filtered.map((f: any) => ({
         _id: f._id,
         slug: (f.metadata?.title || f.filename || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
         title: { en: f.metadata?.title || '', ar: f.metadata?.titleAr || '' },
@@ -77,6 +85,20 @@ export async function POST(request: NextRequest) {
     
     const result = await db.collection('services').insertOne(service);
     
+    // If imageUrl points to a GridFS image, tag it with page: 'services'
+    try {
+      if (service.imageUrl && typeof service.imageUrl === 'string') {
+        const match = service.imageUrl.match(/\/api\/gridfs\/images\/(.+)$/);
+        if (match && match[1]) {
+          const imageId = match[1];
+          await db.collection('images.files').updateOne(
+            { _id: new ObjectId(imageId) },
+            { $set: { 'metadata.page': 'services' } }
+          );
+        }
+      }
+    } catch (_) {}
+
     return NextResponse.json({
       success: true,
       data: { _id: result.insertedId, ...service }

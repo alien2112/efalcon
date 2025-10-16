@@ -7,6 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BlogPost {
   id: string;
+  slug: string;
   title: string;
   excerpt: string;
   content: string;
@@ -25,90 +26,34 @@ export function BlogPosts() {
   const [visiblePosts, setVisiblePosts] = useState(6);
   const postsRef = useRef<HTMLDivElement>(null);
 
-  // Sample blog posts data
-  const samplePosts: BlogPost[] = [
-    {
-      id: '1',
-      title: 'The Future of Sustainable Energy in the Middle East',
-      excerpt: 'Exploring recent developments in renewable energy and how they will shape the region\'s future.',
-      content: '',
-      author: 'Ebdaa Falcon Team',
-      date: '2025-01-15',
-      category: 'Sustainable Energy',
-      imageUrl: '/images/2e61064ba29556dd56f0911170063156e2b7a103.webp',
-      readTime: '5 min read',
-      tags: ['renewable energy', 'sustainability', 'middle east']
-    },
-    {
-      id: '2',
-      title: 'Innovation in Marine Logistics Services',
-      excerpt: 'How Ebdaa Falcon is developing innovative logistics solutions for marine ports.',
-      content: '',
-      author: 'Ebdaa Falcon Team',
-      date: '2025-01-12',
-      category: 'Logistics Services',
-      imageUrl: '/images/5992bbb553331fc55d07d245c68d3a2d7b8fea26.webp',
-      readTime: '7 min read',
-      tags: ['logistics', 'marine ports', 'innovation']
-    },
-    {
-      id: '3',
-      title: 'Impact of Saudi Vision 2030 on the Energy Sector',
-      excerpt: 'Comprehensive analysis of how Saudi Vision 2030 is shaping the future of the Kingdom\'s energy sector.',
-      content: '',
-      author: 'Ebdaa Falcon Team',
-      date: '2025-01-10',
-      category: 'Government Policy',
-      imageUrl: '/images/665db4c10244e78f94bf59a54bb37d716103ac23.webp',
-      readTime: '8 min read',
-      tags: ['vision 2030', 'policy', 'energy']
-    },
-    {
-      id: '4',
-      title: 'Advanced Water Desalination Technologies',
-      excerpt: 'Exploring the latest water desalination technologies and their regional applications.',
-      content: '',
-      author: 'Ebdaa Falcon Team',
-      date: '2025-01-08',
-      category: 'Water Technology',
-      imageUrl: '/images/999718f4c2f82d26b7f5fe8222338d676599195f.webp',
-      readTime: '6 min read',
-      tags: ['water desalination', 'technology', 'sustainability']
-    },
-    {
-      id: '5',
-      title: 'International Partnerships in the Energy Sector',
-      excerpt: 'How international partnerships enhance local companies\' capabilities in the energy sector.',
-      content: '',
-      author: 'Ebdaa Falcon Team',
-      date: '2025-01-05',
-      category: 'International Partnerships',
-      imageUrl: '/images/de677a78167b5a290392b1d450bcb146fab1dd5e.webp',
-      readTime: '9 min read',
-      tags: ['partnerships', 'international', 'energy']
-    },
-    {
-      id: '6',
-      title: 'The Future of Sustainable Transportation',
-      excerpt: 'Exploring developments in sustainable transportation and their impact on logistics services.',
-      content: '',
-      author: 'Ebdaa Falcon Team',
-      date: '2025-01-03',
-      category: 'Sustainable Transportation',
-      imageUrl: '/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp',
-      readTime: '7 min read',
-      tags: ['transportation', 'sustainability', 'logistics']
-    }
-  ];
-
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setPosts(samplePosts);
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch('/api/blog/posts?limit=9');
+        const json = await res.json();
+        if (json.success) {
+          const mapped: BlogPost[] = json.data.map((p: any) => ({
+            id: p._id || p.slug,
+            slug: p.slug,
+            title: p.title?.en || '',
+            excerpt: p.excerpt?.en || '',
+            content: '',
+            author: p.author?.name || 'Admin',
+            date: p.publishedAt || p.createdAt || new Date().toISOString(),
+            category: p.category || '',
+            imageUrl: p.featuredImage || p.imageUrl || '/images/next.svg',
+            readTime: `${p.readTime || 0} min read`,
+            tags: Array.isArray(p.tags) ? p.tags : []
+          }));
+          setPosts(mapped);
+        }
+      } catch (e) {
+        console.error('Failed to load blog posts', e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPosts();
   }, []);
 
   const loadMorePosts = () => {
@@ -208,7 +153,7 @@ export function BlogPosts() {
 
                     {/* Read More Button */}
                     <Link 
-                      href={`/blog/${post.id}`}
+                      href={`/blog/${post.slug}`}
                       className="inline-flex items-center text-[#EFC132] font-medium hover:text-[#5a4f05] transition-colors group-hover:underline"
                     >
                       {t('blog.posts.readMore') || 'Read more'}
