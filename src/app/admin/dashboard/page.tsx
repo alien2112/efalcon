@@ -39,9 +39,13 @@ interface BannerImage {
   contentType: string;
   metadata: {
     title: string;
+    titleAr?: string;
     description: string;
+    descriptionAr?: string;
     order: number;
     isActive: boolean;
+    showTitle?: boolean;
+    showDescription?: boolean;
     page?: string; // Which page this banner belongs to
   };
 }
@@ -1766,9 +1770,13 @@ interface BannerModalProps {
   page: string;
   editFormData: {
     title: string;
+    titleAr?: string;
     description: string;
+    descriptionAr?: string;
     order: number;
     isActive: boolean;
+    showTitle?: boolean;
+    showDescription?: boolean;
   };
   setEditFormData: (data: any) => void;
   onUpload: (formData: FormData) => Promise<void>;
@@ -1794,9 +1802,13 @@ function BannerModal({
   const [formData, setFormData] = useState({
     file: null as File | null,
     title: '',
+    titleAr: '',
     description: '',
+    descriptionAr: '',
     order: 1,
-    isActive: true
+    isActive: true,
+    showTitle: true,
+    showDescription: true
   });
 
   useEffect(() => {
@@ -1804,17 +1816,25 @@ function BannerModal({
       setFormData({
         file: null,
         title: editFormData.title,
+        titleAr: editFormData.titleAr || '',
         description: editFormData.description,
+        descriptionAr: editFormData.descriptionAr || '',
         order: editFormData.order,
-        isActive: editFormData.isActive
+        isActive: editFormData.isActive,
+        showTitle: editFormData.showTitle ?? true,
+        showDescription: editFormData.showDescription ?? true
       });
     } else {
       setFormData({
         file: null,
         title: '',
+        titleAr: '',
         description: '',
+        descriptionAr: '',
         order: 1,
-        isActive: true
+        isActive: true,
+        showTitle: true,
+        showDescription: true
       });
     }
   }, [type, editFormData]);
@@ -1839,9 +1859,13 @@ function BannerModal({
     const data = new FormData();
     data.append('file', formData.file);
     data.append('title', formData.title);
+    data.append('titleAr', formData.titleAr || '');
     data.append('description', formData.description);
+    data.append('descriptionAr', formData.descriptionAr || '');
     data.append('order', formData.order.toString());
     data.append('isActive', formData.isActive.toString());
+    data.append('showTitle', (formData.showTitle ?? true).toString());
+    data.append('showDescription', (formData.showDescription ?? true).toString());
     data.append('page', page);
 
     await onUpload(data);
@@ -1895,6 +1919,18 @@ function BannerModal({
               required
             />
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Arabic Title
+            </label>
+            <input
+              type="text"
+              value={formData.titleAr}
+              onChange={(e) => setFormData(prev => ({ ...prev, titleAr: e.target.value }))}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -1907,6 +1943,37 @@ function BannerModal({
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Arabic Description
+            </label>
+            <input
+              type="text"
+              value={formData.descriptionAr}
+              onChange={(e) => setFormData(prev => ({ ...prev, descriptionAr: e.target.value }))}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <label className="inline-flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={formData.showTitle}
+                onChange={(e) => setFormData(prev => ({ ...prev, showTitle: e.target.checked }))}
+              />
+              <span className="text-sm text-gray-700">Show Title</span>
+            </label>
+            <label className="inline-flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={formData.showDescription}
+                onChange={(e) => setFormData(prev => ({ ...prev, showDescription: e.target.checked }))}
+              />
+              <span className="text-sm text-gray-700">Show Description</span>
+            </label>
           </div>
           
           <div>

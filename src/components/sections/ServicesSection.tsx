@@ -39,6 +39,8 @@ export function ServicesSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
   const [loading, setLoading] = useState(true);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchDeltaX, setTouchDeltaX] = useState(0);
   
   // Fallback services
   const fallbackServices: ServiceImage[] = [
@@ -89,15 +91,18 @@ export function ServicesSection() {
 
   // Combine featured services with fallback services
   const services = featuredServices.length > 0 
-    ? featuredServices.map(service => ({
-        _id: service._id,
-        title: service.title[language],
-        description: service.summary[language],
-        imageUrl: service.imageUrl,
-        slug: service.slug,
-        order: service.order,
-        isActive: service.isActive
-      }))
+    ? featuredServices.map(service => {
+        const lang: 'en' | 'ar' = language === 'ar' ? 'ar' : 'en';
+        return {
+          _id: service._id,
+          title: service.title[lang],
+          description: service.summary[lang],
+          imageUrl: service.imageUrl,
+          slug: service.slug,
+          order: service.order,
+          isActive: service.isActive
+        };
+      })
     : fallbackServices;
 
   const nextSlide = () => {
@@ -106,6 +111,32 @@ export function ServicesSection() {
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + services.length) % services.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches && e.touches.length > 0) {
+      setTouchStartX(e.touches[0].clientX);
+      setTouchDeltaX(0);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX !== null && e.touches && e.touches.length > 0) {
+      setTouchDeltaX(e.touches[0].clientX - touchStartX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    const SWIPE_THRESHOLD = 50; // pixels
+    if (Math.abs(touchDeltaX) > SWIPE_THRESHOLD) {
+      if (touchDeltaX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+    setTouchStartX(null);
+    setTouchDeltaX(0);
   };
 
   return (
@@ -146,7 +177,12 @@ export function ServicesSection() {
             </button>
 
             {/* Images Container */}
-            <div className="relative h-[400px] md:h-[492px] flex items-center justify-center">
+            <div
+              className="relative h-[400px] md:h-[492px] flex items-center justify-center"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               {/* Side images (blurred/smaller) */}
               {services.length > 0 && (
                 <div className="absolute left-0 md:left-[-100px] top-1/2 -translate-y-1/2 opacity-25 rounded-[16px] shadow-[0px_4px_4px_11px_rgba(0,0,0,0.41)] w-[150px] md:w-[297px] h-[150px] md:h-[277px]">

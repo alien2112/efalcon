@@ -414,7 +414,7 @@ export default function OurWorkPage() {
                             }`}>
                               <AnimatedCounter end={highlight.stats.projects} duration={1.5} delay={index * 0.1} />
                             </div>
-                            <div className="text-xs text-gray-600">{t('ourWorkPage.projects') || 'Projects'}</div>
+                            <div className="text-xs text-gray-600">{t('ourWorkPage.projectsLabel') || 'Projects'}</div>
                           </div>
                           <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
                             hoveredHighlight === highlight.id ? 'bg-[#EFC132]/10' : ''
