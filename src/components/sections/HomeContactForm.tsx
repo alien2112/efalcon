@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
@@ -20,6 +20,18 @@ export function HomeContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  // Lightweight floating particles (no extra deps)
+  const particles = useMemo(() => (
+    Array.from({ length: 10 }).map((_, i) => ({
+      id: i,
+      top: `${Math.random() * 80 + 5}%`,
+      left: `${Math.random() * 80 + 5}%`,
+      size: Math.random() * 8 + 4,
+      delay: Math.random() * 2,
+      duration: Math.random() * 6 + 8
+    }))
+  ), []);
 
   const services = [
     { value: 'petroleum-storage', label: t('services.defaultServices.petroleumStorage.title') || 'Petroleum Storage', icon: '' },
@@ -165,29 +177,22 @@ export function HomeContactForm() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 opacity-40">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 to-transparent"></div>
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(148, 163, 184, 0.4) 1px, transparent 0)`,
-          backgroundSize: '30px 30px'
-        }}></div>
-        {/* Subtle geometric pattern */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(45deg, rgba(239, 193, 50, 0.1) 1px, transparent 1px),
-            linear-gradient(-45deg, rgba(239, 193, 50, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px'
-        }}></div>
+    <section className="pt-16 md:pt-24 pb-40 md:pb-48 relative overflow-hidden">
+
+      {/* Floating Particles */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {particles.map(p => (
+          <motion.span
+            key={p.id}
+            className="absolute rounded-full bg-[#EFC132]/20 shadow-[0_0_30px_rgba(239,193,50,0.25)]"
+            style={{ top: p.top, left: p.left, width: p.size, height: p.size }}
+            animate={{ y: [0, -10, 0], x: [0, 8, 0], opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        ))}
       </div>
       
-      {/* Decorative corner accents */}
-      <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[#EFC132]/10 to-transparent rounded-br-3xl"></div>
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#EFC132]/10 to-transparent rounded-bl-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-[#EFC132]/10 to-transparent rounded-tr-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-[#EFC132]/10 to-transparent rounded-tl-3xl"></div>
+      {/* Decorative corner accents removed to let page wrapper background show through */}
       
       <motion.div 
         className="max-w-7xl mx-auto px-4 md:px-8 relative z-10"
@@ -211,6 +216,14 @@ export function HomeContactForm() {
               <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] text-white">
                 {t('contact.hero.contactTitle') || 'Connect With Us'}
               </h2>
+              {/* Gold underline animation */}
+              <motion.div
+                className="absolute left-1/2 -bottom-2 h-1 w-16 -translate-x-1/2 rounded-full bg-gradient-to-r from-[#EFC132] to-[#8B7A0A]"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+              />
             </div>
           </motion.div>
           
@@ -230,24 +243,43 @@ export function HomeContactForm() {
           {contactInfo.map((info, index) => (
             <motion.div
               key={index}
-              className="group cursor-pointer"
+              className="group cursor-pointer h-full"
               variants={itemVariants}
               whileHover={{ y: -8, scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
-              <div className="bg-white rounded-3xl p-8 shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-gray-100 hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover:border-gray-200 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-gray-50">
-                <div className={`w-16 h-16 bg-gradient-to-r ${info.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <info.icon className="w-8 h-8 text-white" />
-                </div>
+              <div className="relative bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/40 hover:shadow-2xl transition-all duration-300 group-hover:border-[#EFC132]/50 h-full min-h-[360px] lg:min-h-[400px]">
+                <motion.div 
+                  className={`w-16 h-16 bg-gradient-to-r ${info.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg`}
+                  whileHover={{ scale: 1.1, rotate: 3 }}
+                  transition={{ type: 'spring', stiffness: 250 }}
+                >
+                  <motion.div className="relative">
+                    <info.icon className="w-8 h-8 text-white" />
+                  </motion.div>
+                </motion.div>
                 <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] text-gray-800 mb-3">
                   {info.title}
                 </h3>
                 <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[15px] text-gray-600 leading-relaxed">
                   {info.value}
                 </p>
+                {/* Mini map under Address */}
+                {info.icon === MapPin && (
+                  <div className="mt-3">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.066950932144!2d46.6753!3d24.7136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f038c7f2f4b69%3A0x3f2e3b6b1b7a0a9!2sRiyadh!5e0!3m2!1sen!2ssa!4v1680000000000"
+                      className="w-full h-40 rounded-xl border border-white/40"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </div>
+                )}
                 
-                {/* Decorative corner element */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-[#EFC132]/20 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Hover glow */}
+                <div className="pointer-events-none absolute -inset-[2px] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{
+                  background: 'radial-gradient(120px 60px at 100% 0%, rgba(239, 193, 50, 0.18), transparent)',
+                }}></div>
               </div>
             </motion.div>
           ))}
@@ -259,12 +291,12 @@ export function HomeContactForm() {
           variants={formVariants}
         >
           <motion.div 
-            className="bg-white rounded-3xl shadow-[0_25px_50px_rgba(0,0,0,0.15)] border border-gray-100 overflow-hidden"
+            className="bg-gradient-to-br from-yellow-50 to-white rounded-3xl shadow-[0_25px_50px_rgba(0,0,0,0.12)] border border-yellow-100/70 overflow-hidden backdrop-blur-sm"
             whileHover={{ shadow: "0 30px 60px rgba(0, 0, 0, 0.2)" }}
             transition={{ duration: 0.3 }}
           >
             {/* Decorative header */}
-            <div className="relative bg-gradient-to-r from-[#EFC132]/10 to-[#8B7A0A]/10 p-6 border-b border-gray-100">
+            <div className="relative bg-gradient-to-r from-[#EFC132]/15 to-[#8B7A0A]/10 p-6 border-b border-yellow-100/60">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-[#EFC132]/60 to-transparent rounded-full"></div>
               <div className="text-center">
                 <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] text-[#EFC132] mb-2">
@@ -581,6 +613,19 @@ export function HomeContactForm() {
           </motion.div>
         </motion.div>
       </motion.div>
+
+      {/* Subtle animated wave at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 opacity-60">
+        <motion.svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" className="w-full h-16 md:h-20" animate={{ x: [0, -20, 0] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}>
+          <path d="M0,32L48,42.7C96,53,192,75,288,85.3C384,96,480,96,576,80C672,64,768,32,864,37.3C960,43,1056,85,1152,106.7C1248,128,1344,128,1392,128L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z" fill="url(#goldGrad)" fillOpacity="0.35" />
+          <defs>
+            <linearGradient id="goldGrad" x1="0" x2="1">
+              <stop offset="0%" stopColor="#EFC132" />
+              <stop offset="100%" stopColor="#8B7A0A" />
+            </linearGradient>
+          </defs>
+        </motion.svg>
+      </div>
     </section>
   );
 }
