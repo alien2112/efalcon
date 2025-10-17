@@ -97,9 +97,9 @@ export function Footer() {
 
   const supportLinks = [
     { name: t('footer.links.faqs') || 'FAQs', href: '/faqs' },
-    { name: t('footer.links.privacyPolicy') || 'Privacy Policy', href: '#' },
-    { name: t('footer.links.terms') || 'Terms of Service', href: '#' },
-    { name: t('footer.links.careers') || 'Careers', href: '#' }
+    { name: t('footer.links.privacyPolicy') || 'Privacy Policy', href: '/privacy-policy' },
+    { name: t('footer.links.terms') || 'Terms of Service', href: '/terms' },
+    { name: t('footer.links.careers') || 'Careers', href: '/careers' }
   ];
 
   return (
