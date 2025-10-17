@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, Download, ArrowRight, Search } from 'lucide-react';
+import { ChevronRight, Download, ArrowRight, ArrowLeft, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
@@ -132,7 +132,7 @@ const toKebabCase = (str: string) => {
 };
 
 export default function OurWorkPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('oilGasProjects');
   const [currentHighlight, setCurrentHighlight] = useState(0);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
@@ -576,7 +576,11 @@ export default function OurWorkPage() {
                         <>
                           {t('ourWorkPage.form.startDiscussion') || 'Start Project Discussion'}
                           <FloatingIcon delay={0.1} floatIntensity={0.3}>
-                            <ArrowRight className="w-4 h-4 ml-2" />
+                            {language === 'ar' ? (
+                              <ArrowLeft className="w-4 h-4 mr-2" />
+                            ) : (
+                              <ArrowRight className="w-4 h-4 ml-2" />
+                            )}
                           </FloatingIcon>
                         </>
                       )}

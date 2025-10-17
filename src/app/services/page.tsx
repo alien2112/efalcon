@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight, Download, ArrowRight } from 'lucide-react';
+import { ChevronRight, Download, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
@@ -683,7 +683,11 @@ export default function ServicesPage() {
                         <>
                           {t('contact.form.send') || 'Send'}
                           <FloatingIcon delay={0.1} floatIntensity={0.3}>
-                            <ArrowRight className="w-4 h-4 ml-2" />
+                            {language === 'ar' ? (
+                              <ArrowLeft className="w-4 h-4 mr-2" />
+                            ) : (
+                              <ArrowRight className="w-4 h-4 ml-2" />
+                            )}
                           </FloatingIcon>
                         </>
                       )}
