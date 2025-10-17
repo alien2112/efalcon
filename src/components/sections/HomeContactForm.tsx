@@ -22,12 +22,12 @@ export function HomeContactForm() {
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const services = [
-    { value: 'petroleum-storage', label: t('services.defaultServices.petroleumStorage.title') || 'Petroleum Storage', icon: '🛢️' },
-    { value: 'logistics', label: t('services.defaultServices.logisticsSolutions.title') || 'Logistics Services', icon: '🚛' },
-    { value: 'marine-ports', label: t('contact.form.options.marinePorts') || 'Marine Ports', icon: '🚢' },
-    { value: 'water-desalination', label: t('contact.form.options.waterDesalination') || 'Water Desalination', icon: '💧' },
-    { value: 'alternative-energy', label: t('contact.form.options.alternativeEnergy') || 'Alternative Energy', icon: '⚡' },
-    { value: 'partnerships', label: t('services.defaultServices.internationalPartnerships.title') || 'International Partnerships', icon: '🤝' }
+    { value: 'petroleum-storage', label: t('services.defaultServices.petroleumStorage.title') || 'Petroleum Storage', icon: '' },
+    { value: 'logistics', label: t('services.defaultServices.logisticsSolutions.title') || 'Logistics Services', icon: '' },
+    { value: 'marine-ports', label: t('contact.form.options.marinePorts') || 'Marine Ports', icon: '' },
+    { value: 'water-desalination', label: t('contact.form.options.waterDesalination') || 'Water Desalination', icon: '' },
+    { value: 'alternative-energy', label: t('contact.form.options.alternativeEnergy') || 'Alternative Energy', icon: '' },
+    { value: 'partnerships', label: t('services.defaultServices.internationalPartnerships.title') || 'International Partnerships', icon: '' }
   ];
 
   const contactInfo = [
@@ -453,7 +453,7 @@ export function HomeContactForm() {
                           <option value="">{t('contact.form.placeholders.service') || 'Select a service'}</option>
                           {services.map((service) => (
                             <option key={service.value} value={service.value}>
-                              {service.icon} {service.label}
+                              {service.label}
                             </option>
                           ))}
                         </select>

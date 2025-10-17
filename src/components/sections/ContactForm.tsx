@@ -32,12 +32,12 @@ export function ContactForm() {
   }));
 
   const services = [
-    { value: 'petroleum-storage', label: t('services.defaultServices.petroleumStorage.title') || 'Petroleum Storage', icon: '🛢️' },
-    { value: 'logistics', label: t('services.defaultServices.logisticsSolutions.title') || 'Logistics Services', icon: '🚛' },
-    { value: 'marine-ports', label: t('contact.form.options.marinePorts') || 'Marine Ports', icon: '🚢' },
-    { value: 'water-desalination', label: t('contact.form.options.waterDesalination') || 'Water Desalination', icon: '💧' },
-    { value: 'alternative-energy', label: t('contact.form.options.alternativeEnergy') || 'Alternative Energy', icon: '⚡' },
-    { value: 'partnerships', label: t('services.defaultServices.internationalPartnerships.title') || 'International Partnerships', icon: '🤝' }
+    { value: 'petroleum-storage', label: t('services.defaultServices.petroleumStorage.title') || 'Petroleum Storage', icon: '' },
+    { value: 'logistics', label: t('services.defaultServices.logisticsSolutions.title') || 'Logistics Services', icon: '' },
+    { value: 'marine-ports', label: t('contact.form.options.marinePorts') || 'Marine Ports', icon: '' },
+    { value: 'water-desalination', label: t('contact.form.options.waterDesalination') || 'Water Desalination', icon: '' },
+    { value: 'alternative-energy', label: t('contact.form.options.alternativeEnergy') || 'Alternative Energy', icon: '' },
+    { value: 'partnerships', label: t('services.defaultServices.internationalPartnerships.title') || 'International Partnerships', icon: '' }
   ];
 
   const formFields = [
@@ -205,25 +205,43 @@ export function ContactForm() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       ref={formRef}
-      className="relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden"
+      className="relative bg-gradient-to-br from-white via-blue-50/30 to-amber-50/30 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-gray-200/50 overflow-hidden backdrop-blur-sm"
       variants={formVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
-      whileHover={{ 
-        shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+      whileHover={{
+        shadow: "0 30px 80px rgba(0, 0, 0, 0.2)",
         scale: 1.005
       }}
       transition={{ duration: 0.3 }}
     >
-      {/* Floating Background Elements */}
+      {/* Multi-layered Background Design */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Subtle gradient base layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/5 via-transparent to-blue-500/5" />
+
+        {/* Geometric pattern layer */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `
+            linear-gradient(30deg, transparent 48%, rgba(239, 193, 50, 0.05) 49%, rgba(239, 193, 50, 0.05) 51%, transparent 52%),
+            linear-gradient(150deg, transparent 48%, rgba(59, 130, 246, 0.04) 49%, rgba(59, 130, 246, 0.04) 51%, transparent 52%)
+          `,
+          backgroundSize: '80px 80px'
+        }} />
+
+        {/* Soft wave shapes */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-gradient-to-br from-[#EFC132]/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-gradient-to-tl from-blue-400/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-amber-300/5 to-orange-300/5 rounded-full blur-2xl" />
+
+        {/* Floating decorative orbs */}
         {floatingElements.map((element) => (
           <motion.div
             key={element.id}
-            className="absolute rounded-full bg-gradient-to-r from-[#EFC132]/10 to-[#8B7A0A]/10 blur-sm"
+            className="absolute rounded-full bg-gradient-to-r from-[#EFC132]/15 to-[#8B7A0A]/15 blur-xl"
             style={{
               left: `${element.x}%`,
               top: `${element.y}%`,
@@ -240,9 +258,48 @@ export function ContactForm() {
             }}
           />
         ))}
-        
-        {/* Gradient overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#EFC132]/5 to-transparent opacity-50" />
+
+        {/* Decorative corner accents */}
+        <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-[#EFC132]/20 rounded-tl-3xl" />
+        <div className="absolute top-0 right-0 w-32 h-32 border-r-2 border-t-2 border-blue-400/20 rounded-tr-3xl" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-amber-400/20 rounded-bl-3xl" />
+        <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#EFC132]/20 rounded-br-3xl" />
+
+        {/* Subtle dot pattern overlay */}
+        <div className="absolute inset-0 opacity-20" style={{
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(239, 193, 50, 0.3) 1px, transparent 0)',
+          backgroundSize: '24px 24px'
+        }} />
+
+        {/* Decorative contact icons scattered in background */}
+        <motion.div
+          className="absolute top-12 right-16 opacity-10"
+          animate={{ rotate: [0, 5, 0], y: [0, -10, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Mail className="w-16 h-16 text-[#EFC132]" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-24 left-12 opacity-10"
+          animate={{ rotate: [0, -5, 0], y: [0, 10, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        >
+          <Phone className="w-14 h-14 text-blue-500" />
+        </motion.div>
+        <motion.div
+          className="absolute top-1/3 left-8 opacity-10"
+          animate={{ scale: [1, 1.1, 1], rotate: [0, 10, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          <MessageSquare className="w-12 h-12 text-amber-500" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-1/3 right-12 opacity-10"
+          animate={{ y: [0, -15, 0], x: [0, 5, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        >
+          <Send className="w-10 h-10 text-[#8B7A0A]" />
+        </motion.div>
       </div>
       <AnimatePresence mode="wait">
         {isSubmitted ? (
@@ -313,22 +370,26 @@ export function ContactForm() {
             </motion.p>
           </motion.div>
         ) : (
-          <motion.div 
+          <motion.div
             key="form"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="p-8 md:p-12"
+            className="relative p-8 md:p-12 backdrop-blur-sm bg-white/40 z-10"
           >
             {/* Form Header */}
-            <motion.div 
+            <motion.div
               className={`text-center mb-12 ${language === 'ar' ? 'text-right' : 'text-left'}`}
               variants={itemVariants}
             >
-              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-4">
+              <motion.h2
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-4 drop-shadow-sm"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
                 {t('contact.form.title') || 'Get in Touch'}
-              </h2>
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              </motion.h2>
+              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-700 max-w-2xl mx-auto leading-relaxed">
                 {t('contact.form.subtitle') || "We'd love to hear about your project. Fill out the form and our team will contact you shortly."}
               </p>
             </motion.div>
@@ -376,7 +437,7 @@ export function ContactForm() {
                         onFocus={() => setFocusedField(field.name)}
                         onBlur={() => setFocusedField(null)}
                         required={field.required}
-                        className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-gray-50 hover:bg-white focus:bg-white focus:outline-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors[field.name] ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-4 focus:ring-red-200' : 'border-gray-200 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20'} ${focusedField === field.name ? 'shadow-lg shadow-[#EFC132]/20' : ''}`}
+                        className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-white/80 hover:bg-white focus:bg-white focus:outline-none shadow-sm hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} ${errors[field.name] ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-4 focus:ring-red-200' : 'border-gray-200/80 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20'} ${focusedField === field.name ? 'shadow-lg shadow-[#EFC132]/30' : ''}`}
                         placeholder={field.placeholder}
                         dir={language === 'ar' ? 'rtl' : 'ltr'}
                         whileFocus={{ scale: 1.02 }}
@@ -430,7 +491,7 @@ export function ContactForm() {
                     onChange={handleInputChange}
                     onFocus={() => setFocusedField('service')}
                     onBlur={() => setFocusedField(null)}
-                    className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-gray-50 hover:bg-white focus:bg-white focus:outline-none ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20 appearance-none cursor-pointer ${focusedField === 'service' ? 'shadow-lg shadow-[#EFC132]/20' : ''}`}
+                    className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-white/80 hover:bg-white focus:bg-white focus:outline-none shadow-sm hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200/80 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20 appearance-none cursor-pointer ${focusedField === 'service' ? 'shadow-lg shadow-[#EFC132]/30' : ''}`}
                     dir={language === 'ar' ? 'rtl' : 'ltr'}
                     whileFocus={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
@@ -438,7 +499,7 @@ export function ContactForm() {
                     <option value="">{t('contact.form.placeholders.service') || 'Select a service'}</option>
                     {services.map((service) => (
                       <option key={service.value} value={service.value}>
-                        {service.icon} {service.label}
+                        {service.label}
                       </option>
                     ))}
                   </motion.select>
@@ -482,7 +543,7 @@ export function ContactForm() {
                     onBlur={() => setFocusedField(null)}
                     required
                     rows={6}
-                    className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-gray-50 hover:bg-white focus:bg-white focus:outline-none resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-4 focus:ring-red-200' : 'border-gray-200 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20'} ${focusedField === 'message' ? 'shadow-lg shadow-[#EFC132]/20' : ''}`}
+                    className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-white/80 hover:bg-white focus:bg-white focus:outline-none resize-none shadow-sm hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-4 focus:ring-red-200' : 'border-gray-200/80 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20'} ${focusedField === 'message' ? 'shadow-lg shadow-[#EFC132]/30' : ''}`}
                     placeholder={t('contact.form.placeholders.message') || 'Tell us about your project...'}
                     dir={language === 'ar' ? 'rtl' : 'ltr'}
                     whileFocus={{ scale: 1.02 }}

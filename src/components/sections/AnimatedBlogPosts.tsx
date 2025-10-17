@@ -33,7 +33,9 @@ export function AnimatedBlogPosts() {
         const res = await fetch('/api/blog/posts?limit=9');
         const json = await res.json();
         if (json.success) {
-          const mapped: BlogPost[] = json.data.map((p: any) => ({
+          // Handle both single post and multiple posts response formats
+          const postsData = json.data.posts || (Array.isArray(json.data) ? json.data : []);
+          const mapped: BlogPost[] = postsData.map((p: any) => ({
             id: p._id || p.slug,
             slug: p.slug,
             title: p.title?.en || '',

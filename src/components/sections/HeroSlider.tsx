@@ -22,6 +22,18 @@ interface BannerImage {
   };
 }
 
+interface Slide {
+  src: string;
+  alt: string;
+  title: string;
+  titleAr?: string;
+  description: string;
+  descriptionAr?: string;
+  showTitle?: boolean;
+  showDescription?: boolean;
+  variant: 'image';
+}
+
 interface HeroSliderProps {
   onReady?: () => void;
   autoplayMs?: number;
@@ -147,24 +159,36 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
         src: '/gallery/logistic .webp',
         alt: 'Logistic Image',
         title: t('hero.logisticTitle') || 'INTEGRATED LOGISTIC SOLUTION',
+        titleAr: '',
         description: t('hero.logisticDescription') || 
           'Provide integrated logistics solutions across marine ports and inland operations, representing international partners to ensure efficiency, reliability, and world-class service standards.',
+        descriptionAr: '',
+        showTitle: true,
+        showDescription: true,
         variant: 'image' as const
       },
       {
         src: '/gallery/oil extraction.webp',
         alt: 'Oil Station',
         title: t('hero.oilTitle') || 'LEADERS IN OIL AND GAS',
+        titleAr: '',
         description: t('hero.oilDescription') || 
           'Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products.',
+        descriptionAr: '',
+        showTitle: true,
+        showDescription: true,
         variant: 'image' as const
       },
       {
         src: '/gallery/water purification1.webp',
         alt: 'Water Desalination',
         title: t('hero.waterTitle') || 'Water Desalination',
+        titleAr: '',
         description: t('hero.waterDescription') || 
           'Desalination is the process of converting salt water into pure fresh water. It is suitable for drinking and daily use.',
+        descriptionAr: '',
+        showTitle: true,
+        showDescription: true,
         variant: 'image' as const
       }
     ],
@@ -495,7 +519,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
         {slides.map((_, i) => (
           <button
             key={i}
-            onClick={() => goTo(i)}
+            onClick={() => goTo(i, 1)}
             className={`relative h-4 w-4 rounded-full transition-all duration-300 cursor-pointer hover:scale-110 active:scale-95 ${
               i === index 
                 ? 'bg-white shadow-xl ring-2 ring-white/40' 
@@ -514,8 +538,15 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
 
       {/* Enhanced arrow controls */}
       <button
-        aria-label="Previous slide"
-        onClick={() => { prev(); resetTimer(); }}
+        aria-label={language === 'ar' ? "Next slide" : "Previous slide"}
+        onClick={() => { 
+          if (language === 'ar') {
+            next(); 
+          } else {
+            prev(); 
+          }
+          resetTimer(); 
+        }}
         className="absolute left-6 top-1/2 -translate-y-1/2 z-20 h-14 w-14 rounded-full bg-white/20 hover:bg-white/30 active:bg-white/40 backdrop-blur-md border border-white/40 shadow-[0_12px_40px_rgba(0,0,0,0.4)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group"
       >
         <div className="relative">
@@ -526,8 +557,15 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
         <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </button>
       <button
-        aria-label="Next slide"
-        onClick={() => { next(); resetTimer(); }}
+        aria-label={language === 'ar' ? "Previous slide" : "Next slide"}
+        onClick={() => { 
+          if (language === 'ar') {
+            prev(); 
+          } else {
+            next(); 
+          }
+          resetTimer(); 
+        }}
         className="absolute right-6 top-1/2 -translate-y-1/2 z-20 h-14 w-14 rounded-full bg-white/20 hover:bg-white/30 active:bg-white/40 backdrop-blur-md border border-white/40 shadow-[0_12px_40px_rgba(0,0,0,0.4)] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group"
       >
         <div className="relative">
