@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, Download, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { ServiceCardAnimation, AnimatedSeparator, FloatingIcon, GlowingBackground } from '@/components/animations/ServiceCardAnimation';
+import { StaggeredReveal, MagneticCard, PulseGlow, TypewriterText } from '@/components/animations/StaggeredReveal';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { services as staticServices } from '@/lib/services';
 
@@ -192,25 +195,28 @@ export default function ServicesPage() {
         </div>
 
       {/* Services Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/10 via-transparent to-[#EFC132]/5"></div>
-          <div className="absolute top-0 left-0 w-full h-full" style={{
-            backgroundImage: `radial-gradient(circle at 20% 20%, rgba(113, 97, 6, 0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 40% 60%, rgba(113, 97, 6, 0.05) 0%, transparent 50%)`,
-          }}></div>
-        </div>
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
+        {/* Animated Separator */}
+        <AnimatedSeparator className="mb-8" delay={0.3} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
-              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center">
-                {t('services.title') || 'Our Services'}
-              </h2>
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
+              <PulseGlow className="inline-block">
+                <TypewriterText 
+                  text={t('services.title') || 'Our Services'}
+                  className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center block"
+                  speed={0.08}
+                  delay={0.5}
+                />
+              </PulseGlow>
+              <motion.p 
+                className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+              >
                 {t('services.description') || 'We provide integrated solutions across oil & gas, logistics, and renewable energy sectors, delivering excellence through strategic partnerships and innovative approaches.'}
-              </p>
+              </motion.p>
           </div>
           </FadeInOnScroll>
 
@@ -259,154 +265,191 @@ export default function ServicesPage() {
                 </FadeInOnScroll>
 
                 {/* Service Cards */}
-                <FadeInOnScroll direction="right" delay={0.8}>
+                <StaggeredReveal direction="right" staggerDelay={0.2}>
                   <div className="grid md:grid-cols-2 gap-6">
                     {currentCategory.services.map((service, index) => (
-                      <div
-                        key={service.id}
-                        className={`bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group ${
-                          hoveredService === service.id ? 'scale-[1.02] shadow-2xl' : ''
-                        }`}
-                        onMouseEnter={() => setHoveredService(service.id)}
-                        onMouseLeave={() => setHoveredService(null)}
-                      >
-                        <Link href={`/services/${service.id}`} className="block">
-                          <div className="relative h-48 overflow-hidden">
-                            <Image
-                              src={service.imageUrl}
-                              alt={service.name}
-                              fill
-                              className={`object-cover transition-transform duration-300 ${
-                                hoveredService === service.id ? 'scale-110' : 'group-hover:scale-105'
-                              }`}
-                            />
-                            <div className={`absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent transition-opacity duration-300 ${
-                              hoveredService === service.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                            }`} />
-                          </div>
-                        </Link>
-                        <div className="p-6">
-                          <Link href={`/services/${service.id}`}>
-                            <h4 className={`font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 transition-colors duration-300 cursor-pointer ${
-                              hoveredService === service.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
-                            }`}>
-                              {service.name}
-                            </h4>
+                      <ServiceCardAnimation key={service.id} index={index} delay={0.8}>
+                        <MagneticCard className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group">
+                          <Link href={`/services/${service.id}`} className="block">
+                            <div className="relative h-48 overflow-hidden">
+                              <Image
+                                src={service.imageUrl}
+                                alt={service.name}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                quality={90}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                              
+                              {/* Floating Icon Overlay */}
+                              <FloatingIcon 
+                                className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                delay={0.1}
+                                floatIntensity={0.5}
+                              >
+                                <div className="w-8 h-8 bg-[#EFC132]/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                  <ArrowRight className="w-4 h-4 text-white" />
+                                </div>
+                              </FloatingIcon>
+                            </div>
                           </Link>
-                          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
-                            {service.description}
-                          </p>
-                          {service.downloadUrl && (
-                            <button
-                              onClick={() => {
-                                window.open(service.downloadUrl, '_blank');
-                              }}
-                              className={`inline-flex items-center transition-all duration-300 transform hover:scale-105 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] ${
-                                hoveredService === service.id
-                                  ? 'text-[#8B7A0A] scale-105'
-                                  : 'text-[#EFC132] hover:text-[#8B7A0A]'
-                              }`}
-                            >
-                              <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-12" />
-                              {t('services.downloadSpecs') || 'Download Specifications'}
-                            </button>
-                          )}
-                        </div>
-                      </div>
+                          <div className="p-6">
+                            <Link href={`/services/${service.id}`}>
+                              <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 cursor-pointer">
+                                {service.name}
+                              </h4>
+                            </Link>
+                            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
+                              {service.description}
+                            </p>
+                            {service.downloadUrl && (
+                              <motion.button
+                                onClick={() => {
+                                  window.open(service.downloadUrl, '_blank');
+                                }}
+                                className="inline-flex items-center text-[#EFC132] hover:text-[#8B7A0A] transition-all duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[14px]"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <FloatingIcon delay={0.2} floatIntensity={0.3}>
+                                  <Download className="w-4 h-4 mr-2" />
+                                </FloatingIcon>
+                                {t('services.downloadSpecs') || 'Download Specifications'}
+                              </motion.button>
+                            )}
+                          </div>
+                        </MagneticCard>
+                      </ServiceCardAnimation>
                     ))}
                   </div>
-                </FadeInOnScroll>
+                </StaggeredReveal>
               </div>
             </ParallaxWrapper>
           )}
         </div>
-      </section>
+      </GlowingBackground>
 
       {/* Dynamic Services Section */}
       {!loading && dynamicServices.length > 0 && (
-        <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+        <GlowingBackground className="py-16 md:py-24 bg-white relative overflow-hidden">
+          {/* Animated Separator */}
+          <AnimatedSeparator className="mb-8" delay={0.5} />
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <FadeInOnScroll direction="up" delay={0.2}>
               <div className="text-center mb-12">
-                <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6">
-                  {t('services.additionalServices') || 'Additional Services'}
-                </h2>
-                <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
+                <PulseGlow className="inline-block">
+                  <TypewriterText 
+                    text={t('services.additionalServices') || 'Additional Services'}
+                    className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 block"
+                    speed={0.08}
+                    delay={0.3}
+                  />
+                </PulseGlow>
+                <motion.p 
+                  className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1.0 }}
+                >
                   {t('services.additionalServicesDescription') || 'Explore our expanded range of specialized services designed to meet your unique requirements.'}
-                </p>
+                </motion.p>
               </div>
             </FadeInOnScroll>
 
-            <FadeInOnScroll direction="up" delay={0.4}>
+            <StaggeredReveal direction="up" staggerDelay={0.15}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {dynamicServices.map((service) => (
-                  <div
-                    key={service._id}
-                    className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group"
-                  >
-                    <Link href={`/services/${service.slug}`} className="block">
-                      <div className="relative h-48 overflow-hidden">
-                        <Image
-                          src={service.imageUrl}
-                          alt={service.title[language]}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      </div>
-                    </Link>
-                    <div className="p-6">
-                      <Link href={`/services/${service.slug}`}>
-                        <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 cursor-pointer">
-                          {service.title[language]}
-                        </h4>
-                      </Link>
-                      <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
-                        {service.summary[language]}
-                      </p>
-                      {(service as any).pdfUrl && (
-                        <button
-                          onClick={() => {
-                            const pdfUrl = (service as any).pdfUrl;
-                            if (pdfUrl) {
-                              window.open(pdfUrl, '_blank');
-                            }
-                          }}
-                          className="inline-flex items-center text-[#EFC132] group-hover:text-[#8B7A0A] transition-all duration-300 transform hover:scale-105 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] mb-3"
-                        >
-                          <Download className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:rotate-12" />
-                          {t('services.downloadSpecs') || 'Download Specifications'}
-                        </button>
-                      )}
-                      <Link href={`/services/${service.slug}`}>
-                        <div className="flex items-center text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] cursor-pointer">
-                          {t('services.learnMore') || 'Learn More'}
-                          <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                {dynamicServices.map((service, index) => (
+                  <ServiceCardAnimation key={service._id} index={index} delay={0.4}>
+                    <MagneticCard className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group">
+                      <Link href={`/services/${service.slug}`} className="block">
+                        <div className="relative h-48 overflow-hidden">
+                          <Image
+                            src={service.imageUrl}
+                            alt={service.title[language]}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            quality={90}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          
+                          {/* Floating Icon Overlay */}
+                          <FloatingIcon 
+                            className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            delay={0.1}
+                            floatIntensity={0.5}
+                          >
+                            <div className="w-8 h-8 bg-[#EFC132]/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                              <ArrowRight className="w-4 h-4 text-white" />
+                            </div>
+                          </FloatingIcon>
                         </div>
                       </Link>
-                    </div>
-                  </div>
+                      <div className="p-6">
+                        <Link href={`/services/${service.slug}`}>
+                          <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 cursor-pointer">
+                            {service.title[language]}
+                          </h4>
+                        </Link>
+                        <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
+                          {service.summary[language]}
+                        </p>
+                        {(service as any).pdfUrl && (
+                          <motion.button
+                            onClick={() => {
+                              const pdfUrl = (service as any).pdfUrl;
+                              if (pdfUrl) {
+                                window.open(pdfUrl, '_blank');
+                              }
+                            }}
+                            className="inline-flex items-center text-[#EFC132] group-hover:text-[#8B7A0A] transition-all duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] mb-3"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <FloatingIcon delay={0.2} floatIntensity={0.3}>
+                              <Download className="w-4 h-4 mr-2" />
+                            </FloatingIcon>
+                            {t('services.downloadSpecs') || 'Download Specifications'}
+                          </motion.button>
+                        )}
+                        <Link href={`/services/${service.slug}`}>
+                          <motion.div 
+                            className="flex items-center text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 font-['ADLaM_Display:Regular',_sans-serif] text-[14px] cursor-pointer"
+                            whileHover={{ x: 5 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {t('services.learnMore') || 'Learn More'}
+                            <FloatingIcon delay={0.1} floatIntensity={0.2}>
+                              <ArrowRight className="w-4 h-4 ml-2" />
+                            </FloatingIcon>
+                          </motion.div>
+                        </Link>
+                      </div>
+                    </MagneticCard>
+                  </ServiceCardAnimation>
                 ))}
               </div>
-            </FadeInOnScroll>
+            </StaggeredReveal>
           </div>
-        </section>
+        </GlowingBackground>
       )}
 
       {/* Applications Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#EFC132]/20 to-transparent rounded-full blur-xl"></div>
-          <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-[#FFD700]/20 to-transparent rounded-full blur-lg"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#EFC132]/15 to-transparent rounded-full blur-2xl"></div>
-        </div>
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
+        {/* Animated Separator */}
+        <AnimatedSeparator className="mb-8" delay={0.7} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6">
-                {t('services.whereUsed') || 'Where Are Our Services Used?'}
-              </h2>
+              <PulseGlow className="inline-block">
+                <TypewriterText 
+                  text={t('services.whereUsed') || 'Where Are Our Services Used?'}
+                  className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 block"
+                  speed={0.08}
+                  delay={0.5}
+                />
+              </PulseGlow>
             </div>
           </FadeInOnScroll>
 
@@ -414,182 +457,244 @@ export default function ServicesPage() {
           <ParallaxWrapper speed={0.3} direction="up">
             <div className="relative">
               {/* Carousel Navigation */}
-              <div className="flex justify-center mb-8">
-                <div className="flex space-x-2">
-                  {applications.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentApplication(index)}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
-                        currentApplication === index ? 'bg-[#EFC132] scale-125' : 'bg-gray-300 hover:bg-gray-400'
-                      }`}
-                    />
-                  ))}
+              <StaggeredReveal direction="up" staggerDelay={0.1}>
+                <div className="flex justify-center mb-8">
+                  <div className="flex space-x-2">
+                    {applications.map((_, index) => (
+                      <motion.button
+                        key={index}
+                        onClick={() => setCurrentApplication(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
+                          currentApplication === index ? 'bg-[#EFC132] scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                        }`}
+                        whileHover={{ scale: 1.25 }}
+                        whileTap={{ scale: 0.9 }}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </StaggeredReveal>
 
               {/* Application Cards */}
-              <div className="grid md:grid-cols-3 gap-4">
-                {applications.map((application, index) => (
-                  <FadeInOnScroll key={application.id} direction="up" delay={0.1 * index}>
-                    <Link 
-                      href={`/services/${application.id}`}
-                      className={`bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block ${
-                        hoveredApplication === application.id ? 'scale-[1.02] shadow-2xl' : ''
-                      }`}
-                      onMouseEnter={() => setHoveredApplication(application.id)}
-                      onMouseLeave={() => setHoveredApplication(null)}
-                    >
-                      <div className="relative h-48 overflow-hidden">
-                        <Image
-                          src={application.imageUrl}
-                          alt={application.title}
-                          fill
-                          className={`object-cover transition-transform duration-300 ${
-                            hoveredApplication === application.id ? 'scale-110' : 'group-hover:scale-105'
-                          }`}
-                        />
-                        <div className={`absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent transition-opacity duration-300 ${
-                          hoveredApplication === application.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                        }`} />
-                      </div>
-                      <div className="p-6">
-                        <h3 className={`font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 transition-colors duration-300 ${
-                          hoveredApplication === application.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
-                        }`}>
-                          {application.title}
-                        </h3>
-                        <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed">
-                          {application.description}
-                        </p>
-                      </div>
-                    </Link>
-                  </FadeInOnScroll>
-            ))}
-          </div>
+              <StaggeredReveal direction="up" staggerDelay={0.2}>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {applications.map((application, index) => (
+                    <ServiceCardAnimation key={application.id} index={index} delay={0.1 * index}>
+                      <MagneticCard className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group block">
+                        <Link 
+                          href={`/services/${application.id}`}
+                          className="block"
+                        >
+                          <div className="relative h-48 overflow-hidden">
+                            <Image
+                              src={application.imageUrl}
+                              alt={application.title}
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-110"
+                              quality={90}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            
+                            {/* Floating Icon Overlay */}
+                            <FloatingIcon 
+                              className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                              delay={0.1}
+                              floatIntensity={0.5}
+                            >
+                              <div className="w-8 h-8 bg-[#EFC132]/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                <ArrowRight className="w-4 h-4 text-white" />
+                              </div>
+                            </FloatingIcon>
+                          </div>
+                          <div className="p-6">
+                            <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300">
+                              {application.title}
+                            </h3>
+                            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed">
+                              {application.description}
+                            </p>
+                          </div>
+                        </Link>
+                      </MagneticCard>
+                    </ServiceCardAnimation>
+                  ))}
+                </div>
+              </StaggeredReveal>
             </div>
           </ParallaxWrapper>
         </div>
-      </section>
+      </GlowingBackground>
 
       {/* Contact Form Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/5 via-transparent to-[#FFD700]/5"></div>
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 30% 30%, rgba(113, 97, 6, 0.08) 0%, transparent 50%),
-                             radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%)`,
-          }}></div>
-        </div>
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
+        {/* Animated Separator */}
+        <AnimatedSeparator className="mb-8" delay={0.9} />
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-6">
-                {t('contact.form.title') || 'For Inquiries'}
-              </h2>
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">
+              <PulseGlow className="inline-block">
+                <TypewriterText 
+                  text={t('contact.form.title') || 'For Inquiries'}
+                  className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-6 block"
+                  speed={0.08}
+                  delay={0.3}
+                />
+              </PulseGlow>
+              <motion.p 
+                className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.0 }}
+              >
                 {t('contact.form.subtitle') || 'Please contact us if you need any additional information about our services.'}
-              </p>
+              </motion.p>
             </div>
           </FadeInOnScroll>
 
           <ParallaxWrapper speed={0.2} direction="up">
-            <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
+            <motion.div 
+              className="bg-gray-50 rounded-2xl p-8 md:p-12"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
               <form onSubmit={handleFormSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t('contact.form.fields.inquiryType') || 'Select Inquiry Type'}
-                    </label>
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400">
-                      <option>{t('contact.form.options.general') || 'General Inquiries'}</option>
-                      <option>{t('contact.form.options.product') || 'Product & Sales'}</option>
-                      <option>{t('contact.form.options.procurement') || 'Procurement & Contracts'}</option>
-                      <option>{t('contact.form.options.media') || 'Media Relations'}</option>
-                      <option>{t('contact.form.options.careers') || 'Careers'}</option>
-                    </select>
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('contact.form.fields.inquiryType') || 'Select Inquiry Type'}
+                      </label>
+                      <motion.select 
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                        whileFocus={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <option>{t('contact.form.options.general') || 'General Inquiries'}</option>
+                        <option>{t('contact.form.options.product') || 'Product & Sales'}</option>
+                        <option>{t('contact.form.options.procurement') || 'Procurement & Contracts'}</option>
+                        <option>{t('contact.form.options.media') || 'Media Relations'}</option>
+                        <option>{t('contact.form.options.careers') || 'Careers'}</option>
+                      </motion.select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('contact.form.fields.name') || 'Name'}
+                      </label>
+                      <motion.input
+                        type="text"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                        placeholder={t('contact.form.placeholders.name') || 'Your Name'}
+                        required
+                        whileFocus={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                    </div>
                   </div>
+                </StaggeredReveal>
+                
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t('contact.form.fields.name') || 'Name'}
+                      {t('contact.form.fields.email') || 'Email'}
                     </label>
-                    <input
-                      type="text"
+                    <motion.input
+                      type="email"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                      placeholder={t('contact.form.placeholders.name') || 'Your Name'}
+                      placeholder={t('contact.form.placeholders.email') || 'your.email@example.com'}
                       required
+                      whileFocus={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
                     />
                   </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('contact.form.fields.email') || 'Email'}
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                    placeholder={t('contact.form.placeholders.email') || 'your.email@example.com'}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('contact.form.fields.subject') || 'Subject'}
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                    placeholder={t('contact.form.placeholders.subject') || 'Message Subject'}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('contact.form.fields.message') || 'Your Message'}
-                  </label>
-                  <textarea
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
-                    placeholder={t('contact.form.placeholders.message') || 'Please describe your inquiry...'}
-                    required
-                  />
-                </div>
-                <div className="text-center">
-                  <button
-                    type="submit"
-                    disabled={isFormSubmitting}
-                    className={`px-8 py-3 rounded-lg font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center ${
-                      formSubmitted 
-                        ? 'bg-green-600 text-white' 
-                        : 'bg-[#EFC132] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
-                    }`}
-                  >
-                    {isFormSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                        {t('contact.form.sending') || 'Sending...'}
-                      </>
-                    ) : formSubmitted ? (
-                      <>
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {t('contact.form.sent') || 'Message Sent!'}
-                      </>
-                    ) : (
-                      <>
-                        {t('contact.form.send') || 'Send'}
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </>
-                    )}
-                  </button>
-                </div>
+                </StaggeredReveal>
+                
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('contact.form.fields.subject') || 'Subject'}
+                    </label>
+                    <motion.input
+                      type="text"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                      placeholder={t('contact.form.placeholders.subject') || 'Message Subject'}
+                      required
+                      whileFocus={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  </div>
+                </StaggeredReveal>
+                
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('contact.form.fields.message') || 'Your Message'}
+                    </label>
+                    <motion.textarea
+                      rows={4}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
+                      placeholder={t('contact.form.placeholders.message') || 'Please describe your inquiry...'}
+                      required
+                      whileFocus={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  </div>
+                </StaggeredReveal>
+                
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
+                  <div className="text-center">
+                    <motion.button
+                      type="submit"
+                      disabled={isFormSubmitting}
+                      className={`px-8 py-3 rounded-lg font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center ${
+                        formSubmitted 
+                          ? 'bg-green-600 text-white' 
+                          : 'bg-[#EFC132] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {isFormSubmitting ? (
+                        <>
+                          <motion.div 
+                            className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          />
+                          {t('contact.form.sending') || 'Sending...'}
+                        </>
+                      ) : formSubmitted ? (
+                        <>
+                          <motion.svg 
+                            className="w-4 h-4 mr-2" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </motion.svg>
+                          {t('contact.form.sent') || 'Message Sent!'}
+                        </>
+                      ) : (
+                        <>
+                          {t('contact.form.send') || 'Send'}
+                          <FloatingIcon delay={0.1} floatIntensity={0.3}>
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </FloatingIcon>
+                        </>
+                      )}
+                    </motion.button>
+                  </div>
+                </StaggeredReveal>
               </form>
-          </div>
+          </motion.div>
           </ParallaxWrapper>
         </div>
-      </section>
+      </GlowingBackground>
     </div>
   );
 }

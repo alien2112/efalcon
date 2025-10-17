@@ -57,6 +57,18 @@ export function Banner({
   const [isLoading, setIsLoading] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Static image arrays for different pages when slider is enabled
+  const getStaticImages = (page: string) => {
+    const staticImageSets: Record<string, string[]> = {
+      'home': ['/ourservicesbanner.webp', '/ourworkbanner.webp', '/about us banner .webp'],
+      'work': ['/ourworkbanner.webp', '/gallery/oil extraction.webp', '/gallery/logistic .webp'],
+      'services': ['/ourservicesbanner.webp', '/gallery/solar panels.webp', '/gallery/wind genrators.webp'],
+      'about': ['/about us banner .webp', '/vision.webp', '/vision2.webp'],
+      'blog': ['/blog banner.webp', '/blog behind blog.webp']
+    };
+    return staticImageSets[page] || [backgroundImage];
+  };
+
   // Parallax scroll effect
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
@@ -87,7 +99,7 @@ export function Banner({
           const pageImages = result.data
             .filter((img: BannerImage) => 
               (img.metadata.isActive !== false) && 
-              (img.metadata.page === page || (!img.metadata.page && page === 'home'))
+              (img.metadata.page === page)
             )
             .sort((a: BannerImage, b: BannerImage) => 
               (a.metadata.order || 0) - (b.metadata.order || 0)
@@ -105,32 +117,45 @@ export function Banner({
     fetchBannerImages();
   }, [useDynamicImages, page]);
 
-  // Auto-rotate through images if multiple are available and slider is enabled
-  useEffect(() => {
-    if (!isSlider || bannerImages.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setCurrentImageIndex(prev => (prev + 1) % bannerImages.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [bannerImages.length, isSlider]);
-
-  // Determine which image to show
-  const getCurrentImage = () => {
+  // Get available images (dynamic or static)
+  const getAvailableImages = () => {
     if (useDynamicImages && bannerImages.length > 0) {
-      const currentImage = bannerImages[currentImageIndex];
-      return {
-        src: `/api/gridfs/images/${currentImage._id}`,
-        alt: (language === 'ar' && currentImage.metadata.titleAr) ? currentImage.metadata.titleAr : (currentImage.metadata.title || 'Banner image'),
-        metadata: currentImage.metadata
-      };
+      return bannerImages.map(img => ({
+        src: `/api/gridfs/images/${img._id}`,
+        alt: (language === 'ar' && img.metadata.titleAr) ? img.metadata.titleAr : (img.metadata.title || 'Banner image'),
+        metadata: img.metadata
+      }));
+    } else if (isSlider) {
+      const staticImages = getStaticImages(page);
+      return staticImages.map(img => ({
+        src: img,
+        alt: title,
+        metadata: null
+      }));
     }
-    return {
+    return [{
       src: backgroundImage,
       alt: title || 'Banner image',
       metadata: null
-    };
+    }];
+  };
+
+  const availableImages = getAvailableImages();
+
+  // Auto-rotate through images if multiple are available and slider is enabled
+  useEffect(() => {
+    if (!isSlider || availableImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex(prev => (prev + 1) % availableImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [availableImages.length, isSlider]);
+
+  // Determine which image to show
+  const getCurrentImage = () => {
+    return availableImages[currentImageIndex] || availableImages[0];
   };
 
   const currentImage = getCurrentImage();
@@ -150,23 +175,31 @@ export function Banner({
             fill
             className="object-cover transition-opacity duration-1000"
             priority
+            quality={95}
+            sizes="100vw"
           />
         )}
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/40"></div>
         
         {/* Image indicators if multiple images and slider is enabled */}
-        {isSlider && useDynamicImages && bannerImages.length > 1 && (
-          <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-10">
-            {bannerImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentImageIndex(index)}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                }`}
-              />
-            ))}
+        {isSlider && availableImages.length > 1 && (
+          <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">
+            <div className="flex items-center gap-3 px-2">
+              {availableImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer hover:scale-125 active:scale-95 ${
+                    index === currentImageIndex 
+                      ? 'bg-white shadow-lg ring-2 ring-white/30' 
+                      : 'bg-white/50 hover:bg-white/70 hover:shadow-md'
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
+                  title={`View image ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>

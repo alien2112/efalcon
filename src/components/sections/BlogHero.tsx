@@ -190,16 +190,22 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
 
       {/* Image indicators if multiple images */}
       {bannerImages.length > 1 && (
-        <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-10">
-          {bannerImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImageIndex(index)}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                index === currentImageIndex ? 'bg-white' : 'bg-white/50'
-              }`}
-            />
-          ))}
+        <div className="absolute bottom-6 left-0 right-0 flex justify-center z-10">
+          <div className="flex items-center gap-3 px-2">
+            {bannerImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer hover:scale-125 active:scale-95 ${
+                  index === currentImageIndex 
+                    ? 'bg-white shadow-lg ring-2 ring-white/30' 
+                    : 'bg-white/50 hover:bg-white/70 hover:shadow-md'
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+                title={`View image ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       )}
     </motion.div>

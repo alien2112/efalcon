@@ -1,0 +1,23 @@
+{
+  "name": "Ebdaa Falcon",
+  "short_name": "Ebdaa Falcon",
+  "description": "Petroleum Derivatives and Logistics Services",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EFC132",
+  "theme_color": "#EFC132",
+  "icons": [
+    {
+      "src": "/logofirstsection.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logofirstsection.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

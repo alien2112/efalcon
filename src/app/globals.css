@@ -97,16 +97,19 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Hide horizontal scrollbar while keeping vertical scrollbar */
+/* Hide scrollbars visually while keeping scroll functionality */
 html, body {
   overflow-x: hidden;
   overflow-y: auto;
+  scrollbar-width: none; /* Firefox - hides scrollbar but keeps scroll */
+  -ms-overflow-style: none; /* Internet Explorer 10+ - hides scrollbar but keeps scroll */
 }
 
-/* Hide horizontal scrollbar globally */
+/* Hide scrollbars for Webkit browsers (Chrome, Safari, Edge) but keep scroll functionality */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 0px; /* Hide horizontal scrollbar */
+  width: 0px;
+  height: 0px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-track {
@@ -114,12 +117,19 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(239, 193, 50, 0.3);
-  border-radius: 4px;
+  background: transparent;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(239, 193, 50, 0.5);
+/* Hide scrollbars on all elements but keep scroll functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background: transparent;
 }
 
 /* Ensure no horizontal overflow on all elements */

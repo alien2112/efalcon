@@ -9,15 +9,23 @@ import './globals.css';
 export const metadata = {
   title: 'Ebdaa Falcon - Petroleum Derivatives and Logistics Services',
   description: 'Ebdaa Falcon is specialized in storing, transporting, and trading petroleum products.',
+  manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: '/logofirstsection.png' },
+      { url: '/logofirstsection.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logofirstsection.png', sizes: '16x16', type: 'image/png' },
       { url: '/logofirstsection.png', rel: 'shortcut icon' },
     ],
     apple: [
-      { url: '/logofirstsection.png' },
+      { url: '/logofirstsection.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      { url: '/logofirstsection.png', rel: 'icon', sizes: '192x192', type: 'image/png' },
+      { url: '/logofirstsection.png', rel: 'icon', sizes: '512x512', type: 'image/png' },
     ],
   },
+  themeColor: '#EFC132',
+  viewport: 'width=device-width, initial-scale=1',
 };
 
 export default function RootLayout({

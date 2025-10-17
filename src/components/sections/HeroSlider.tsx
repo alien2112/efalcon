@@ -242,13 +242,18 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
       </div>
 
       {/* Simple indicators */}
-      <div className="absolute bottom-6 left-0 right-0 z-20 flex items-center justify-center gap-2">
+      <div className="absolute bottom-6 left-0 right-0 z-20 flex items-center justify-center gap-3 px-2">
         {slides.map((_, i) => (
-          <span
+          <button
             key={i}
-            className={`h-2 w-2 rounded-full transition-colors duration-300 ${
-              i === index ? 'bg-white' : 'bg-white/50'
+            onClick={() => goTo(i)}
+            className={`h-3 w-3 rounded-full transition-all duration-300 cursor-pointer hover:scale-125 active:scale-95 ${
+              i === index 
+                ? 'bg-white shadow-lg ring-2 ring-white/30' 
+                : 'bg-white/50 hover:bg-white/70 hover:shadow-md'
             }`}
+            aria-label={`Go to slide ${i + 1}`}
+            title={`View slide ${i + 1}`}
           />
         ))}
       </div>

@@ -110,7 +110,15 @@ export default function ServiceDetailPage() {
 
       {/* Hero banner using clicked service image */}
       <section className="relative w-full h-[40vh] md:h-[52vh] overflow-hidden">
-        <Image src={service.imageUrl} alt={service.title} fill className="object-cover" priority />
+        <Image 
+          src={service.imageUrl} 
+          alt={service.title} 
+          fill 
+          className="object-cover" 
+          priority 
+          quality={95}
+          sizes="100vw"
+        />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
           <div>
@@ -234,6 +242,8 @@ export default function ServiceDetailPage() {
                     alt={`${staticService ? service.title : service.title[language]} - Image ${index + 1}`} 
                     fill 
                     className="object-cover group-hover:scale-105 transition-transform duration-300" 
+                    quality={90}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

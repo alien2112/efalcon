@@ -4,9 +4,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, Download, ArrowRight, Search } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { ServiceCardAnimation, AnimatedSeparator, FloatingIcon, GlowingBackground } from '@/components/animations/ServiceCardAnimation';
+import { StaggeredReveal, MagneticCard, PulseGlow, TypewriterText } from '@/components/animations/StaggeredReveal';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -177,25 +180,28 @@ export default function OurWorkPage() {
       </div>
 
       {/* Work Portfolio Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/10 via-transparent to-[#EFC132]/5"></div>
-          <div className="absolute top-0 left-0 w-full h-full" style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(113, 97, 6, 0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 50% 50%, rgba(113, 97, 6, 0.05) 0%, transparent 50%)`,
-          }}></div>
-        </div>
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
+        {/* Animated Separator */}
+        <AnimatedSeparator className="mb-8" delay={0.3} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="mb-12">
-              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center">
-                {t('ourWorkPage.portfolio') || 'Our Portfolio'}
-              </h2>
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed">
+              <PulseGlow className="inline-block">
+                <TypewriterText 
+                  text={t('ourWorkPage.portfolio') || 'Our Portfolio'}
+                  className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 text-center block"
+                  speed={0.08}
+                  delay={0.5}
+                />
+              </PulseGlow>
+              <motion.p 
+                className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 max-w-4xl mx-auto text-center leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+              >
                 {t('ourWorkPage.portfolioDescription') || 'We showcase our expertise through successful projects that demonstrate our commitment to excellence, innovation, and sustainable solutions across diverse industries and regions.'}
-              </p>
+              </motion.p>
             </div>
           </FadeInOnScroll>
 
@@ -249,285 +255,339 @@ export default function OurWorkPage() {
                 </FadeInOnScroll>
 
                 {/* Project Cards */}
-                <FadeInOnScroll direction="right" delay={0.8}>
+                <StaggeredReveal direction="right" staggerDelay={0.2}>
                   <div className="grid md:grid-cols-2 gap-6">
                     {currentCategory.projects.map((project, index) => (
-                      <div
-                        key={project.id} 
-                        className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group block cursor-pointer ${
-                          hoveredProject === project.id ? 'scale-105' : ''
-                        }`}
-                        onMouseEnter={() => setHoveredProject(project.id)}
-                        onMouseLeave={() => setHoveredProject(null)}
-                        onClick={() => {
-                          window.location.href = `/our-work/${toKebabCase(project.id)}`;
-                        }}
-                      >
-                        <div className="relative h-48">
-                          <Image
-                            src={project.imageUrl}
-                            alt={project.title}
-                            fill
-                            className={`object-cover transition-transform duration-300 ${
-                              hoveredProject === project.id ? 'scale-110' : 'group-hover:scale-105'
-                            }`}
-                          />
-                          <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 ${
-                            hoveredProject === project.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                          }`} />
-                          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
-                            hoveredProject === project.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                          }`}>
-                            <div className={`flex items-center justify-center w-12 h-12 rounded-full bg-white/20 border border-white/30 backdrop-blur transition-all duration-300 ${
-                              hoveredProject === project.id ? 'scale-110' : ''
-                            }`}>
-                              <Search className="text-white" size={20} strokeWidth={2} />
+                      <ServiceCardAnimation key={project.id} index={index} delay={0.8}>
+                        <MagneticCard className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block cursor-pointer">
+                          <div
+                            onClick={() => {
+                              window.location.href = `/our-work/${toKebabCase(project.id)}`;
+                            }}
+                          >
+                            <div className="relative h-48">
+                              <Image
+                                src={project.imageUrl}
+                                alt={project.title}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                quality={90}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                              
+                              {/* Floating Search Icon Overlay */}
+                              <FloatingIcon 
+                                className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                delay={0.1}
+                                floatIntensity={0.5}
+                              >
+                                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/20 border border-white/30 backdrop-blur">
+                                  <Search className="text-white" size={20} strokeWidth={2} />
+                                </div>
+                              </FloatingIcon>
+                            </div>
+                            <div className="p-6">
+                              <div className="flex justify-between items-start mb-3">
+                                <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300">
+                                  {t(`ourWorkPage.projects.${toKebabCase(project.id)}.title`)}
+                                </h4>
+                                <motion.span 
+                                  className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded transition-all duration-300 group-hover:bg-[#EFC132] group-hover:text-white"
+                                  whileHover={{ scale: 1.05 }}
+                                >
+                                  {project.year}
+                                </motion.span>
+                              </div>
+                              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
+                                {t(`ourWorkPage.projects.${toKebabCase(project.id)}.description`)}
+                              </p>
+                              <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500">{t(`ourWorkPage.projects.${toKebabCase(project.id)}.location`)}</span>
+                                <FloatingIcon delay={0.2} floatIntensity={0.3}>
+                                  <ArrowRight className="w-4 h-4 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300" />
+                                </FloatingIcon>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="p-6">
-                          <div className="flex justify-between items-start mb-3">
-                            <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] text-[#EFC132]">
-                              {t(`ourWorkPage.projects.${toKebabCase(project.id)}.title`)}
-                            </h4>
-                            <span className={`text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded transition-all duration-300 ${
-                              hoveredProject === project.id ? 'bg-[#EFC132] text-white' : ''
-                            }`}>
-                              {project.year}
-                            </span>
-                          </div>
-                          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
-                            {t(`ourWorkPage.projects.${toKebabCase(project.id)}.description`)}
-                          </p>
-                          <div className="flex justify-between items-center">
-                            <span className="text-xs text-gray-500">{t(`ourWorkPage.projects.${toKebabCase(project.id)}.location`)}</span>
-                          </div>
-                        </div>
-                      </div>
+                        </MagneticCard>
+                      </ServiceCardAnimation>
                     ))}
-          </div>
-                </FadeInOnScroll>
+                  </div>
+                </StaggeredReveal>
           </div>
             </ParallaxWrapper>
           )}
         </div>
-      </section>
+      </GlowingBackground>
 
       {/* Project Highlights Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#EFC132]/20 to-transparent rounded-full blur-xl"></div>
-          <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-[#FFD700]/20 to-transparent rounded-full blur-lg"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#EFC132]/15 to-transparent rounded-full blur-2xl"></div>
-          <div className="absolute bottom-10 right-1/3 w-28 h-28 bg-gradient-to-tl from-[#FFD700]/15 to-transparent rounded-full blur-xl"></div>
-        </div>
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
+        {/* Animated Separator */}
+        <AnimatedSeparator className="mb-8" delay={0.7} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6">
-                {t('ourWorkPage.projectHighlights') || 'Project Highlights'}
-              </h2>
-          </div>
+              <PulseGlow className="inline-block">
+                <TypewriterText 
+                  text={t('ourWorkPage.projectHighlights') || 'Project Highlights'}
+                  className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[36px] md:text-[48px] text-[#EFC132] mb-6 block"
+                  speed={0.08}
+                  delay={0.5}
+                />
+              </PulseGlow>
+            </div>
           </FadeInOnScroll>
 
           {/* Highlights Carousel */}
           <ParallaxWrapper speed={0.3} direction="up">
             <div className="relative">
               {/* Carousel Navigation */}
-              <div className="flex justify-center mb-8">
-                <div className="flex space-x-2">
-                  {projectHighlights.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentHighlight(index)}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
-                        currentHighlight === index ? 'bg-[#EFC132] scale-125' : 'bg-gray-300 hover:bg-gray-400'
-                      }`}
-                    />
-                  ))}
-          </div>
-        </div>
+              <StaggeredReveal direction="up" staggerDelay={0.1}>
+                <div className="flex justify-center mb-8">
+                  <div className="flex space-x-2">
+                    {projectHighlights.map((_, index) => (
+                      <motion.button
+                        key={index}
+                        onClick={() => setCurrentHighlight(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
+                          currentHighlight === index ? 'bg-[#EFC132] scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                        }`}
+                        whileHover={{ scale: 1.25 }}
+                        whileTap={{ scale: 0.9 }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </StaggeredReveal>
 
               {/* Highlight Cards */}
-              <div className="grid md:grid-cols-3 gap-4">
-                {projectHighlights.map((highlight, index) => (
-                  <FadeInOnScroll key={highlight.id} direction="up" delay={0.1 * index}>
-                    <div 
-                      className={`bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${
-                        hoveredHighlight === highlight.id ? 'scale-105' : ''
-                      }`}
-                      onMouseEnter={() => setHoveredHighlight(highlight.id)}
-                      onMouseLeave={() => setHoveredHighlight(null)}
-                    >
-                      <div className="relative h-48">
-                        <Image
-                          src={highlight.imageUrl}
-                          alt={highlight.title}
-                          fill
-                          className={`object-cover transition-transform duration-300 ${
-                            hoveredHighlight === highlight.id ? 'scale-110' : ''
-                          }`}
-                        />
-                        <div className={`absolute inset-0 bg-gradient-to-t from-black/20 to-transparent transition-opacity duration-300 ${
-                          hoveredHighlight === highlight.id ? 'opacity-100' : 'opacity-0'
-                        }`} />
-                      </div>
-                      <div className="p-6">
-                        <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] text-[#EFC132] mb-3">
-                          {t(`ourWorkPage.highlights.${highlight.id}.title`) || highlight.title}
-                        </h3>
-                        <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed mb-4">
-                          {t(`ourWorkPage.highlights.${highlight.id}.description`) || highlight.description}
-                        </p>
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
-                            hoveredHighlight === highlight.id ? 'bg-[#EFC132]/10' : ''
-                          }`}>
-                            <div className={`text-lg font-bold transition-colors duration-300 ${
-                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
-                            }`}>
-                              <AnimatedCounter end={highlight.stats.projects} duration={1.5} delay={index * 0.1} />
+              <StaggeredReveal direction="up" staggerDelay={0.2}>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {projectHighlights.map((highlight, index) => (
+                    <ServiceCardAnimation key={highlight.id} index={index} delay={0.1 * index}>
+                      <MagneticCard className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group">
+                        <div className="relative h-48">
+                          <Image
+                            src={highlight.imageUrl}
+                            alt={highlight.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            quality={90}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          
+                          {/* Floating Icon Overlay */}
+                          <FloatingIcon 
+                            className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            delay={0.1}
+                            floatIntensity={0.5}
+                          >
+                            <div className="w-8 h-8 bg-[#EFC132]/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                              <ArrowRight className="w-4 h-4 text-white" />
                             </div>
-                            <div className="text-xs text-gray-600">{t('ourWorkPage.projectsLabel') || 'Projects'}</div>
+                          </FloatingIcon>
+                        </div>
+                        <div className="p-6">
+                          <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 mb-3">
+                            {t(`ourWorkPage.highlights.${highlight.id}.title`) || highlight.title}
+                          </h3>
+                          <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed mb-4">
+                            {t(`ourWorkPage.highlights.${highlight.id}.description`) || highlight.description}
+                          </p>
+                          <div className="grid grid-cols-3 gap-2 text-center">
+                            <motion.div 
+                              className="bg-gray-50 rounded-lg p-2 transition-all duration-300 group-hover:bg-[#EFC132]/10"
+                              whileHover={{ scale: 1.05 }}
+                            >
+                              <div className="text-lg font-bold text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300">
+                                <AnimatedCounter end={highlight.stats.projects} duration={1.5} delay={index * 0.1} />
+                              </div>
+                              <div className="text-xs text-gray-600">{t('ourWorkPage.projectsLabel') || 'Projects'}</div>
+                            </motion.div>
+                            <motion.div 
+                              className="bg-gray-50 rounded-lg p-2 transition-all duration-300 group-hover:bg-[#EFC132]/10"
+                              whileHover={{ scale: 1.05 }}
+                            >
+                              <div className="text-lg font-bold text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300">
+                                <AnimatedCounter end={highlight.stats.countries} duration={1.5} delay={index * 0.1 + 0.2} />
+                              </div>
+                              <div className="text-xs text-gray-600">{t('ourWorkPage.countries') || 'Countries'}</div>
+                            </motion.div>
+                            <motion.div 
+                              className="bg-gray-50 rounded-lg p-2 transition-all duration-300 group-hover:bg-[#EFC132]/10"
+                              whileHover={{ scale: 1.05 }}
+                            >
+                              <div className="text-lg font-bold text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300">
+                                {highlight.stats.year}
+                              </div>
+                              <div className="text-xs text-gray-600">{t('ourWorkPage.year') || 'Year'}</div>
+                            </motion.div>
                           </div>
-                          <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
-                            hoveredHighlight === highlight.id ? 'bg-[#EFC132]/10' : ''
-                          }`}>
-                            <div className={`text-lg font-bold transition-colors duration-300 ${
-                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
-                            }`}>
-                              <AnimatedCounter end={highlight.stats.countries} duration={1.5} delay={index * 0.1 + 0.2} />
-                            </div>
-                            <div className="text-xs text-gray-600">{t('ourWorkPage.countries') || 'Countries'}</div>
-                          </div>
-                          <div className={`bg-gray-50 rounded-lg p-2 transition-all duration-300 ${
-                            hoveredHighlight === highlight.id ? 'bg-[#EFC132]/10' : ''
-                          }`}>
-                            <div className={`text-lg font-bold transition-colors duration-300 ${
-                              hoveredHighlight === highlight.id ? 'text-[#8B7A0A]' : 'text-[#EFC132]'
-                            }`}>
-                              {highlight.stats.year}
-            </div>
-                            <div className="text-xs text-gray-600">{t('ourWorkPage.year') || 'Year'}</div>
-            </div>
-          </div>
-        </div>
-              </div>
-                  </FadeInOnScroll>
-            ))}
-          </div>
+                        </div>
+                      </MagneticCard>
+                    </ServiceCardAnimation>
+                  ))}
+                </div>
+              </StaggeredReveal>
             </div>
           </ParallaxWrapper>
         </div>
-      </section>
+      </GlowingBackground>
 
       {/* Contact Form Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/5 via-transparent to-[#FFD700]/5"></div>
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 30% 30%, rgba(113, 97, 6, 0.08) 0%, transparent 50%),
-                             radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%)`,
-          }}></div>
-        </div>
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
+        {/* Animated Separator */}
+        <AnimatedSeparator className="mb-8" delay={0.9} />
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
             <div className="text-center mb-12">
-              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-6">
-                {t('ourWorkPage.interested') || 'Interested in Our Work?'}
-              </h2>
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600">
+              <PulseGlow className="inline-block">
+                <TypewriterText 
+                  text={t('ourWorkPage.interested') || 'Interested in Our Work?'}
+                  className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[40px] text-[#EFC132] mb-6 block"
+                  speed={0.08}
+                  delay={0.3}
+                />
+              </PulseGlow>
+              <motion.p 
+                className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.0 }}
+              >
                 {t('ourWorkPage.interestedDescription') || "Let's discuss how we can help bring your project to life with our expertise and innovative solutions."}
-              </p>
+              </motion.p>
             </div>
           </FadeInOnScroll>
 
           <ParallaxWrapper speed={0.2} direction="up">
-            <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
+            <motion.div 
+              className="bg-gray-50 rounded-2xl p-8 md:p-12"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
               <form onSubmit={handleFormSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t('ourWorkPage.form.projectType') || 'Project Type'}
-                    </label>
-                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400">
-                      <option>{t('ourWorkPage.form.options.oilGas') || 'Oil & Gas Projects'}</option>
-                      <option>{t('ourWorkPage.form.options.logistics') || 'Logistics & Marine'}</option>
-                      <option>{t('ourWorkPage.form.options.sustainability') || 'Sustainability Initiatives'}</option>
-                      <option>{t('ourWorkPage.form.options.consultation') || 'General Consultation'}</option>
-                    </select>
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('ourWorkPage.form.projectType') || 'Project Type'}
+                      </label>
+                      <motion.select 
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                        whileFocus={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <option>{t('ourWorkPage.form.options.oilGas') || 'Oil & Gas Projects'}</option>
+                        <option>{t('ourWorkPage.form.options.logistics') || 'Logistics & Marine'}</option>
+                        <option>{t('ourWorkPage.form.options.sustainability') || 'Sustainability Initiatives'}</option>
+                        <option>{t('ourWorkPage.form.options.consultation') || 'General Consultation'}</option>
+                      </motion.select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('ourWorkPage.form.name') || 'Name'}
+                      </label>
+                      <motion.input
+                        type="text"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
+                        placeholder={t('ourWorkPage.form.placeholders.name') || 'Your Name'}
+                        required
+                        whileFocus={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                    </div>
                   </div>
+                </StaggeredReveal>
+                
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t('ourWorkPage.form.name') || 'Name'}
+                      {t('ourWorkPage.form.email') || 'Email'}
                     </label>
-                    <input
-                      type="text"
+                    <motion.input
+                      type="email"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                      placeholder={t('ourWorkPage.form.placeholders.name') || 'Your Name'}
+                      placeholder={t('ourWorkPage.form.placeholders.email') || 'your.email@example.com'}
                       required
+                      whileFocus={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
                     />
-      </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('ourWorkPage.form.email') || 'Email'}
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400"
-                    placeholder={t('ourWorkPage.form.placeholders.email') || 'your.email@example.com'}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('ourWorkPage.form.projectDescription') || 'Project Description'}
-                  </label>
-                  <textarea
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
-                    placeholder={t('ourWorkPage.form.placeholders.projectDescription') || 'Please describe your project requirements...'}
-                    required
-                  />
-                </div>
-                <div className="text-center">
-                  <button
-                    type="submit"
-                    disabled={isFormSubmitting}
-                    className={`px-8 py-3 rounded-lg font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center ${
-                      formSubmitted 
-                        ? 'bg-green-600 text-white' 
-                        : 'bg-[#EFC132] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
-                    }`}
-                  >
-                    {isFormSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                        {t('ourWorkPage.form.sending') || 'Sending...'}
-                      </>
-                    ) : formSubmitted ? (
-                      <>
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {t('ourWorkPage.form.sent') || 'Message Sent!'}
-                      </>
-                    ) : (
-                      <>
-                        {t('ourWorkPage.form.startDiscussion') || 'Start Project Discussion'}
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </>
-                    )}
-                  </button>
-              </div>
+                  </div>
+                </StaggeredReveal>
+                
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('ourWorkPage.form.projectDescription') || 'Project Description'}
+                    </label>
+                    <motion.textarea
+                      rows={4}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#EFC132] focus:border-transparent transition-all duration-300 hover:border-gray-400 resize-none"
+                      placeholder={t('ourWorkPage.form.placeholders.projectDescription') || 'Please describe your project requirements...'}
+                      required
+                      whileFocus={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  </div>
+                </StaggeredReveal>
+                
+                <StaggeredReveal direction="up" staggerDelay={0.1}>
+                  <div className="text-center">
+                    <motion.button
+                      type="submit"
+                      disabled={isFormSubmitting}
+                      className={`px-8 py-3 rounded-lg font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none inline-flex items-center ${
+                        formSubmitted 
+                          ? 'bg-green-600 text-white' 
+                          : 'bg-[#EFC132] text-white hover:bg-[#8B7A0A] hover:shadow-lg'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {isFormSubmitting ? (
+                        <>
+                          <motion.div 
+                            className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          />
+                          {t('ourWorkPage.form.sending') || 'Sending...'}
+                        </>
+                      ) : formSubmitted ? (
+                        <>
+                          <motion.svg 
+                            className="w-4 h-4 mr-2" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </motion.svg>
+                          {t('ourWorkPage.form.sent') || 'Message Sent!'}
+                        </>
+                      ) : (
+                        <>
+                          {t('ourWorkPage.form.startDiscussion') || 'Start Project Discussion'}
+                          <FloatingIcon delay={0.1} floatIntensity={0.3}>
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </FloatingIcon>
+                        </>
+                      )}
+                    </motion.button>
+                  </div>
+                </StaggeredReveal>
               </form>
-          </div>
+          </motion.div>
           </ParallaxWrapper>
         </div>
-      </section>
+      </GlowingBackground>
     </div>
   );
 }

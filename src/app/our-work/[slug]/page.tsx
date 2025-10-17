@@ -4,7 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
+import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { ServiceCardAnimation, AnimatedSeparator, FloatingIcon, GlowingBackground } from '@/components/animations/ServiceCardAnimation';
+import { StaggeredReveal, MagneticCard, PulseGlow, TypewriterText } from '@/components/animations/StaggeredReveal';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 // Work projects data - using kebab-case slugs for URLs but camelCase for translation keys
@@ -203,71 +207,100 @@ export default function WorkDetailPage() {
           src={staticProject ? staticProject.imageUrl : project.imageUrl} 
           alt={staticProject 
             ? (t(`ourWorkPage.projects.${staticProject.translationKey}.title`) || staticProject.id)
-            : project.title[language]
+            : (project as DynamicProject).title[language as 'en' | 'ar']
           } 
           fill 
           className="object-cover" 
           priority 
+          quality={95}
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
-          <div>
-            <h1 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-white text-[40px] md:text-[64px] mb-3">
-              {staticProject 
-                ? (t(`ourWorkPage.projects.${staticProject.translationKey}.title`) || staticProject.id)
-                : project.title[language]
-              }
-            </h1>
-            <p className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[18px] max-w-[900px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <PulseGlow className="inline-block">
+              <TypewriterText 
+                text={staticProject 
+                  ? (t(`ourWorkPage.projects.${staticProject.translationKey}.title`) || staticProject.id)
+                  : (project as DynamicProject).title[language as 'en' | 'ar']
+                }
+                className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-white text-[40px] md:text-[64px] mb-3 block"
+                speed={0.08}
+                delay={0.5}
+              />
+            </PulseGlow>
+            <motion.p 
+              className="font-['ADLaM_Display:Regular',_sans-serif] text-white/90 text-[16px] md:text-[18px] max-w-[900px] mx-auto mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+            >
               {staticProject 
                 ? (t(`ourWorkPage.projects.${staticProject.translationKey}.description`) || 'Project description not available.')
-                : project.summary[language]
+                : (project as DynamicProject).summary[language as 'en' | 'ar']
               }
-            </p>
-            <div className="flex items-center justify-center gap-4 mt-4 text-white/80">
-              <span>{staticProject ? staticProject.year : project.duration[language]}</span>
+            </motion.p>
+            <motion.div 
+              className="flex items-center justify-center gap-4 mt-4 text-white/80"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.5 }}
+            >
+              <span>{staticProject ? staticProject.year : (project as DynamicProject).duration[language as 'en' | 'ar']}</span>
               <span>•</span>
               <span>
                 {staticProject 
                   ? (t(`ourWorkPage.projects.${staticProject.translationKey}.location`) || 'Location not specified')
-                  : project.location[language]
+                  : (project as DynamicProject).location[language as 'en' | 'ar']
                 }
               </span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Key features */}
-      <section className="bg-gray-50 py-12 md:py-16">
+      <GlowingBackground className="bg-gray-50 py-12 md:py-16">
+        {/* Animated Separator */}
+        <AnimatedSeparator className="mb-8" delay={0.3} />
         <div className="max-w-[1280px] mx-auto px-4 md:px-8">
-          <div className="grid md:grid-cols-3 gap-6">
-            {staticProject ? (
-              staticProject.features.map((featureIndex) => (
-                <div key={featureIndex} className="bg-gray-50 border border-gray-200 rounded-[14px] p-5 shadow-sm">
-                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[#EFC132] text-[18px] md:text-[20px]">
-                    {t(`ourWorkPage.projects.${staticProject.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`}
-                  </h3>
-                  <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
-                    {(t(`ourWorkPage.projects.${staticProject.translationKey}.title`) || staticProject.id)} {t('work.detail.includes') || 'includes'}: {(t(`ourWorkPage.projects.${staticProject.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`)} {t('work.detail.asPartOf') || 'as part of our comprehensive project delivery'}.
-                  </p>
-                </div>
-              ))
-            ) : (
-              project.features[language].map((feature, index) => (
-                <div key={index} className="bg-gray-50 border border-gray-200 rounded-[14px] p-5 shadow-sm">
-                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[#EFC132] text-[18px] md:text-[20px]">
-                    {feature}
-                  </h3>
-                  <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
-                    {project.title[language]} includes: {feature} as part of our comprehensive project delivery.
-                  </p>
-                </div>
-              ))
-            )}
-          </div>
+          <StaggeredReveal direction="up" staggerDelay={0.2}>
+            <div className="grid md:grid-cols-3 gap-6">
+              {staticProject ? (
+                staticProject.features.map((featureIndex) => (
+                  <ServiceCardAnimation key={featureIndex} index={parseInt(featureIndex)} delay={0.1 * parseInt(featureIndex)}>
+                    <MagneticCard className="bg-white border border-gray-200 rounded-[14px] p-5 shadow-sm">
+                      <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[#EFC132] text-[18px] md:text-[20px] mb-2">
+                        {t(`ourWorkPage.projects.${staticProject.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`}
+                      </h3>
+                      <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px]">
+                        {(t(`ourWorkPage.projects.${staticProject.translationKey}.title`) || staticProject.id)} {t('work.detail.includes') || 'includes'}: {(t(`ourWorkPage.projects.${staticProject.translationKey}.features.${featureIndex}`) || `Feature ${featureIndex}`)} {t('work.detail.asPartOf') || 'as part of our comprehensive project delivery'}.
+                      </p>
+                    </MagneticCard>
+                  </ServiceCardAnimation>
+                ))
+              ) : (
+                (project as DynamicProject).features[language as 'en' | 'ar'].map((feature: string, index: number) => (
+                  <ServiceCardAnimation key={index} index={index} delay={0.1 * index}>
+                    <MagneticCard className="bg-white border border-gray-200 rounded-[14px] p-5 shadow-sm">
+                      <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[#EFC132] text-[18px] md:text-[20px] mb-2">
+                        {feature}
+                      </h3>
+                      <p className="font-['Alice:Regular',_sans-serif] text-gray-700 text-[14px] md:text-[16px]">
+                        {(project as DynamicProject).title[language as 'en' | 'ar']} includes: {feature} as part of our comprehensive project delivery.
+                      </p>
+                    </MagneticCard>
+                  </ServiceCardAnimation>
+                ))
+              )}
+            </div>
+          </StaggeredReveal>
         </div>
-      </section>
+      </GlowingBackground>
 
       {/* Overview & details */}
       <section className="bg-gray-50 py-12 md:py-20">
@@ -281,7 +314,7 @@ export default function WorkDetailPage() {
               <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed mb-6">
                 {staticProject 
                   ? (t(`ourWorkPage.projects.${staticProject.translationKey}.content`) || 'Project content not available.')
-                  : project.description[language]
+                  : (project as DynamicProject).description[language as 'en' | 'ar']
                 }
               </p>
               <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] md:text-[24px] text-[#EFC132] mb-4">
@@ -290,7 +323,7 @@ export default function WorkDetailPage() {
               <p className="font-['Alice:Regular',_sans-serif] text-gray-800 text-[16px] md:text-[18px] leading-relaxed">
                 {staticProject 
                   ? (t(`ourWorkPage.projects.${staticProject.translationKey}.detailedContent`) || 'Detailed project information not available.')
-                  : project.description[language]
+                  : (project as DynamicProject).description[language as 'en' | 'ar']
                 }
               </p>
             </div>
@@ -345,7 +378,7 @@ export default function WorkDetailPage() {
                   </div>
                 ))
               ) : (
-                project.results[language].map((result, index) => (
+                (project as DynamicProject).results[language as 'en' | 'ar'].map((result: string, index: number) => (
                   <div key={index} className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
                     <div className="w-8 h-8 bg-[#EFC132] rounded-full flex items-center justify-center flex-shrink-0">
                       <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -373,10 +406,12 @@ export default function WorkDetailPage() {
                     src={image}
                     alt={staticProject 
                       ? `${t(`ourWorkPage.projects.${staticProject.translationKey}.title`)} - Image ${index + 1}`
-                      : `${project.title[language]} - Image ${index + 1}`
+                      : `${(project as DynamicProject).title[language as 'en' | 'ar']} - Image ${index + 1}`
                     } 
                     fill 
                     className="object-cover group-hover:scale-105 transition-transform duration-300" 
+                    quality={90}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

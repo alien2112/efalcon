@@ -38,7 +38,14 @@ export function GlobalPresenceMap() {
           {/* Map */}
           <div className="relative w-full bg-white rounded-xl border border-gray-200 shadow-md overflow-hidden">
             <div className="relative aspect-[16/9] md:aspect-[21/9]">
-              <Image src="/globe.svg" alt="Global map" fill className="object-contain bg-white" />
+              <Image 
+                src="/globe.svg" 
+                alt="Global map" 
+                fill 
+                className="object-contain bg-white" 
+                quality={90}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
+              />
 
               {/* markers */}
               {MARKERS.map(m => (

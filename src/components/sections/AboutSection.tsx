@@ -78,13 +78,32 @@ export function AboutSection() {
     const globeAny = globeRef.current as unknown as { controls?: () => any } | null;
     const controls = globeAny && typeof globeAny.controls === 'function' ? globeAny.controls() : null;
     if (!controls) return;
+    
+    // Enable all controls
     controls.enableZoom = true;
     controls.enablePan = true;
+    controls.enableRotate = true;
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.zoomSpeed = 0.5;
-    controls.minDistance = 120;
-    controls.maxDistance = 400;
+    
+    // Optimize zoom settings for mobile
+    controls.zoomSpeed = 1.0; // Increased for better mobile responsiveness
+    controls.minDistance = 100; // Allow closer zoom
+    controls.maxDistance = 500; // Allow further zoom
+    
+    // Configure touch controls for mobile devices
+    if (controls.touches) {
+      controls.touches.ONE = THREE.TOUCH.ROTATE;
+      controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;
+    }
+    
+    // Additional mobile-specific settings
+    controls.touchAction = 'none'; // Prevent default touch behaviors
+    controls.enableKeys = false; // Disable keyboard controls on mobile
+    
+    // Improve mobile responsiveness
+    controls.panSpeed = 0.8;
+    controls.rotateSpeed = 0.5;
   }, [size.w, size.h]);
 
   return (

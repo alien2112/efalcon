@@ -411,13 +411,7 @@ export default function AdminDashboard() {
       .filter(img => img.metadata?.isActive !== false)
       .sort((a, b) => (a.metadata?.order || 0) - (b.metadata?.order || 0));
 
-    // For Services and Our Work, only show the main banner (top-priority by order)
-    if (page === 'services' || page === 'work') {
-      const main = pageImages.find(img => (img.metadata?.order || 0) === 1) || pageImages[0];
-      return main ? [main] : [];
-    }
-
-    // For Home/About/Contact/Blog show all banners (e.g., home slider)
+    // Show all banner images for all pages
     return pageImages;
   };
 
