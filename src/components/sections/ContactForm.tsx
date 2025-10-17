@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Send, CheckCircle, AlertCircle, User, Mail, Phone, Building, MessageSquare, FileText } from 'lucide-react';
 
@@ -21,6 +21,15 @@ export function ContactForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
+  
+  // Floating background elements
+  const floatingElements = Array.from({ length: 6 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 4 + 2,
+    delay: Math.random() * 2
+  }));
 
   const services = [
     { value: 'petroleum-storage', label: t('services.defaultServices.petroleumStorage.title') || 'Petroleum Storage', icon: '🛢️' },
@@ -151,32 +160,46 @@ export function ContactForm() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.08,
+        delayChildren: 0.1
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        duration: 0.6,
-        ease: "easeOut"
+        duration: 0.7,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   const formVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
+    hidden: { opacity: 0, scale: 0.9, y: 50 },
     visible: {
       opacity: 1,
       scale: 1,
+      y: 0,
       transition: {
-        duration: 0.5,
-        ease: "easeOut"
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const floatingVariants = {
+    animate: {
+      y: [0, -20, 0],
+      x: [0, 10, 0],
+      transition: {
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut"
       }
     }
   };
@@ -184,30 +207,93 @@ export function ContactForm() {
   return (
     <motion.div 
       ref={formRef}
-      className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden"
+      className="relative bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden"
       variants={formVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
-      whileHover={{ shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+      whileHover={{ 
+        shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+        scale: 1.005
+      }}
       transition={{ duration: 0.3 }}
     >
+      {/* Floating Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {floatingElements.map((element) => (
+          <motion.div
+            key={element.id}
+            className="absolute rounded-full bg-gradient-to-r from-[#EFC132]/10 to-[#8B7A0A]/10 blur-sm"
+            style={{
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              width: `${element.size}rem`,
+              height: `${element.size}rem`,
+            }}
+            variants={floatingVariants}
+            animate="animate"
+            transition={{
+              delay: element.delay,
+              duration: 6 + Math.random() * 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Gradient overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#EFC132]/5 to-transparent opacity-50" />
+      </div>
       <AnimatePresence mode="wait">
         {isSubmitted ? (
           <motion.div 
             key="success"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="text-center py-20 px-8"
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: -50 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="relative text-center py-20 px-8 z-10"
           >
             <motion.div 
-              className="w-24 h-24 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-8"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="relative w-24 h-24 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-8"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ 
+                delay: 0.2, 
+                type: "spring", 
+                stiffness: 200,
+                damping: 15
+              }}
             >
-              <CheckCircle className="w-12 h-12 text-white" />
+              {/* Pulsing ring effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full border-4 border-green-400"
+                initial={{ scale: 1, opacity: 0.8 }}
+                animate={{ scale: 1.5, opacity: 0 }}
+                transition={{ 
+                  duration: 1.5, 
+                  repeat: Infinity,
+                  ease: "easeOut"
+                }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-green-300"
+                initial={{ scale: 1, opacity: 0.6 }}
+                animate={{ scale: 1.8, opacity: 0 }}
+                transition={{ 
+                  duration: 1.5, 
+                  repeat: Infinity,
+                  delay: 0.3,
+                  ease: "easeOut"
+                }}
+              />
+              <motion.div
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              >
+                <CheckCircle className="w-12 h-12 text-white" />
+              </motion.div>
             </motion.div>
             <motion.h3 
               className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] text-[#EFC132] mb-6"
@@ -266,8 +352,22 @@ export function ContactForm() {
                         {field.label} {field.required && <span className="text-red-500">*</span>}
                       </div>
                     </label>
-                    <div className="relative">
-                      <input
+                    <div className="relative group">
+                      {/* Gradient glow effect on focus */}
+                      <motion.div
+                        className="absolute inset-0 rounded-xl opacity-0 pointer-events-none"
+                        animate={{
+                          opacity: focusedField === field.name ? 1 : 0,
+                          scale: focusedField === field.name ? 1.02 : 1
+                        }}
+                        transition={{ duration: 0.3 }}
+                        style={{
+                          background: 'linear-gradient(135deg, #EFC132, #8B7A0A)',
+                          filter: 'blur(8px)'
+                        }}
+                      />
+                      
+                      <motion.input
                         type={field.type}
                         id={field.name}
                         name={field.name}
@@ -276,9 +376,11 @@ export function ContactForm() {
                         onFocus={() => setFocusedField(field.name)}
                         onBlur={() => setFocusedField(null)}
                         required={field.required}
-                        className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors[field.name] ? 'border-red-400 bg-red-50' : 'border-gray-200'} ${focusedField === field.name ? 'ring-4 ring-[#EFC132]/20 border-[#EFC132]' : ''}`}
+                        className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-gray-50 hover:bg-white focus:bg-white focus:outline-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors[field.name] ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-4 focus:ring-red-200' : 'border-gray-200 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20'} ${focusedField === field.name ? 'shadow-lg shadow-[#EFC132]/20' : ''}`}
                         placeholder={field.placeholder}
                         dir={language === 'ar' ? 'rtl' : 'ltr'}
+                        whileFocus={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
                       />
                       <AnimatePresence>
                         {errors[field.name] && (
@@ -306,16 +408,32 @@ export function ContactForm() {
                     {t('contact.form.fields.service') || 'Service'}
                   </div>
                 </label>
-                <div className="relative">
-                  <select
+                <div className="relative group">
+                  {/* Gradient glow effect on focus */}
+                  <motion.div
+                    className="absolute inset-0 rounded-xl opacity-0 pointer-events-none"
+                    animate={{
+                      opacity: focusedField === 'service' ? 1 : 0,
+                      scale: focusedField === 'service' ? 1.02 : 1
+                    }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      background: 'linear-gradient(135deg, #EFC132, #8B7A0A)',
+                      filter: 'blur(8px)'
+                    }}
+                  />
+                  
+                  <motion.select
                     id="service"
                     name="service"
                     value={formData.service}
                     onChange={handleInputChange}
                     onFocus={() => setFocusedField('service')}
                     onBlur={() => setFocusedField(null)}
-                    className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 appearance-none cursor-pointer`}
+                    className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-gray-50 hover:bg-white focus:bg-white focus:outline-none ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20 appearance-none cursor-pointer ${focusedField === 'service' ? 'shadow-lg shadow-[#EFC132]/20' : ''}`}
                     dir={language === 'ar' ? 'rtl' : 'ltr'}
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
                   >
                     <option value="">{t('contact.form.placeholders.service') || 'Select a service'}</option>
                     {services.map((service) => (
@@ -323,7 +441,7 @@ export function ContactForm() {
                         {service.icon} {service.label}
                       </option>
                     ))}
-                  </select>
+                  </motion.select>
                   <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                     <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -340,8 +458,22 @@ export function ContactForm() {
                     {t('contact.form.fields.message') || 'Message'} <span className="text-red-500">*</span>
                   </div>
                 </label>
-                <div className="relative">
-                  <textarea
+                <div className="relative group">
+                  {/* Gradient glow effect on focus */}
+                  <motion.div
+                    className="absolute inset-0 rounded-xl opacity-0 pointer-events-none"
+                    animate={{
+                      opacity: focusedField === 'message' ? 1 : 0,
+                      scale: focusedField === 'message' ? 1.02 : 1
+                    }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      background: 'linear-gradient(135deg, #EFC132, #8B7A0A)',
+                      filter: 'blur(8px)'
+                    }}
+                  />
+                  
+                  <motion.textarea
                     id="message"
                     name="message"
                     value={formData.message}
@@ -350,9 +482,11 @@ export function ContactForm() {
                     onBlur={() => setFocusedField(null)}
                     required
                     rows={6}
-                    className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50' : 'border-gray-200'} ${focusedField === 'message' ? 'ring-4 ring-[#EFC132]/20 border-[#EFC132]' : ''}`}
+                    className={`relative w-full px-4 py-4 border-2 rounded-xl transition-all duration-300 bg-gray-50 hover:bg-white focus:bg-white focus:outline-none resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-4 focus:ring-red-200' : 'border-gray-200 focus:border-[#EFC132] focus:ring-4 focus:ring-[#EFC132]/20'} ${focusedField === 'message' ? 'shadow-lg shadow-[#EFC132]/20' : ''}`}
                     placeholder={t('contact.form.placeholders.message') || 'Tell us about your project...'}
                     dir={language === 'ar' ? 'rtl' : 'ltr'}
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
                   />
                   <AnimatePresence>
                     {errors.message && (
@@ -378,14 +512,33 @@ export function ContactForm() {
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group relative bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white px-16 py-5 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  initial={{ opacity: 0, y: 20 }}
+                  className="group relative bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white px-16 py-5 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                  whileHover={{ 
+                    scale: 1.05, 
+                    y: -3,
+                    boxShadow: "0 20px 40px -12px rgba(239, 193, 50, 0.4)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
+                  transition={{ delay: 0.6, duration: 0.7 }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#8B7A0A] to-[#EFC132] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  {/* Animated background gradient */}
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-[#8B7A0A] to-[#EFC132] opacity-0"
+                    animate={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  
+                  {/* Shimmer effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  
                   <div className="relative flex items-center justify-center gap-3">
                     {isSubmitting ? (
                       <>
@@ -398,7 +551,12 @@ export function ContactForm() {
                       </>
                     ) : (
                       <>
-                        <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                        <motion.div
+                          whileHover={{ x: 3, rotate: 15 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <Send className="w-5 h-5" />
+                        </motion.div>
                         {t('contact.form.submit') || 'Send Message'}
                       </>
                     )}
