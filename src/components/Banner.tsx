@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRight, ChevronDown } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect, useCallback } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BannerImage {
@@ -56,6 +56,113 @@ export function Banner({
   const [bannerImages, setBannerImages] = useState<BannerImage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoadingStates, setImageLoadingStates] = useState<{ [key: string]: boolean }>({});
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  // Image loading handlers
+  const handleImageLoad = useCallback((imageSrc: string) => {
+    setImageLoadingStates(prev => ({ ...prev, [imageSrc]: false }));
+    setLoadedImages(prev => new Set([...prev, imageSrc]));
+  }, []);
+
+  const handleImageStart = useCallback((imageSrc: string) => {
+    setImageLoadingStates(prev => ({ ...prev, [imageSrc]: true }));
+  }, []);
+
+  // Premium Loading Components
+  const ShimmerSkeleton = () => (
+    <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132] via-[#FFD700] to-[#EFC132] overflow-hidden">
+      {/* Animated shimmer effect */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        animate={{ x: ['-100%', '100%'] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+      />
+      
+      {/* Subtle pattern overlay */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 2px 2px, rgba(255,255,255,0.3) 1px, transparent 0),
+            radial-gradient(circle at 2px 2px, rgba(255,215,0,0.2) 1px, transparent 0)
+          `,
+          backgroundSize: '60px 60px, 120px 120px',
+          backgroundPosition: '0 0, 30px 30px'
+        }}></div>
+      </div>
+      
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-white/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+
+  const GradientPlaceholder = () => (
+    <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132] via-[#FFD700] to-[#8B7A0A]">
+      {/* Animated gradient waves */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+        animate={{ 
+          backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] 
+        }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+      />
+      
+      {/* Subtle geometric pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(45deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+            linear-gradient(-45deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '80px 80px'
+        }}></div>
+      </div>
+    </div>
+  );
+
+  const BlurUpPlaceholder = ({ src }: { src: string }) => (
+    <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132] to-[#8B7A0A]">
+      {/* Low-quality blurred version */}
+      <Image
+        src={src}
+        alt=""
+        fill
+        className="object-cover blur-md scale-110"
+        quality={10}
+        priority={false}
+      />
+      
+      {/* Overlay for better contrast */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/60 via-transparent to-[#8B7A0A]/60" />
+      
+      {/* Shimmer effect */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        animate={{ x: ['-100%', '100%'] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: 'linear' }}
+      />
+    </div>
+  );
 
   // Static image arrays for different pages when slider is enabled
   const getStaticImages = (page: string) => {
@@ -164,20 +271,47 @@ export function Banner({
     <div className="relative h-screen overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
+        {/* Premium loading state */}
         {isLoading ? (
-          <div className="w-full h-full bg-gray-300 animate-pulse flex items-center justify-center">
-            <div className="text-gray-600">Loading...</div>
-          </div>
+          <ShimmerSkeleton />
         ) : (
-          <Image
-            src={currentImage.src}
-            alt={currentImage.alt}
-            fill
-            className="object-cover transition-opacity duration-1000"
-            priority
-            quality={95}
-            sizes="100vw"
-          />
+          <>
+            {/* Loading placeholder */}
+            <AnimatePresence>
+              {imageLoadingStates[currentImage.src] && (
+                <motion.div
+                  key={`placeholder-${currentImage.src}`}
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <BlurUpPlaceholder src={currentImage.src} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            
+            {/* Background image with blur-up effect */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: loadedImages.has(currentImage.src) ? 1 : 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative w-full h-full"
+            >
+              <Image
+                src={currentImage.src}
+                alt={currentImage.alt}
+                fill
+                className="object-cover"
+                priority={currentImageIndex === 0}
+                onLoadStart={() => handleImageStart(currentImage.src)}
+                onLoad={() => handleImageLoad(currentImage.src)}
+                quality={95}
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                sizes="100vw"
+              />
+            </motion.div>
+          </>
         )}
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/40"></div>
@@ -293,6 +427,35 @@ export function Banner({
               >
                 {subtitle}
               </motion.p>
+            )}
+
+            {/* Loading indicator for image loading */}
+            {imageLoadingStates[currentImage.src] && (
+              <motion.div 
+                className="mt-8 flex justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.4 }}
+              >
+                <div className="flex space-x-2">
+                  {[...Array(3)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="w-3 h-3 bg-white/60 rounded-full"
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [0.6, 1, 0.6]
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        delay: i * 0.2,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  ))}
+                </div>
+              </motion.div>
             )}
           </div>
         </div>

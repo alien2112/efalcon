@@ -109,12 +109,36 @@ export function WorkSection() {
 
   return (
     <div className="relative w-full bg-[#EFC132] py-20 md:py-32 overflow-hidden">
+      {/* Enhanced background pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
+        {/* Subtle geometric pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0),
+            radial-gradient(circle at 2px 2px, rgba(255,215,0,0.1) 1px, transparent 0)
+          `,
+          backgroundSize: '50px 50px, 100px 100px',
+          backgroundPosition: '0 0, 25px 25px'
+        }}></div>
+      </div>
+      
+      {/* Decorative corner accents */}
+      <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-white/15 to-transparent rounded-br-3xl"></div>
+      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/15 to-transparent rounded-bl-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-white/15 to-transparent rounded-tr-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/15 to-transparent rounded-tl-3xl"></div>
+      
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
-        {/* Section Title */}
+        {/* Enhanced Section Title */}
         <FadeInOnScroll direction="up" delay={0.2}>
-          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[56px] md:text-[96px] leading-[1.2] text-center text-white mb-16">
-            {t('work.title') || 'Our Work'}
-          </h2>
+          <div className="relative text-center mb-20">
+            {/* Decorative accent line */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full"></div>
+            <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[56px] md:text-[96px] leading-[1.2] text-white mb-8 drop-shadow-lg">
+              {t('work.title') || 'Our Work'}
+            </h2>
+          </div>
         </FadeInOnScroll>
 
         {/* Portfolio Grid */}
@@ -124,40 +148,49 @@ export function WorkSection() {
               <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
                 <Link 
                   href={item.slug ? `/our-work/${item.slug}` : '#'}
-                  className="group relative rounded-[20px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.35)] border border-white/10 bg-black/20 transition-transform duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(0,0,0,0.45)] block"
+                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block"
                 >
-                  {/* Thumbnail */}
+                  {/* Enhanced Thumbnail */}
                   <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
                       fill
-                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.08] group-hover:-translate-y-6"
+                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8"
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000B3] via-[#00000066] to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
-                    {/* subtle sheen */}
-                    <div className="pointer-events-none absolute -right-10 -top-10 w-52 h-52 rotate-45 bg-white/5 blur-xl group-hover:bg-white/10 transition-colors" />
+                    {/* Enhanced gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Enhanced sheen effect */}
+                    <div className="pointer-events-none absolute -right-12 -top-12 w-64 h-64 rotate-45 bg-white/10 blur-2xl group-hover:bg-white/20 transition-colors duration-500" />
+                    
+                    {/* Decorative corner elements */}
+                    <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute bottom-4 left-4 w-6 h-6 bg-white/15 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
 
-                  {/* Caption strip */}
+                  {/* Enhanced Caption strip */}
                   <div className="absolute inset-x-0 bottom-0 p-0">
-                    <div className="bg-white/20 text-white px-4 py-3 md:px-5 md:py-3">
-                      <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide">
+                    <div className="bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
+                      <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
                         {item.title}
                       </h3>
                     </div>
                   </div>
 
-                  {/* Hover magnifier */}
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white/15 border border-white/30 backdrop-blur">
-                      <Search className="text-white" size={28} strokeWidth={2.25} />
+                  {/* Enhanced Hover magnifier */}
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-white/20 border-2 border-white/40 backdrop-blur-md shadow-xl">
+                      <Search className="text-white" size={32} strokeWidth={2.5} />
                     </div>
                   </div>
 
-                  {/* Hover border highlight */}
-                  <div className="pointer-events-none absolute inset-0 rounded-[20px] border border-white/0 group-hover:border-white/25 transition-colors duration-300" />
+                  {/* Enhanced Hover border highlight */}
+                  <div className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-white/0 group-hover:border-white/40 transition-all duration-500" />
+                  
+                  {/* Subtle inner glow */}
+                  <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-t from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </Link>
               </FadeInOnScroll>
             ))}

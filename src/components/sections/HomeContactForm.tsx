@@ -166,14 +166,28 @@ export function HomeContactForm() {
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent"></div>
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 opacity-40">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 to-transparent"></div>
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.3) 1px, transparent 0)`,
-          backgroundSize: '20px 20px'
+          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(148, 163, 184, 0.4) 1px, transparent 0)`,
+          backgroundSize: '30px 30px'
+        }}></div>
+        {/* Subtle geometric pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(45deg, rgba(239, 193, 50, 0.1) 1px, transparent 1px),
+            linear-gradient(-45deg, rgba(239, 193, 50, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px'
         }}></div>
       </div>
+      
+      {/* Decorative corner accents */}
+      <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[#EFC132]/10 to-transparent rounded-br-3xl"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#EFC132]/10 to-transparent rounded-bl-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-[#EFC132]/10 to-transparent rounded-tr-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-[#EFC132]/10 to-transparent rounded-tl-3xl"></div>
       
       <motion.div 
         className="max-w-7xl mx-auto px-4 md:px-8 relative z-10"
@@ -208,9 +222,9 @@ export function HomeContactForm() {
           </motion.p>
         </motion.div>
 
-        {/* Contact Info Cards */}
+        {/* Enhanced Contact Info Cards */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20"
           variants={containerVariants}
         >
           {contactInfo.map((info, index) => (
@@ -218,34 +232,49 @@ export function HomeContactForm() {
               key={index}
               className="group cursor-pointer"
               variants={itemVariants}
-              whileHover={{ y: -5, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ y: -8, scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group-hover:border-gray-200">
-                <div className={`w-12 h-12 bg-gradient-to-r ${info.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <info.icon className="w-6 h-6 text-white" />
+              <div className="bg-white rounded-3xl p-8 shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-gray-100 hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] transition-all duration-300 group-hover:border-gray-200 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-gray-50">
+                <div className={`w-16 h-16 bg-gradient-to-r ${info.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                  <info.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] text-gray-800 mb-2">
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] text-gray-800 mb-3">
                   {info.title}
                 </h3>
-                <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 leading-relaxed">
+                <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[15px] text-gray-600 leading-relaxed">
                   {info.value}
                 </p>
+                
+                {/* Decorative corner element */}
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-[#EFC132]/20 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Main Form */}
+        {/* Enhanced Main Form */}
         <motion.div 
           className="max-w-4xl mx-auto"
           variants={formVariants}
         >
           <motion.div 
-            className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden"
-            whileHover={{ shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+            className="bg-white rounded-3xl shadow-[0_25px_50px_rgba(0,0,0,0.15)] border border-gray-100 overflow-hidden"
+            whileHover={{ shadow: "0 30px 60px rgba(0, 0, 0, 0.2)" }}
             transition={{ duration: 0.3 }}
           >
+            {/* Decorative header */}
+            <div className="relative bg-gradient-to-r from-[#EFC132]/10 to-[#8B7A0A]/10 p-6 border-b border-gray-100">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-[#EFC132]/60 to-transparent rounded-full"></div>
+              <div className="text-center">
+                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] text-[#EFC132] mb-2">
+                  {t('contact.form.header.title') || 'Send us a Message'}
+                </h3>
+                <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] text-gray-600">
+                  {t('contact.form.header.subtitle') || 'We\'d love to hear from you'}
+                </p>
+              </div>
+            </div>
             <AnimatePresence mode="wait">
               {isSubmitted ? (
                 <motion.div 
@@ -308,7 +337,7 @@ export function HomeContactForm() {
                             onFocus={() => setFocusedField('name')}
                             onBlur={() => setFocusedField(null)}
                             required
-                            className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.name ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
+                            className={`w-full px-6 py-5 border-2 rounded-2xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.name ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
                             placeholder={t('contact.form.placeholders.name') || 'Your full name'}
                             dir={language === 'ar' ? 'rtl' : 'ltr'}
                           />
@@ -345,7 +374,7 @@ export function HomeContactForm() {
                             onFocus={() => setFocusedField('email')}
                             onBlur={() => setFocusedField(null)}
                             required
-                            className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.email ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
+                            className={`w-full px-6 py-5 border-2 rounded-2xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.email ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
                             placeholder={t('contact.form.placeholders.email') || 'you@example.com'}
                             dir={language === 'ar' ? 'rtl' : 'ltr'}
                           />
@@ -380,7 +409,7 @@ export function HomeContactForm() {
                           onChange={handleInputChange}
                           onFocus={() => setFocusedField('phone')}
                           onBlur={() => setFocusedField(null)}
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200`}
+                          className={`w-full px-6 py-5 border-2 rounded-2xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200`}
                           placeholder="+966 11 123 4567"
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         />
@@ -398,7 +427,7 @@ export function HomeContactForm() {
                           onChange={handleInputChange}
                           onFocus={() => setFocusedField('company')}
                           onBlur={() => setFocusedField(null)}
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200`}
+                          className={`w-full px-6 py-5 border-2 rounded-2xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200`}
                           placeholder={t('contact.form.placeholders.company') || 'Company name'}
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         />
@@ -418,7 +447,7 @@ export function HomeContactForm() {
                           onChange={handleInputChange}
                           onFocus={() => setFocusedField('service')}
                           onBlur={() => setFocusedField(null)}
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 appearance-none cursor-pointer`}
+                          className={`w-full px-6 py-5 border-2 rounded-2xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} border-gray-200 appearance-none cursor-pointer`}
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         >
                           <option value="">{t('contact.form.placeholders.service') || 'Select a service'}</option>
@@ -451,7 +480,7 @@ export function HomeContactForm() {
                           onFocus={() => setFocusedField('subject')}
                           onBlur={() => setFocusedField(null)}
                           required
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.subject ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
+                          className={`w-full px-6 py-5 border-2 rounded-2xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white hover:shadow-md ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.subject ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
                           placeholder={t('contact.form.placeholders.subject') || 'How can we help?'}
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         />
@@ -486,7 +515,7 @@ export function HomeContactForm() {
                           onBlur={() => setFocusedField(null)}
                           required
                           rows={6}
-                          className={`w-full px-4 py-4 border-2 rounded-xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
+                          className={`w-full px-6 py-5 border-2 rounded-2xl focus:ring-4 focus:ring-[#EFC132]/20 focus:border-[#EFC132] transition-all duration-300 bg-gray-50 hover:bg-white hover:shadow-md resize-none ${language === 'ar' ? 'text-right' : 'text-left'} ${errors.message ? 'border-red-400 bg-red-50' : 'border-gray-200'}`}
                           placeholder={t('contact.form.placeholders.message') || 'Tell us about your project...'}
                           dir={language === 'ar' ? 'rtl' : 'ltr'}
                         />
@@ -514,19 +543,19 @@ export function HomeContactForm() {
                       <motion.button
                         type="submit"
                         disabled={isSubmitting}
-                        className="group relative bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white px-12 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
-                        whileHover={{ scale: 1.02, y: -2 }}
-                        whileTap={{ scale: 0.98 }}
+                        className="group relative bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white px-16 py-5 rounded-2xl font-semibold text-xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] hover:shadow-[0_25px_50px_rgba(0,0,0,0.3)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden border-2 border-white/20"
+                        whileHover={{ scale: 1.03, y: -3 }}
+                        whileTap={{ scale: 0.97 }}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-[#8B7A0A] to-[#EFC132] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative flex items-center justify-center gap-3">
+                        <div className="relative flex items-center justify-center gap-4">
                           {isSubmitting ? (
                             <>
                               <motion.div
-                                className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                                className="w-6 h-6 border-2 border-white border-t-transparent rounded-full"
                                 animate={{ rotate: 360 }}
                                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                               />
@@ -534,11 +563,15 @@ export function HomeContactForm() {
                             </>
                           ) : (
                             <>
-                              <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                              <Send className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
                               {t('contact.form.submit') || 'Send Message'}
                             </>
                           )}
                         </div>
+                        
+                        {/* Decorative corner elements */}
+                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-white/15 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </motion.button>
                     </motion.div>
                   </form>

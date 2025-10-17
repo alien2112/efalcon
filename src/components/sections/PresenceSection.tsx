@@ -156,24 +156,30 @@ export function PresenceSection() {
         {/* Foreground Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
           <FadeInOnScroll direction="up" delay={0.2}>
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-white mb-4">
-                {t('about.title')}
-              </h2>
-              <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-white/90 max-w-3xl mx-auto">
-                {t('about.description')}
-              </p>
+            <div className="text-center mb-8 md:mb-12 lg:mb-16">
+              {/* Enhanced title container */}
+              <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl md:rounded-3xl border border-white/20 p-6 md:p-8 lg:p-12 shadow-[0_15px_30px_rgba(0,0,0,0.2)] md:shadow-[0_20px_40px_rgba(0,0,0,0.3)] mb-6 md:mb-8">
+                {/* Decorative accent line */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full"></div>
+                
+                <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[24px] md:text-[32px] lg:text-[48px] text-white mb-3 md:mb-4 drop-shadow-lg">
+                  {t('about.title')}
+                </h2>
+                <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] md:text-[16px] lg:text-[20px] text-white/90 max-w-3xl mx-auto drop-shadow-md">
+                  {t('about.description')}
+                </p>
+              </div>
             </div>
           </FadeInOnScroll>
 
 
 
-        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 items-start">
-          {/* Real 3D Globe */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6 md:gap-8 lg:gap-12 items-start">
+          {/* Enhanced Real 3D Globe */}
           <ParallaxWrapper speed={0.3} direction="left">
             <div className="order-2 lg:order-1">
               <div
-                className="relative rounded-2xl border border-gray-200 shadow-xl overflow-hidden"
+                className="relative rounded-2xl md:rounded-3xl border-2 border-white/30 shadow-[0_20px_40px_rgba(0,0,0,0.3)] md:shadow-[0_25px_50px_rgba(0,0,0,0.4)] overflow-hidden bg-white/10 backdrop-blur-sm"
                 style={{
                   backgroundColor: '#0a0e1a',
                   backgroundImage:
@@ -182,7 +188,7 @@ export function PresenceSection() {
                   backgroundPosition: '0 0, 1px 1px'
                 }}
               >
-                <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1]" style={{ touchAction: 'none' }}>
+                <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1] min-h-[300px] md:min-h-[400px]" style={{ touchAction: 'none' }}>
                   <Globe
                     ref={globeRef as unknown as any}
                     height={size.h}
@@ -210,42 +216,49 @@ export function PresenceSection() {
                     }}
                   />
                 </div>
+                
+                {/* Decorative corner elements */}
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-white/40 rounded-full"></div>
+                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-white/30 rounded-full"></div>
               </div>
             </div>
           </ParallaxWrapper>
 
-          {/* Country Information Panel */}
+          {/* Enhanced Country Information Panel */}
           <FadeInOnScroll direction="right" delay={0.4}>
             <div className="order-1 lg:order-2">
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 md:p-8">
-                {/* Legend */}
-                <div className="mb-6">
-                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-lg text-white mb-4">
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] md:shadow-[0_25px_50px_rgba(0,0,0,0.3)] border border-white/30 p-6 md:p-8 lg:p-10">
+                {/* Decorative accent line */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-[#EFC132]/60 to-transparent rounded-full"></div>
+                
+                {/* Enhanced Legend */}
+                <div className="mb-6 md:mb-8">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-base md:text-lg text-[#EFC132] mb-4 md:mb-6 drop-shadow-sm">
                     Presence Status
                   </h3>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-[#EFC132]"></div>
-                      <span className="text-sm font-medium text-gray-700">{t('about.presence.strongPresence')}</span>
+                  <div className="space-y-2 md:space-y-3">
+                    <div className="flex items-center gap-3 md:gap-4">
+                      <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#EFC132] shadow-lg flex-shrink-0"></div>
+                      <span className="text-xs md:text-sm font-medium text-gray-700">{t('about.presence.strongPresence')}</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-[#EFC132]"></div>
-                      <span className="text-sm font-medium text-gray-700">{t('about.presence.expanding')}</span>
+                    <div className="flex items-center gap-3 md:gap-4">
+                      <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#EFC132] shadow-lg flex-shrink-0"></div>
+                      <span className="text-xs md:text-sm font-medium text-gray-700">{t('about.presence.expanding')}</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-[#EFC132]"></div>
-                      <span className="text-sm font-medium text-gray-700">{t('about.presence.partnerships')}</span>
+                    <div className="flex items-center gap-3 md:gap-4">
+                      <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#EFC132] shadow-lg flex-shrink-0"></div>
+                      <span className="text-xs md:text-sm font-medium text-gray-700">{t('about.presence.partnerships')}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Selected Country Info */}
                 {activeCountry && (
-                  <div className="border-t pt-6">
-                    <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-xl text-[#EFC132] mb-2">
+                  <div className="border-t pt-4 md:pt-6">
+                    <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-lg md:text-xl text-[#EFC132] mb-2">
                       {activeCountry.name}
                     </h4>
-                    <div className="space-y-2 text-sm text-gray-600">
+                    <div className="space-y-2 text-xs md:text-sm text-gray-600">
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{t('about.status')}:</span>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium bg-[#EFC132]/10 text-[#EFC132]` }>
@@ -257,17 +270,17 @@ export function PresenceSection() {
                 )}
 
                 {/* Key Statistics */}
-                <div className="mt-6 pt-6 border-t">
-                  <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-lg text-[#EFC132] mb-4">
+                <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t">
+                  <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-base md:text-lg text-[#EFC132] mb-3 md:mb-4">
                     {t('about.globalReach')}
                   </h4>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#EFC132]">11</div>
+                      <div className="text-xl md:text-2xl font-bold text-[#EFC132]">11</div>
                       <div className="text-xs text-gray-600">{t('about.countries')}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#EFC132]">4</div>
+                      <div className="text-xl md:text-2xl font-bold text-[#EFC132]">4</div>
                       <div className="text-xs text-gray-600">{t('about.continents')}</div>
                     </div>
                   </div>
@@ -277,54 +290,54 @@ export function PresenceSection() {
           </FadeInOnScroll>
         </div>
 
-        {/* Regional Highlights */}
+        {/* Enhanced Regional Highlights */}
         <FadeInOnScroll direction="up" delay={0.6}>
-          <div className="mt-12 md:mt-16">
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="mt-12 md:mt-16 lg:mt-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-[0_15px_30px_rgba(0,0,0,0.15)] md:shadow-[0_20px_40px_rgba(0,0,0,0.2)] border border-white/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.25)] md:hover:shadow-[0_25px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1">
+                <div className="flex items-center mb-4 md:mb-6">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-xl flex items-center justify-center mr-3 md:mr-4 shadow-lg flex-shrink-0">
+                    <svg className="w-5 h-5 md:w-6 md:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-lg text-[#EFC132]">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-base md:text-lg text-[#EFC132]">
                     {t('about.presence.strongPresenceTitle')}
                   </h3>
                 </div>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
                   {t('about.presence.strongPresence')}
                 </p>
               </div>
 
-              <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-[0_15px_30px_rgba(0,0,0,0.15)] md:shadow-[0_20px_40px_rgba(0,0,0,0.2)] border border-white/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.25)] md:hover:shadow-[0_25px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1">
+                <div className="flex items-center mb-4 md:mb-6">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-yellow-100 rounded-xl flex items-center justify-center mr-3 md:mr-4 shadow-lg flex-shrink-0">
+                    <svg className="w-5 h-5 md:w-6 md:h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-lg text-[#EFC132]">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-base md:text-lg text-[#EFC132]">
                     {t('about.presence.expandingTitle')}
                   </h3>
                 </div>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
                   {t('about.presence.expanding')}
                 </p>
               </div>
 
-              <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-[0_15px_30px_rgba(0,0,0,0.15)] md:shadow-[0_20px_40px_rgba(0,0,0,0.2)] border border-white/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.25)] md:hover:shadow-[0_25px_50px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1 md:col-span-2 lg:col-span-1">
+                <div className="flex items-center mb-4 md:mb-6">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-3 md:mr-4 shadow-lg flex-shrink-0">
+                    <svg className="w-5 h-5 md:w-6 md:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                   </div>
-                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-lg text-[#EFC132]">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-base md:text-lg text-[#EFC132]">
                     {t('about.presence.partnershipsTitle')}
                   </h3>
                 </div>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
                   {t('about.presence.partnerships')}
                 </p>
               </div>

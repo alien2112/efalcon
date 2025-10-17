@@ -764,6 +764,10 @@
     "form": {
       "title": "Get In Touch",
       "subtitle": "Send us a message and we'll get back to you as soon as possible",
+      "header": {
+        "title": "Send us a Message",
+        "subtitle": "We'd love to hear from you"
+      },
       "fields": {
         "inquiryType": "Inquiry Type",
         "name": "Full Name",
