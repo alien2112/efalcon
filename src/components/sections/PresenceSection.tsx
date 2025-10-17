@@ -120,37 +120,20 @@ export function PresenceSection() {
 
   return (
     <>
-      {/* Presence Section with Rich Gold Gradient */}
+      {/* Presence Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
-        {/* Gold Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700] via-[#B8860B] to-[#FFB300]">
-          {/* Shimmering Overlay */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-white/5 to-transparent"></div>
-          </div>
-
-          {/* Soft Gold Glow Elements */}
-          <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-[#FFD700]/20 to-transparent rounded-full blur-xl"></div>
-          <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-bl from-[#FFC107]/20 to-transparent rounded-full blur-lg"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-tr from-[#FFB300]/15 to-transparent rounded-full blur-2xl"></div>
-          <div className="absolute bottom-10 right-1/3 w-28 h-28 bg-gradient-to-tl from-[#FFD700]/10 to-transparent rounded-full blur-xl"></div>
-
-          {/* Fine Grid Pattern */}
-          <div className="absolute inset-0 opacity-5" style={{
+        {/* Background pattern overlay */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
+          {/* Subtle geometric pattern */}
+          <div className="absolute inset-0" style={{
             backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0),
+              radial-gradient(circle at 2px 2px, rgba(255,215,0,0.1) 1px, transparent 0)
             `,
-            backgroundSize: '50px 50px'
+            backgroundSize: '50px 50px, 100px 100px',
+            backgroundPosition: '0 0, 25px 25px'
           }}></div>
-
-          {/* Animated Light Shimmers */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -top-10 -left-10 w-96 h-1 bg-gradient-to-r from-transparent via-[#FFF3B0]/30 to-transparent rotate-12 animate-pulse"></div>
-            <div className="absolute top-1/3 -right-10 w-80 h-1 bg-gradient-to-r from-transparent via-[#FFD700]/25 to-transparent -rotate-12 animate-pulse" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute bottom-1/4 -left-10 w-72 h-1 bg-gradient-to-r from-transparent via-[#FFECB3]/20 to-transparent rotate-6 animate-pulse" style={{ animationDelay: '2s' }}></div>
-          </div>
         </div>
 
         {/* Foreground Content */}

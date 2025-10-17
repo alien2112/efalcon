@@ -9,7 +9,7 @@ export function VisionSection() {
   return (
     <div className="relative w-full overflow-hidden">
       {/* Top Section: OUR VISION */}
-      <div className="relative bg-[#EFC132] py-20 md:py-32">
+      <div className="relative py-20 md:py-32">
         {/* Enhanced Background Pattern */}
         <div className="absolute inset-0 opacity-15">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
@@ -80,7 +80,7 @@ export function VisionSection() {
       </div>
 
       {/* Bottom Section: Ebdaa Falcon Company */}
-      <div className="relative bg-[#EFC132] py-20 md:py-32">
+      <div className="relative py-20 md:py-32">
         {/* Enhanced Background Pattern */}
         <div className="absolute inset-0 opacity-15">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>

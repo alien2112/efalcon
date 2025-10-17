@@ -12,7 +12,7 @@ export default function CareersPage() {
   const subtitle = language === 'ar' ? 'لا توجد فرص وظيفية متاحة حاليًا — يُرجى التحقق لاحقًا.' : 'No current openings — please check back later.';
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #fff9e9 0%, #f9f3df 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(90deg, #E0AA3E 0%, #B88A44 100%)' }}>
       <Navigation currentSection="careers" onNavigate={() => {}} />
       <div className="pt-[103px]">
         <Banner

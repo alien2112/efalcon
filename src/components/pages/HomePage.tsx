@@ -19,10 +19,38 @@ export function HomePage() {
       <main>
         <HeroSection />
         <WaveSeparator variant="wave" animate={true} />
-        <VisionSection />
-        <ServicesSection />
-        <WorkSection />
-        <PresenceSection />
+        {/* Main sections with metallic golden gradient background */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(90deg, #D4AF37 0%, #B8860B 50%, #CD853F 100%)'
+          }}
+        >
+          {/* Metallic shimmer overlay */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/5"></div>
+          </div>
+          
+          {/* Metallic texture pattern */}
+          <div className="absolute inset-0 opacity-15" style={{
+            backgroundImage: `
+              linear-gradient(45deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(-45deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+              radial-gradient(circle at 1px 1px, rgba(255,215,0,0.2) 1px, transparent 0)
+            `,
+            backgroundSize: '20px 20px, 20px 20px, 40px 40px'
+          }}></div>
+          
+          {/* Metallic glow effects */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-300/50 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-300/50 to-transparent"></div>
+          
+          <VisionSection />
+          <ServicesSection />
+          <WorkSection />
+          <PresenceSection />
+        </div>
         {/* Contact section container background */}
         <div
           className="relative overflow-hidden"

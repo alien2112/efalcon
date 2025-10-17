@@ -108,7 +108,7 @@ export function WorkSection() {
     : fallbackWorkImages;
 
   return (
-    <div className="relative w-full bg-[#EFC132] py-20 md:py-32 overflow-hidden">
+    <div className="relative w-full py-20 md:py-32 overflow-hidden">
       {/* Enhanced background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
