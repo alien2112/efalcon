@@ -23,7 +23,7 @@ export function HomePage() {
         <div
           className="relative overflow-hidden"
           style={{
-            background: 'linear-gradient(90deg, #D4AF37 0%, #B8860B 50%, #CD853F 100%)'
+            background: 'linear-gradient(90deg, #F9F295 0%, #E0AA3E 50%, #B88A44 100%)'
           }}
         >
           {/* Metallic shimmer overlay */}
