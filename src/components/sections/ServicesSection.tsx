@@ -144,8 +144,8 @@ export function ServicesSection() {
       {/* Enhanced background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
-        {/* Subtle geometric pattern */}
-        <div className="absolute inset-0" style={{
+        {/* Subtle geometric pattern - hidden on mobile, visible on md and up */}
+        <div className="absolute inset-0 hidden md:block" style={{
           backgroundImage: `
             radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0),
             radial-gradient(circle at 2px 2px, rgba(255,215,0,0.1) 1px, transparent 0)
@@ -155,11 +155,11 @@ export function ServicesSection() {
         }}></div>
       </div>
       
-      {/* Decorative corner accents */}
-      <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-white/15 to-transparent rounded-br-3xl"></div>
-      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/15 to-transparent rounded-bl-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-white/15 to-transparent rounded-tr-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/15 to-transparent rounded-tl-3xl"></div>
+      {/* Decorative corner accents - hidden on mobile, visible on md and up */}
+      <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-white/15 to-transparent rounded-br-3xl hidden md:block"></div>
+      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/15 to-transparent rounded-bl-3xl hidden md:block"></div>
+      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-white/15 to-transparent rounded-tr-3xl hidden md:block"></div>
+      <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/15 to-transparent rounded-tl-3xl hidden md:block"></div>
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Section Title */}
         <FadeInOnScroll direction="up" delay={0.2}>

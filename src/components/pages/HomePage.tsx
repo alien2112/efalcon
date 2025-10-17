@@ -32,8 +32,8 @@ export function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/5"></div>
           </div>
           
-          {/* Metallic texture pattern */}
-          <div className="absolute inset-0 opacity-15" style={{
+          {/* Metallic texture pattern - hidden on mobile, visible on md and up */}
+          <div className="absolute inset-0 opacity-15 hidden md:block" style={{
             backgroundImage: `
               linear-gradient(45deg, rgba(255,255,255,0.1) 1px, transparent 1px),
               linear-gradient(-45deg, rgba(255,255,255,0.1) 1px, transparent 1px),

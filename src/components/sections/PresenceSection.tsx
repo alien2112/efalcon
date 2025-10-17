@@ -126,8 +126,8 @@ export function PresenceSection() {
         {/* Background pattern overlay */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
-          {/* Subtle geometric pattern */}
-          <div className="absolute inset-0" style={{
+          {/* Subtle geometric pattern - hidden on mobile, visible on md and up */}
+          <div className="absolute inset-0 hidden md:block" style={{
             backgroundImage: `
               radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0),
               radial-gradient(circle at 2px 2px, rgba(255,215,0,0.1) 1px, transparent 0)

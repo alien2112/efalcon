@@ -67,9 +67,9 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
         transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
       />
       
-      {/* Subtle pattern overlay */}
+      {/* Subtle pattern overlay - hidden on mobile, visible on md and up */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
+        <div className="absolute inset-0 hidden md:block" style={{
           backgroundImage: `
             radial-gradient(circle at 2px 2px, rgba(255,255,255,0.3) 1px, transparent 0),
             radial-gradient(circle at 2px 2px, rgba(255,215,0,0.2) 1px, transparent 0)
@@ -400,9 +400,9 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
 
   return (
     <div className="relative w-full h-screen bg-[#EFC132] overflow-hidden">
-      {/* Subtle background pattern overlay */}
+      {/* Subtle background pattern overlay - hidden on mobile, visible on md and up */}
       <div className="absolute inset-0 opacity-5 z-5">
-        <div className="absolute inset-0" style={{
+        <div className="absolute inset-0 hidden md:block" style={{
           backgroundImage: `
             radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0),
             radial-gradient(circle at 1px 1px, rgba(255,215,0,0.1) 1px, transparent 0)

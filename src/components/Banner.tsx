@@ -79,9 +79,9 @@ export function Banner({
         transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
       />
       
-      {/* Subtle pattern overlay */}
+      {/* Subtle pattern overlay - hidden on mobile, visible on md and up */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
+        <div className="absolute inset-0 hidden md:block" style={{
           backgroundImage: `
             radial-gradient(circle at 2px 2px, rgba(255,255,255,0.3) 1px, transparent 0),
             radial-gradient(circle at 2px 2px, rgba(255,215,0,0.2) 1px, transparent 0)
