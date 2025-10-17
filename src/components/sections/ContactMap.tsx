@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export function ContactMap() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const mapRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -22,10 +22,10 @@ export function ContactMap() {
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[32px] md:text-[48px] text-[#EFC132] mb-4">
-            {t('contact.map.title') || 'Our Location'}
+            {language === 'ar' ? 'موقعنا' : 'Our Location'}
           </h2>
           <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[20px] text-gray-600 max-w-[768px] mx-auto">
-            {t('contact.map.subtitle') || 'Find us easily on the map below.'}
+            {language === 'ar' ? 'اعثر علينا بسهولة على الخريطة أدناه.' : 'Find us easily on the map below.'}
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export function ContactMap() {
           <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 md:max-w-sm">
             <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-xl p-4 md:p-6 border border-white/20">
               <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] text-[#EFC132] mb-3">
-                {t('contact.map.contactDetails') || 'Contact Details'}
+                {language === 'ar' ? 'تفاصيل الاتصال' : 'Contact Details'}
               </h4>
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
@@ -68,7 +68,7 @@ export function ContactMap() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[13px] md:text-[14px] text-gray-600">
-                    {t('contact.map.address') || 'King Fahed Road, Riyadh'}
+                    {language === 'ar' ? 'طريق الملك فهد، الرياض' : 'King Fahed Road, Riyadh'}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -76,7 +76,7 @@ export function ContactMap() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span className="font-['ADLaM_Display:Regular',_sans-serif] text-[13px] md:text-[14px] text-gray-600">
-                    {t('contact.map.hours') || 'Sunday - Thursday: 8:00 AM - 5:00 PM'}
+                    {language === 'ar' ? 'الأحد - الخميس: 8:00 ص - 5:00 م' : 'Sunday - Thursday: 8:00 AM - 5:00 PM'}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -88,7 +88,7 @@ export function ContactMap() {
                     className="font-['ADLaM_Display:Regular',_sans-serif] text-[13px] md:text-[14px] text-gray-600 hover:text-[#EFC132] transition-colors"
                     dir="ltr"
                   >
-                    {t('contact.map.phone') || '+966 56 514 5666'}
+                    +966 56 514 5666
                   </a>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export function ContactMap() {
                 rel="noopener noreferrer"
                 className="mt-3 w-full bg-[#EFC132] text-white py-2 px-4 rounded-lg font-medium hover:bg-[#5a4f05] transition-colors text-center block text-[13px] md:text-[14px]"
               >
-                {t('contact.map.getDirections') || 'Get Directions'}
+                {language === 'ar' ? 'احصل على الاتجاهات' : 'Get Directions'}
               </a>
             </div>
           </div>

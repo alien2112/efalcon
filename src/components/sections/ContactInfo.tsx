@@ -56,32 +56,34 @@ export function ContactInfo() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.08,
+        delayChildren: 0.1
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        duration: 0.6,
-        ease: "easeOut"
+        duration: 0.7,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
+    hidden: { opacity: 0, scale: 0.9, y: 30 },
     visible: {
       opacity: 1,
       scale: 1,
+      y: 0,
       transition: {
-        duration: 0.5,
-        ease: "easeOut"
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
@@ -117,17 +119,26 @@ export function ContactInfo() {
           <motion.div
             key={item.id}
             variants={cardVariants}
-            whileHover={{ y: -5, scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ y: -8, scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             className="group cursor-pointer"
           >
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group-hover:border-gray-200">
-              <div className="flex items-start gap-4">
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 group-hover:border-gray-200 relative overflow-hidden">
+              {/* Subtle gradient overlay on hover */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/5 to-transparent opacity-0"
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+              <div className="flex items-start gap-4 relative z-10">
                 <motion.div 
-                  className={`w-14 h-14 bg-gradient-to-r ${item.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                  className={`w-14 h-14 bg-gradient-to-r ${item.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 relative`}
                   whileHover={{ rotate: 5 }}
                 >
-                  <item.icon className="w-7 h-7 text-white" />
+                  <motion.div
+                    className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  <item.icon className="w-7 h-7 text-white relative z-10" />
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
@@ -176,6 +187,31 @@ export function ContactInfo() {
             backgroundSize: '20px 20px'
           }}></div>
           
+          {/* Floating particles */}
+          {Array.from({ length: 3 }, (_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-white/10"
+              style={{
+                width: `${Math.random() * 4 + 2}rem`,
+                height: `${Math.random() * 4 + 2}rem`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                x: [0, 10, 0],
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{
+                duration: 4 + Math.random() * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: Math.random() * 2
+              }}
+            />
+          ))}
+          
           <div className="relative z-10 text-center">
             <motion.h3 
               className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] mb-6"
@@ -203,20 +239,26 @@ export function ContactInfo() {
             >
               <motion.a
                 href="tel:+966565145666"
-                className="bg-white text-[#EFC132] px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100 transition-colors duration-300 hover:scale-105 transform shadow-lg"
-                whileHover={{ y: -2 }}
+                className="relative bg-white text-[#EFC132] px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg overflow-hidden group"
+                whileHover={{ y: -3, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {t('contact.info.cta.call') || 'Call Us'}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-[#EFC132]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                <span className="relative z-10">{t('contact.info.cta.call') || 'Call Us'}</span>
               </motion.a>
               
               <motion.a
                 href="mailto:info@ebdaafalcon.com"
-                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold hover:bg-white hover:text-[#EFC132] transition-colors duration-300 hover:scale-105 transform"
-                whileHover={{ y: -2 }}
+                className="relative bg-transparent border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold hover:bg-white hover:text-[#EFC132] transition-colors duration-300 overflow-hidden group"
+                whileHover={{ y: -3, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {t('contact.info.cta.email') || 'Email Us'}
+                <motion.div
+                  className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                <span className="relative z-10">{t('contact.info.cta.email') || 'Email Us'}</span>
               </motion.a>
             </motion.div>
           </div>
