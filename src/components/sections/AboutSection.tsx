@@ -98,7 +98,6 @@ export function AboutSection() {
     }
     
     // Additional mobile-specific settings
-    controls.touchAction = 'none'; // Prevent default touch behaviors
     controls.enableKeys = false; // Disable keyboard controls on mobile
     
     // Improve mobile responsiveness

@@ -111,7 +111,6 @@ export function PresenceSection() {
     }
     
     // Additional mobile-specific settings
-    controls.touchAction = 'none'; // Prevent default touch behaviors
     controls.enableKeys = false; // Disable keyboard controls on mobile
     
     // Improve mobile responsiveness
@@ -192,7 +191,7 @@ export function PresenceSection() {
                   backgroundPosition: '0 0, 1px 1px'
                 }}
               >
-                <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1] min-h-[300px] md:min-h-[400px]" style={{ touchAction: 'none' }}>
+                <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1] min-h-[300px] md:min-h-[400px]">
                   <Globe
                     ref={globeRef as unknown as any}
                     height={size.h}
