@@ -130,8 +130,10 @@ export default function AdminDashboard() {
 
     try {
       const token = localStorage.getItem('adminToken');
+      // If replacing an existing image, use PUT; otherwise POST to create
+      const method = formData.has('_id') ? 'PUT' : 'POST';
       const response = await fetch('/api/gridfs/images', {
-        method: 'POST',
+        method,
         headers: {
           'Authorization': `Bearer ${token}`
         },
@@ -141,7 +143,7 @@ export default function AdminDashboard() {
       const result = await response.json();
 
       if (result.success) {
-        setMessage(t('admin.dashboard.messages.imageAdded'));
+        setMessage(formData.has('_id') ? t('admin.dashboard.messages.imageUpdated') || 'Image updated successfully' : t('admin.dashboard.messages.imageAdded'));
         setShowUploadForm(false);
         fetchBannerImages();
       } else {
@@ -1923,9 +1925,10 @@ function BannerModal({
 
     await onUpload(data);
     } else {
-      // If a new file is provided in edit mode, upload a new image with existing metadata
+      // If a new file is provided in edit mode, update existing image by sending _id
       if (formData.file) {
         const data = new FormData();
+        data.append('_id', editingImageId || '');
         data.append('file', formData.file);
         data.append('title', formData.title);
         data.append('titleAr', formData.titleAr || '');
