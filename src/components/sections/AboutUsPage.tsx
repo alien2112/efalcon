@@ -477,7 +477,7 @@ export function AboutUsPage() {
                 src="/vision2.webp"
                 alt="Mosaed M. Al-Jhail Chairman"
                 fill
-                className="object-cover"
+                className="object-cover md:object-contain"
                 priority
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 quality={85}
