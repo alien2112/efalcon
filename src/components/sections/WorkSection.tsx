@@ -151,12 +151,13 @@ export function WorkSection() {
                   className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block"
                 >
                   {/* Enhanced Thumbnail */}
-                  <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
+                  <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden touch-pan-y" onDragStart={(e) => e.preventDefault()}>
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
                       fill
-                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8"
+                      draggable={false}
+                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8 select-none"
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     />
                     {/* Enhanced gradient overlay */}

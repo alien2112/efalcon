@@ -40,7 +40,9 @@ export function ServicesSection() {
   const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
   const [loading, setLoading] = useState(true);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const [touchDeltaX, setTouchDeltaX] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
   
   // Fallback services
   const fallbackServices: ServiceImage[] = [
@@ -116,19 +118,35 @@ export function ServicesSection() {
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches && e.touches.length > 0) {
       setTouchStartX(e.touches[0].clientX);
+      setTouchStartY(e.touches[0].clientY);
       setTouchDeltaX(0);
+      setIsSwiping(false);
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX !== null && e.touches && e.touches.length > 0) {
-      setTouchDeltaX(e.touches[0].clientX - touchStartX);
+    if (touchStartX !== null && touchStartY !== null && e.touches && e.touches.length > 0) {
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = currentX - touchStartX;
+      const deltaY = currentY - touchStartY;
+
+      // Only treat as swipe when horizontal intent is clear
+      if (!isSwiping && Math.abs(deltaX) > 12 && Math.abs(deltaX) > Math.abs(deltaY) + 6) {
+        setIsSwiping(true);
+      }
+
+      if (isSwiping) {
+        // Prevent vertical scroll only when we confirmed a horizontal swipe
+        e.preventDefault();
+        setTouchDeltaX(deltaX);
+      }
     }
   };
 
   const handleTouchEnd = () => {
     const SWIPE_THRESHOLD = 50; // pixels
-    if (Math.abs(touchDeltaX) > SWIPE_THRESHOLD) {
+    if (isSwiping && Math.abs(touchDeltaX) > SWIPE_THRESHOLD) {
       if (touchDeltaX < 0) {
         nextSlide();
       } else {
@@ -136,7 +154,9 @@ export function ServicesSection() {
       }
     }
     setTouchStartX(null);
+    setTouchStartY(null);
     setTouchDeltaX(0);
+    setIsSwiping(false);
   };
 
   return (
@@ -213,6 +233,7 @@ export function ServicesSection() {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
+              onDragStart={(e) => e.preventDefault()}
             >
               {/* Enhanced side images (blurred/smaller) */}
               {services.length > 0 && (
@@ -221,7 +242,8 @@ export function ServicesSection() {
                     src={services[(currentSlide - 1 + services.length) % services.length].imageUrl}
                     alt=""
                     fill
-                    className="object-cover rounded-2xl opacity-80"
+                    draggable={false}
+                    className="object-cover rounded-2xl opacity-80 select-none"
                   />
                   {/* Subtle overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
@@ -242,7 +264,8 @@ export function ServicesSection() {
                     src={services[currentSlide].imageUrl}
                     alt={services[currentSlide].title}
                     fill
-                    className="object-cover rounded-2xl group-hover:opacity-90 transition-opacity duration-300"
+                    draggable={false}
+                    className="object-cover rounded-2xl group-hover:opacity-90 transition-opacity duration-300 select-none"
                   />
                   {/* Enhanced border and overlay */}
                   <div className="absolute border border-white/40 border-solid inset-0 rounded-2xl pointer-events-none" />
@@ -261,7 +284,8 @@ export function ServicesSection() {
                     src={services[(currentSlide + 1) % services.length].imageUrl}
                     alt=""
                     fill
-                    className="object-cover rounded-2xl"
+                    draggable={false}
+                    className="object-cover rounded-2xl select-none"
                   />
                   {/* Subtle overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
