@@ -148,16 +148,26 @@ export function WorkSection() {
               <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
                 <Link 
                   href={item.slug ? `/our-work/${item.slug}` : '#'}
-                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block"
+                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block touch-none select-none"
+                  onDragStart={(e) => e.preventDefault()}
+                  onDrag={(e) => e.preventDefault()}
+                  onDragEnd={(e) => e.preventDefault()}
+                  style={{ touchAction: 'none' }}
                 >
                   {/* Enhanced Thumbnail */}
-                  <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden touch-pan-y" onDragStart={(e) => e.preventDefault()}>
+                  <div 
+                    className="relative w-full h-[220px] md:h-[280px] overflow-hidden touch-none select-none" 
+                    onDragStart={(e) => e.preventDefault()}
+                    onDrag={(e) => e.preventDefault()}
+                    onDragEnd={(e) => e.preventDefault()}
+                    style={{ touchAction: 'none' }}
+                  >
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
                       fill
                       draggable={false}
-                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8 select-none"
+                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8 select-none pointer-events-none"
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     />
                     {/* Enhanced gradient overlay */}

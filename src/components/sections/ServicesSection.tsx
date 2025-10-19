@@ -229,21 +229,30 @@ export function ServicesSection() {
 
             {/* Images Container */}
             <div
-              className="relative h-[400px] md:h-[492px] flex items-center justify-center"
+              className="relative h-[400px] md:h-[492px] flex items-center justify-center touch-none select-none"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               onDragStart={(e) => e.preventDefault()}
+              onDrag={(e) => e.preventDefault()}
+              onDragEnd={(e) => e.preventDefault()}
+              style={{ touchAction: 'pan-y' }}
             >
               {/* Enhanced side images (blurred/smaller) */}
               {services.length > 0 && (
-                <div className="absolute left-0 md:left-[-100px] top-1/2 -translate-y-1/2 opacity-25 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] w-[150px] md:w-[297px] h-[150px] md:h-[277px] border border-white/20 bg-white/10 backdrop-blur-sm">
+                <div 
+                  className="absolute left-0 md:left-[-100px] top-1/2 -translate-y-1/2 opacity-25 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] w-[150px] md:w-[297px] h-[150px] md:h-[277px] border border-white/20 bg-white/10 backdrop-blur-sm touch-none select-none"
+                  onDragStart={(e) => e.preventDefault()}
+                  onDrag={(e) => e.preventDefault()}
+                  onDragEnd={(e) => e.preventDefault()}
+                  style={{ touchAction: 'none' }}
+                >
                   <Image
                     src={services[(currentSlide - 1 + services.length) % services.length].imageUrl}
                     alt=""
                     fill
                     draggable={false}
-                    className="object-cover rounded-2xl opacity-80 select-none"
+                    className="object-cover rounded-2xl opacity-80 select-none pointer-events-none"
                   />
                   {/* Subtle overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
@@ -252,20 +261,27 @@ export function ServicesSection() {
 
               {/* Enhanced main center image */}
               {services.length > 0 && (
-                <Link href={`/services/${services[currentSlide].slug || (() => {
-                  const title = services[currentSlide].title.toLowerCase();
-                  if (title.includes('petroleum') || title.includes('trading')) return 'oil-gas-solutions';
-                  if (title.includes('logistics')) return 'logistics-marine-services';
-                  if (title.includes('international') || title.includes('renewable') || title.includes('energy')) return 'renewable-energy-desalination';
-                  if (title.includes('engine') || title.includes('motor')) return 'engine-oils';
-                  return encodeURIComponent(title.replace(/\s+/g,'-'));
-                })()}`} className="relative z-10 rounded-2xl shadow-[0_25px_50px_rgba(0,0,0,0.4)] w-[300px] md:w-[762px] h-[250px] md:h-[444px] block group border-4 border-white/30 bg-white/10 backdrop-blur-sm">
+                <Link 
+                  href={`/services/${services[currentSlide].slug || (() => {
+                    const title = services[currentSlide].title.toLowerCase();
+                    if (title.includes('petroleum') || title.includes('trading')) return 'oil-gas-solutions';
+                    if (title.includes('logistics')) return 'logistics-marine-services';
+                    if (title.includes('international') || title.includes('renewable') || title.includes('energy')) return 'renewable-energy-desalination';
+                    if (title.includes('engine') || title.includes('motor')) return 'engine-oils';
+                    return encodeURIComponent(title.replace(/\s+/g,'-'));
+                  })()}`} 
+                  className="relative z-10 rounded-2xl shadow-[0_25px_50px_rgba(0,0,0,0.4)] w-[300px] md:w-[762px] h-[250px] md:h-[444px] block group border-4 border-white/30 bg-white/10 backdrop-blur-sm touch-none select-none"
+                  onDragStart={(e) => e.preventDefault()}
+                  onDrag={(e) => e.preventDefault()}
+                  onDragEnd={(e) => e.preventDefault()}
+                  style={{ touchAction: 'none' }}
+                >
                   <Image
                     src={services[currentSlide].imageUrl}
                     alt={services[currentSlide].title}
                     fill
                     draggable={false}
-                    className="object-cover rounded-2xl group-hover:opacity-90 transition-opacity duration-300 select-none"
+                    className="object-cover rounded-2xl group-hover:opacity-90 transition-opacity duration-300 select-none pointer-events-none"
                   />
                   {/* Enhanced border and overlay */}
                   <div className="absolute border border-white/40 border-solid inset-0 rounded-2xl pointer-events-none" />
@@ -279,13 +295,19 @@ export function ServicesSection() {
 
               {/* Enhanced right side image */}
               {services.length > 0 && (
-                <div className="absolute right-0 md:right-[-100px] top-1/2 -translate-y-1/2 opacity-55 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] w-[150px] md:w-[398px] h-[150px] md:h-[324px] border border-white/20 bg-white/10 backdrop-blur-sm">
+                <div 
+                  className="absolute right-0 md:right-[-100px] top-1/2 -translate-y-1/2 opacity-55 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] w-[150px] md:w-[398px] h-[150px] md:h-[324px] border border-white/20 bg-white/10 backdrop-blur-sm touch-none select-none"
+                  onDragStart={(e) => e.preventDefault()}
+                  onDrag={(e) => e.preventDefault()}
+                  onDragEnd={(e) => e.preventDefault()}
+                  style={{ touchAction: 'none' }}
+                >
                   <Image
                     src={services[(currentSlide + 1) % services.length].imageUrl}
                     alt=""
                     fill
                     draggable={false}
-                    className="object-cover rounded-2xl select-none"
+                    className="object-cover rounded-2xl select-none pointer-events-none"
                   />
                   {/* Subtle overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
