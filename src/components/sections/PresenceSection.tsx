@@ -57,6 +57,7 @@ export function PresenceSection() {
     pointOfView: (view: { lat: number; lng: number; altitude: number }, ms?: number) => void;
   } | null>(null);
   const [activeCountry, setActiveCountry] = useState<Marker | null>(ACTIVE_COUNTRIES[0]);
+  const [isMobile, setIsMobile] = useState(false);
 
   const points = useMemo(() => {
     // Different sizes by presence level
@@ -69,6 +70,16 @@ export function PresenceSection() {
       return { ...m, size: sizeByLevel[m.level] };
     };
     return [...ACTIVE_COUNTRIES, ...EXPANDING_COUNTRIES, ...PARTNERSHIP_COUNTRIES].map(withSize);
+  }, []);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   useEffect(() => {
@@ -86,37 +97,61 @@ export function PresenceSection() {
     globeRef.current.pointOfView({ lat: 23.8859, lng: 45.0792, altitude: 1.2 }, 0);
   }, [size.w, size.h]);
 
-  // Enable mobile pinch-to-zoom and pan via OrbitControls
+  // Enhanced mobile-optimized globe controls
   useEffect(() => {
     const globeAny = globeRef.current as unknown as { controls?: () => any } | null;
     const controls = globeAny && typeof globeAny.controls === 'function' ? globeAny.controls() : null;
     if (!controls) return;
     
-    // Enable all controls
-    controls.enableZoom = true;
-    controls.enablePan = true;
-    controls.enableRotate = true;
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    
-    // Optimize zoom settings for mobile
-    controls.zoomSpeed = 1.0; // Increased for better mobile responsiveness
-    controls.minDistance = 100; // Allow closer zoom
-    controls.maxDistance = 500; // Allow further zoom
-    
-    // Configure touch controls for mobile devices
-    if (controls.touches) {
-      controls.touches.ONE = THREE.TOUCH.ROTATE;
-      controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;
+    if (isMobile) {
+      // Mobile-optimized settings for better performance
+      controls.enableZoom = true;
+      controls.enablePan = false; // Disable pan on mobile for better scroll performance
+      controls.enableRotate = true;
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.1; // Increased damping for smoother mobile experience
+      
+      // Mobile-optimized zoom settings
+      controls.zoomSpeed = 0.8; // Reduced for better control
+      controls.minDistance = 150; // Increased minimum distance
+      controls.maxDistance = 400; // Reduced maximum distance
+      
+      // Configure touch controls for mobile devices
+      if (controls.touches) {
+        controls.touches.ONE = THREE.TOUCH.ROTATE;
+        controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;
+      }
+      
+      // Mobile-specific performance settings
+      controls.enableKeys = false;
+      controls.panSpeed = 0.5; // Reduced pan speed
+      controls.rotateSpeed = 0.3; // Reduced rotation speed for smoother scrolling
+      
+      // Reduce update frequency on mobile
+      controls.autoRotate = false;
+      controls.autoRotateSpeed = 0.5;
+    } else {
+      // Desktop settings
+      controls.enableZoom = true;
+      controls.enablePan = true;
+      controls.enableRotate = true;
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      
+      controls.zoomSpeed = 1.0;
+      controls.minDistance = 100;
+      controls.maxDistance = 500;
+      
+      if (controls.touches) {
+        controls.touches.ONE = THREE.TOUCH.ROTATE;
+        controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;
+      }
+      
+      controls.enableKeys = false;
+      controls.panSpeed = 0.8;
+      controls.rotateSpeed = 0.5;
     }
-    
-    // Additional mobile-specific settings
-    controls.enableKeys = false; // Disable keyboard controls on mobile
-    
-    // Improve mobile responsiveness
-    controls.panSpeed = 0.8;
-    controls.rotateSpeed = 0.5;
-  }, [size.w, size.h]);
+  }, [size.w, size.h, isMobile]);
 
   return (
     <>
@@ -191,21 +226,21 @@ export function PresenceSection() {
                   backgroundPosition: '0 0, 1px 1px'
                 }}
               >
-                <div ref={containerRef} className="relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1] min-h-[300px] md:min-h-[400px]">
+                <div ref={containerRef} className={`relative aspect-[4/3] sm:aspect-[1/1] lg:aspect-[1/1] min-h-[300px] md:min-h-[400px] ${isMobile ? 'mobile-optimized-scroll' : ''}`}>
                   <Globe
                     ref={globeRef as unknown as any}
                     height={size.h}
                     width={size.w}
                     backgroundColor="rgba(0,0,0,0)"
                     globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-                    bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+                    bumpImageUrl={isMobile ? undefined : "//unpkg.com/three-globe/example/img/earth-topology.png"} // Disable bump map on mobile for performance
                     pointsData={points as unknown as object[]}
                     pointLat={((d: any) => (d as Marker).lat) as unknown as any}
                     pointLng={((d: any) => (d as Marker).lng) as unknown as any}
                     pointAltitude={() => 0.02}
                     pointColor={(() => '#EFC132') as unknown as any}
-                    pointRadius={((d: any) => (d as { size: number }).size * 0.28) as unknown as any}
-                    labelsData={points as unknown as object[]}
+                    pointRadius={((d: any) => (d as { size: number }).size * (isMobile ? 0.2 : 0.28)) as unknown as any} // Smaller points on mobile
+                    labelsData={isMobile ? [] : points as unknown as object[]} // Disable labels on mobile for performance
                     labelLat={((d: any) => (d as Marker).lat) as unknown as any}
                     labelLng={((d: any) => (d as Marker).lng) as unknown as any}
                     labelText={((d: any) => (d as Marker).name) as unknown as any}
@@ -216,6 +251,12 @@ export function PresenceSection() {
                     onPointClick={(point: any) => {
                       const marker = point as Marker;
                       setActiveCountry(marker);
+                    }}
+                    // Mobile-specific performance optimizations
+                    rendererConfig={{
+                      antialias: !isMobile, // Disable antialiasing on mobile for performance
+                      alpha: true,
+                      powerPreference: isMobile ? "low-power" : "high-performance"
                     }}
                   />
                 </div>

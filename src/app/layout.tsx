@@ -4,6 +4,7 @@ import { Footer } from '@/components/Footer';
 import { FloatingActions } from '@/components/FloatingActions';
 import { ResponsiveScrollProgressIndicator } from '@/components/ScrollProgressIndicator';
 import { ImagePreloader, CRITICAL_IMAGES } from '@/components/ImagePreloader';
+import { MobileScrollOptimizer } from '@/components/MobileScrollOptimizer';
 import './globals.css';
 
 export const metadata = {
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html suppressHydrationWarning>
       <body className="antialiased">
         <ImagePreloader images={CRITICAL_IMAGES} />
+        <MobileScrollOptimizer />
         <LanguageProvider>
           <ResponsiveScrollProgressIndicator />
           {children}

@@ -1,10 +1,22 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 
 export function ScrollProgressIndicator() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const lastScrollTime = useRef(0);
+  const isMobile = useRef(false);
+
+  // Check if device is mobile for performance optimization
+  useEffect(() => {
+    const checkMobile = () => {
+      isMobile.current = window.innerWidth < 768;
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const updateScrollProgress = useCallback(() => {
     const scrollTop = window.scrollY;
@@ -21,19 +33,29 @@ export function ScrollProgressIndicator() {
     // Initial check
     updateScrollProgress();
 
-    // Add scroll event listener with throttling for better performance
+    // Enhanced scroll event listener with mobile-specific optimizations
     let ticking = false;
+    let lastUpdateTime = 0;
+    
     const handleScroll = () => {
-      if (!ticking) {
+      const now = Date.now();
+      
+      // Throttle more aggressively on mobile for better performance
+      const throttleDelay = isMobile.current ? 16 : 8; // ~60fps on mobile, ~120fps on desktop
+      
+      if (!ticking && (now - lastUpdateTime) > throttleDelay) {
         requestAnimationFrame(() => {
           updateScrollProgress();
+          lastUpdateTime = now;
           ticking = false;
         });
         ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Use passive listeners for better performance
+    const scrollOptions = { passive: true, capture: false };
+    window.addEventListener('scroll', handleScroll, scrollOptions);
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -88,10 +110,11 @@ export function ScrollProgressIndicator() {
   );
 }
 
-// Mobile-optimized version with thinner bar
+// Mobile-optimized version with enhanced performance
 export function MobileScrollProgressIndicator() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const lastUpdateTime = useRef(0);
 
   const updateScrollProgress = useCallback(() => {
     const scrollTop = window.scrollY;
@@ -105,18 +128,29 @@ export function MobileScrollProgressIndicator() {
   useEffect(() => {
     updateScrollProgress();
 
+    // Enhanced mobile scroll handling with aggressive throttling
     let ticking = false;
+    let lastTime = 0;
+    
     const handleScroll = () => {
-      if (!ticking) {
+      const now = Date.now();
+      
+      // More aggressive throttling for mobile (30fps max)
+      const throttleDelay = 33; // ~30fps for better battery life
+      
+      if (!ticking && (now - lastTime) > throttleDelay) {
         requestAnimationFrame(() => {
           updateScrollProgress();
+          lastTime = now;
           ticking = false;
         });
         ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Use passive listeners with capture for better mobile performance
+    const scrollOptions = { passive: true, capture: false };
+    window.addEventListener('scroll', handleScroll, scrollOptions);
     
     return () => {
       window.removeEventListener('scroll', handleScroll);

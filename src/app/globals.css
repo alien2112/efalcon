@@ -92,9 +92,55 @@
   }
 }
 
-/* Smooth scroll behavior */
+/* Enhanced smooth scroll behavior with mobile optimizations */
 html {
   scroll-behavior: smooth;
+  /* Mobile-specific scroll optimizations */
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-top: 0;
+}
+
+/* Mobile-specific scroll momentum and performance */
+@media (max-width: 768px) {
+  html {
+    /* Enable momentum scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Improve scroll performance */
+    scroll-behavior: smooth;
+    /* Reduce scroll bounce on iOS */
+    overscroll-behavior: contain;
+  }
+  
+  body {
+    /* Prevent horizontal scroll bounce */
+    overscroll-behavior-x: contain;
+    /* Enable momentum scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Improve scroll performance */
+    will-change: scroll-position;
+  }
+  
+  /* Optimize scroll performance for mobile */
+  * {
+    /* Enable hardware acceleration for transforms */
+    transform: translateZ(0);
+    /* Improve scroll performance */
+    will-change: auto;
+  }
+  
+  /* Specific optimizations for animated elements */
+  .motion-div, [data-framer-motion] {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+  
+  /* Optimize parallax elements for mobile */
+  .parallax-element {
+    will-change: transform;
+    transform: translateZ(0);
+    /* Reduce motion for better performance */
+    animation-duration: 0.3s;
+  }
 }
 
 /* Hide scrollbars visually while keeping scroll functionality */
@@ -330,4 +376,129 @@ img {
 
 .section-gradient-secondary {
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(239, 193, 50, 0.05) 100%);
+}
+
+/* Mobile scroll performance optimizations */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  .animate-slide-in, .animate-slide-out {
+    animation-duration: 0.4s !important;
+    animation-timing-function: ease-out !important;
+  }
+  
+  /* Optimize hover effects for touch devices */
+  .hover\\:scale-105:hover {
+    transform: scale(1.02) !important;
+  }
+  
+  .hover\\:-translate-y-1:hover {
+    transform: translateY(-2px) !important;
+  }
+  
+  .hover\\:-translate-y-2:hover {
+    transform: translateY(-4px) !important;
+  }
+  
+  /* Optimize transform animations */
+  .transition-transform {
+    transition-duration: 0.2s !important;
+  }
+  
+  /* Reduce shadow complexity on mobile */
+  .shadow-\\[0_20px_40px_rgba\\(0\\,0\\,0\\,0\\.2\\)\\] {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+  }
+  
+  .shadow-\\[0_25px_50px_rgba\\(0\\,0\\,0\\,0\\.3\\)\\] {
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2) !important;
+  }
+  
+  /* Optimize backdrop blur for mobile performance */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px) !important;
+  }
+  
+  .backdrop-blur-md {
+    backdrop-filter: blur(6px) !important;
+  }
+  
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Enhanced scroll momentum for iOS */
+@supports (-webkit-overflow-scrolling: touch) {
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Optimize scroll performance for heavy components */
+.mobile-optimized-scroll {
+  contain: layout style paint;
+  will-change: scroll-position;
+}
+
+/* Reduce repaints during scroll */
+.scroll-optimized {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Enhanced scroll momentum and performance states */
+body.scrolling {
+  /* Optimize performance during active scrolling */
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+body.scrolling * {
+  /* Reduce animation complexity during scroll */
+  animation-play-state: paused;
+  transition-duration: 0.1s !important;
+}
+
+/* Mobile-specific scroll momentum improvements */
+@media (max-width: 768px) {
+  body.scrolling {
+    /* Enhanced momentum scrolling on mobile */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  /* Optimize heavy elements during scroll */
+  body.scrolling .motion-div,
+  body.scrolling [data-framer-motion] {
+    will-change: auto;
+    transform: translateZ(0);
+  }
+  
+  /* Reduce parallax intensity during scroll */
+  body.scrolling .parallax-element {
+    transform: translateZ(0) !important;
+    animation-duration: 0.1s !important;
+  }
+}
+
+/* Smooth scroll restoration for better UX */
+@supports (scroll-behavior: smooth) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* iOS-specific momentum scrolling enhancements */
+@supports (-webkit-overflow-scrolling: touch) {
+  .momentum-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
 }

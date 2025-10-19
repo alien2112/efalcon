@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useRef, useState, useEffect } from 'react';
 
 interface ParallaxWrapperProps {
   children: ReactNode;
@@ -17,12 +17,26 @@ export function ParallaxWrapper({
   className = '' 
 }: ParallaxWrapperProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Mobile detection for performance optimization
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start']
   });
 
-  const distance = 100 * speed;
+  // Reduce parallax intensity on mobile for better performance
+  const mobileSpeed = isMobile ? speed * 0.3 : speed;
+  const distance = 100 * mobileSpeed;
   
   const y = useTransform(scrollYProgress, [0, 1], 
     direction === 'up' ? [distance, -distance] : 
@@ -38,7 +52,7 @@ export function ParallaxWrapper({
     <motion.div
       ref={ref}
       style={{ y, x }}
-      className={className}
+      className={`${className} ${isMobile ? 'parallax-element' : ''}`}
     >
       {children}
     </motion.div>
@@ -101,13 +115,26 @@ export function FadeInOnScroll({
   direction = 'up'
 }: FadeInOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Mobile detection for performance optimization
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start 0.8', 'start 0.2']
   });
 
   const getInitialPosition = () => {
-    const distance = 50;
+    // Reduce movement distance on mobile for better performance
+    const distance = isMobile ? 25 : 50;
     switch (direction) {
       case 'up':
         return { y: distance, x: 0 };
@@ -128,12 +155,15 @@ export function FadeInOnScroll({
   const y = useTransform(scrollYProgress, [0, 1], [initial.y, 0]);
   const x = useTransform(scrollYProgress, [0, 1], [initial.x, 0]);
 
+  // Reduce animation duration on mobile for better performance
+  const mobileDuration = isMobile ? duration * 0.7 : duration;
+
   return (
     <motion.div
       ref={ref}
       style={{ opacity, y, x }}
-      transition={{ duration, delay }}
-      className={className}
+      transition={{ duration: mobileDuration, delay }}
+      className={`${className} ${isMobile ? 'parallax-element' : ''}`}
     >
       {children}
     </motion.div>
