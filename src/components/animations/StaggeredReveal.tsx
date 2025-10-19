@@ -87,23 +87,26 @@ interface MagneticCardProps {
   intensity?: number;
 }
 
-export function MagneticCard({ 
-  children, 
+export function MagneticCard({
+  children,
   className = '',
   intensity = 0.3
 }: MagneticCardProps) {
+  // Check if device supports touch
+  const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
   return (
     <motion.div
       className={className}
-      whileHover={{ 
+      whileHover={{
         scale: 1.02,
         transition: { duration: 0.3, ease: "easeOut" }
       }}
-      drag
+      drag={!isTouchDevice}
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={intensity}
       dragMomentum={false}
-      whileDrag={{ 
+      whileDrag={{
         scale: 1.05,
         rotate: 2,
         transition: { duration: 0.1 }

@@ -7,7 +7,7 @@ import { ChevronRight, Download, ArrowRight, ArrowLeft, Search } from 'lucide-re
 import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
-import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { FadeInOnScroll } from '@/components/ParallaxWrapper';
 import { ServiceCardAnimation, AnimatedSeparator, FloatingIcon, GlowingBackground } from '@/components/animations/ServiceCardAnimation';
 import { StaggeredReveal, MagneticCard, PulseGlow, TypewriterText } from '@/components/animations/StaggeredReveal';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
@@ -228,7 +228,11 @@ export default function OurWorkPage() {
 
           {/* Work Content */}
           {currentCategory && (
-            <ParallaxWrapper speed={0.2} direction="up">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
               <div className="grid lg:grid-cols-[1fr_2fr] gap-6 items-start">
                 {/* Work Info */}
                 <FadeInOnScroll direction="left" delay={0.6}>
@@ -316,7 +320,7 @@ export default function OurWorkPage() {
                   </div>
                 </StaggeredReveal>
           </div>
-            </ParallaxWrapper>
+          </motion.div>
           )}
         </div>
       </GlowingBackground>
@@ -340,7 +344,12 @@ export default function OurWorkPage() {
           </FadeInOnScroll>
 
           {/* Highlights Carousel */}
-          <ParallaxWrapper speed={0.3} direction="up">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
             <div className="relative">
               {/* Carousel Navigation */}
               <StaggeredReveal direction="up" staggerDelay={0.1}>
@@ -432,7 +441,7 @@ export default function OurWorkPage() {
                 </div>
               </StaggeredReveal>
             </div>
-          </ParallaxWrapper>
+          </motion.div>
         </div>
       </GlowingBackground>
 
@@ -462,8 +471,7 @@ export default function OurWorkPage() {
             </div>
           </FadeInOnScroll>
 
-          <ParallaxWrapper speed={0.2} direction="up">
-            <motion.div 
+          <motion.div 
               className="bg-gray-50 rounded-2xl p-8 md:p-12"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -589,7 +597,6 @@ export default function OurWorkPage() {
                 </StaggeredReveal>
               </form>
           </motion.div>
-          </ParallaxWrapper>
         </div>
       </GlowingBackground>
     </div>
