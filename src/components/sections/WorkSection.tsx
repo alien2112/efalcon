@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
-import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { FadeInOnScroll } from '@/components/ParallaxWrapper';
+import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface WorkImage {
@@ -142,7 +143,12 @@ export function WorkSection() {
         </FadeInOnScroll>
 
         {/* Portfolio Grid */}
-        <ParallaxWrapper speed={0.3} direction="up">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {workImages.map((item, index) => (
               <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
@@ -206,7 +212,7 @@ export function WorkSection() {
               </FadeInOnScroll>
             ))}
           </div>
-        </ParallaxWrapper>
+        </motion.div>
       </div>
     </div>
   );

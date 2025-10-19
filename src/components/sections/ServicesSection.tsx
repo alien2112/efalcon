@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { FadeInOnScroll } from '@/components/ParallaxWrapper';
 
 interface ServiceImage {
   _id: string;
@@ -204,7 +205,12 @@ export function ServicesSection() {
         </FadeInOnScroll>
 
         {/* Carousel */}
-        <ParallaxWrapper speed={0.2} direction="up">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <div className="relative">
             {/* Enhanced Navigation Arrows */}
             <button
@@ -346,7 +352,7 @@ export function ServicesSection() {
               </div>
             )}
           </div>
-        </ParallaxWrapper>
+        </motion.div>
       </div>
     </div>
   );
