@@ -386,31 +386,9 @@ img {
     animation-timing-function: ease-out !important;
   }
   
-  /* Optimize hover effects for touch devices */
-  .hover\\:scale-105:hover {
-    transform: scale(1.02) !important;
-  }
-  
-  .hover\\:-translate-y-1:hover {
-    transform: translateY(-2px) !important;
-  }
-  
-  .hover\\:-translate-y-2:hover {
-    transform: translateY(-4px) !important;
-  }
-  
   /* Optimize transform animations */
   .transition-transform {
     transition-duration: 0.2s !important;
-  }
-  
-  /* Reduce shadow complexity on mobile */
-  .shadow-\\[0_20px_40px_rgba\\(0\\,0\\,0\\,0\\.2\\)\\] {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
-  }
-  
-  .shadow-\\[0_25px_50px_rgba\\(0\\,0\\,0\\,0\\.3\\)\\] {
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2) !important;
   }
   
   /* Optimize backdrop blur for mobile performance */
