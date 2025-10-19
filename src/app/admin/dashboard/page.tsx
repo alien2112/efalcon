@@ -79,6 +79,34 @@ export default function AdminDashboard() {
   const [projectCategories, setProjectCategories] = useState([]);
   const [blogCategories, setBlogCategories] = useState<BlogCategory[]>([]);
 
+  // Auto logout after inactivity
+  useEffect(() => {
+    const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    const logoutAndRedirect = () => {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+      router.push('/admin');
+    };
+
+    const resetTimer = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(logoutAndRedirect, INACTIVITY_TIMEOUT_MS);
+    };
+
+    // Start timer
+    resetTimer();
+    // Reset on user activity
+    const activityEvents = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+    activityEvents.forEach((evt) => window.addEventListener(evt, resetTimer, { passive: true }));
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      activityEvents.forEach((evt) => window.removeEventListener(evt, resetTimer));
+    };
+  }, [router]);
+
   // Check authentication on component mount
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -108,6 +136,12 @@ export default function AdminDashboard() {
           'Authorization': `Bearer ${token}`
         }
       });
+      if (response.status === 401) {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
+        router.push('/admin');
+        return;
+      }
       
       const result = await response.json();
       if (result.success) {
@@ -139,6 +173,12 @@ export default function AdminDashboard() {
         },
         body: formData,
       });
+      if (response.status === 401) {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
+        router.push('/admin');
+        return;
+      }
 
       const result = await response.json();
 
@@ -169,6 +209,12 @@ export default function AdminDashboard() {
           'Authorization': `Bearer ${token}`
         }
       });
+      if (response.status === 401) {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
+        router.push('/admin');
+        return;
+      }
 
       const result = await response.json();
       if (result.success) {
@@ -366,6 +412,12 @@ export default function AdminDashboard() {
           isActive: !currentStatus
         })
       });
+      if (response.status === 401) {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
+        router.push('/admin');
+        return;
+      }
 
       const result = await response.json();
       if (result.success) {
@@ -393,6 +445,12 @@ export default function AdminDashboard() {
           ...(data ?? editFormData)
         })
       });
+      if (response.status === 401) {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
+        router.push('/admin');
+        return;
+      }
 
       const result = await response.json();
       if (result.success) {

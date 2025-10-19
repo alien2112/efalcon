@@ -56,6 +56,7 @@ export default function AdminLoginPage() {
         // Store token and user data
         localStorage.setItem('adminToken', data.data.token);
         localStorage.setItem('adminUser', JSON.stringify(data.data.admin));
+        localStorage.setItem('adminTokenIssuedAt', Date.now().toString());
         
         setSuccess(t('admin.login.loginSuccess'));
         
