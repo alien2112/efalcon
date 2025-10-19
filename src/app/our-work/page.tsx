@@ -263,18 +263,28 @@ export default function OurWorkPage() {
                   <div className="grid md:grid-cols-2 gap-6">
                     {currentCategory.projects.map((project, index) => (
                       <ServiceCardAnimation key={project.id} index={index} delay={0.8}>
-                        <MagneticCard className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block cursor-pointer">
+                        <MagneticCard 
+                          className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block cursor-pointer touch-none select-none"
+                          onDragStart={(e) => e.preventDefault()}
+                          onDrag={(e) => e.preventDefault()}
+                          onDragEnd={(e) => e.preventDefault()}
+                          style={{ touchAction: 'none' }}
+                        >
                           <div
                             onClick={() => {
                               window.location.href = `/our-work/${toKebabCase(project.id)}`;
                             }}
+                            onDragStart={(e) => e.preventDefault()}
+                            onDrag={(e) => e.preventDefault()}
+                            onDragEnd={(e) => e.preventDefault()}
                           >
-                            <div className="relative h-48">
+                            <div className="relative h-48 touch-none select-none" onDragStart={(e) => e.preventDefault()}>
                               <Image
                                 src={project.imageUrl}
                                 alt={project.title}
                                 fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                draggable={false}
+                                className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
                                 quality={90}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               />
@@ -375,13 +385,25 @@ export default function OurWorkPage() {
                 <div className="grid md:grid-cols-3 gap-4">
                   {projectHighlights.map((highlight, index) => (
                     <ServiceCardAnimation key={highlight.id} index={index} delay={0.1 * index}>
-                      <MagneticCard className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group">
-                        <div className="relative h-48">
+                      <MagneticCard 
+                        className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-none select-none"
+                        onDragStart={(e) => e.preventDefault()}
+                        onDrag={(e) => e.preventDefault()}
+                        onDragEnd={(e) => e.preventDefault()}
+                        style={{ touchAction: 'none' }}
+                      >
+                        <div 
+                          className="relative h-48 touch-none select-none" 
+                          onDragStart={(e) => e.preventDefault()}
+                          onDrag={(e) => e.preventDefault()}
+                          onDragEnd={(e) => e.preventDefault()}
+                        >
                           <Image
                             src={highlight.imageUrl}
                             alt={highlight.title}
                             fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            draggable={false}
+                            className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
                             quality={90}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />

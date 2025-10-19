@@ -273,14 +273,32 @@ export default function ServicesPage() {
                   <div className="grid md:grid-cols-2 gap-6">
                     {currentCategory.services.map((service, index) => (
                       <ServiceCardAnimation key={service.id} index={index} delay={0.8}>
-                        <MagneticCard className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group">
-                          <Link href={`/services/${service.id}`} className="block">
-                            <div className="relative h-48 overflow-hidden">
+                        <MagneticCard 
+                          className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-none select-none"
+                          onDragStart={(e) => e.preventDefault()}
+                          onDrag={(e) => e.preventDefault()}
+                          onDragEnd={(e) => e.preventDefault()}
+                          style={{ touchAction: 'none' }}
+                        >
+                          <Link 
+                            href={`/services/${service.id}`} 
+                            className="block touch-none select-none"
+                            onDragStart={(e) => e.preventDefault()}
+                            onDrag={(e) => e.preventDefault()}
+                            onDragEnd={(e) => e.preventDefault()}
+                          >
+                            <div 
+                              className="relative h-48 overflow-hidden touch-none select-none" 
+                              onDragStart={(e) => e.preventDefault()}
+                              onDrag={(e) => e.preventDefault()}
+                              onDragEnd={(e) => e.preventDefault()}
+                            >
                               <Image
                                 src={service.imageUrl}
                                 alt={service.name}
                                 fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                draggable={false}
+                                className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
                                 quality={90}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               />
@@ -365,14 +383,32 @@ export default function ServicesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {dynamicServices.map((service, index) => (
                   <ServiceCardAnimation key={service._id} index={index} delay={0.4}>
-                    <MagneticCard className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group">
-                      <Link href={`/services/${service.slug}`} className="block">
-                        <div className="relative h-48 overflow-hidden">
+                    <MagneticCard 
+                      className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-none select-none"
+                      onDragStart={(e) => e.preventDefault()}
+                      onDrag={(e) => e.preventDefault()}
+                      onDragEnd={(e) => e.preventDefault()}
+                      style={{ touchAction: 'none' }}
+                    >
+                      <Link 
+                        href={`/services/${service.slug}`} 
+                        className="block touch-none select-none"
+                        onDragStart={(e) => e.preventDefault()}
+                        onDrag={(e) => e.preventDefault()}
+                        onDragEnd={(e) => e.preventDefault()}
+                      >
+                        <div 
+                          className="relative h-48 overflow-hidden touch-none select-none" 
+                          onDragStart={(e) => e.preventDefault()}
+                          onDrag={(e) => e.preventDefault()}
+                          onDragEnd={(e) => e.preventDefault()}
+                        >
                           <Image
                             src={service.imageUrl}
                             alt={service.title[language]}
                             fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            draggable={false}
+                            className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
                             quality={90}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
@@ -488,17 +524,32 @@ export default function ServicesPage() {
                 <div className="grid md:grid-cols-3 gap-4">
                   {applications.map((application, index) => (
                     <ServiceCardAnimation key={application.id} index={index} delay={0.1 * index}>
-                      <MagneticCard className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group block">
+                      <MagneticCard 
+                        className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group block touch-none select-none"
+                        onDragStart={(e) => e.preventDefault()}
+                        onDrag={(e) => e.preventDefault()}
+                        onDragEnd={(e) => e.preventDefault()}
+                        style={{ touchAction: 'none' }}
+                      >
                         <Link 
                           href={`/services/${application.id}`}
-                          className="block"
+                          className="block touch-none select-none"
+                          onDragStart={(e) => e.preventDefault()}
+                          onDrag={(e) => e.preventDefault()}
+                          onDragEnd={(e) => e.preventDefault()}
                         >
-                          <div className="relative h-48 overflow-hidden">
+                          <div 
+                            className="relative h-48 overflow-hidden touch-none select-none" 
+                            onDragStart={(e) => e.preventDefault()}
+                            onDrag={(e) => e.preventDefault()}
+                            onDragEnd={(e) => e.preventDefault()}
+                          >
                             <Image
                               src={application.imageUrl}
                               alt={application.title}
                               fill
-                              className="object-cover transition-transform duration-500 group-hover:scale-110"
+                              draggable={false}
+                              className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
                               quality={90}
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
