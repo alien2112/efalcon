@@ -264,11 +264,13 @@ export default function OurWorkPage() {
                     {currentCategory.projects.map((project, index) => (
                       <ServiceCardAnimation key={project.id} index={index} delay={0.8}>
                         <MagneticCard 
-                          className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block cursor-pointer touch-none select-none"
+                          className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block touch-none select-none"
                           onDragStart={(e) => e.preventDefault()}
                           onDrag={(e) => e.preventDefault()}
                           onDragEnd={(e) => e.preventDefault()}
-                          style={{ touchAction: 'none' }}
+                          onMouseDown={(e) => e.preventDefault()}
+                          onContextMenu={(e) => e.preventDefault()}
+                          style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                         >
                           <div
                             onClick={() => {
@@ -277,8 +279,19 @@ export default function OurWorkPage() {
                             onDragStart={(e) => e.preventDefault()}
                             onDrag={(e) => e.preventDefault()}
                             onDragEnd={(e) => e.preventDefault()}
+                            onMouseDown={(e) => e.preventDefault()}
+                            onContextMenu={(e) => e.preventDefault()}
+                            style={{ touchAction: 'none', userSelect: 'none' }}
                           >
-                            <div className="relative h-48 touch-none select-none" onDragStart={(e) => e.preventDefault()}>
+                            <div 
+                              className="relative h-48 touch-none select-none" 
+                              onDragStart={(e) => e.preventDefault()}
+                              onDrag={(e) => e.preventDefault()}
+                              onDragEnd={(e) => e.preventDefault()}
+                              onMouseDown={(e) => e.preventDefault()}
+                              onContextMenu={(e) => e.preventDefault()}
+                              style={{ touchAction: 'none', userSelect: 'none' }}
+                            >
                               <Image
                                 src={project.imageUrl}
                                 alt={project.title}
@@ -390,13 +403,18 @@ export default function OurWorkPage() {
                         onDragStart={(e) => e.preventDefault()}
                         onDrag={(e) => e.preventDefault()}
                         onDragEnd={(e) => e.preventDefault()}
-                        style={{ touchAction: 'none' }}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onContextMenu={(e) => e.preventDefault()}
+                        style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                       >
                         <div 
                           className="relative h-48 touch-none select-none" 
                           onDragStart={(e) => e.preventDefault()}
                           onDrag={(e) => e.preventDefault()}
                           onDragEnd={(e) => e.preventDefault()}
+                          onMouseDown={(e) => e.preventDefault()}
+                          onContextMenu={(e) => e.preventDefault()}
+                          style={{ touchAction: 'none', userSelect: 'none' }}
                         >
                           <Image
                             src={highlight.imageUrl}

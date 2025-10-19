@@ -278,7 +278,9 @@ export default function ServicesPage() {
                           onDragStart={(e) => e.preventDefault()}
                           onDrag={(e) => e.preventDefault()}
                           onDragEnd={(e) => e.preventDefault()}
-                          style={{ touchAction: 'none' }}
+                          onMouseDown={(e) => e.preventDefault()}
+                          onContextMenu={(e) => e.preventDefault()}
+                          style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                         >
                           <Link 
                             href={`/services/${service.id}`} 
@@ -286,12 +288,18 @@ export default function ServicesPage() {
                             onDragStart={(e) => e.preventDefault()}
                             onDrag={(e) => e.preventDefault()}
                             onDragEnd={(e) => e.preventDefault()}
+                            onMouseDown={(e) => e.preventDefault()}
+                            onContextMenu={(e) => e.preventDefault()}
+                            style={{ touchAction: 'none', userSelect: 'none' }}
                           >
                             <div 
                               className="relative h-48 overflow-hidden touch-none select-none" 
                               onDragStart={(e) => e.preventDefault()}
                               onDrag={(e) => e.preventDefault()}
                               onDragEnd={(e) => e.preventDefault()}
+                              onMouseDown={(e) => e.preventDefault()}
+                              onContextMenu={(e) => e.preventDefault()}
+                              style={{ touchAction: 'none', userSelect: 'none' }}
                             >
                               <Image
                                 src={service.imageUrl}
@@ -388,7 +396,9 @@ export default function ServicesPage() {
                       onDragStart={(e) => e.preventDefault()}
                       onDrag={(e) => e.preventDefault()}
                       onDragEnd={(e) => e.preventDefault()}
-                      style={{ touchAction: 'none' }}
+                      onMouseDown={(e) => e.preventDefault()}
+                      onContextMenu={(e) => e.preventDefault()}
+                      style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                     >
                       <Link 
                         href={`/services/${service.slug}`} 
@@ -396,12 +406,18 @@ export default function ServicesPage() {
                         onDragStart={(e) => e.preventDefault()}
                         onDrag={(e) => e.preventDefault()}
                         onDragEnd={(e) => e.preventDefault()}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onContextMenu={(e) => e.preventDefault()}
+                        style={{ touchAction: 'none', userSelect: 'none' }}
                       >
                         <div 
                           className="relative h-48 overflow-hidden touch-none select-none" 
                           onDragStart={(e) => e.preventDefault()}
                           onDrag={(e) => e.preventDefault()}
                           onDragEnd={(e) => e.preventDefault()}
+                          onMouseDown={(e) => e.preventDefault()}
+                          onContextMenu={(e) => e.preventDefault()}
+                          style={{ touchAction: 'none', userSelect: 'none' }}
                         >
                           <Image
                             src={service.imageUrl}
@@ -529,7 +545,9 @@ export default function ServicesPage() {
                         onDragStart={(e) => e.preventDefault()}
                         onDrag={(e) => e.preventDefault()}
                         onDragEnd={(e) => e.preventDefault()}
-                        style={{ touchAction: 'none' }}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onContextMenu={(e) => e.preventDefault()}
+                        style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                       >
                         <Link 
                           href={`/services/${application.id}`}
@@ -537,12 +555,18 @@ export default function ServicesPage() {
                           onDragStart={(e) => e.preventDefault()}
                           onDrag={(e) => e.preventDefault()}
                           onDragEnd={(e) => e.preventDefault()}
+                          onMouseDown={(e) => e.preventDefault()}
+                          onContextMenu={(e) => e.preventDefault()}
+                          style={{ touchAction: 'none', userSelect: 'none' }}
                         >
                           <div 
                             className="relative h-48 overflow-hidden touch-none select-none" 
                             onDragStart={(e) => e.preventDefault()}
                             onDrag={(e) => e.preventDefault()}
                             onDragEnd={(e) => e.preventDefault()}
+                            onMouseDown={(e) => e.preventDefault()}
+                            onContextMenu={(e) => e.preventDefault()}
+                            style={{ touchAction: 'none', userSelect: 'none' }}
                           >
                             <Image
                               src={application.imageUrl}

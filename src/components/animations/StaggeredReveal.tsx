@@ -92,8 +92,7 @@ export function MagneticCard({
   className = '',
   intensity = 0.3
 }: MagneticCardProps) {
-  // Check if device supports touch
-  const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  // Drag is disabled to prevent accidental container movement on mouse/touch
 
   return (
     <motion.div
@@ -102,7 +101,7 @@ export function MagneticCard({
         scale: 1.02,
         transition: { duration: 0.3, ease: "easeOut" }
       }}
-      drag={!isTouchDevice}
+      drag={false}
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={intensity}
       dragMomentum={false}
