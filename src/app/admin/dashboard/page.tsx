@@ -1824,6 +1824,9 @@ function BannerModal({
     showTitle: true,
     showDescription: true
   });
+  const [showImageEditor, setShowImageEditor] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (type === 'edit') {
@@ -1861,6 +1864,36 @@ function BannerModal({
         file,
         title: file.name.split('.')[0] // Auto-fill title from filename
       }));
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      setFormData(prev => ({
+        ...prev,
+        file,
+        title: prev.title || file.name.split('.')[0]
+      }));
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
     }
   };
 
@@ -1890,9 +1923,26 @@ function BannerModal({
 
     await onUpload(data);
     } else {
-      setEditFormData(formData);
-      if (editingImageId) {
-        await onSave(editingImageId, formData);
+      // If a new file is provided in edit mode, upload a new image with existing metadata
+      if (formData.file) {
+        const data = new FormData();
+        data.append('file', formData.file);
+        data.append('title', formData.title);
+        data.append('titleAr', formData.titleAr || '');
+        data.append('description', formData.description);
+        data.append('descriptionAr', formData.descriptionAr || '');
+        data.append('order', formData.order.toString());
+        data.append('isActive', formData.isActive.toString());
+        data.append('showTitle', (formData.showTitle ?? true).toString());
+        data.append('showDescription', (formData.showDescription ?? true).toString());
+        data.append('page', page);
+        await onUpload(data);
+      } else {
+        // Metadata-only update
+        setEditFormData(formData);
+        if (editingImageId) {
+          await onSave(editingImageId, formData);
+        }
       }
     }
   };
@@ -1900,31 +1950,80 @@ function BannerModal({
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={onCancel}></div>
+        <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onClick={onCancel}></div>
         
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.15)] ring-1 ring-slate-200 transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
           <form onSubmit={handleSubmit}>
-            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div className="sm:flex sm:items-start">
+            <div className="bg-white px-6 pt-6 pb-4 sm:p-8 sm:pb-6">
+              <div className="sm:flex sm:items-start sm:gap-6">
                 <div className="w-full">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
-                    {type === 'add' ? 'Add Banner Image' : 'Edit Banner Image'}
-      </h3>
-      
-                  <div className="space-y-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl leading-6 font-semibold text-slate-900">
+                      {type === 'add' ? 'Add Banner Image' : 'Edit Banner Image'}
+                    </h3>
+                    {type === 'edit' && (
+                      <button
+                        type="button"
+                        onClick={() => setShowImageEditor(v => !v)}
+                        className="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm"
+                        title="Edit Image"
+                      >
+                        <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+                        Edit Image
+                      </button>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-5">
                     {type === 'add' && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Image File
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Image File</label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFileChange}
+                          className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
+                          required
+                        />
+                      </div>
+                    )}
+
+                    {type === 'edit' && (
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-4">
+                          <div className="w-40 h-24 rounded-xl overflow-hidden border border-slate-200 bg-slate-50 shadow-inner">
+                            <img
+                              src={previewUrl || (editingImageId ? `/api/gridfs/images/${editingImageId}` : '')}
+                              alt="Current banner"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
+
+                        {showImageEditor && (
+                          <div
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                            className={`mt-2 flex flex-col items-center justify-center border-2 rounded-2xl p-6 transition-all cursor-pointer ${dragActive ? 'border-blue-400 bg-blue-50' : 'border-dashed border-slate-300 hover:border-slate-400 bg-white'}`}
+                          >
+                            <input
+                              id="edit-image-file"
+                              type="file"
+                              accept="image/*"
+                              onChange={handleFileChange}
+                              className="hidden"
+                            />
+                            <label htmlFor="edit-image-file" className="text-center">
+                              <div className="text-slate-900 font-medium">Drag & drop to replace</div>
+                              <div className="text-slate-500 text-sm mt-1">or click to browse</div>
+                            </label>
+                            {previewUrl && (
+                              <div className="mt-3 text-xs text-slate-600">Selected: {formData.file?.name}</div>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     )}
           
           <div>
@@ -1935,7 +2034,7 @@ function BannerModal({
               type="text"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
               required
             />
           </div>
@@ -1948,7 +2047,7 @@ function BannerModal({
               type="text"
               value={formData.titleAr}
               onChange={(e) => setFormData(prev => ({ ...prev, titleAr: e.target.value }))}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
             required
             />
           </div>
@@ -1961,7 +2060,7 @@ function BannerModal({
               type="text"
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
               required
             />
           </div>
@@ -1974,7 +2073,7 @@ function BannerModal({
               type="text"
               value={formData.descriptionAr}
               onChange={(e) => setFormData(prev => ({ ...prev, descriptionAr: e.target.value }))}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
             required
             />
           </div>
@@ -2007,7 +2106,7 @@ function BannerModal({
               min="1"
               value={formData.order}
               onChange={(e) => setFormData(prev => ({ ...prev, order: parseInt(e.target.value) }))}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
               required
             />
         </div>
@@ -2018,7 +2117,7 @@ function BannerModal({
             id="isActive"
             checked={formData.isActive}
             onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
           />
           <label htmlFor="isActive" className="ml-2 block text-sm text-gray-900">
             Active (visible on website)
@@ -2029,28 +2128,28 @@ function BannerModal({
               </div>
         </div>
         
-            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div className="bg-slate-50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse border-t border-slate-200">
           <button
             type="submit"
                 disabled={uploading || (type === 'add' && !formData.file)}
-                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full inline-flex justify-center rounded-xl border border-transparent shadow-lg hover:shadow-xl px-5 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-sm font-semibold text-white hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             {uploading ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    {type === 'add' ? 'Uploading...' : 'Saving...'}
+                    {type === 'add' ? 'Uploading...' : (formData.file ? 'Replacing...' : 'Saving...')}
               </>
             ) : (
               <>
                 <Upload className="w-4 h-4 mr-2" />
-                    {type === 'add' ? 'Upload Image' : 'Save Changes'}
+                    {type === 'add' ? 'Upload Image' : (formData.file ? 'Replace Image' : 'Save Changes')}
               </>
             )}
           </button>
               <button
                 type="button"
                 onClick={onCancel}
-                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                className="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-5 py-3 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto transition-all"
               >
                 Cancel
           </button>
