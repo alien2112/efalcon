@@ -121,12 +121,7 @@ html {
   }
   
   /* Optimize scroll performance for mobile */
-  * {
-    /* Enable hardware acceleration for transforms */
-    transform: translateZ(0);
-    /* Improve scroll performance */
-    will-change: auto;
-  }
+  /* Removed global transform rule that was creating stacking context issues */
   
   /* Specific optimizations for animated elements */
   .motion-div, [data-framer-motion] {
@@ -478,5 +473,25 @@ body.scrolling * {
   .momentum-scroll {
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
+  }
+}
+
+/* Ensure floating actions appear on top across all pages */
+.floating-actions-container {
+  position: fixed !important;
+  z-index: 99999 !important;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.floating-actions-container > * {
+  pointer-events: auto;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .floating-actions-container {
+    bottom: 20px !important;
+    right: 20px !important;
   }
 }

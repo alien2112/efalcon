@@ -264,13 +264,13 @@ export default function OurWorkPage() {
                     {currentCategory.projects.map((project, index) => (
                       <ServiceCardAnimation key={project.id} index={index} delay={0.8}>
                         <MagneticCard 
-                          className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block touch-none select-none"
+                          className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block touch-pan-y select-none"
                           onDragStart={(e) => e.preventDefault()}
                           onDrag={(e) => e.preventDefault()}
                           onDragEnd={(e) => e.preventDefault()}
                           onMouseDown={(e) => e.preventDefault()}
                           onContextMenu={(e) => e.preventDefault()}
-                          style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
+                          style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                         >
                           <div
                             onClick={() => {
@@ -281,16 +281,16 @@ export default function OurWorkPage() {
                             onDragEnd={(e) => e.preventDefault()}
                             onMouseDown={(e) => e.preventDefault()}
                             onContextMenu={(e) => e.preventDefault()}
-                            style={{ touchAction: 'none', userSelect: 'none' }}
+                            style={{ touchAction: 'pan-y', userSelect: 'none' }}
                           >
                             <div 
-                              className="relative h-48 touch-none select-none" 
+                              className="relative h-48 touch-pan-y select-none" 
                               onDragStart={(e) => e.preventDefault()}
                               onDrag={(e) => e.preventDefault()}
                               onDragEnd={(e) => e.preventDefault()}
                               onMouseDown={(e) => e.preventDefault()}
                               onContextMenu={(e) => e.preventDefault()}
-                              style={{ touchAction: 'none', userSelect: 'none' }}
+                              style={{ touchAction: 'pan-y', userSelect: 'none' }}
                             >
                               <Image
                                 src={project.imageUrl}
@@ -399,22 +399,22 @@ export default function OurWorkPage() {
                   {projectHighlights.map((highlight, index) => (
                     <ServiceCardAnimation key={highlight.id} index={index} delay={0.1 * index}>
                       <MagneticCard 
-                        className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-none select-none"
+                        className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-pan-y select-none"
                         onDragStart={(e) => e.preventDefault()}
                         onDrag={(e) => e.preventDefault()}
                         onDragEnd={(e) => e.preventDefault()}
                         onMouseDown={(e) => e.preventDefault()}
                         onContextMenu={(e) => e.preventDefault()}
-                        style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
+                        style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                       >
                         <div 
-                          className="relative h-48 touch-none select-none" 
+                          className="relative h-48 touch-pan-y select-none" 
                           onDragStart={(e) => e.preventDefault()}
                           onDrag={(e) => e.preventDefault()}
                           onDragEnd={(e) => e.preventDefault()}
                           onMouseDown={(e) => e.preventDefault()}
                           onContextMenu={(e) => e.preventDefault()}
-                          style={{ touchAction: 'none', userSelect: 'none' }}
+                          style={{ touchAction: 'pan-y', userSelect: 'none' }}
                         >
                           <Image
                             src={highlight.imageUrl}
