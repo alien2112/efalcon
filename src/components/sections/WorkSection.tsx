@@ -40,6 +40,26 @@ export function WorkSection() {
   const [featuredProjects, setFeaturedProjects] = useState<FeaturedProject[]>([]);
   const [loading, setLoading] = useState(true);
   
+  // Add explicit touch handler for mobile devices
+  useEffect(() => {
+    // Force enable touch scrolling on mobile
+    const enableTouchScrolling = () => {
+      const workSection = document.querySelector('.work-section-container');
+      if (workSection) {
+        workSection.classList.add('touch-pan-y');
+        (workSection as HTMLElement).style.touchAction = 'auto';
+        (workSection as HTMLElement).style.overscrollBehavior = 'auto';
+      }
+    };
+    
+    enableTouchScrolling();
+    window.addEventListener('touchstart', enableTouchScrolling, { once: true });
+    
+    return () => {
+      window.removeEventListener('touchstart', enableTouchScrolling);
+    };
+  }, []);
+  
   // Fallback work images
   const fallbackWorkImages: WorkImage[] = [
     {
@@ -99,8 +119,8 @@ export function WorkSection() {
   const workImages = featuredProjects.length > 0 
     ? featuredProjects.map(project => ({
         _id: project._id,
-        title: project.title[language],
-        description: project.summary[language],
+        title: project.title[language as keyof typeof project.title],
+        description: project.summary[language as keyof typeof project.summary],
         imageUrl: project.imageUrl,
         slug: project.slug,
         order: project.order,
@@ -109,7 +129,7 @@ export function WorkSection() {
     : fallbackWorkImages;
 
   return (
-    <div className="relative w-full py-20 md:py-32 overflow-hidden touch-pan-y" style={{ touchAction: 'pan-y' }}>
+    <div className="work-section-container relative w-full py-20 md:py-32 overflow-hidden touch-pan-y" style={{ touchAction: 'auto', overscrollBehavior: 'auto' }}>
       {/* Enhanced background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
@@ -149,7 +169,7 @@ export function WorkSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 touch-pan-y" style={{ touchAction: 'pan-y' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 touch-pan-y" style={{ touchAction: 'auto', overscrollBehavior: 'auto' }}>
             {workImages.map((item, index) => (
               <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index} className="touch-pan-y">
                 <Link 
@@ -158,7 +178,7 @@ export function WorkSection() {
                   onDragStart={(e) => e.preventDefault()}
                   onDrag={(e) => e.preventDefault()}
                   onDragEnd={(e) => e.preventDefault()}
-                  style={{ touchAction: 'pan-y', userSelect: 'none' }}
+                  style={{ touchAction: 'auto', userSelect: 'none' }}
                 >
                   {/* Enhanced Thumbnail */}
                   <div 
@@ -166,21 +186,21 @@ export function WorkSection() {
                     onDragStart={(e) => e.preventDefault()}
                     onDrag={(e) => e.preventDefault()}
                     onDragEnd={(e) => e.preventDefault()}
-                    style={{ touchAction: 'pan-y', userSelect: 'none' }}
+                    style={{ touchAction: 'auto', userSelect: 'none' }}
                   >
                     <Image
                       src={item.imageUrl}
                       alt={item.title}
                       fill
                       draggable={false}
-                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8 select-none pointer-events-none"
+                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8 select-none"
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     />
                     {/* Enhanced gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
                     
                     {/* Enhanced sheen effect */}
-                    <div className="pointer-events-none absolute -right-12 -top-12 w-64 h-64 rotate-45 bg-white/10 blur-2xl group-hover:bg-white/20 transition-colors duration-500" />
+                    <div className="absolute -right-12 -top-12 w-64 h-64 rotate-45 bg-white/10 blur-2xl group-hover:bg-white/20 transition-colors duration-500" />
                     
                     {/* Decorative corner elements */}
                     <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -197,17 +217,17 @@ export function WorkSection() {
                   </div>
 
                   {/* Enhanced Hover magnifier */}
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <div className="flex items-center justify-center w-20 h-20 rounded-full bg-white/20 border-2 border-white/40 backdrop-blur-md shadow-xl">
                       <Search className="text-white" size={32} strokeWidth={2.5} />
                     </div>
                   </div>
 
                   {/* Enhanced Hover border highlight */}
-                  <div className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-white/0 group-hover:border-white/40 transition-all duration-500" />
+                  <div className="absolute inset-0 rounded-3xl border-2 border-white/0 group-hover:border-white/40 transition-all duration-500" />
                   
                   {/* Subtle inner glow */}
-                  <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-t from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </Link>
               </FadeInOnScroll>
             ))}

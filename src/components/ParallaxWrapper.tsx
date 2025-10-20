@@ -118,6 +118,21 @@ export function FadeInOnScroll({
   duration = 0.6,
   direction = 'up'
 }: FadeInOnScrollProps) {
+  // Special handling for touch events in the WorkSection
+  useEffect(() => {
+    const handleTouch = (e: TouchEvent) => {
+      // Allow default touch behavior to ensure scrolling works
+      e.stopPropagation();
+    };
+    
+    document.addEventListener('touchstart', handleTouch, { passive: true });
+    document.addEventListener('touchmove', handleTouch, { passive: true });
+    
+    return () => {
+      document.removeEventListener('touchstart', handleTouch);
+      document.removeEventListener('touchmove', handleTouch);
+    };
+  }, []);
   const ref = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   

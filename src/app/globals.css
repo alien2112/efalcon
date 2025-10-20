@@ -459,6 +459,15 @@ img {
     backdrop-filter: blur(6px) !important;
   }
   
+  /* Force enable touch scrolling on work section */
+  .work-section-container,
+  .work-section-container * {
+    touch-action: auto !important;
+    pointer-events: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: auto !important;
+  }
+  
   /* Reduce motion for users who prefer it */
   @media (prefers-reduced-motion: reduce) {
     * {
