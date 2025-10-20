@@ -51,12 +51,15 @@ export function ParallaxWrapper({
   return (
     <motion.div
       ref={ref}
-      style={{ 
-        y, 
+      style={{
+        y,
         x,
         touchAction: 'pan-y' // Enable vertical scrolling on touch devices
       }}
-      className={`${className} ${isMobile ? 'parallax-element' : ''} touch-pan-y`}
+      className={`${className} ${isMobile ? 'parallax-element' : ''}`}
+      onTouchStart={undefined}
+      onTouchMove={undefined}
+      onTouchEnd={undefined}
     >
       {children}
     </motion.div>
@@ -111,31 +114,16 @@ interface FadeInOnScrollProps {
   direction?: 'up' | 'down' | 'left' | 'right';
 }
 
-export function FadeInOnScroll({ 
-  children, 
+export function FadeInOnScroll({
+  children,
   className = '',
   delay = 0,
   duration = 0.6,
   direction = 'up'
 }: FadeInOnScrollProps) {
-  // Special handling for touch events in the WorkSection
-  useEffect(() => {
-    const handleTouch = (e: TouchEvent) => {
-      // Allow default touch behavior to ensure scrolling works
-      e.stopPropagation();
-    };
-    
-    document.addEventListener('touchstart', handleTouch, { passive: true });
-    document.addEventListener('touchmove', handleTouch, { passive: true });
-    
-    return () => {
-      document.removeEventListener('touchstart', handleTouch);
-      document.removeEventListener('touchmove', handleTouch);
-    };
-  }, []);
   const ref = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // Mobile detection for performance optimization
   useEffect(() => {
     const checkMobile = () => {
@@ -180,14 +168,17 @@ export function FadeInOnScroll({
   return (
     <motion.div
       ref={ref}
-      style={{ 
-        opacity, 
-        y, 
+      style={{
+        opacity,
+        y,
         x,
         touchAction: 'pan-y' // Enable vertical scrolling on touch devices
       }}
       transition={{ duration: mobileDuration, delay }}
-      className={`${className} ${isMobile ? 'parallax-element' : ''} touch-pan-y`}
+      className={`${className} ${isMobile ? 'parallax-element' : ''}`}
+      onTouchStart={undefined}
+      onTouchMove={undefined}
+      onTouchEnd={undefined}
     >
       {children}
     </motion.div>

@@ -460,12 +460,23 @@ img {
   }
   
   /* Force enable touch scrolling on work section */
-  .work-section-container,
-  .work-section-container * {
-    touch-action: auto !important;
-    pointer-events: auto !important;
+  .work-section-container {
+    touch-action: pan-y !important;
     -webkit-overflow-scrolling: touch !important;
     overscroll-behavior: auto !important;
+    overflow-y: auto !important;
+  }
+
+  /* Ensure cards in work section allow vertical scrolling */
+  .work-section-container a,
+  .work-section-container > div {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Make decorative elements non-interactive on mobile */
+  .work-section-container .pointer-events-none {
+    pointer-events: none !important;
   }
   
   /* Reduce motion for users who prefer it */

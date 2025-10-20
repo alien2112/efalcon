@@ -50,11 +50,11 @@ function MobileCard({ item, index, isMobile }: { item: WorkImage; index: number;
   // On mobile, use a simple div wrapper instead of motion.div to avoid event conflicts
   if (isMobile) {
     return (
-      <div ref={ref} className="h-full" style={{ opacity: 1 }}>
+      <div ref={ref} className="h-full" style={{ opacity: 1, touchAction: 'pan-y' }}>
         <Link
           href={item.slug ? `/our-work/${item.slug}` : '#'}
           className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out active:scale-[0.98] block h-full"
-          style={{ touchAction: 'auto' }}
+          style={{ touchAction: 'pan-y', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
         >
           {/* Enhanced Thumbnail */}
           <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
@@ -247,9 +247,16 @@ export function WorkSection() {
     : fallbackWorkImages;
 
   return (
-    <div className="work-section-container relative w-full py-20 md:py-32 overflow-visible">
+    <div
+      className="work-section-container relative w-full py-20 md:py-32 overflow-y-auto"
+      style={{
+        touchAction: 'pan-y',
+        WebkitOverflowScrolling: 'touch',
+        overscrollBehavior: 'auto'
+      } as React.CSSProperties}
+    >
       {/* Enhanced background pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
         {/* Subtle geometric pattern - hidden on mobile, visible on md and up */}
         <div className="absolute inset-0 hidden md:block" style={{
@@ -263,10 +270,10 @@ export function WorkSection() {
       </div>
 
       {/* Decorative corner accents - hidden on mobile, visible on md and up */}
-      <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-white/15 to-transparent rounded-br-3xl hidden md:block"></div>
-      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/15 to-transparent rounded-bl-3xl hidden md:block"></div>
-      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-white/15 to-transparent rounded-tr-3xl hidden md:block"></div>
-      <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/15 to-transparent rounded-tl-3xl hidden md:block"></div>
+      <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-white/15 to-transparent rounded-br-3xl hidden md:block pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/15 to-transparent rounded-bl-3xl hidden md:block pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-white/15 to-transparent rounded-tr-3xl hidden md:block pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/15 to-transparent rounded-tl-3xl hidden md:block pointer-events-none"></div>
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Enhanced Section Title */}
@@ -275,8 +282,9 @@ export function WorkSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, delay: 0.2 }}
+          style={{ touchAction: 'pan-y' }}
         >
-          <div className="relative text-center mb-20">
+          <div className="relative text-center mb-20 pointer-events-none">
             {/* Decorative accent line */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full"></div>
             <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[56px] md:text-[96px] leading-[1.2] text-white mb-8 drop-shadow-lg">
@@ -286,7 +294,10 @@ export function WorkSection() {
         </motion.div>
 
         {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          style={{ touchAction: 'pan-y' }}
+        >
           {workImages.map((item, index) => (
             <MobileCard key={item._id} item={item} index={index} isMobile={isMobile} />
           ))}
