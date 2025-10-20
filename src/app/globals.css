@@ -103,10 +103,11 @@ html {
 /* Ensure proper page scrolling - prevent scroll conflicts */
 html, body {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   scroll-behavior: smooth;
   height: 100%;
   position: relative;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Prevent any element from creating scroll contexts */

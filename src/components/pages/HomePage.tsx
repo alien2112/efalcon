@@ -54,7 +54,7 @@ export function HomePage() {
         <WaveSeparator variant="wave" animate={true} />
         {/* Main sections with metallic golden gradient background */}
         <div
-          className="relative overflow-hidden"
+          className="relative"
           style={{
             background: 'linear-gradient(90deg, #F9F295 0%, #E0AA3E 50%, #B88A44 100%)'
           }}
@@ -86,7 +86,7 @@ export function HomePage() {
         </div>
         {/* Contact section container background */}
         <div
-          className="relative overflow-hidden"
+          className="relative"
           style={{
             background: 'linear-gradient(180deg, #fff9e9 0%, #f9f3df 100%)'
           }}
