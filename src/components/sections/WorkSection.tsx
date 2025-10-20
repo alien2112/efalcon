@@ -137,36 +137,77 @@ export function WorkSection() {
           </h2>
         </div>
 
-        {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {workImages.map((item) => (
-            <Link
-              key={item._id}
-              href={item.slug ? `/our-work/${item.slug}` : '#'}
-              className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] transition-shadow duration-300"
-            >
-              {/* Image Container */}
-              <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
-                <Image
-                  src={item.imageUrl}
-                  alt={item.title}
-                  fill
-                  draggable={false}
-                  className="object-cover object-top"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                />
-                {/* Gradient overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent"></div>
-              </div>
+        {/* Portfolio Grid/Carousel */}
+        <div className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8">
+          {/* Mobile: Horizontal Scroll */}
+          <div className="md:hidden overflow-x-auto overflow-y-visible -mx-4 px-4 pb-4 scrollbar-hide">
+            <div className="flex gap-4" style={{ width: 'max-content' }}>
+              {workImages.map((item) => (
+                <Link
+                  key={item._id}
+                  href={item.slug ? `/our-work/${item.slug}` : '#'}
+                  className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm flex-shrink-0"
+                  style={{ 
+                    width: '280px',
+                    touchAction: 'pan-x'
+                  }}
+                >
+                  {/* Image Container */}
+                  <div className="relative w-full h-[220px] overflow-hidden">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      fill
+                      draggable={false}
+                      className="object-cover object-top"
+                      sizes="280px"
+                    />
+                    {/* Gradient overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent"></div>
+                  </div>
 
-              {/* Caption */}
-              <div className="absolute inset-x-0 bottom-0 bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
-                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
-                  {item.title}
-                </h3>
-              </div>
-            </Link>
-          ))}
+                  {/* Caption */}
+                  <div className="absolute inset-x-0 bottom-0 bg-white/25 backdrop-blur-sm text-white px-6 py-4 border-t border-white/20">
+                    <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] tracking-wide drop-shadow-md">
+                      {item.title}
+                    </h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop: Grid */}
+          <div className="hidden md:contents">
+            {workImages.map((item) => (
+              <Link
+                key={item._id}
+                href={item.slug ? `/our-work/${item.slug}` : '#'}
+                className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] transition-shadow duration-300"
+              >
+                {/* Image Container */}
+                <div className="relative w-full h-[280px] overflow-hidden">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.title}
+                    fill
+                    draggable={false}
+                    className="object-cover object-top"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  />
+                  {/* Gradient overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent"></div>
+                </div>
+
+                {/* Caption */}
+                <div className="absolute inset-x-0 bottom-0 bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
+                    {item.title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>

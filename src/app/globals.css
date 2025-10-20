@@ -447,8 +447,22 @@ img {
   cursor: pointer;
 }
 
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Mobile optimizations */
 @media (max-width: 768px) {
+  .work-section-container {
+    -webkit-overflow-scrolling: touch;
+  }
+  
   .work-card {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
