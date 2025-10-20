@@ -37,46 +37,6 @@ export function WorkSection() {
   const [featuredProjects, setFeaturedProjects] = useState<FeaturedProject[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // Force enable touch scrolling on mobile
-  useEffect(() => {
-    const enableTouchScrolling = () => {
-      if (window.innerWidth <= 768) {
-        // Force enable touch scrolling globally
-        document.body.style.touchAction = 'manipulation';
-        document.documentElement.style.touchAction = 'manipulation';
-        (document.body.style as any).webkitOverflowScrolling = 'touch';
-        (document.documentElement.style as any).webkitOverflowScrolling = 'touch';
-        
-        // Force enable touch scrolling on work section
-        const workSection = document.querySelector('.work-section-container');
-        if (workSection) {
-          (workSection as HTMLElement).style.touchAction = 'manipulation';
-          ((workSection as HTMLElement).style as any).webkitOverflowScrolling = 'touch';
-          (workSection as HTMLElement).style.pointerEvents = 'auto';
-          
-          // Force enable on all child elements
-          const allElements = workSection.querySelectorAll('*');
-          allElements.forEach((el) => {
-            (el as HTMLElement).style.touchAction = 'manipulation';
-            (el as HTMLElement).style.pointerEvents = 'auto';
-          });
-        }
-      }
-    };
-    
-    enableTouchScrolling();
-    
-    // Re-enable on touch events
-    const handleTouch = () => enableTouchScrolling();
-    document.addEventListener('touchstart', handleTouch, { passive: true });
-    document.addEventListener('touchmove', handleTouch, { passive: true });
-    
-    return () => {
-      document.removeEventListener('touchstart', handleTouch);
-      document.removeEventListener('touchmove', handleTouch);
-    };
-  }, []);
-  
   // Fallback work images
   const fallbackWorkImages: WorkImage[] = [
     {
@@ -183,38 +143,10 @@ export function WorkSection() {
             <Link
               key={item._id}
               href={item.slug ? `/our-work/${item.slug}` : '#'}
-              className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm"
-              style={{ 
-                touchAction: 'pan-y',
-                pointerEvents: 'auto'
-              }}
-              onTouchStart={(e) => {
-                const target = e.currentTarget;
-                const startY = e.touches[0].clientY;
-                const startTime = Date.now();
-                
-                const onTouchMove = (moveEvent: TouchEvent) => {
-                  const deltaY = Math.abs(moveEvent.touches[0].clientY - startY);
-                  if (deltaY > 10) {
-                    // It's a scroll, not a tap
-                    target.style.pointerEvents = 'none';
-                  }
-                };
-                
-                const onTouchEnd = () => {
-                  setTimeout(() => {
-                    target.style.pointerEvents = 'auto';
-                  }, 100);
-                  document.removeEventListener('touchmove', onTouchMove);
-                  document.removeEventListener('touchend', onTouchEnd);
-                };
-                
-                document.addEventListener('touchmove', onTouchMove, { passive: true });
-                document.addEventListener('touchend', onTouchEnd);
-              }}
+              className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] transition-shadow duration-300"
             >
               {/* Image Container */}
-              <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden" style={{ pointerEvents: 'none' }}>
+              <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
                 <Image
                   src={item.imageUrl}
                   alt={item.title}
@@ -228,7 +160,7 @@ export function WorkSection() {
               </div>
 
               {/* Caption */}
-              <div className="absolute inset-x-0 bottom-0 bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20" style={{ pointerEvents: 'none' }}>
+              <div className="absolute inset-x-0 bottom-0 bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
                 <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
                   {item.title}
                 </h3>
