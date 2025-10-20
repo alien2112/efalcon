@@ -47,13 +47,68 @@ function MobileCard({ item, index, isMobile }: { item: WorkImage; index: number;
   const opacity = isMobile ? 1 : useTransform(scrollYProgress, [0, 1], [0, 1]);
   const y = isMobile ? 0 : useTransform(scrollYProgress, [0, 1], [30, 0]);
 
+  // On mobile, use a simple div wrapper instead of motion.div to avoid event conflicts
+  if (isMobile) {
+    return (
+      <div ref={ref} className="h-full" style={{ opacity: 1 }}>
+        <Link
+          href={item.slug ? `/our-work/${item.slug}` : '#'}
+          className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out active:scale-[0.98] block h-full"
+          style={{ touchAction: 'auto' }}
+        >
+          {/* Enhanced Thumbnail */}
+          <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
+            <Image
+              src={item.imageUrl}
+              alt={item.title}
+              fill
+              draggable={false}
+              className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8 select-none pointer-events-none"
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            />
+            {/* Enhanced gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+            {/* Enhanced sheen effect */}
+            <div className="absolute -right-12 -top-12 w-64 h-64 rotate-45 bg-white/10 blur-2xl group-hover:bg-white/20 transition-colors duration-500 pointer-events-none" />
+
+            {/* Decorative corner elements */}
+            <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 w-6 h-6 bg-white/15 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          </div>
+
+          {/* Enhanced Caption strip */}
+          <div className="absolute inset-x-0 bottom-0 p-0 pointer-events-none">
+            <div className="bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
+              <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
+                {item.title}
+              </h3>
+            </div>
+          </div>
+
+          {/* Enhanced Hover magnifier */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+            <div className="flex items-center justify-center w-20 h-20 rounded-full bg-white/20 border-2 border-white/40 backdrop-blur-md shadow-xl">
+              <Search className="text-white" size={32} strokeWidth={2.5} />
+            </div>
+          </div>
+
+          {/* Enhanced Hover border highlight */}
+          <div className="absolute inset-0 rounded-3xl border-2 border-white/0 group-hover:border-white/40 transition-all duration-500 pointer-events-none" />
+
+          {/* Subtle inner glow */}
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        </Link>
+      </div>
+    );
+  }
+
+  // Desktop version with scroll animations
   return (
     <motion.div
       ref={ref}
-      initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      animate={isMobile ? { opacity: 1, y: 0 } : undefined}
-      style={isMobile ? {} : { opacity, y }}
-      transition={{ duration: 0.4, delay: isMobile ? index * 0.1 : 0 }}
+      style={{ opacity, y }}
+      transition={{ duration: 0.4 }}
       className="h-full"
     >
       <Link
