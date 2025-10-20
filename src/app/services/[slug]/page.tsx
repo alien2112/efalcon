@@ -142,22 +142,46 @@ export default function ServiceDetailPage() {
       <section className="bg-white py-12 md:py-16">
         <div className="max-w-[1280px] mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-3 gap-6">
-            {(staticService ? service.features : service.features[language]).map((f, index) => (
-              <div key={index} className="bg-white border border-gray-200 rounded-[14px] p-5 shadow-sm">
-                <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[#EFC132] text-[18px] md:text-[20px]">
-                  {staticService 
-                    ? (t(`services.detail.${service.slug}.features.${f.toLowerCase().replace(/\s/g, '')}`) || f)
-                    : f
-                  }
-                </h3>
-                <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
-                  {staticService 
-                    ? `${(t(`services.detail.${service.slug}.title`) || service.title)} ${t('services.detail.includes') || 'includes'}: ${(t(`services.detail.${service.slug}.features.${f.toLowerCase().replace(/\s/g, '')}`) || f)} ${t('services.detail.asPartOf') || 'as part of our comprehensive offering'}.`
-                    : `${service.title[language]} includes: ${f} as part of our comprehensive offering.`
-                  }
-                </p>
-              </div>
-            ))}
+            {(staticService ? service.features : service.features[language]).map((f, index) => {
+              // Create a mapping for feature keys to match translation structure
+              const featureKeyMap: { [key: string]: string } = {
+                'Synthetic and mineral formulations': 'syntheticandmineralformulations',
+                'Extended engine protection': 'extendedengineprotection',
+                'High-temperature stability': 'high-temperaturestability',
+                'Fuel efficiency optimization': 'fuelefficiencyoptimization',
+                'Bulk storage facilities': 'bulkstoragefacilities',
+                'Import/export operations': 'import/exportoperations',
+                'Blending and distribution': 'blendinganddistribution',
+                'Trading and risk management': 'tradingandriskmanagement',
+                'Port handling and stevedoring': 'porthandlingandstevedoring',
+                'Customs and documentation': 'customsanddocumentation',
+                'Inland transport and distribution': 'inlandtransportanddistribution',
+                'Global freight coordination': 'globalfreightcoordination',
+                'Solar and wind integrations': 'solarandwindintegrations',
+                'Hybrid energy systems': 'hybridenergysystems',
+                'Reverse osmosis desalination': 'reverseosmosisdesalination',
+                'Sustainable infrastructure design': 'sustainableinfrastructuredesign'
+              };
+              
+              const featureKey = featureKeyMap[f] || f.toLowerCase().replace(/\s/g, '');
+              
+              return (
+                <div key={index} className="bg-white border border-gray-200 rounded-[14px] p-5 shadow-sm">
+                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[#EFC132] text-[18px] md:text-[20px]">
+                    {staticService 
+                      ? (t(`services.detail.${service.slug}.features.${featureKey}`) || f)
+                      : f
+                    }
+                  </h3>
+                  <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
+                    {staticService 
+                      ? `${(t(`services.detail.${service.slug}.title`) || service.title)} ${t('services.detail.includes') || 'includes'}: ${(t(`services.detail.${service.slug}.features.${featureKey}`) || f)} ${t('services.detail.asPartOf') || 'as part of our comprehensive offering'}.`
+                      : `${service.title[language]} includes: ${f} as part of our comprehensive offering.`
+                    }
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

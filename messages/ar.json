@@ -755,6 +755,9 @@
     "goHome": "العودة للرئيسية",
     "goBack": "العودة للخدمات"
   },
+  "common": {
+    "downloadPdf": "تحميل PDF"
+  },
   "admin": {
     "login": {
       "title": "تسجيل دخول الإدارة",
