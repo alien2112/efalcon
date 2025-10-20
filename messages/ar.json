@@ -246,7 +246,11 @@
       "partnerships": "شراكات نشطة في الولايات المتحدة وأوروبا وماليزيا",
       "strongPresenceTitle": "وجود قوي",
       "expandingTitle": "توسع النطاق",
-      "partnershipsTitle": "شراكات استراتيجية"
+      "partnershipsTitle": "شراكات استراتيجية",
+      "presenceStatus": "حالة التواجد",
+      "globalReach": {
+        "caption": "تواجدنا الاستراتيجي عبر الأسواق الرئيسية في جميع أنحاء العالم"
+      }
     },
     "statusLabels": {
       "active": "وجود قوي",

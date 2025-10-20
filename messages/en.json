@@ -246,7 +246,11 @@
       "partnerships": "Active partnerships in USA, Europe, and Malaysia",
       "strongPresenceTitle": "Strong Presence",
       "expandingTitle": "Expanding Reach",
-      "partnershipsTitle": "Strategic Partnerships"
+      "partnershipsTitle": "Strategic Partnerships",
+      "presenceStatus": "Presence Status",
+      "globalReach": {
+        "caption": "Our strategic presence across key markets worldwide"
+      }
     },
     "statusLabels": {
       "active": "Strong Presence",
