@@ -120,7 +120,7 @@ export function GlobalPresenceGlobe() {
               backgroundPosition: '0 0, 1px 1px'
             }}
           >
-            <div ref={containerRef} className="relative aspect-[16/9] md:aspect-[21/9]" style={{ touchAction: 'none' }}>
+            <div ref={containerRef} className="relative aspect-[16/9] md:aspect-[21/9]" style={{ touchAction: 'pan-y', overflow: 'visible' }}>
               {/* globe component rendered client-side; casts keep TS quiet */}
               <Globe
                 ref={globeRef as unknown as any}

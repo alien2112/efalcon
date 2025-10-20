@@ -176,7 +176,7 @@ export default function ServiceDetailPage() {
                   <p className="font-['Alice:Regular',_sans-serif] text-gray-700 mt-2 text-[14px] md:text-[16px]">
                     {staticService 
                       ? `${(t(`services.detail.${service.slug}.title`) || service.title)} ${t('services.detail.includes') || 'includes'}: ${(t(`services.detail.${service.slug}.features.${featureKey}`) || f)} ${t('services.detail.asPartOf') || 'as part of our comprehensive offering'}.`
-                      : `${service.title[language]} includes: ${f} as part of our comprehensive offering.`
+                      : `${service.title[language]} ${t('services.detail.includes') || 'includes'}: ${f} ${t('services.detail.asPartOf') || 'as part of our comprehensive offering'}.`
                     }
                   </p>
                 </div>

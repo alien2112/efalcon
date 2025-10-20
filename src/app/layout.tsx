@@ -5,6 +5,7 @@ import { FloatingActions } from '@/components/FloatingActions';
 import { ResponsiveScrollProgressIndicator } from '@/components/ScrollProgressIndicator';
 import { ImagePreloader, CRITICAL_IMAGES } from '@/components/ImagePreloader';
 import { MobileScrollOptimizer } from '@/components/MobileScrollOptimizer';
+import { ScrollOptimizer } from '@/components/ScrollOptimizer';
 import { PerformanceMonitor } from '@/components/PerformanceMonitor';
 import { MobilePerformanceMonitor } from '@/components/MobilePerformanceMonitor';
 import { MobileResourcePreloader, MOBILE_CRITICAL_IMAGES } from '@/components/MobileResourcePreloader';
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body className="antialiased">
         <PerformanceMonitor />
         <MobilePerformanceMonitor />
+        <ScrollOptimizer />
         <ImagePreloader images={CRITICAL_IMAGES} />
         <MobileResourcePreloader images={MOBILE_CRITICAL_IMAGES} />
         <MobileScrollOptimizer />

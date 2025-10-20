@@ -30,9 +30,9 @@ export function ServiceCardAnimation({
   const rotateY = useSpring(0, { stiffness: 300, damping: 30 });
   const y = useSpring(0, { stiffness: 300, damping: 30 });
 
-  // Scroll-based animations
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const scrollY = useTransform(scrollYProgress, [0, 1], [50, 0]);
+  // Scroll-based animations with reduced sensitivity for smoother scrolling
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0.5, 1]);
+  const scrollY = useTransform(scrollYProgress, [0, 0.3, 1], [30, 15, 0]);
 
   // Mouse tracking for 3D tilt effect
   const mouseX = useMotionValue(0);
@@ -71,7 +71,7 @@ export function ServiceCardAnimation({
   return (
     <motion.div
       ref={ref}
-      className={`relative overflow-hidden ${className}`}
+      className={`relative ${className}`}
       style={{ 
         opacity, 
         y: scrollY,
@@ -79,7 +79,8 @@ export function ServiceCardAnimation({
         rotateX,
         rotateY,
         transformStyle: 'preserve-3d',
-        maxWidth: '100%'
+        maxWidth: '100%',
+        overflow: 'visible'
       }}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -249,7 +250,7 @@ export function GlowingBackground({
   intensity = 1 
 }: GlowingBackgroundProps) {
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative ${className}`} style={{ overflow: 'visible' }}>
       {/* Animated gradient background */}
       <motion.div
         className="absolute inset-0 opacity-20"
