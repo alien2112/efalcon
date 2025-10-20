@@ -31,7 +31,7 @@ export function PresenceImage({ src, alt, className = '' }: PresenceImageProps) 
   }, []);
 
   return (
-    <div className={`relative w-full ${className}`}>
+    <div className={`absolute inset-0 ${className}`}>
       {/* Loading state */}
       {!isLoaded && (
         <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132]/20 to-[#FFD700]/20 animate-pulse rounded-xl flex items-center justify-center">
@@ -39,14 +39,14 @@ export function PresenceImage({ src, alt, className = '' }: PresenceImageProps) 
         </div>
       )}
 
-      {/* Optimized image */}
+      {/* Optimized image with perfect aspect ratio (1123 x 793) */}
       <OptimizedImage
         src={src}
         alt={alt}
-        width={1600}
-        height={400}
+        width={1123}
+        height={793}
         quality={isMobile ? 85 : 90}
-        className={`w-full h-auto object-contain rounded-xl transition-opacity duration-500 ${
+        className={`w-full h-full object-contain rounded-xl transition-opacity duration-500 ${
           isLoaded ? 'opacity-100' : 'opacity-0'
         }`}
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 95vw, (max-width: 1024px) 90vw, (max-width: 1280px) 85vw, 80vw"

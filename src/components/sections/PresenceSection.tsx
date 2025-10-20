@@ -194,14 +194,17 @@ export function PresenceSection() {
           <FadeInOnScroll direction="up" delay={0.3}>
             <div className="text-center mb-12 md:mb-16">
               <div className="relative w-full max-w-7xl mx-auto px-4 md:px-8">
-                {/* Enhanced container with better mobile responsiveness */}
+                {/* Enhanced container optimized for 1123x793 aspect ratio */}
                 <div className="relative rounded-2xl md:rounded-3xl border-2 border-white/30 shadow-[0_20px_40px_rgba(0,0,0,0.3)] md:shadow-[0_25px_50px_rgba(0,0,0,0.4)] overflow-hidden bg-white/10 backdrop-blur-sm p-3 md:p-6 lg:p-8">
+                  {/* Container with proper aspect ratio for 1123x793 image */}
+                  <div className="relative w-full" style={{ aspectRatio: '1123/793' }}>
                   
-                  {/* Optimized presence image */}
-                  <PresenceImage
-                    src="/our presence around .png"
-                    alt="Our Presence Around the World - Ebdaa Falcon Global Reach"
-                  />
+                    {/* Optimized presence image */}
+                    <PresenceImage
+                      src="/our presence around .png"
+                      alt="Our Presence Around the World - Ebdaa Falcon Global Reach"
+                    />
+                  </div>
                   
                   {/* Optional caption for better accessibility */}
                   <div className="mt-4 md:mt-6">
