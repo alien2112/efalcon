@@ -117,5 +117,6 @@ export const MOBILE_CRITICAL_IMAGES = [
   '/logofirstsection.webp', // Most critical - above the fold
   '/vision.webp', // Hero section
   '/vision2.webp', // Hero section
+  '/our presence around .png', // Presence section - important for mobile
   // Reduced list for mobile to avoid overwhelming
 ];

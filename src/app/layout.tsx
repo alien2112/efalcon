@@ -59,6 +59,7 @@ export default function RootLayout({
         {/* Mobile-specific resource hints */}
         <link rel="preload" href="/logofirstsection.webp" as="image" type="image/webp" media="(max-width: 768px)" />
         <link rel="preload" href="/vision.webp" as="image" type="image/webp" media="(max-width: 768px)" />
+        <link rel="preload" href="/our presence around .png" as="image" type="image/png" media="(max-width: 768px)" />
         
         {/* Mobile-optimized font loading */}
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Alfa+Slab+One&display=swap" as="style" media="(max-width: 768px)" />

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
+import { PresenceImage } from '@/components/PresenceImage';
 import * as THREE from 'three';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
@@ -190,23 +190,25 @@ export function PresenceSection() {
             </div>
           </FadeInOnScroll>
 
-          {/* Our Presence Around the World Image */}
+          {/* Our Presence Around the World Image - Optimized for Mobile & PC */}
           <FadeInOnScroll direction="up" delay={0.3}>
             <div className="text-center mb-12 md:mb-16">
               <div className="relative w-full max-w-7xl mx-auto px-4 md:px-8">
-                <div className="relative rounded-2xl md:rounded-3xl border-2 border-white/30 shadow-[0_20px_40px_rgba(0,0,0,0.3)] md:shadow-[0_25px_50px_rgba(0,0,0,0.4)] overflow-hidden bg-white/10 backdrop-blur-sm p-4 md:p-6 lg:p-8">
-                  <Image
+                {/* Enhanced container with better mobile responsiveness */}
+                <div className="relative rounded-2xl md:rounded-3xl border-2 border-white/30 shadow-[0_20px_40px_rgba(0,0,0,0.3)] md:shadow-[0_25px_50px_rgba(0,0,0,0.4)] overflow-hidden bg-white/10 backdrop-blur-sm p-3 md:p-6 lg:p-8">
+                  
+                  {/* Optimized presence image */}
+                  <PresenceImage
                     src="/our presence around .png"
-                    alt="Our Presence Around the World"
-                    width={1600}
-                    height={400}
-                    quality={95}
-                    className="w-full h-[250px] md:h-[300px] object-cover rounded-xl"
-                    priority
+                    alt="Our Presence Around the World - Ebdaa Falcon Global Reach"
                   />
-                  {/* Decorative corner elements */}
-                  <div className="absolute -top-3 -right-3 w-8 h-8 bg-white/40 rounded-full"></div>
-                  <div className="absolute -bottom-3 -left-3 w-6 h-6 bg-white/30 rounded-full"></div>
+                  
+                  {/* Optional caption for better accessibility */}
+                  <div className="mt-4 md:mt-6">
+                    <p className="text-sm md:text-base text-white/80 font-medium">
+                      {t('presence.globalReach.caption') || 'Our strategic presence across key markets worldwide'}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
