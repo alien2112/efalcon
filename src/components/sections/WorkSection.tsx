@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
 import { FadeInOnScroll } from '@/components/ParallaxWrapper';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface WorkImage {
@@ -35,29 +35,92 @@ interface FeaturedProject {
   isFeatured: boolean;
 }
 
+// Mobile-optimized card component that doesn't interfere with scrolling
+function MobileCard({ item, index, isMobile }: { item: WorkImage; index: number; isMobile: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 0.9', 'start 0.6']
+  });
+
+  // Only apply scroll-based animation on desktop
+  const opacity = isMobile ? 1 : useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const y = isMobile ? 0 : useTransform(scrollYProgress, [0, 1], [30, 0]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      animate={isMobile ? { opacity: 1, y: 0 } : undefined}
+      style={isMobile ? {} : { opacity, y }}
+      transition={{ duration: 0.4, delay: isMobile ? index * 0.1 : 0 }}
+      className="h-full"
+    >
+      <Link
+        href={item.slug ? `/our-work/${item.slug}` : '#'}
+        className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block h-full"
+      >
+        {/* Enhanced Thumbnail */}
+        <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
+          <Image
+            src={item.imageUrl}
+            alt={item.title}
+            fill
+            draggable={false}
+            className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8 select-none"
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          />
+          {/* Enhanced gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+
+          {/* Enhanced sheen effect */}
+          <div className="absolute -right-12 -top-12 w-64 h-64 rotate-45 bg-white/10 blur-2xl group-hover:bg-white/20 transition-colors duration-500" />
+
+          {/* Decorative corner elements */}
+          <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute bottom-4 left-4 w-6 h-6 bg-white/15 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+
+        {/* Enhanced Caption strip */}
+        <div className="absolute inset-x-0 bottom-0 p-0">
+          <div className="bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
+            <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
+              {item.title}
+            </h3>
+          </div>
+        </div>
+
+        {/* Enhanced Hover magnifier */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="flex items-center justify-center w-20 h-20 rounded-full bg-white/20 border-2 border-white/40 backdrop-blur-md shadow-xl">
+            <Search className="text-white" size={32} strokeWidth={2.5} />
+          </div>
+        </div>
+
+        {/* Enhanced Hover border highlight */}
+        <div className="absolute inset-0 rounded-3xl border-2 border-white/0 group-hover:border-white/40 transition-all duration-500" />
+
+        {/* Subtle inner glow */}
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      </Link>
+    </motion.div>
+  );
+}
+
 export function WorkSection() {
   const { t, language } = useLanguage();
   const [featuredProjects, setFeaturedProjects] = useState<FeaturedProject[]>([]);
   const [loading, setLoading] = useState(true);
-  
-  // Add explicit touch handler for mobile devices
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile devices
   useEffect(() => {
-    // Force enable touch scrolling on mobile
-    const enableTouchScrolling = () => {
-      const workSection = document.querySelector('.work-section-container');
-      if (workSection) {
-        workSection.classList.add('touch-pan-y');
-        (workSection as HTMLElement).style.touchAction = 'auto';
-        (workSection as HTMLElement).style.overscrollBehavior = 'auto';
-      }
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
     };
-    
-    enableTouchScrolling();
-    window.addEventListener('touchstart', enableTouchScrolling, { once: true });
-    
-    return () => {
-      window.removeEventListener('touchstart', enableTouchScrolling);
-    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
   
   // Fallback work images
@@ -129,7 +192,7 @@ export function WorkSection() {
     : fallbackWorkImages;
 
   return (
-    <div className="work-section-container relative w-full py-20 md:py-32 overflow-hidden touch-pan-y" style={{ touchAction: 'auto', overscrollBehavior: 'auto' }}>
+    <div className="work-section-container relative w-full py-20 md:py-32 overflow-visible">
       {/* Enhanced background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
@@ -143,16 +206,21 @@ export function WorkSection() {
           backgroundPosition: '0 0, 25px 25px'
         }}></div>
       </div>
-      
+
       {/* Decorative corner accents - hidden on mobile, visible on md and up */}
       <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-white/15 to-transparent rounded-br-3xl hidden md:block"></div>
       <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/15 to-transparent rounded-bl-3xl hidden md:block"></div>
       <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-white/15 to-transparent rounded-tr-3xl hidden md:block"></div>
       <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/15 to-transparent rounded-tl-3xl hidden md:block"></div>
-      
+
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
         {/* Enhanced Section Title */}
-        <FadeInOnScroll direction="up" delay={0.2}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           <div className="relative text-center mb-20">
             {/* Decorative accent line */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full"></div>
@@ -160,79 +228,14 @@ export function WorkSection() {
               {t('work.title') || 'Our Work'}
             </h2>
           </div>
-        </FadeInOnScroll>
+        </motion.div>
 
         {/* Portfolio Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 touch-pan-y" style={{ touchAction: 'auto', overscrollBehavior: 'auto' }}>
-            {workImages.map((item, index) => (
-              <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index} className="touch-pan-y">
-                <Link 
-                  href={item.slug ? `/our-work/${item.slug}` : '#'}
-                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block touch-pan-y select-none"
-                  onDragStart={(e) => e.preventDefault()}
-                  onDrag={(e) => e.preventDefault()}
-                  onDragEnd={(e) => e.preventDefault()}
-                  style={{ touchAction: 'auto', userSelect: 'none' }}
-                >
-                  {/* Enhanced Thumbnail */}
-                  <div 
-                    className="relative w-full h-[220px] md:h-[280px] overflow-hidden touch-pan-y select-none" 
-                    onDragStart={(e) => e.preventDefault()}
-                    onDrag={(e) => e.preventDefault()}
-                    onDragEnd={(e) => e.preventDefault()}
-                    style={{ touchAction: 'auto', userSelect: 'none' }}
-                  >
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.title}
-                      fill
-                      draggable={false}
-                      className="object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-[1.1] group-hover:-translate-y-8 select-none"
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    />
-                    {/* Enhanced gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-                    
-                    {/* Enhanced sheen effect */}
-                    <div className="absolute -right-12 -top-12 w-64 h-64 rotate-45 bg-white/10 blur-2xl group-hover:bg-white/20 transition-colors duration-500" />
-                    
-                    {/* Decorative corner elements */}
-                    <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-4 left-4 w-6 h-6 bg-white/15 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-
-                  {/* Enhanced Caption strip */}
-                  <div className="absolute inset-x-0 bottom-0 p-0">
-                    <div className="bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
-                      <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
-                        {item.title}
-                      </h3>
-                    </div>
-                  </div>
-
-                  {/* Enhanced Hover magnifier */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-white/20 border-2 border-white/40 backdrop-blur-md shadow-xl">
-                      <Search className="text-white" size={32} strokeWidth={2.5} />
-                    </div>
-                  </div>
-
-                  {/* Enhanced Hover border highlight */}
-                  <div className="absolute inset-0 rounded-3xl border-2 border-white/0 group-hover:border-white/40 transition-all duration-500" />
-                  
-                  {/* Subtle inner glow */}
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </Link>
-              </FadeInOnScroll>
-            ))}
-          </div>
-        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {workImages.map((item, index) => (
+            <MobileCard key={item._id} item={item} index={index} isMobile={isMobile} />
+          ))}
+        </div>
       </div>
     </div>
   );
