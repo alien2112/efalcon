@@ -50,11 +50,11 @@ function MobileCard({ item, index, isMobile }: { item: WorkImage; index: number;
   // On mobile, use a simple div wrapper instead of motion.div to avoid event conflicts
   if (isMobile) {
     return (
-      <div ref={ref} className="h-full" style={{ opacity: 1, touchAction: 'pan-y' }}>
+      <div ref={ref} className="h-full" style={{ touchAction: 'auto' }}>
         <Link
           href={item.slug ? `/our-work/${item.slug}` : '#'}
           className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out active:scale-[0.98] block h-full"
-          style={{ touchAction: 'pan-y', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+          style={{ touchAction: 'auto' } as React.CSSProperties}
         >
           {/* Enhanced Thumbnail */}
           <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
@@ -248,11 +248,9 @@ export function WorkSection() {
 
   return (
     <div
-      className="work-section-container relative w-full py-20 md:py-32 overflow-y-auto"
+      className="work-section-container relative w-full py-20 md:py-32"
       style={{
-        touchAction: 'pan-y',
-        WebkitOverflowScrolling: 'touch',
-        overscrollBehavior: 'auto'
+        touchAction: 'auto'
       } as React.CSSProperties}
     >
       {/* Enhanced background pattern */}
@@ -282,7 +280,7 @@ export function WorkSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          style={{ touchAction: 'pan-y' }}
+          style={{ touchAction: 'auto' }}
         >
           <div className="relative text-center mb-20 pointer-events-none">
             {/* Decorative accent line */}
@@ -296,7 +294,7 @@ export function WorkSection() {
         {/* Portfolio Grid */}
         <div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-          style={{ touchAction: 'pan-y' }}
+          style={{ touchAction: 'auto' }}
         >
           {workImages.map((item, index) => (
             <MobileCard key={item._id} item={item} index={index} isMobile={isMobile} />
