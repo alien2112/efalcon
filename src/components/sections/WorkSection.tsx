@@ -109,7 +109,7 @@ export function WorkSection() {
     : fallbackWorkImages;
 
   return (
-    <div className="relative w-full py-20 md:py-32 overflow-hidden">
+    <div className="relative w-full py-20 md:py-32 overflow-hidden touch-pan-y" style={{ touchAction: 'pan-y' }}>
       {/* Enhanced background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
@@ -149,9 +149,9 @@ export function WorkSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 touch-pan-y" style={{ touchAction: 'pan-y' }}>
             {workImages.map((item, index) => (
-              <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
+              <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index} className="touch-pan-y">
                 <Link 
                   href={item.slug ? `/our-work/${item.slug}` : '#'}
                   className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block touch-pan-y select-none"

@@ -51,8 +51,12 @@ export function ParallaxWrapper({
   return (
     <motion.div
       ref={ref}
-      style={{ y, x }}
-      className={`${className} ${isMobile ? 'parallax-element' : ''}`}
+      style={{ 
+        y, 
+        x,
+        touchAction: 'pan-y' // Enable vertical scrolling on touch devices
+      }}
+      className={`${className} ${isMobile ? 'parallax-element' : ''} touch-pan-y`}
     >
       {children}
     </motion.div>
@@ -161,9 +165,14 @@ export function FadeInOnScroll({
   return (
     <motion.div
       ref={ref}
-      style={{ opacity, y, x }}
+      style={{ 
+        opacity, 
+        y, 
+        x,
+        touchAction: 'pan-y' // Enable vertical scrolling on touch devices
+      }}
       transition={{ duration: mobileDuration, delay }}
-      className={`${className} ${isMobile ? 'parallax-element' : ''}`}
+      className={`${className} ${isMobile ? 'parallax-element' : ''} touch-pan-y`}
     >
       {children}
     </motion.div>
