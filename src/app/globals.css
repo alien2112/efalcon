@@ -437,138 +437,28 @@ img {
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(239, 193, 50, 0.05) 100%);
 }
 
-/* Mobile scroll performance optimizations */
+/* Work section specific styles */
+.work-section-container {
+  position: relative;
+  overflow: visible;
+}
+
+.work-card {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Mobile optimizations */
 @media (max-width: 768px) {
-  /* Reduce animation complexity on mobile */
-  .animate-slide-in, .animate-slide-out {
-    animation-duration: 0.4s !important;
-    animation-timing-function: ease-out !important;
-  }
-  
-  /* Optimize transform animations */
-  .transition-transform {
-    transition-duration: 0.2s !important;
-  }
-  
-  /* Optimize backdrop blur for mobile performance */
-  .backdrop-blur-sm {
-    backdrop-filter: blur(4px) !important;
-  }
-  
-  .backdrop-blur-md {
-    backdrop-filter: blur(6px) !important;
-  }
-  
-  /* Force enable touch scrolling on work section */
   .work-section-container {
-    touch-action: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: auto !important;
-    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: auto;
   }
 
-  /* Ensure cards in work section allow vertical scrolling */
-  .work-section-container a,
-  .work-section-container > div,
-  .work-section-container .grid {
-    touch-action: auto !important;
-    -webkit-user-select: none !important;
-    user-select: none !important;
-  }
-
-  /* Disable transforms on mobile to prevent scroll blocking */
-  .work-section-container a {
-    transform: none !important;
-    transform-style: flat !important;
-    backface-visibility: hidden !important;
-  }
-
-  /* Make decorative elements non-interactive on mobile */
-  .work-section-container .pointer-events-none {
-    pointer-events: none !important;
-    touch-action: none !important;
-  }
-
-  /* Ensure motion.div elements don't interfere with scroll */
-  .work-section-container [data-framer-motion] {
-    touch-action: auto !important;
-    pointer-events: auto !important;
-    transform-style: flat !important;
-  }
-
-  /* Override any transform effects on mobile during scroll */
-  body.scrolling .work-section-container a {
-    transform: none !important;
-    transition-duration: 0.1s !important;
-  }
-
-  /* Disable tap highlight on mobile */
-  .work-section-container a {
-    -webkit-tap-highlight-color: transparent !important;
-    tap-highlight-color: transparent !important;
-  }
-
-  /* Add will-change for better performance */
-  .work-section-container {
-    will-change: scroll-position;
-  }
-
-  .work-section-container a {
-    will-change: auto;
-  }
-
-  /* Optimize images during scroll */
-  body.scrolling .work-section-container img {
-    will-change: auto;
-    transform: translateZ(0);
-  }
-
-  /* Disable hover effects on touch devices */
-  @media (hover: none) and (pointer: coarse) {
-    .work-section-container .group:hover,
-    .work-section-container a:hover {
-      transform: none !important;
-      scale: 1 !important;
-    }
-    
-    .work-section-container .group:hover img,
-    .work-section-container a:hover img {
-      transform: none !important;
-    }
-
-    /* Disable all transitions and transforms on touch devices */
-    .work-section-container * {
-      transition: none !important;
-      transform: none !important;
-      transform-style: flat !important;
-      perspective: none !important;
-    }
-
-    /* Only allow opacity transitions for visual feedback */
-    .work-section-container a {
-      transition: opacity 0.2s ease !important;
-    }
-  }
-
-  /* Enable hover effects only on devices with precise pointers */
-  @media (hover: hover) and (pointer: fine) {
-    .work-section-container a:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.5) !important;
-    }
-
-    .work-section-container .group:hover img {
-      transform: scale(1.05) !important;
-    }
-  }
-  
-  /* Reduce motion for users who prefer it */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+  .work-card {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
   }
 }
 
