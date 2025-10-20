@@ -29,8 +29,12 @@ export const metadata = {
       { url: '/logofirstsection.png', rel: 'icon', sizes: '512x512', type: 'image/png' },
     ],
   },
+};
+
+export const viewport = {
   themeColor: '#EFC132',
-  viewport: 'width=device-width, initial-scale=1',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({

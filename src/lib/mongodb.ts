@@ -38,7 +38,6 @@ if (process.env.NODE_ENV === 'development') {
       tlsAllowInvalidHostnames: true,
       // Additional options for Windows compatibility
       family: 4, // Use IPv4
-      useUnifiedTopology: true,
     });
     globalWithMongo._mongoClientPromise = client.connect();
   }
@@ -60,7 +59,6 @@ if (process.env.NODE_ENV === 'development') {
     tlsAllowInvalidHostnames: true,
     // Additional options for Windows compatibility
     family: 4, // Use IPv4
-    useUnifiedTopology: true,
   });
   clientPromise = client.connect();
 }
