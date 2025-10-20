@@ -11,7 +11,9 @@
     "verify-optimizations": "node scripts/verify-optimizations.js",
     "build:analyze": "ANALYZE=true npm run build",
     "perf:test": "npm run build && npm run start",
-    "perf:lighthouse": "echo 'Run Lighthouse audit on http://localhost:3000'"
+    "perf:lighthouse": "echo 'Run Lighthouse audit on http://localhost:3000'",
+    "perf:mobile": "echo 'Run Lighthouse Mobile audit on http://localhost:3000'",
+    "perf:mobile-test": "npm run build && npm run start && echo 'Test mobile performance at http://localhost:3000'"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

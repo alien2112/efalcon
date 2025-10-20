@@ -6,6 +6,8 @@ import { ResponsiveScrollProgressIndicator } from '@/components/ScrollProgressIn
 import { ImagePreloader, CRITICAL_IMAGES } from '@/components/ImagePreloader';
 import { MobileScrollOptimizer } from '@/components/MobileScrollOptimizer';
 import { PerformanceMonitor } from '@/components/PerformanceMonitor';
+import { MobilePerformanceMonitor } from '@/components/MobilePerformanceMonitor';
+import { MobileResourcePreloader, MOBILE_CRITICAL_IMAGES } from '@/components/MobileResourcePreloader';
 import { fonts } from '@/lib/fonts';
 import './globals.css';
 
@@ -53,10 +55,19 @@ export default function RootLayout({
         
         {/* Preload critical CSS */}
         <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+        
+        {/* Mobile-specific resource hints */}
+        <link rel="preload" href="/logofirstsection.webp" as="image" type="image/webp" media="(max-width: 768px)" />
+        <link rel="preload" href="/vision.webp" as="image" type="image/webp" media="(max-width: 768px)" />
+        
+        {/* Mobile-optimized font loading */}
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Alfa+Slab+One&display=swap" as="style" media="(max-width: 768px)" />
       </head>
       <body className="antialiased">
         <PerformanceMonitor />
+        <MobilePerformanceMonitor />
         <ImagePreloader images={CRITICAL_IMAGES} />
+        <MobileResourcePreloader images={MOBILE_CRITICAL_IMAGES} />
         <MobileScrollOptimizer />
         <LanguageProvider>
           <ResponsiveScrollProgressIndicator />

@@ -26,6 +26,21 @@ const nextConfig: NextConfig = {
       },
     ],
     unoptimized: false, // Ensure optimization is enabled
+    // Mobile-optimized image quality
+    quality: 75, // Lower default quality for mobile
+    // Responsive image sizes for mobile
+    responsive: [
+      {
+        deviceSizes: [640, 750, 828],
+        imageSizes: [16, 32, 48, 64, 96, 128],
+        quality: 70, // Lower quality for mobile devices
+      },
+      {
+        deviceSizes: [1080, 1200, 1920, 2048, 3840],
+        imageSizes: [256, 384],
+        quality: 85, // Higher quality for desktop
+      },
+    ],
   },
   experimental: {
     optimizeCss: true,
@@ -51,17 +66,28 @@ const nextConfig: NextConfig = {
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
+        maxSize: 244000, // Smaller chunks for mobile (244KB)
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
+            maxSize: 200000, // Smaller vendor chunks for mobile
           },
           common: {
             name: 'common',
             minChunks: 2,
             chunks: 'all',
             enforce: true,
+            maxSize: 150000, // Smaller common chunks for mobile
+          },
+          // Mobile-specific chunk for heavy components
+          mobile: {
+            test: /[\\/]components[\\/](sections|pages)[\\/]/,
+            name: 'mobile-components',
+            chunks: 'async',
+            maxSize: 100000, // Very small chunks for mobile
+            priority: 10,
           },
         },
       };
