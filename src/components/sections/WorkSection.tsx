@@ -38,6 +38,11 @@ interface FeaturedProject {
 // Mobile-optimized card component that doesn't interfere with scrolling
 function MobileCard({ item, index, isMobile }: { item: WorkImage; index: number; isMobile: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
+  const touchStartY = useRef<number>(0);
+  const touchStartTime = useRef<number>(0);
+  const isTouchScrolling = useRef<boolean>(false);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start 0.9', 'start 0.6']
@@ -47,14 +52,65 @@ function MobileCard({ item, index, isMobile }: { item: WorkImage; index: number;
   const opacity = isMobile ? 1 : useTransform(scrollYProgress, [0, 1], [0, 1]);
   const y = isMobile ? 0 : useTransform(scrollYProgress, [0, 1], [30, 0]);
 
+  // Mobile touch event handlers to distinguish between scroll and tap
+  useEffect(() => {
+    if (!isMobile || !linkRef.current) return;
+
+    const linkElement = linkRef.current;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+      touchStartTime.current = Date.now();
+      isTouchScrolling.current = false;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touchMoveY = e.touches[0].clientY;
+      const deltaY = Math.abs(touchMoveY - touchStartY.current);
+      
+      // If moved more than 10px, consider it a scroll
+      if (deltaY > 10) {
+        isTouchScrolling.current = true;
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      const touchEndTime = Date.now();
+      const touchDuration = touchEndTime - touchStartTime.current;
+      
+      // If was scrolling or touch was too long, don't trigger click
+      if (isTouchScrolling.current || touchDuration > 500) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    // Add passive listeners for better scroll performance
+    linkElement.addEventListener('touchstart', handleTouchStart, { passive: true });
+    linkElement.addEventListener('touchmove', handleTouchMove, { passive: true });
+    linkElement.addEventListener('touchend', handleTouchEnd, { passive: false });
+
+    return () => {
+      linkElement.removeEventListener('touchstart', handleTouchStart);
+      linkElement.removeEventListener('touchmove', handleTouchMove);
+      linkElement.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isMobile]);
+
   // On mobile, use a simple div wrapper instead of motion.div to avoid event conflicts
   if (isMobile) {
     return (
       <div ref={ref} className="h-full" style={{ touchAction: 'auto' }}>
         <Link
+          ref={linkRef}
           href={item.slug ? `/our-work/${item.slug}` : '#'}
-          className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out active:scale-[0.98] block h-full"
-          style={{ touchAction: 'auto' } as React.CSSProperties}
+          className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-300 ease-out block h-full select-none"
+          style={{ 
+            touchAction: 'auto',
+            WebkitUserSelect: 'none',
+            userSelect: 'none',
+            WebkitTapHighlightColor: 'transparent'
+          } as React.CSSProperties}
         >
           {/* Enhanced Thumbnail */}
           <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
@@ -113,7 +169,10 @@ function MobileCard({ item, index, isMobile }: { item: WorkImage; index: number;
     >
       <Link
         href={item.slug ? `/our-work/${item.slug}` : '#'}
-        className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block h-full"
+        className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] active:scale-[0.98] block h-full"
+        style={{ 
+          touchAction: 'auto'
+        } as React.CSSProperties}
       >
         {/* Enhanced Thumbnail */}
         <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">

@@ -122,13 +122,13 @@ html, body {
 
 /* Fix for interactive elements that might interfere with scroll */
 .interactive-element {
-  touch-action: pan-y;
+  touch-action: auto;
   pointer-events: auto;
 }
 
 /* Ensure globe and 3D elements don't block scroll */
 .globe-container, .three-container {
-  touch-action: pan-y;
+  touch-action: auto;
   overflow: visible;
 }
 
@@ -471,11 +471,14 @@ img {
   .work-section-container > div,
   .work-section-container .grid {
     touch-action: auto !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
   }
 
   /* Make decorative elements non-interactive on mobile */
   .work-section-container .pointer-events-none {
     pointer-events: none !important;
+    touch-action: none !important;
   }
 
   /* Ensure motion.div elements don't interfere with scroll */
@@ -487,6 +490,28 @@ img {
   /* Override any transform effects on mobile during scroll */
   body.scrolling .work-section-container a {
     transform: none !important;
+    transition-duration: 0.1s !important;
+  }
+
+  /* Disable tap highlight on mobile */
+  .work-section-container a {
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+  }
+
+  /* Add will-change for better performance */
+  .work-section-container {
+    will-change: scroll-position;
+  }
+
+  .work-section-container a {
+    will-change: auto;
+  }
+
+  /* Optimize images during scroll */
+  body.scrolling .work-section-container img {
+    will-change: auto;
+    transform: translateZ(0);
   }
   
   /* Reduce motion for users who prefer it */
@@ -535,6 +560,11 @@ body.scrolling * {
 
 /* Mobile-specific scroll momentum improvements */
 @media (max-width: 768px) {
+  /* Enable momentum scrolling globally */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
   body.scrolling {
     /* Enhanced momentum scrolling on mobile */
     -webkit-overflow-scrolling: touch;
@@ -552,6 +582,17 @@ body.scrolling * {
   body.scrolling .parallax-element {
     transform: translateZ(0) !important;
     animation-duration: 0.1s !important;
+  }
+
+  /* Prevent text selection during scroll */
+  body.scrolling * {
+    -webkit-user-select: none !important;
+    user-select: none !important;
+  }
+
+  /* Optimize animations during scroll */
+  body.scrolling .group {
+    transition-duration: 0.1s !important;
   }
 }
 

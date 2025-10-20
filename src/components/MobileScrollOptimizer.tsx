@@ -8,8 +8,23 @@ export function MobileScrollOptimizer() {
   const lastScrollTime = useRef(0);
   const scrollVelocity = useRef(0);
   const lastScrollY = useRef(0);
+  const isPassiveSupported = useRef(false);
 
   useEffect(() => {
+    // Test for passive event listener support
+    try {
+      const opts = Object.defineProperty({}, 'passive', {
+        get: function() {
+          isPassiveSupported.current = true;
+          return true;
+        }
+      });
+      window.addEventListener('testPassive', null as any, opts);
+      window.removeEventListener('testPassive', null as any, opts);
+    } catch (e) {
+      isPassiveSupported.current = false;
+    }
+
     const checkMobile = () => {
       isMobile.current = window.innerWidth < 768;
     };
@@ -74,23 +89,35 @@ export function MobileScrollOptimizer() {
         }
       };
 
+      // Event listener options
+      const scrollOptions = isPassiveSupported.current ? { passive: true } : false;
+      const touchOptions = isPassiveSupported.current ? { passive: true } : false;
+
       // Add scroll event listener with passive flag for better performance
-      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('scroll', handleScroll, scrollOptions);
       
       // Add touch event listeners for better momentum detection
       let touchStartY = 0;
       let touchStartTime = 0;
+      let touchMoveY = 0;
       
       const handleTouchStart = (e: TouchEvent) => {
         if (e.touches.length === 1) {
           touchStartY = e.touches[0].clientY;
+          touchMoveY = touchStartY;
           touchStartTime = Date.now();
+        }
+      };
+
+      const handleTouchMove = (e: TouchEvent) => {
+        if (e.touches.length === 1) {
+          touchMoveY = e.touches[0].clientY;
         }
       };
       
       const handleTouchEnd = (e: TouchEvent) => {
         if (e.changedTouches.length === 1) {
-          const touchEndY = e.changedTouches[0].clientY;
+          const touchEndY = touchMoveY;
           const touchEndTime = Date.now();
           const touchDistance = Math.abs(touchEndY - touchStartY);
           const touchDuration = touchEndTime - touchStartTime;
@@ -111,13 +138,15 @@ export function MobileScrollOptimizer() {
         }
       };
 
-      window.addEventListener('touchstart', handleTouchStart, { passive: true });
-      window.addEventListener('touchend', handleTouchEnd, { passive: true });
+      window.addEventListener('touchstart', handleTouchStart, touchOptions);
+      window.addEventListener('touchmove', handleTouchMove, touchOptions);
+      window.addEventListener('touchend', handleTouchEnd, touchOptions);
 
       // Cleanup function
       return () => {
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchmove', handleTouchMove);
         window.removeEventListener('touchend', handleTouchEnd);
         window.removeEventListener('resize', checkMobile);
         
@@ -128,6 +157,10 @@ export function MobileScrollOptimizer() {
         document.body.classList.remove('scrolling');
       };
     }
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   return null; // This component doesn't render anything
