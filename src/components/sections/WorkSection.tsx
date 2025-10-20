@@ -184,10 +184,37 @@ export function WorkSection() {
               key={item._id}
               href={item.slug ? `/our-work/${item.slug}` : '#'}
               className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm"
-              style={{ touchAction: 'manipulation' }}
+              style={{ 
+                touchAction: 'pan-y',
+                pointerEvents: 'auto'
+              }}
+              onTouchStart={(e) => {
+                const target = e.currentTarget;
+                const startY = e.touches[0].clientY;
+                const startTime = Date.now();
+                
+                const onTouchMove = (moveEvent: TouchEvent) => {
+                  const deltaY = Math.abs(moveEvent.touches[0].clientY - startY);
+                  if (deltaY > 10) {
+                    // It's a scroll, not a tap
+                    target.style.pointerEvents = 'none';
+                  }
+                };
+                
+                const onTouchEnd = () => {
+                  setTimeout(() => {
+                    target.style.pointerEvents = 'auto';
+                  }, 100);
+                  document.removeEventListener('touchmove', onTouchMove);
+                  document.removeEventListener('touchend', onTouchEnd);
+                };
+                
+                document.addEventListener('touchmove', onTouchMove, { passive: true });
+                document.addEventListener('touchend', onTouchEnd);
+              }}
             >
               {/* Image Container */}
-              <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden" style={{ touchAction: 'manipulation' }}>
+              <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden" style={{ pointerEvents: 'none' }}>
                 <Image
                   src={item.imageUrl}
                   alt={item.title}
@@ -201,7 +228,7 @@ export function WorkSection() {
               </div>
 
               {/* Caption */}
-              <div className="absolute inset-x-0 bottom-0 bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
+              <div className="absolute inset-x-0 bottom-0 bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20" style={{ pointerEvents: 'none' }}>
                 <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
                   {item.title}
                 </h3>

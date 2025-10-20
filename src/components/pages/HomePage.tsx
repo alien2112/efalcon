@@ -47,102 +47,79 @@ export function HomePage() {
   }, []);
   
   return (
-    <div className="home-page-wrapper">
+    <>
       <Navigation currentSection="home" onNavigate={() => {}} />
-      
-      <main className="home-page-main">
-        {/* Hero Section */}
+      <main>
         <HeroSection />
-        
-        {/* Wave Separator */}
         <WaveSeparator variant="wave" animate={true} />
         
-        {/* Main Content Sections */}
-        <div className="main-sections-container">
-          {/* Golden Gradient Background */}
-          <div 
-            className="main-sections-background"
-            style={{
-              background: 'linear-gradient(90deg, #F9F295 0%, #E0AA3E 50%, #B88A44 100%)'
-            }}
-          >
-            {/* Metallic shimmer overlay */}
-            <div className="shimmer-overlay">
-              <div className="shimmer-gradient-1" />
-              <div className="shimmer-gradient-2" />
-            </div>
-            
-            {/* Metallic texture pattern - hidden on mobile */}
-            <div 
-              className="metallic-pattern hidden md:block"
+        {/* Main sections with metallic golden gradient background */}
+        <div
+          className="relative"
+          style={{
+            background: 'linear-gradient(90deg, #F9F295 0%, #E0AA3E 50%, #B88A44 100%)'
+          }}
+        >
+          {/* Metallic shimmer overlay */}
+          <div className="absolute inset-0 opacity-30 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/5"></div>
+          </div>
+          
+          {/* Metallic texture pattern - hidden on mobile, visible on md and up */}
+          <div className="absolute inset-0 opacity-15 hidden md:block pointer-events-none" style={{
+            backgroundImage: `
+              linear-gradient(45deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(-45deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+              radial-gradient(circle at 1px 1px, rgba(255,215,0,0.2) 1px, transparent 0)
+            `,
+            backgroundSize: '20px 20px, 20px 20px, 40px 40px'
+          }}></div>
+          
+          {/* Metallic glow effects */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-300/50 to-transparent pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-300/50 to-transparent pointer-events-none"></div>
+          
+          <VisionSection />
+          <ServicesSection />
+          <WorkSection />
+          <PresenceSection />
+        </div>
+        
+        {/* Contact section container background */}
+        <div
+          className="relative"
+          style={{
+            background: 'linear-gradient(180deg, #fff9e9 0%, #f9f3df 100%)'
+          }}
+        >
+          {/* Subtle background pattern and glow (match Contact Us page) */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div
+              className="absolute inset-0"
               style={{
-                backgroundImage: `
-                  linear-gradient(45deg, rgba(255,255,255,0.1) 1px, transparent 1px),
-                  linear-gradient(-45deg, rgba(255,255,255,0.1) 1px, transparent 1px),
-                  radial-gradient(circle at 1px 1px, rgba(255,215,0,0.2) 1px, transparent 0)
-                `,
-                backgroundSize: '20px 20px, 20px 20px, 40px 40px'
+                backgroundImage:
+                  'radial-gradient(circle at 2px 2px, rgba(239,193,50,0.28) 1px, transparent 0)',
+                backgroundSize: '26px 26px'
               }}
             />
-            
-            {/* Metallic glow effects */}
-            <div className="glow-top" />
-            <div className="glow-bottom" />
+            <div
+              className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full"
+              style={{
+                background:
+                  'radial-gradient(closest-side, rgba(239,193,50,0.16), rgba(239,193,50,0.0))'
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(180deg, rgba(239,193,50,0.08), rgba(255,255,255,0))'
+              }}
+            />
           </div>
-
-          {/* Content Sections */}
-          <div className="sections-content">
-            <VisionSection />
-            <ServicesSection />
-            <WorkSection />
-            <PresenceSection />
-          </div>
-        </div>
-
-        {/* Contact Section */}
-        <div className="contact-section-container">
-          {/* Contact Background */}
-          <div 
-            className="contact-background"
-            style={{
-              background: 'linear-gradient(180deg, #fff9e9 0%, #f9f3df 100%)'
-            }}
-          >
-            {/* Background pattern and glow */}
-            <div className="contact-decorations">
-              {/* Dot pattern */}
-              <div
-                className="contact-dots"
-                style={{
-                  backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(239,193,50,0.28) 1px, transparent 0)',
-                  backgroundSize: '26px 26px'
-                }}
-              />
-              
-              {/* Radial glow */}
-              <div
-                className="contact-glow"
-                style={{
-                  background: 'radial-gradient(closest-side, rgba(239,193,50,0.16), rgba(239,193,50,0.0))'
-                }}
-              />
-              
-              {/* Gradient overlay */}
-              <div
-                className="contact-gradient"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(239,193,50,0.08), rgba(255,255,255,0))'
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Contact Form */}
-          <div className="contact-content">
-            <HomeContactForm />
-          </div>
+          <HomeContactForm />
         </div>
       </main>
-    </div>
+    </>
   );
 }
