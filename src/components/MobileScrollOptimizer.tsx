@@ -67,7 +67,7 @@ export function MobileScrollOptimizer() {
         // Set new timeout for scroll end detection
         scrollTimeout.current = setTimeout(() => {
           handleScrollEnd();
-        }, 100); // Reduced from 150ms for more responsive scroll end detection
+        }, 150); // 150ms delay to detect scroll end
 
         if (!isScrolling) {
           handleScrollStart();

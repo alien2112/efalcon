@@ -178,6 +178,8 @@ html, body {
 
 /* Hide scrollbars visually while keeping scroll functionality */
 html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
   scrollbar-width: none; /* Firefox - hides scrollbar but keeps scroll */
   -ms-overflow-style: none; /* Internet Explorer 10+ - hides scrollbar but keeps scroll */
 }
@@ -214,10 +216,10 @@ html, body {
   max-width: 100%;
 }
 
-/* Fix animation overflow issues - ensure animations don't interfere with scroll */
+/* Fix animation overflow issues */
 .motion-div, [data-framer-motion] {
-  overflow: visible;
-  contain: none;
+  overflow: hidden;
+  contain: layout;
 }
 
 /* Ensure proper scrolling for animated pages */
@@ -488,70 +490,46 @@ img {
   perspective: 1000px;
 }
 
-/* Scroll optimization class for better performance during scroll */
-body.scroll-optimized {
+/* Enhanced scroll momentum and performance states */
+body.scrolling {
   /* Optimize performance during active scrolling */
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
 
-body.scroll-optimized * {
+body.scrolling * {
   /* Reduce animation complexity during scroll */
   animation-play-state: paused;
   transition-duration: 0.1s !important;
 }
 
-/* Mobile-specific scroll optimization */
+/* Mobile-specific scroll momentum improvements */
 @media (max-width: 768px) {
-  body.scroll-optimized {
+  body.scrolling {
     /* Enhanced momentum scrolling on mobile */
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
   }
   
   /* Optimize heavy elements during scroll */
-  body.scroll-optimized .motion-div,
-  body.scroll-optimized [data-framer-motion] {
+  body.scrolling .motion-div,
+  body.scrolling [data-framer-motion] {
     will-change: auto;
     transform: translateZ(0);
   }
   
   /* Reduce parallax intensity during scroll */
-  body.scroll-optimized .parallax-element {
+  body.scrolling .parallax-element {
     transform: translateZ(0) !important;
-    animation-duration: 0.2s !important;
+    animation-duration: 0.1s !important;
   }
 }
-
 
 /* Smooth scroll restoration for better UX */
 @supports (scroll-behavior: smooth) {
   html {
     scroll-behavior: smooth;
   }
-}
-
-/* Enhanced smooth scrolling for all scrollable elements */
-* {
-  scroll-behavior: smooth;
-}
-
-/* Ensure consistent scroll behavior across all pages */
-.page-container, .main-content, main {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-/* Optimize scroll performance for all interactive elements */
-button, a, [role="button"] {
-  scroll-behavior: smooth;
-}
-
-/* Prevent scroll interference from fixed elements */
-.fixed, .sticky {
-  scroll-behavior: smooth;
-  contain: layout;
 }
 
 /* iOS-specific momentum scrolling enhancements */

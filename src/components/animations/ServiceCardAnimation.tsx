@@ -30,9 +30,9 @@ export function ServiceCardAnimation({
   const rotateY = useSpring(0, { stiffness: 300, damping: 30 });
   const y = useSpring(0, { stiffness: 300, damping: 30 });
 
-  // Scroll-based animations with reduced sensitivity for smoother scrolling
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0.5, 1]);
-  const scrollY = useTransform(scrollYProgress, [0, 0.3, 1], [30, 15, 0]);
+  // Scroll-based animations
+  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const scrollY = useTransform(scrollYProgress, [0, 1], [50, 0]);
 
   // Mouse tracking for 3D tilt effect
   const mouseX = useMotionValue(0);
