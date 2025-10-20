@@ -37,6 +37,46 @@ export function WorkSection() {
   const [featuredProjects, setFeaturedProjects] = useState<FeaturedProject[]>([]);
   const [loading, setLoading] = useState(true);
   
+  // Force enable touch scrolling on mobile
+  useEffect(() => {
+    const enableTouchScrolling = () => {
+      if (window.innerWidth <= 768) {
+        // Force enable touch scrolling globally
+        document.body.style.touchAction = 'manipulation';
+        document.documentElement.style.touchAction = 'manipulation';
+        (document.body.style as any).webkitOverflowScrolling = 'touch';
+        (document.documentElement.style as any).webkitOverflowScrolling = 'touch';
+        
+        // Force enable touch scrolling on work section
+        const workSection = document.querySelector('.work-section-container');
+        if (workSection) {
+          (workSection as HTMLElement).style.touchAction = 'manipulation';
+          ((workSection as HTMLElement).style as any).webkitOverflowScrolling = 'touch';
+          (workSection as HTMLElement).style.pointerEvents = 'auto';
+          
+          // Force enable on all child elements
+          const allElements = workSection.querySelectorAll('*');
+          allElements.forEach((el) => {
+            (el as HTMLElement).style.touchAction = 'manipulation';
+            (el as HTMLElement).style.pointerEvents = 'auto';
+          });
+        }
+      }
+    };
+    
+    enableTouchScrolling();
+    
+    // Re-enable on touch events
+    const handleTouch = () => enableTouchScrolling();
+    document.addEventListener('touchstart', handleTouch, { passive: true });
+    document.addEventListener('touchmove', handleTouch, { passive: true });
+    
+    return () => {
+      document.removeEventListener('touchstart', handleTouch);
+      document.removeEventListener('touchmove', handleTouch);
+    };
+  }, []);
+  
   // Fallback work images
   const fallbackWorkImages: WorkImage[] = [
     {
@@ -144,9 +184,10 @@ export function WorkSection() {
               key={item._id}
               href={item.slug ? `/our-work/${item.slug}` : '#'}
               className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm"
+              style={{ touchAction: 'manipulation' }}
             >
               {/* Image Container */}
-              <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
+              <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden" style={{ touchAction: 'manipulation' }}>
                 <Image
                   src={item.imageUrl}
                   alt={item.title}

@@ -569,3 +569,37 @@ body.scrolling * {
     right: 20px !important;
   }
 }
+
+/* AGGRESSIVE MOBILE TOUCH SCROLLING FIX */
+@media (max-width: 768px) {
+  /* Force enable touch scrolling globally */
+  * {
+    touch-action: manipulation !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* Specific fix for work section */
+  .work-section-container,
+  .work-section-container *,
+  .work-section-container a,
+  .work-section-container div {
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: auto !important;
+  }
+  
+  /* Ensure body allows scrolling */
+  body, html {
+    touch-action: manipulation !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: auto !important;
+  }
+  
+  /* Fix for any motion components */
+  [data-framer-motion],
+  .motion-div {
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+  }
+}
