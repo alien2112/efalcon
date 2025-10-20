@@ -178,6 +178,32 @@ html, body {
   max-width: 100%;
 }
 
+/* Fix animation overflow issues */
+.motion-div, [data-framer-motion] {
+  overflow: hidden;
+  contain: layout;
+}
+
+/* Ensure proper scrolling for animated pages */
+.page-container {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  position: relative;
+}
+
+/* Fix TypewriterText overflow */
+.typewriter-container {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* Ensure animated sections don't cause overflow */
+.animated-section {
+  overflow: hidden;
+  position: relative;
+}
+
 /* Additional safety for common overflow culprits */
 img, video, iframe, canvas, svg {
   max-width: 100%;

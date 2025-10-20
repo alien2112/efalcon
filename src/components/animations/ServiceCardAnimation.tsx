@@ -71,14 +71,15 @@ export function ServiceCardAnimation({
   return (
     <motion.div
       ref={ref}
-      className={`relative ${className}`}
+      className={`relative overflow-hidden ${className}`}
       style={{ 
         opacity, 
         y: scrollY,
         scale,
         rotateX,
         rotateY,
-        transformStyle: 'preserve-3d'
+        transformStyle: 'preserve-3d',
+        maxWidth: '100%'
       }}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}

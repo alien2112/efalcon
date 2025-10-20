@@ -165,7 +165,7 @@ export function TypewriterText({
 }: TypewriterTextProps) {
   return (
     <motion.div
-      className={className}
+      className={`${className} overflow-hidden`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay }}
@@ -178,7 +178,12 @@ export function TypewriterText({
           delay: delay + 0.5,
           ease: "easeInOut"
         }}
-        className="inline-block overflow-hidden whitespace-nowrap"
+        className="inline-block overflow-hidden"
+        style={{ 
+          whiteSpace: 'nowrap',
+          maxWidth: '100%',
+          wordBreak: 'break-word'
+        }}
       >
         {text}
       </motion.span>
