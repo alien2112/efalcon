@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "analyze": "ANALYZE=true npm run build",
+    "verify-optimizations": "node scripts/verify-optimizations.js"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
@@ -47,7 +49,6 @@
     "critters": "^0.0.23",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.24",
-    "gsap": "^3.13.0",
     "input-otp": "^1.4.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
@@ -70,6 +71,7 @@
   },
   "overrides": {},
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.5.4",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",

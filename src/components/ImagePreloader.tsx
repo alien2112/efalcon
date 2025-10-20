@@ -8,13 +8,19 @@ interface ImagePreloaderProps {
 
 export function ImagePreloader({ images }: ImagePreloaderProps) {
   useEffect(() => {
-    // Preload critical images
+    // Preload critical images with high priority
     images.forEach((src) => {
+      // Create preload link
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
       link.href = src;
+      link.fetchPriority = 'high';
       document.head.appendChild(link);
+
+      // Also create image object for browser cache
+      const img = new Image();
+      img.src = src;
     });
 
     // Cleanup function to remove preload links
@@ -41,4 +47,5 @@ export const CRITICAL_IMAGES = [
   '/blog%20banner.webp',
   '/ourworkbanner.webp',
   '/ourservicesbanner.webp',
+  '/images/14a6fa02ae183cbb256e0b4da2b46e17d3c07cee.webp', // Wave animation
 ];

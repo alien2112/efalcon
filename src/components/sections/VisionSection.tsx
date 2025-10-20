@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { BLUR_DATA_URLS } from '@/lib/blur-placeholder';
 
 export function VisionSection() {
   const { t } = useLanguage();
@@ -65,6 +66,9 @@ export function VisionSection() {
                     className="w-full h-auto object-cover"
                     priority
                     quality={85}
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URLS.gradient}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                   />
                   {/* Subtle overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
@@ -114,6 +118,9 @@ export function VisionSection() {
                     className="w-full h-auto object-cover"
                     priority
                     quality={85}
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URLS.gradient}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                   />
                   {/* Subtle overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>

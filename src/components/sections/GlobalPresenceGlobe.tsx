@@ -7,7 +7,18 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 // react-globe.gl needs window; use dynamic import to avoid SSR
-const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
+// Add loading component for better UX
+const Globe = dynamic(() => import('react-globe.gl'), { 
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-[#EFC132] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-600 font-medium">Loading Interactive Globe...</p>
+      </div>
+    </div>
+  )
+});
 
 type Point = {
   id: string;

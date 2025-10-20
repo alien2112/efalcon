@@ -5,6 +5,7 @@ import { FloatingActions } from '@/components/FloatingActions';
 import { ResponsiveScrollProgressIndicator } from '@/components/ScrollProgressIndicator';
 import { ImagePreloader, CRITICAL_IMAGES } from '@/components/ImagePreloader';
 import { MobileScrollOptimizer } from '@/components/MobileScrollOptimizer';
+import { fonts } from '@/lib/fonts';
 import './globals.css';
 
 export const metadata = {
@@ -35,7 +36,11 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning>
+    <html suppressHydrationWarning className={fonts.className}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className="antialiased">
         <ImagePreloader images={CRITICAL_IMAGES} />
         <MobileScrollOptimizer />

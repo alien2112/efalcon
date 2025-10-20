@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 
+// Bundle analyzer setup
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
@@ -24,6 +29,12 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizeCss: true,
+  },
+  // Production optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
   },
   // Smart caching headers
   async headers() {
@@ -116,4 +127,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
