@@ -1,14 +1,32 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { HeroSection } from '../sections/HeroSection';
 import { VisionSection } from '../sections/VisionSection';
-import { ServicesSection } from '../sections/ServicesSection';
-import { WorkSection } from '../sections/WorkSection';
-import { PresenceSection } from '../sections/PresenceSection';
-import { HomeContactForm } from '../sections/HomeContactForm';
 import { Navigation } from '../Navigation';
 import { WaveSeparator } from '../WaveSeparator';
 import { useLanguage } from '@/contexts/LanguageContext';
+
+// Dynamic imports for heavy components to reduce initial bundle size
+const ServicesSection = dynamic(() => import('../sections/ServicesSection').then(mod => ({ default: mod.ServicesSection })), {
+  loading: () => <div className="h-96 bg-gradient-to-br from-yellow-50 to-yellow-100 animate-pulse rounded-lg" />,
+  ssr: false
+});
+
+const WorkSection = dynamic(() => import('../sections/WorkSection').then(mod => ({ default: mod.WorkSection })), {
+  loading: () => <div className="h-96 bg-gradient-to-br from-yellow-50 to-yellow-100 animate-pulse rounded-lg" />,
+  ssr: false
+});
+
+const PresenceSection = dynamic(() => import('../sections/PresenceSection').then(mod => ({ default: mod.PresenceSection })), {
+  loading: () => <div className="h-96 bg-gradient-to-br from-yellow-50 to-yellow-100 animate-pulse rounded-lg" />,
+  ssr: false
+});
+
+const HomeContactForm = dynamic(() => import('../sections/HomeContactForm').then(mod => ({ default: mod.HomeContactForm })), {
+  loading: () => <div className="h-64 bg-gradient-to-br from-yellow-50 to-yellow-100 animate-pulse rounded-lg" />,
+  ssr: false
+});
 
 export function HomePage() {
   const { t } = useLanguage();

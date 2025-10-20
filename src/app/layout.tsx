@@ -5,6 +5,7 @@ import { FloatingActions } from '@/components/FloatingActions';
 import { ResponsiveScrollProgressIndicator } from '@/components/ScrollProgressIndicator';
 import { ImagePreloader, CRITICAL_IMAGES } from '@/components/ImagePreloader';
 import { MobileScrollOptimizer } from '@/components/MobileScrollOptimizer';
+import { PerformanceMonitor } from '@/components/PerformanceMonitor';
 import { fonts } from '@/lib/fonts';
 import './globals.css';
 
@@ -38,10 +39,23 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning className={fonts.className}>
       <head>
+        {/* Critical resource hints for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Preload critical resources */}
+        <link rel="preload" href="/logofirstsection.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/ourworkbanner.webp" as="image" type="image/webp" />
+        
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        
+        {/* Preload critical CSS */}
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
       </head>
       <body className="antialiased">
+        <PerformanceMonitor />
         <ImagePreloader images={CRITICAL_IMAGES} />
         <MobileScrollOptimizer />
         <LanguageProvider>

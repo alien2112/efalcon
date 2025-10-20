@@ -8,20 +8,33 @@ interface ImagePreloaderProps {
 
 export function ImagePreloader({ images }: ImagePreloaderProps) {
   useEffect(() => {
-    // Preload critical images with high priority
-    images.forEach((src) => {
-      // Create preload link
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = src;
-      link.fetchPriority = 'high';
-      document.head.appendChild(link);
+    // Use requestIdleCallback for non-critical preloading to avoid blocking
+    const preloadImages = () => {
+      images.forEach((src, index) => {
+        // Stagger preloading to avoid overwhelming the browser
+        setTimeout(() => {
+          // Create preload link with high priority for critical images
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'image';
+          link.href = src;
+          link.fetchPriority = index < 3 ? 'high' : 'low'; // First 3 images get high priority
+          document.head.appendChild(link);
 
-      // Also create image object for browser cache
-      const img = new Image();
-      img.src = src;
-    });
+          // Also create image object for browser cache
+          const img = new Image();
+          img.src = src;
+          img.loading = 'eager';
+        }, index * 100); // Stagger by 100ms
+      });
+    };
+
+    // Use requestIdleCallback if available, otherwise setTimeout
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(preloadImages, { timeout: 2000 });
+    } else {
+      setTimeout(preloadImages, 100);
+    }
 
     // Cleanup function to remove preload links
     return () => {
@@ -37,12 +50,12 @@ export function ImagePreloader({ images }: ImagePreloaderProps) {
   return null; // This component doesn't render anything
 }
 
-// Critical images that should be preloaded
+// Critical images that should be preloaded (prioritized)
 export const CRITICAL_IMAGES = [
+  '/logofirstsection.webp', // Most critical - above the fold
+  '/vision.webp', // Hero section
+  '/vision2.webp', // Hero section
   '/images/95eb61c3ac3249a169d62775cfc3315b24c65966.webp', // Logo
-  '/vision.webp',
-  '/vision2.webp',
-  '/logofirstsection.webp',
   '/about%20us%20banner%20.webp',
   '/blog%20banner.webp',
   '/ourworkbanner.webp',

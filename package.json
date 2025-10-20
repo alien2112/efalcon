@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "analyze": "ANALYZE=true npm run build",
-    "verify-optimizations": "node scripts/verify-optimizations.js"
+    "verify-optimizations": "node scripts/verify-optimizations.js",
+    "build:analyze": "ANALYZE=true npm run build",
+    "perf:test": "npm run build && npm run start",
+    "perf:lighthouse": "echo 'Run Lighthouse audit on http://localhost:3000'"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

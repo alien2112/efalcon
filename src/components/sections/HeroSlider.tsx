@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { OptimizedImage } from '@/components/OptimizedImage';
 
 interface BannerImage {
   _id: string;
@@ -131,7 +132,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
   const BlurUpPlaceholder = ({ src }: { src: string }) => (
     <div className="absolute inset-0 bg-gradient-to-br from-[#EFC132] to-[#8B7A0A]">
       {/* Low-quality blurred version */}
-      <Image
+      <OptimizedImage
         src={src}
         alt=""
         fill
@@ -453,7 +454,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="relative w-full h-full"
             >
-              <Image
+              <OptimizedImage
                 src={slide.src}
                 alt={slide.alt}
                 fill
@@ -462,8 +463,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
                 onLoadStart={() => handleImageStart(slide.src)}
                 onLoad={() => handleImageLoad(slide.src)}
                 quality={85}
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                sizes="100vw"
               />
             </motion.div>
             
