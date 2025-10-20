@@ -26,21 +26,6 @@ const nextConfig: NextConfig = {
       },
     ],
     unoptimized: false, // Ensure optimization is enabled
-    // Mobile-optimized image quality
-    quality: 75, // Lower default quality for mobile
-    // Responsive image sizes for mobile
-    responsive: [
-      {
-        deviceSizes: [640, 750, 828],
-        imageSizes: [16, 32, 48, 64, 96, 128],
-        quality: 70, // Lower quality for mobile devices
-      },
-      {
-        deviceSizes: [1080, 1200, 1920, 2048, 3840],
-        imageSizes: [256, 384],
-        quality: 85, // Higher quality for desktop
-      },
-    ],
   },
   experimental: {
     optimizeCss: true,
