@@ -3,6 +3,10 @@
 import { useEffect, useRef } from 'react';
 
 export function MobileScrollOptimizer() {
+  // DISABLED: This component was interfering with natural scrolling
+  // Return early to prevent scroll event interference
+  return null;
+  
   const isMobile = useRef(false);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
   const lastScrollTime = useRef(0);

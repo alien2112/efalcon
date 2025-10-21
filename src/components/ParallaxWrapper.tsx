@@ -83,7 +83,7 @@ export function ParallaxSection({
   const contentY = '0%'; // No scroll-based movement
 
   return (
-    <div ref={ref} className={`relative overflow-hidden ${className}`}>
+    <div ref={ref} className={`relative ${className}`}>
       <motion.div
         style={{ y: backgroundY }}
         className="absolute inset-0"

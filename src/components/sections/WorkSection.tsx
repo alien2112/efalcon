@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { FadeInOnScroll } from '@/components/ParallaxWrapper';
 
 interface WorkImage {
   _id: string;
@@ -106,7 +108,7 @@ export function WorkSection() {
     : fallbackWorkImages;
 
   return (
-    <section className="work-section-container relative w-full py-20 md:py-32">
+    <section ref={sectionRef} className="work-section-container relative w-full py-20 md:py-32">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
@@ -151,24 +153,18 @@ export function WorkSection() {
             Desktop (lg+): standard 3-column grid
           */}
           <div
-            className="grid lg:grid-cols-3 lg:gap-8 gap-4 grid-flow-col lg:grid-flow-row auto-cols-[85%] sm:auto-cols-[60%] md:auto-cols-[50%] overflow-x-auto lg:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="grid lg:grid-cols-3 lg:gap-8 gap-4 grid-flow-col lg:grid-flow-row auto-cols-[85%] sm:auto-cols-[60%] md:auto-cols-[50%] lg:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {workImages.map((item, index) => (
               <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
                 <Link 
                   href={item.slug ? `/our-work/${item.slug}` : '#'}
-                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block touch-none select-none snap-start"
-                  onDragStart={(e) => e.preventDefault()}
-                  onDrag={(e) => e.preventDefault()}
-                  onDragEnd={(e) => e.preventDefault()}
+                  className="group relative rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] block snap-start"
                   style={{ touchAction: 'pan-y' }}
                 >
                   {/* Enhanced Thumbnail */}
                   <div 
-                    className="relative w-full h-[220px] md:h-[280px] overflow-hidden touch-none select-none" 
-                    onDragStart={(e) => e.preventDefault()}
-                    onDrag={(e) => e.preventDefault()}
-                    onDragEnd={(e) => e.preventDefault()}
+                    className="relative w-full h-[220px] md:h-[280px]" 
                     style={{ touchAction: 'pan-y' }}
                   >
                     <Image
@@ -190,42 +186,10 @@ export function WorkSection() {
                     </h3>
                   </div>
                 </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Desktop: Grid */}
-          <div className="hidden md:contents">
-            {workImages.map((item) => (
-              <Link
-                key={item._id}
-                href={item.slug ? `/our-work/${item.slug}` : '#'}
-                className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] transition-shadow duration-300"
-              >
-                {/* Image Container */}
-                <div className="relative w-full h-[280px] overflow-hidden">
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.title}
-                    fill
-                    draggable={false}
-                    className="object-cover object-top"
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  />
-                  {/* Gradient overlay for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000CC] via-[#00000066] to-transparent"></div>
-                </div>
-
-                {/* Caption */}
-                <div className="absolute inset-x-0 bottom-0 bg-white/25 backdrop-blur-sm text-white px-6 py-4 md:px-8 md:py-5 border-t border-white/20">
-                  <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[16px] md:text-[18px] tracking-wide drop-shadow-md">
-                    {item.title}
-                  </h3>
-                </div>
-              </Link>
+              </FadeInOnScroll>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

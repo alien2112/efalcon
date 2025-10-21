@@ -162,28 +162,27 @@ html, body {
   /* Optimize scroll performance for mobile */
   /* Removed global transform rule that was creating stacking context issues */
   
-  /* Specific optimizations for animated elements */
-  .motion-div, [data-framer-motion] {
+  /* Specific optimizations for animated elements - DISABLED to prevent scroll interference */
+  /* .motion-div, [data-framer-motion] {
     will-change: transform, opacity;
     transform: translateZ(0);
-  }
+  } */
   
-  /* Optimize parallax elements for mobile */
-  .parallax-element {
+  /* Optimize parallax elements for mobile - DISABLED to prevent scroll interference */
+  /* .parallax-element {
     will-change: transform;
     transform: translateZ(0);
-    /* Reduce motion for better performance */
     animation-duration: 0.3s;
-  }
+  } */
 }
 
-/* Hide scrollbars visually while keeping scroll functionality */
-html, body {
+/* Hide scrollbars visually while keeping scroll functionality - DISABLED to prevent section scrolling */
+/* html, body {
   overflow-x: hidden;
   overflow-y: auto;
-  scrollbar-width: none; /* Firefox - hides scrollbar but keeps scroll */
-  -ms-overflow-style: none; /* Internet Explorer 10+ - hides scrollbar but keeps scroll */
-}
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+} */
 
 /* Hide scrollbars for Webkit browsers (Chrome, Safari, Edge) but keep scroll functionality */
 ::-webkit-scrollbar {
@@ -217,19 +216,19 @@ html, body {
   max-width: 100%;
 }
 
-/* Fix animation overflow issues */
-.motion-div, [data-framer-motion] {
+/* Fix animation overflow issues - DISABLED to prevent scroll interference */
+/* .motion-div, [data-framer-motion] {
   overflow: hidden;
   contain: layout;
-}
+} */
 
-/* Ensure proper scrolling for animated pages */
-.page-container {
+/* Ensure proper scrolling for animated pages - DISABLED to prevent section scrolling */
+/* .page-container {
   overflow-x: hidden;
   overflow-y: auto;
   height: 100vh;
   position: relative;
-}
+} */
 
 /* Fix TypewriterText overflow */
 .typewriter-container {
@@ -237,11 +236,11 @@ html, body {
   max-width: 100%;
 }
 
-/* Ensure animated sections don't cause overflow */
-.animated-section {
+/* Ensure animated sections don't cause overflow - DISABLED to prevent section scrolling */
+/* .animated-section {
   overflow: hidden;
   position: relative;
-}
+} */
 
 /* Additional safety for common overflow culprits */
 img, video, iframe, canvas, svg {
@@ -297,10 +296,10 @@ img {
   max-width: 100%;
 }
 
-/* Ensure wave animations don't cause overflow */
-.wave-animation {
+/* Ensure wave animations don't cause overflow - DISABLED to prevent section scrolling */
+/* .wave-animation {
   overflow: hidden;
-}
+} */
 
 /* Blog-specific animations */
 .line-clamp-2 {
@@ -477,18 +476,18 @@ img {
   }
 }
 
-/* Optimize scroll performance for heavy components */
-.mobile-optimized-scroll {
+/* Optimize scroll performance for heavy components - DISABLED to prevent scroll interference */
+/* .mobile-optimized-scroll {
   contain: layout style paint;
   will-change: scroll-position;
-}
+} */
 
-/* Reduce repaints during scroll */
-.scroll-optimized {
+/* Reduce repaints during scroll - DISABLED to prevent scroll interference */
+/* .scroll-optimized {
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
-}
+} */
 
 
 

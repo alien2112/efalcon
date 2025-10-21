@@ -55,9 +55,9 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
     const handleScroll = (e: Event) => {
       if (!heroRef.current) return;
 
-      // If animation is not complete, prevent actual scrolling and only update animation
+      // Allow natural scrolling - removed preventDefault to fix scroll blocking
       if (!animationComplete) {
-        e.preventDefault();
+        // e.preventDefault(); // DISABLED: Allow natural page scrolling
         
         // Calculate animation progress based on scroll delta
         const deltaY = (e as WheelEvent).deltaY;
@@ -127,7 +127,7 @@ export function WaveAnimation({ className = '', onAnimationComplete }: WaveAnima
 
     const handleTouchMove = (e: TouchEvent) => {
       if (!animationComplete && e.touches.length === 1) {
-        e.preventDefault();
+        // e.preventDefault(); // DISABLED: Allow natural touch scrolling
         
         const touchCurrentY = e.touches[0].clientY;
         const deltaY = touchStartY - touchCurrentY; // Inverted for natural scroll direction

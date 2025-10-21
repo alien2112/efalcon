@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, Download, ArrowRight, ArrowLeft } from 'lucide-react';
@@ -12,6 +12,7 @@ import { ServiceCardAnimation, AnimatedSeparator, FloatingIcon, GlowingBackgroun
 import { StaggeredReveal, MagneticCard, PulseGlow, TypewriterText } from '@/components/animations/StaggeredReveal';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { services as staticServices } from '@/lib/services';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 interface DynamicService {
   _id: string;
@@ -68,6 +69,7 @@ export default function ServicesPage() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [dynamicServices, setDynamicServices] = useState<DynamicService[]>([]);
   const [loading, setLoading] = useState(true);
+  const servicesSectionRef = useRef<HTMLElement>(null);
 
   // Fetch dynamic services
   useEffect(() => {
@@ -86,6 +88,30 @@ export default function ServicesPage() {
     };
 
     fetchDynamicServices();
+  }, []);
+
+  // Lock scroll for services section when component mounts
+  useEffect(() => {
+    const element = servicesSectionRef.current;
+    if (element) {
+      // Lock scroll for the services section
+      try {
+        disableBodyScroll(element);
+      } catch (error) {
+        console.warn('Failed to disable body scroll:', error);
+      }
+      
+      return () => {
+        // Unlock scroll when component unmounts - with proper error handling
+        try {
+          if (element && element.isConnected) {
+            enableBodyScroll(element);
+          }
+        } catch (error) {
+          console.warn('Failed to enable body scroll:', error);
+        }
+      };
+    }
   }, []);
 
   // Define service categories with translations
@@ -195,7 +221,7 @@ export default function ServicesPage() {
         </div>
 
       {/* Services Section */}
-      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
+      <GlowingBackground ref={servicesSectionRef} className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
         {/* Animated Separator */}
         <AnimatedSeparator className="mb-8" delay={0.3} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -275,30 +301,18 @@ export default function ServicesPage() {
                       <ServiceCardAnimation key={service.id} index={index} delay={0.8}>
                         <MagneticCard 
                           className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-pan-y select-none"
-                          onDragStart={(e) => e.preventDefault()}
-                          onDrag={(e) => e.preventDefault()}
-                          onDragEnd={(e) => e.preventDefault()}
-                          onMouseDown={(e) => e.preventDefault()}
-                          onContextMenu={(e) => e.preventDefault()}
+                          // Removed drag prevention to allow natural scrolling
                           style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                         >
                           <Link 
                             href={`/services/${service.id}`} 
                             className="block touch-none select-none"
-                            onDragStart={(e) => e.preventDefault()}
-                            onDrag={(e) => e.preventDefault()}
-                            onDragEnd={(e) => e.preventDefault()}
-                            onMouseDown={(e) => e.preventDefault()}
-                            onContextMenu={(e) => e.preventDefault()}
+                            // Removed drag prevention to allow natural scrolling
                             style={{ touchAction: 'pan-y', userSelect: 'none' }}
                           >
                             <div 
                               className="relative h-48 overflow-hidden touch-pan-y select-none" 
-                              onDragStart={(e) => e.preventDefault()}
-                              onDrag={(e) => e.preventDefault()}
-                              onDragEnd={(e) => e.preventDefault()}
-                              onMouseDown={(e) => e.preventDefault()}
-                              onContextMenu={(e) => e.preventDefault()}
+                              // Removed drag prevention to allow natural scrolling
                               style={{ touchAction: 'pan-y', userSelect: 'none' }}
                             >
                               <Image
@@ -393,11 +407,7 @@ export default function ServicesPage() {
                   <ServiceCardAnimation key={service._id} index={index} delay={0.4}>
                     <MagneticCard 
                       className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-pan-y select-none"
-                      onDragStart={(e) => e.preventDefault()}
-                      onDrag={(e) => e.preventDefault()}
-                      onDragEnd={(e) => e.preventDefault()}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onContextMenu={(e) => e.preventDefault()}
+                      // Removed drag prevention to allow natural scrolling
                       style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                     >
                       <Link 
@@ -412,11 +422,7 @@ export default function ServicesPage() {
                       >
                         <div 
                           className="relative h-48 overflow-hidden touch-pan-y select-none" 
-                          onDragStart={(e) => e.preventDefault()}
-                          onDrag={(e) => e.preventDefault()}
-                          onDragEnd={(e) => e.preventDefault()}
-                          onMouseDown={(e) => e.preventDefault()}
-                          onContextMenu={(e) => e.preventDefault()}
+                          // Removed drag prevention to allow natural scrolling
                           style={{ touchAction: 'pan-y', userSelect: 'none' }}
                         >
                           <Image
@@ -542,30 +548,15 @@ export default function ServicesPage() {
                     <ServiceCardAnimation key={application.id} index={index} delay={0.1 * index}>
                       <MagneticCard 
                         className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group block touch-pan-y select-none"
-                        onDragStart={(e) => e.preventDefault()}
-                        onDrag={(e) => e.preventDefault()}
-                        onDragEnd={(e) => e.preventDefault()}
-                        onMouseDown={(e) => e.preventDefault()}
-                        onContextMenu={(e) => e.preventDefault()}
                         style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
                       >
                         <Link 
                           href={`/services/${application.id}`}
                           className="block touch-pan-y select-none"
-                          onDragStart={(e) => e.preventDefault()}
-                          onDrag={(e) => e.preventDefault()}
-                          onDragEnd={(e) => e.preventDefault()}
-                          onMouseDown={(e) => e.preventDefault()}
-                          onContextMenu={(e) => e.preventDefault()}
                           style={{ touchAction: 'pan-y', userSelect: 'none' }}
                         >
                           <div 
                             className="relative h-48 overflow-hidden touch-pan-y select-none" 
-                            onDragStart={(e) => e.preventDefault()}
-                            onDrag={(e) => e.preventDefault()}
-                            onDragEnd={(e) => e.preventDefault()}
-                            onMouseDown={(e) => e.preventDefault()}
-                            onContextMenu={(e) => e.preventDefault()}
                             style={{ touchAction: 'pan-y', userSelect: 'none' }}
                           >
                             <Image
