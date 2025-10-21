@@ -149,16 +149,22 @@ export function WorkSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {/*
+            Mobile/tablet: horizontal scrollable grid with one item per column-sized cell
+            Desktop (lg+): standard 3-column grid
+          */}
+          <div
+            className="grid lg:grid-cols-3 lg:gap-8 gap-4 grid-flow-col lg:grid-flow-row auto-cols-[85%] sm:auto-cols-[60%] md:auto-cols-[50%] overflow-x-auto lg:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
             {workImages.map((item, index) => (
               <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
                 <Link 
                   href={item.slug ? `/our-work/${item.slug}` : '#'}
-                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block touch-none select-none"
+                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block touch-none select-none snap-start"
                   onDragStart={(e) => e.preventDefault()}
                   onDrag={(e) => e.preventDefault()}
                   onDragEnd={(e) => e.preventDefault()}
-                  style={{ touchAction: 'none' }}
+                  style={{ touchAction: 'pan-y' }}
                 >
                   {/* Enhanced Thumbnail */}
                   <div 
@@ -166,7 +172,7 @@ export function WorkSection() {
                     onDragStart={(e) => e.preventDefault()}
                     onDrag={(e) => e.preventDefault()}
                     onDragEnd={(e) => e.preventDefault()}
-                    style={{ touchAction: 'none' }}
+                    style={{ touchAction: 'pan-y' }}
                   >
                     <Image
                       src={item.imageUrl}

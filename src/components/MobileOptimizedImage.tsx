@@ -30,7 +30,7 @@ export function MobileOptimizedImage({
   quality = 85,
   src,
   alt,
-  ...props
+  ...restProps
 }: MobileOptimizedImageProps) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -53,10 +53,10 @@ export function MobileOptimizedImage({
 
   // Mobile-specific optimizations
   const optimizedProps = {
-    ...props,
+    ...restProps,
     quality: isMobile ? mobileQuality : quality,
-    loading: isMobile ? 'lazy' : props.loading,
-    sizes: isMobile ? '(max-width: 768px) 100vw, 50vw' : props.sizes,
+    loading: isMobile ? 'lazy' : restProps.loading,
+    sizes: isMobile ? '(max-width: 768px) 100vw, 50vw' : restProps.sizes,
   };
 
   return (

@@ -52,8 +52,6 @@ export function PresenceImage({ src, alt, className = '' }: PresenceImageProps) 
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 95vw, (max-width: 1024px) 90vw, (max-width: 1280px) 85vw, 80vw"
         priority={true}
         onLoad={() => setIsLoaded(true)}
-        // Mobile-specific optimizations
-        mobileQuality={85}
       />
 
       {/* Responsive overlay for better text readability */}
