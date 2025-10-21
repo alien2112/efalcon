@@ -122,38 +122,55 @@ export function WorkSection() {
       </div>
 
       {/* Decorative corner accents - hidden on mobile, visible on md and up */}
-      <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-white/15 to-transparent rounded-br-3xl hidden md:block pointer-events-none"></div>
-      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/15 to-transparent rounded-bl-3xl hidden md:block pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-white/15 to-transparent rounded-tr-3xl hidden md:block pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/15 to-transparent rounded-tl-3xl hidden md:block pointer-events-none"></div>
-
+      <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-white/15 to-transparent rounded-br-3xl hidden md:block"></div>
+      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-white/15 to-transparent rounded-bl-3xl hidden md:block"></div>
+      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-white/15 to-transparent rounded-tr-3xl hidden md:block"></div>
+      <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-white/15 to-transparent rounded-tl-3xl hidden md:block"></div>
+      
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 md:px-8">
-        {/* Section Title */}
-        <div className="relative text-center mb-20 pointer-events-none">
-          {/* Decorative accent line */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full"></div>
-          <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[56px] md:text-[96px] leading-[1.2] text-white mb-8 drop-shadow-lg">
-            {t('work.title') || 'Our Work'}
-          </h2>
-        </div>
+        {/* Enhanced Section Title */}
+        <FadeInOnScroll direction="up" delay={0.2}>
+          <div className="relative text-center mb-20">
+            {/* Decorative accent line */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full"></div>
+            <h2 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[56px] md:text-[96px] leading-[1.2] text-white mb-8 drop-shadow-lg">
+              {t('work.title') || 'Our Work'}
+            </h2>
+          </div>
+        </FadeInOnScroll>
 
-        {/* Portfolio Grid/Carousel */}
-        <div className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8">
-          {/* Mobile: Horizontal Scroll */}
-          <div className="md:hidden overflow-x-auto overflow-y-visible -mx-4 px-4 pb-4 scrollbar-hide">
-            <div className="flex gap-4" style={{ width: 'max-content' }}>
-              {workImages.map((item) => (
-                <Link
-                  key={item._id}
+        {/* Portfolio Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          {/*
+            Mobile/tablet: horizontal scrollable grid with one item per column-sized cell
+            Desktop (lg+): standard 3-column grid
+          */}
+          <div
+            className="grid lg:grid-cols-3 lg:gap-8 gap-4 grid-flow-col lg:grid-flow-row auto-cols-[85%] sm:auto-cols-[60%] md:auto-cols-[50%] overflow-x-auto lg:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {workImages.map((item, index) => (
+              <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
+                <Link 
                   href={item.slug ? `/our-work/${item.slug}` : '#'}
-                  className="work-card relative block rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm flex-shrink-0"
-                  style={{ 
-                    width: '280px',
-                    touchAction: 'pan-x'
-                  }}
+                  className="group relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] hover:scale-[1.02] block touch-none select-none snap-start"
+                  onDragStart={(e) => e.preventDefault()}
+                  onDrag={(e) => e.preventDefault()}
+                  onDragEnd={(e) => e.preventDefault()}
+                  style={{ touchAction: 'pan-y' }}
                 >
-                  {/* Image Container */}
-                  <div className="relative w-full h-[220px] overflow-hidden">
+                  {/* Enhanced Thumbnail */}
+                  <div 
+                    className="relative w-full h-[220px] md:h-[280px] overflow-hidden touch-none select-none" 
+                    onDragStart={(e) => e.preventDefault()}
+                    onDrag={(e) => e.preventDefault()}
+                    onDragEnd={(e) => e.preventDefault()}
+                    style={{ touchAction: 'pan-y' }}
+                  >
                     <Image
                       src={item.imageUrl}
                       alt={item.title}

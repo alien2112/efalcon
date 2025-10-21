@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { ReactNode, useRef, useState } from 'react';
 
 interface ServiceCardAnimationProps {
@@ -19,10 +19,11 @@ export function ServiceCardAnimation({
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 0.8', 'start 0.2']
-  });
+  // Disabled scroll-based animations for better PC scrolling experience
+  // const { scrollYProgress } = useScroll({
+  //   target: ref,
+  //   offset: ['start 0.8', 'start 0.2']
+  // });
 
   // Smooth spring animations for hover effects
   const scale = useSpring(1, { stiffness: 300, damping: 30 });
@@ -30,9 +31,9 @@ export function ServiceCardAnimation({
   const rotateY = useSpring(0, { stiffness: 300, damping: 30 });
   const y = useSpring(0, { stiffness: 300, damping: 30 });
 
-  // Scroll-based animations
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const scrollY = useTransform(scrollYProgress, [0, 1], [50, 0]);
+  // Disabled scroll-based animations - using static values instead
+  const opacity = 1; // Always visible
+  const scrollY = 0; // No scroll-based movement
 
   // Mouse tracking for 3D tilt effect
   const mouseX = useMotionValue(0);
@@ -153,13 +154,15 @@ interface AnimatedSeparatorProps {
 
 export function AnimatedSeparator({ className = '', delay = 0 }: AnimatedSeparatorProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 0.8', 'start 0.2']
-  });
+  // Disabled scroll-based animations for better PC scrolling experience
+  // const { scrollYProgress } = useScroll({
+  //   target: ref,
+  //   offset: ['start 0.8', 'start 0.2']
+  // });
 
-  const width = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  // Static values instead of scroll-based animations
+  const width = '100%'; // Always full width
+  const opacity = 1; // Always visible
 
   return (
     <motion.div
@@ -171,6 +174,8 @@ export function AnimatedSeparator({ className = '', delay = 0 }: AnimatedSeparat
         <motion.div
           className="h-full bg-gradient-to-r from-[#EFC132] to-[#FFD700]"
           style={{ width }}
+          initial={{ width: '0%' }}
+          animate={{ width: '100%' }}
           transition={{ duration: 1.5, delay, ease: "easeOut" }}
         />
       </div>

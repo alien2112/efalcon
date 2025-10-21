@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BannerImage {
@@ -176,9 +176,10 @@ export function Banner({
     return staticImageSets[page] || [backgroundImage];
   };
 
-  // Parallax scroll effect
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  // Disabled parallax scroll effect for better PC scrolling experience
+  // const { scrollYProgress } = useScroll();
+  // const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const y = '0%'; // Static position instead of parallax
 
   useEffect(() => {
     // Generate particles only on client side

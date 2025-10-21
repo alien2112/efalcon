@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ReactNode, useRef, useState, useEffect } from 'react';
 
 interface ParallaxWrapperProps {
@@ -29,24 +29,15 @@ export function ParallaxWrapper({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start']
-  });
+  // Disabled scroll-based animations for better PC scrolling experience
+  // const { scrollYProgress } = useScroll({
+  //   target: ref,
+  //   offset: ['start end', 'end start']
+  // });
 
-  // Reduce parallax intensity on mobile for better performance
-  const mobileSpeed = isMobile ? speed * 0.3 : speed;
-  const distance = 100 * mobileSpeed;
-  
-  const y = useTransform(scrollYProgress, [0, 1], 
-    direction === 'up' ? [distance, -distance] : 
-    direction === 'down' ? [-distance, distance] : [0, 0]
-  );
-  
-  const x = useTransform(scrollYProgress, [0, 1], 
-    direction === 'left' ? [distance, -distance] : 
-    direction === 'right' ? [-distance, distance] : [0, 0]
-  );
+  // Static values instead of scroll-based animations
+  const y = 0; // No scroll-based movement
+  const x = 0; // No scroll-based movement
 
   return (
     <motion.div
@@ -80,13 +71,16 @@ export function ParallaxSection({
   contentSpeed = 0.5
 }: ParallaxSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start']
-  });
+  
+  // Disabled scroll-based animations for better PC scrolling experience
+  // const { scrollYProgress } = useScroll({
+  //   target: ref,
+  //   offset: ['start end', 'end start']
+  // });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', `${backgroundSpeed * 100}%`]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', `${contentSpeed * -100}%`]);
+  // Static values instead of scroll-based animations
+  const backgroundY = '0%'; // No scroll-based movement
+  const contentY = '0%'; // No scroll-based movement
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
@@ -134,14 +128,15 @@ export function FadeInOnScroll({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 0.8', 'start 0.2']
-  });
+  // Disabled scroll-based animations for better PC scrolling experience
+  // const { scrollYProgress } = useScroll({
+  //   target: ref,
+  //   offset: ['start 0.8', 'start 0.2']
+  // });
 
   const getInitialPosition = () => {
-    // Reduce movement distance on mobile for better performance
-    const distance = isMobile ? 25 : 50;
+    // Reduced movement distance for better performance
+    const distance = isMobile ? 15 : 25;
     switch (direction) {
       case 'up':
         return { y: distance, x: 0 };
@@ -158,9 +153,10 @@ export function FadeInOnScroll({
 
   const initial = getInitialPosition();
 
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [initial.y, 0]);
-  const x = useTransform(scrollYProgress, [0, 1], [initial.x, 0]);
+  // Static values instead of scroll-based animations
+  const opacity = 1; // Always visible
+  const y = 0; // No scroll-based movement
+  const x = 0; // No scroll-based movement
 
   // Reduce animation duration on mobile for better performance
   const mobileDuration = isMobile ? duration * 0.7 : duration;
@@ -168,12 +164,8 @@ export function FadeInOnScroll({
   return (
     <motion.div
       ref={ref}
-      style={{
-        opacity,
-        y,
-        x,
-        touchAction: 'pan-y' // Enable vertical scrolling on touch devices
-      }}
+      initial={{ opacity: 0, y: initial.y, x: initial.x }}
+      animate={{ opacity: 1, y: 0, x: 0 }}
       transition={{ duration: mobileDuration, delay }}
       className={`${className} ${isMobile ? 'parallax-element' : ''}`}
       onTouchStart={undefined}
@@ -199,19 +191,23 @@ export function ScaleOnScroll({
   delay = 0
 }: ScaleOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 0.8', 'start 0.2']
-  });
+  
+  // Disabled scroll-based animations for better PC scrolling experience
+  // const { scrollYProgress } = useScroll({
+  //   target: ref,
+  //   offset: ['start 0.8', 'start 0.2']
+  // });
 
-  const scale = useTransform(scrollYProgress, [0, 1], scaleRange);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  // Static values instead of scroll-based animations
+  const scale = 1; // Always full scale
+  const opacity = 1; // Always visible
 
   return (
     <motion.div
       ref={ref}
-      style={{ scale, opacity }}
-      transition={{ delay }}
+      initial={{ scale: scaleRange[0], opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay, duration: 0.6 }}
       className={className}
     >
       {children}
