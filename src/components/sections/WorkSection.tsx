@@ -108,7 +108,7 @@ export function WorkSection() {
     : fallbackWorkImages;
 
   return (
-    <section ref={sectionRef} className="work-section-container relative w-full py-20 md:py-32">
+    <section className="work-section-container relative w-full py-20 md:py-32">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/8 to-transparent"></div>
