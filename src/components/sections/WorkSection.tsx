@@ -153,19 +153,23 @@ export function WorkSection() {
             Desktop (lg+): standard 3-column grid
           */}
           <div
-            className="grid lg:grid-cols-3 lg:gap-8 gap-4 grid-flow-col lg:grid-flow-row auto-cols-[85%] sm:auto-cols-[60%] md:auto-cols-[50%] lg:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="grid lg:grid-cols-3 lg:gap-8 gap-4 grid-flow-col lg:grid-flow-row auto-cols-[85%] sm:auto-cols-[60%] md:auto-cols-[50%] lg:overflow-visible overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            style={{ 
+              WebkitOverflowScrolling: 'touch',
+              scrollBehavior: 'smooth'
+            }}
           >
             {workImages.map((item, index) => (
               <FadeInOnScroll key={item._id} direction="up" delay={0.1 * index}>
                 <Link 
                   href={item.slug ? `/our-work/${item.slug}` : '#'}
                   className="group relative rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)] block snap-start"
-                  style={{ touchAction: 'pan-y' }}
+                  style={{ touchAction: 'manipulation' }}
                 >
                   {/* Enhanced Thumbnail */}
                   <div 
                     className="relative w-full h-[220px] md:h-[280px]" 
-                    style={{ touchAction: 'pan-y' }}
+                    style={{ touchAction: 'manipulation' }}
                   >
                     <Image
                       src={item.imageUrl}
