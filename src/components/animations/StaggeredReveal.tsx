@@ -63,8 +63,7 @@ export function StaggeredReveal({
       className={className}
       variants={containerVariants}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      animate="visible"
     >
       {Array.isArray(children) ? (
         children.map((child, index) => (

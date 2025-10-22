@@ -512,42 +512,42 @@ export default function AdminDashboard() {
 
       <div className="flex h-screen">
         {/* Sidebar - Full Height on PC */}
-        <div className={`fixed inset-y-0 left-0 z-50 w-80 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 shadow-2xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:h-screen ${
+        <div className={`fixed inset-y-0 left-0 z-50 w-80 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 shadow-2xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:h-screen border-r border-slate-700/50 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
           {/* Sidebar Header */}
-          <div className="flex items-center justify-between h-20 px-8 border-b border-slate-700">
+          <div className="flex items-center justify-between h-20 px-8 border-b border-slate-700/60 backdrop-blur-sm">
             <div className="flex items-center space-x-3">
-              <div className="h-10 w-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center shadow-lg">
+              <div className="h-10 w-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center shadow-lg ring-1 ring-amber-300/20">
                 <span className="text-white font-bold text-lg">AF</span>
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white">Admin Panel</h2>
-                <p className="text-xs text-slate-400">Ebdaa Falcon</p>
+                <h2 className="text-xl font-bold text-white tracking-tight">Admin Panel</h2>
+                <p className="text-xs text-slate-400 font-medium">Ebdaa Falcon</p>
               </div>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all duration-200 hover:scale-105"
             >
               <X className="h-6 w-6" />
             </button>
           </div>
 
           {/* User Profile Section */}
-          <div className="p-8 border-b border-slate-700">
+          <div className="p-8 border-b border-slate-700/60 backdrop-blur-sm">
             <div className="flex items-center space-x-4">
-              <div className="h-12 w-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+              <div className="h-12 w-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg ring-1 ring-blue-400/20">
                 <span className="text-white font-semibold text-lg">
                     {adminUser?.username?.charAt(0).toUpperCase()}
                   </span>
                 </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">{adminUser?.username}</p>
-                <p className="text-xs text-slate-400 truncate">{adminUser?.email}</p>
-                <div className="flex items-center mt-1">
-                  <div className="h-2 w-2 bg-green-400 rounded-full mr-2"></div>
-                  <span className="text-xs text-green-400">Online</span>
+                <p className="text-sm font-semibold text-white truncate tracking-tight">{adminUser?.username}</p>
+                <p className="text-xs text-slate-400 truncate font-medium">{adminUser?.email}</p>
+                <div className="flex items-center mt-2">
+                  <div className="h-2 w-2 bg-green-400 rounded-full mr-2 shadow-sm ring-1 ring-green-300/30"></div>
+                  <span className="text-xs text-green-400 font-medium">Online</span>
                 </div>
                 </div>
               </div>
@@ -555,7 +555,7 @@ export default function AdminDashboard() {
 
           {/* Navigation */}
           <div className="flex-1 overflow-y-auto py-6">
-            <nav className="space-y-2 px-6">
+            <nav className="space-y-1 px-6">
               {[
                 { key: 'pagebanners', label: 'Page Banners', icon: Image, color: 'from-purple-500 to-purple-600' },
                 { key: 'services', label: 'Services', icon: Settings, color: 'from-blue-500 to-blue-600' },
@@ -570,22 +570,22 @@ export default function AdminDashboard() {
                     setActiveTab(tab.key as any);
                     setSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${
+                  className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group relative ${
                     activeTab === tab.key
-                      ? 'bg-gradient-to-r from-slate-700 to-slate-600 text-white shadow-lg transform scale-105'
-                      : 'text-slate-300 hover:bg-slate-700 hover:text-white hover:transform hover:scale-105'
+                      ? 'bg-gradient-to-r from-slate-700 to-slate-600 text-white shadow-lg shadow-slate-900/20 transform scale-[1.02]'
+                      : 'text-slate-300 hover:bg-slate-700/50 hover:text-white hover:transform hover:scale-[1.01] hover:shadow-md'
                   }`}
                 >
                   <div className={`p-2 rounded-lg mr-3 transition-all duration-200 ${
                     activeTab === tab.key 
-                      ? `bg-gradient-to-br ${tab.color} shadow-lg` 
-                      : 'bg-slate-600 group-hover:bg-slate-500'
+                      ? `bg-gradient-to-br ${tab.color} shadow-lg ring-1 ring-white/10` 
+                      : 'bg-slate-600 group-hover:bg-slate-500 group-hover:shadow-md'
                   }`}>
                     <tab.icon className="h-5 w-5" />
                   </div>
-                  <span className="flex-1 text-left">{tab.label}</span>
+                  <span className="flex-1 text-left font-medium tracking-tight">{tab.label}</span>
                   {activeTab === tab.key && (
-                    <div className="h-2 w-2 bg-white rounded-full"></div>
+                    <div className="h-2 w-2 bg-white rounded-full shadow-sm"></div>
                   )}
                 </button>
               ))}
@@ -593,13 +593,13 @@ export default function AdminDashboard() {
           </div>
 
           {/* Sidebar Footer */}
-          <div className="p-6 border-t border-slate-700">
+          <div className="p-6 border-t border-slate-700/60 backdrop-blur-sm">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center px-4 py-3 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 rounded-xl transition-all duration-200 group"
+              className="w-full flex items-center justify-center px-4 py-3 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-xl transition-all duration-200 group hover:shadow-md hover:scale-[1.01]"
             >
-              <LogOut className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform" />
-              Logout
+              <LogOut className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform duration-200" />
+              <span className="font-medium tracking-tight">Logout</span>
             </button>
           </div>
         </div>
@@ -615,11 +615,11 @@ export default function AdminDashboard() {
         {/* Main Content */}
         <div className="flex-1 lg:ml-0 overflow-y-auto">
           {/* Desktop Header */}
-          <div className="hidden lg:block bg-white/90 backdrop-blur-sm shadow-sm border-b border-slate-200">
+          <div className="hidden lg:block bg-white/95 backdrop-blur-sm shadow-sm border-b border-slate-200/60">
             <div className="px-8 py-6">
               <div className="flex items-center justify-between">
           <div>
-                  <h1 className="text-3xl font-bold text-slate-900 mb-2">
+                  <h1 className="text-3xl font-bold text-slate-900 mb-2 tracking-tight">
                     {activeTab === 'pagebanners' && 'Page Banners'}
                     {activeTab === 'services' && 'Services Management'}
                     {activeTab === 'projects' && 'Projects Management'}
@@ -631,7 +631,7 @@ export default function AdminDashboard() {
                     {activeTab === 'analytics' && 'Analytics'}
                     {activeTab === 'settings' && 'Settings'}
             </h1>
-                  <p className="text-slate-600">
+                  <p className="text-slate-600 font-medium">
                     {activeTab === 'pagebanners' && 'Manage banner images for different pages'}
                     {activeTab === 'services' && 'Manage services and service categories'}
                     {activeTab === 'projects' && 'Manage projects and project portfolios'}
@@ -648,7 +648,7 @@ export default function AdminDashboard() {
                   {activeTab === 'pagebanners' && (
                     <button
                       onClick={openAddModal}
-                      className="flex items-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 border border-transparent rounded-xl hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 shadow-lg hover:shadow-xl transition-all duration-200"
+                      className="flex items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-purple-700 border border-transparent rounded-xl hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 ring-1 ring-purple-500/20"
                     >
                       <Plus className="w-4 h-4 mr-2" />
                       Add Banner
@@ -657,7 +657,7 @@ export default function AdminDashboard() {
                   {activeTab === 'services' && (
             <button
                       onClick={() => openServiceModal()}
-                      className="flex items-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 border border-transparent rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-lg hover:shadow-xl transition-all duration-200"
+                      className="flex items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 border border-transparent rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 ring-1 ring-blue-500/20"
             >
                       <Plus className="w-4 h-4 mr-2" />
                       Add Service
@@ -666,7 +666,7 @@ export default function AdminDashboard() {
                   {activeTab === 'projects' && (
                     <button
                       onClick={() => openProjectModal()}
-                      className="flex items-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-green-600 to-green-700 border border-transparent rounded-xl hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-lg hover:shadow-xl transition-all duration-200"
+                      className="flex items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-green-600 to-green-700 border border-transparent rounded-xl hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 ring-1 ring-green-500/20"
                     >
                       <Plus className="w-4 h-4 mr-2" />
                       Add Project
@@ -675,7 +675,7 @@ export default function AdminDashboard() {
                   {activeTab === 'blog' && (
                     <button
                       onClick={() => openBlogModal()}
-                      className="flex items-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-orange-600 to-orange-700 border border-transparent rounded-xl hover:from-orange-700 hover:to-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 shadow-lg hover:shadow-xl transition-all duration-200"
+                      className="flex items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-orange-600 to-orange-700 border border-transparent rounded-xl hover:from-orange-700 hover:to-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 ring-1 ring-orange-500/20"
                     >
                       <Plus className="w-4 h-4 mr-2" />
                       Add Blog Post
@@ -858,10 +858,10 @@ function PageBannersTab({
   return (
     <div className="space-y-8">
         {/* Page Tabs */}
-      <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
-          <h3 className="text-lg font-semibold text-slate-900">Page Selection</h3>
-          <p className="text-sm text-slate-600">Choose which page to manage banners for</p>
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 overflow-hidden ring-1 ring-slate-100/50">
+        <div className="px-6 py-4 border-b border-slate-200/60 bg-gradient-to-r from-slate-50/80 to-white backdrop-blur-sm">
+          <h3 className="text-lg font-semibold text-slate-900 tracking-tight">Page Selection</h3>
+          <p className="text-sm text-slate-600 font-medium">Choose which page to manage banners for</p>
         </div>
         <div className="p-6">
           <nav className="flex space-x-2 overflow-x-auto">
@@ -876,10 +876,10 @@ function PageBannersTab({
                 <button
                   key={tab.key}
                 onClick={() => setActivePageTab(tab.key as any)}
-                className={`px-6 py-3 rounded-xl font-medium text-sm whitespace-nowrap transition-all duration-200 ${
+                className={`px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-all duration-200 ring-1 ${
                   activePageTab === tab.key
-                    ? `bg-gradient-to-r ${tab.color} text-white shadow-lg transform scale-105`
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800'
+                    ? `bg-gradient-to-r ${tab.color} text-white shadow-lg shadow-slate-900/20 transform scale-105 ring-white/20`
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 hover:shadow-md hover:scale-102 ring-slate-200/50'
                   }`}
                 >
                   {tab.label}
@@ -893,7 +893,7 @@ function PageBannersTab({
       <div className="lg:hidden">
         <button
           onClick={openAddModal}
-          className="w-full flex items-center justify-center px-6 py-4 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 border border-transparent rounded-xl hover:from-purple-700 hover:to-purple-800 shadow-lg hover:shadow-xl transition-all duration-200"
+          className="w-full flex items-center justify-center px-6 py-4 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-purple-700 border border-transparent rounded-xl hover:from-purple-700 hover:to-purple-800 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 ring-1 ring-purple-500/20"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Banner Image
@@ -901,20 +901,20 @@ function PageBannersTab({
       </div>
 
         {/* Banner Images Grid */}
-      <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-200/60 overflow-hidden ring-1 ring-slate-100/50">
+        <div className="px-6 py-4 border-b border-slate-200/60 bg-gradient-to-r from-slate-50/80 to-white backdrop-blur-sm">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-xl font-semibold text-slate-900">
+              <h2 className="text-xl font-semibold text-slate-900 tracking-tight">
             Banner Images for {activePageTab.charAt(0).toUpperCase() + activePageTab.slice(1)} Page
             </h2>
-              <p className="text-sm text-slate-600 mt-1">
+              <p className="text-sm text-slate-600 mt-1 font-medium">
                 Manage banner images for the {activePageTab} page
               </p>
             </div>
             <button
             onClick={openAddModal}
-              className="hidden lg:flex items-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 border border-transparent rounded-xl hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 shadow-lg hover:shadow-xl transition-all duration-200"
+              className="hidden lg:flex items-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-purple-700 border border-transparent rounded-xl hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 ring-1 ring-purple-500/20"
             >
             <Plus className="w-4 h-4 mr-2" />
               Add Banner Image
@@ -925,47 +925,47 @@ function PageBannersTab({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {getBannerImagesForPage(activePageTab).map((image) => (
-              <div key={image._id} className="bg-gradient-to-br from-white to-slate-50 rounded-2xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105">
-                <div className="aspect-video bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative overflow-hidden">
+              <div key={image._id} className="bg-gradient-to-br from-white to-slate-50/50 rounded-2xl shadow-lg border border-slate-200/60 overflow-hidden hover:shadow-xl hover:shadow-slate-900/10 transition-all duration-300 hover:transform hover:scale-105 ring-1 ring-slate-100/50 group">
+                <div className="aspect-video bg-gradient-to-br from-slate-100/80 to-slate-200/80 flex items-center justify-center relative overflow-hidden backdrop-blur-sm">
                   <img
                     src={`/api/gridfs/images/${image._id}`}
                     alt={image.metadata.title}
-                    className="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-110"
+                    className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute top-3 right-3">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold shadow-sm ring-1 ${
                       image.metadata.isActive
-                        ? 'bg-green-100 text-green-800 border border-green-200'
-                        : 'bg-red-100 text-red-800 border border-red-200'
+                        ? 'bg-green-100/90 text-green-800 border border-green-200/60 ring-green-300/30'
+                        : 'bg-red-100/90 text-red-800 border border-red-200/60 ring-red-300/30'
                     }`}>
                       {image.metadata.isActive ? 'Active' : 'Inactive'}
                     </span>
                 </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-semibold text-slate-900 mb-2 text-base line-clamp-2">
+                  <h3 className="font-semibold text-slate-900 mb-2 text-base line-clamp-2 tracking-tight">
                         {image.metadata.title}
                       </h3>
-                  <p className="text-sm text-slate-600 mb-4 line-clamp-2">
+                  <p className="text-sm text-slate-600 mb-4 line-clamp-2 font-medium">
                         {image.metadata.description}
                       </p>
                   <div className="flex items-center justify-between text-sm text-slate-500 mb-4">
-                    <span className="bg-slate-100 px-3 py-1 rounded-full">Order: {image.metadata.order}</span>
+                    <span className="bg-slate-100/80 px-3 py-1 rounded-full font-medium ring-1 ring-slate-200/50">Order: {image.metadata.order}</span>
                       </div>
                 <div className="flex flex-wrap gap-2">
                         <button
                     onClick={() => openEditModal(image)}
-                      className="flex items-center px-3 py-2 text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                      className="flex items-center px-3 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 hover:bg-blue-50/80 rounded-lg transition-all duration-200 hover:shadow-sm hover:scale-105 ring-1 ring-blue-200/30"
                         >
                           <Edit className="w-3 h-3 mr-1" />
                           Edit
                         </button>
                         <button
                           onClick={() => toggleImageStatus(image._id, image.metadata.isActive)}
-                      className={`flex items-center px-3 py-2 text-xs font-medium rounded-lg transition-all duration-200 ${
+                      className={`flex items-center px-3 py-2 text-xs font-semibold rounded-lg transition-all duration-200 hover:shadow-sm hover:scale-105 ring-1 ${
                             image.metadata.isActive
-                          ? 'text-orange-600 hover:text-orange-700 hover:bg-orange-50'
-                          : 'text-green-600 hover:text-green-700 hover:bg-green-50'
+                          ? 'text-orange-600 hover:text-orange-700 hover:bg-orange-50/80 ring-orange-200/30'
+                          : 'text-green-600 hover:text-green-700 hover:bg-green-50/80 ring-green-200/30'
                           }`}
                         >
                           {image.metadata.isActive ? (
@@ -977,7 +977,7 @@ function PageBannersTab({
                         </button>
                         <button
                           onClick={() => handleDelete(image._id)}
-                      className="flex items-center px-3 py-2 text-xs font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200"
+                      className="flex items-center px-3 py-2 text-xs font-semibold text-red-600 hover:text-red-700 hover:bg-red-50/80 rounded-lg transition-all duration-200 hover:shadow-sm hover:scale-105 ring-1 ring-red-200/30"
                         >
                           <Trash2 className="w-3 h-3 mr-1" />
                           Delete
@@ -990,16 +990,16 @@ function PageBannersTab({
 
         {getBannerImagesForPage(activePageTab).length === 0 && (
             <div className="text-center py-16">
-              <div className="mx-auto h-20 w-20 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center mb-6">
+              <div className="mx-auto h-20 w-20 bg-gradient-to-br from-slate-100/80 to-slate-200/80 rounded-full flex items-center justify-center mb-6 shadow-lg ring-1 ring-slate-200/50 backdrop-blur-sm">
                 <Image className="h-10 w-10 text-slate-400" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">No banner images</h3>
-              <p className="text-slate-600 mb-8 max-w-md mx-auto">
+              <h3 className="text-lg font-semibold text-slate-900 mb-2 tracking-tight">No banner images</h3>
+              <p className="text-slate-600 mb-8 max-w-md mx-auto font-medium">
                 Get started by uploading a new banner image for the {activePageTab} page.
               </p>
                 <button
                 onClick={openAddModal}
-                className="inline-flex items-center px-6 py-3 border border-transparent shadow-lg text-sm font-medium rounded-xl text-white bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200"
+                className="inline-flex items-center px-6 py-3 border border-transparent shadow-lg text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 hover:scale-105 transition-all duration-200 ring-1 ring-purple-500/20"
                 >
                 <Plus className="w-4 h-4 mr-2" />
                   Add Banner Image
@@ -2011,22 +2011,22 @@ function BannerModal({
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onClick={onCancel}></div>
+        <div className="fixed inset-0 bg-gray-900/70 backdrop-blur-md transition-opacity" onClick={onCancel}></div>
         
-        <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.15)] ring-1 ring-slate-200 transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+        <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.25)] ring-1 ring-slate-200/60 transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full backdrop-blur-sm">
           <form onSubmit={handleSubmit}>
-            <div className="bg-white px-6 pt-6 pb-4 sm:p-8 sm:pb-6">
+            <div className="bg-white/95 backdrop-blur-sm px-6 pt-6 pb-4 sm:p-8 sm:pb-6">
               <div className="sm:flex sm:items-start sm:gap-6">
                 <div className="w-full">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl leading-6 font-semibold text-slate-900">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl leading-6 font-bold text-slate-900 tracking-tight">
                       {type === 'add' ? 'Add Banner Image' : 'Edit Banner Image'}
                     </h3>
                     {type === 'edit' && (
                       <button
                         type="button"
                         onClick={() => setShowImageEditor(v => !v)}
-                        className="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm"
+                        className="inline-flex items-center px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/60 hover:bg-slate-50/80 hover:text-slate-900 hover:scale-105 transition-all shadow-sm ring-1 ring-slate-200/30"
                         title="Edit Image"
                       >
                         <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
@@ -2035,15 +2035,15 @@ function BannerModal({
                     )}
                   </div>
                   
-                  <div className="space-y-5">
+                  <div className="space-y-6">
                     {type === 'add' && (
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Image File</label>
+                        <label className="block text-sm font-semibold text-slate-700 mb-3 tracking-tight">Image File</label>
                         <input
                           type="file"
                           accept="image/*"
                           onChange={handleFileChange}
-                          className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
+                          className="w-full p-4 border-2 border-slate-200/60 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-300/60 transition-all shadow-sm hover:shadow-md ring-1 ring-slate-100/50"
                           required
                         />
                       </div>
@@ -2088,78 +2088,80 @@ function BannerModal({
                     )}
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-3 tracking-tight">
               Title
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
+              className="w-full p-4 border-2 border-slate-200/60 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-300/60 transition-all shadow-sm hover:shadow-md ring-1 ring-slate-100/50"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-3 tracking-tight">
               Arabic Title
             </label>
             <input
               type="text"
               value={formData.titleAr}
               onChange={(e) => setFormData(prev => ({ ...prev, titleAr: e.target.value }))}
-            className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
+            className="w-full p-4 border-2 border-slate-200/60 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-300/60 transition-all shadow-sm hover:shadow-md ring-1 ring-slate-100/50"
             required
             />
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-3 tracking-tight">
               Description
             </label>
             <input
               type="text"
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-            className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
+            className="w-full p-4 border-2 border-slate-200/60 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-300/60 transition-all shadow-sm hover:shadow-md ring-1 ring-slate-100/50"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-3 tracking-tight">
               Arabic Description
             </label>
             <input
               type="text"
               value={formData.descriptionAr}
               onChange={(e) => setFormData(prev => ({ ...prev, descriptionAr: e.target.value }))}
-            className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
+            className="w-full p-4 border-2 border-slate-200/60 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-300/60 transition-all shadow-sm hover:shadow-md ring-1 ring-slate-100/50"
             required
             />
           </div>
 
-          <div className="flex items-center space-x-4">
-            <label className="inline-flex items-center space-x-2">
+          <div className="flex items-center space-x-6">
+            <label className="inline-flex items-center space-x-3">
               <input
                 type="checkbox"
                 checked={formData.showTitle}
                 onChange={(e) => setFormData(prev => ({ ...prev, showTitle: e.target.checked }))}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
               />
-              <span className="text-sm text-gray-700">Show Title</span>
+              <span className="text-sm font-semibold text-slate-700">Show Title</span>
             </label>
-            <label className="inline-flex items-center space-x-2">
+            <label className="inline-flex items-center space-x-3">
               <input
                 type="checkbox"
                 checked={formData.showDescription}
                 onChange={(e) => setFormData(prev => ({ ...prev, showDescription: e.target.checked }))}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
               />
-              <span className="text-sm text-gray-700">Show Description</span>
+              <span className="text-sm font-semibold text-slate-700">Show Description</span>
             </label>
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-3 tracking-tight">
               Display Order
             </label>
             <input
@@ -2167,7 +2169,7 @@ function BannerModal({
               min="1"
               value={formData.order}
               onChange={(e) => setFormData(prev => ({ ...prev, order: parseInt(e.target.value) }))}
-            className="w-full p-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-300 transition-all"
+            className="w-full p-4 border-2 border-slate-200/60 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100/50 focus:border-blue-300/60 transition-all shadow-sm hover:shadow-md ring-1 ring-slate-100/50"
               required
             />
         </div>
@@ -2180,7 +2182,7 @@ function BannerModal({
             onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
           />
-          <label htmlFor="isActive" className="ml-2 block text-sm text-gray-900">
+          <label htmlFor="isActive" className="ml-3 block text-sm font-semibold text-slate-900">
             Active (visible on website)
           </label>
                     </div>
@@ -2189,11 +2191,11 @@ function BannerModal({
               </div>
         </div>
         
-            <div className="bg-slate-50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse border-t border-slate-200">
+            <div className="bg-slate-50/80 backdrop-blur-sm px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse border-t border-slate-200/60">
           <button
             type="submit"
                 disabled={uploading || (type === 'add' && !formData.file)}
-                className="w-full inline-flex justify-center rounded-xl border border-transparent shadow-lg hover:shadow-xl px-5 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-sm font-semibold text-white hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="w-full inline-flex justify-center rounded-xl border border-transparent shadow-lg hover:shadow-xl px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-sm font-bold text-white hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-all ring-1 ring-blue-500/20"
           >
             {uploading ? (
               <>
@@ -2210,7 +2212,7 @@ function BannerModal({
               <button
                 type="button"
                 onClick={onCancel}
-                className="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-5 py-3 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto transition-all"
+                className="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300/60 shadow-sm px-6 py-3 bg-white/80 text-sm font-semibold text-slate-700 hover:bg-slate-50/80 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto transition-all ring-1 ring-slate-200/30"
               >
                 Cancel
           </button>

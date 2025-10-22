@@ -7,12 +7,10 @@ import { ChevronRight, Download, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
 import { Banner } from '@/components/Banner';
-import { FadeInOnScroll } from '@/components/ParallaxWrapper';
 import { ServiceCardAnimation, AnimatedSeparator, FloatingIcon, GlowingBackground } from '@/components/animations/ServiceCardAnimation';
 import { StaggeredReveal, MagneticCard, PulseGlow, TypewriterText } from '@/components/animations/StaggeredReveal';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { services as staticServices } from '@/lib/services';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 interface DynamicService {
   _id: string;
@@ -46,6 +44,15 @@ interface DynamicService {
   category: string;
   isActive: boolean;
   order: number;
+}
+
+interface Service {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  imageUrl: string;
+  downloadUrl?: string;
 }
 
 interface ServiceCategory {
@@ -90,29 +97,7 @@ export default function ServicesPage() {
     fetchDynamicServices();
   }, []);
 
-  // Lock scroll for services section when component mounts
-  useEffect(() => {
-    const element = servicesSectionRef.current;
-    if (element) {
-      // Lock scroll for the services section
-      try {
-        disableBodyScroll(element);
-      } catch (error) {
-        console.warn('Failed to disable body scroll:', error);
-      }
-      
-      return () => {
-        // Unlock scroll when component unmounts - with proper error handling
-        try {
-          if (element && element.isConnected) {
-            enableBodyScroll(element);
-          }
-        } catch (error) {
-          console.warn('Failed to enable body scroll:', error);
-        }
-      };
-    }
-  }, []);
+  // Removed body scroll lock to allow normal page scrolling
 
   // Define service categories with translations
   const serviceCategories: ServiceCategory[] = [
@@ -221,11 +206,15 @@ export default function ServicesPage() {
         </div>
 
       {/* Services Section */}
-      <GlowingBackground ref={servicesSectionRef} className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative">
         {/* Animated Separator */}
         <AnimatedSeparator className="mb-8" delay={0.3} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <FadeInOnScroll direction="up" delay={0.2}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="mb-12">
               <PulseGlow className="inline-block">
                 <TypewriterText 
@@ -244,10 +233,14 @@ export default function ServicesPage() {
                 {t('services.description') || 'We provide integrated solutions across oil & gas, logistics, and renewable energy sectors, delivering excellence through strategic partnerships and innovative approaches.'}
               </motion.p>
           </div>
-          </FadeInOnScroll>
+          </motion.div>
 
           {/* Service Category Tabs */}
-          <FadeInOnScroll direction="up" delay={0.4}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             <div className="flex justify-center mb-12">
               <div className="bg-gray-100 rounded-lg p-2 flex space-x-2">
                 {serviceCategories.map((category) => (
@@ -265,7 +258,7 @@ export default function ServicesPage() {
                 ))}
                     </div>
                   </div>
-          </FadeInOnScroll>
+          </motion.div>
 
           {/* Service Content */}
           {currentCategory && (
@@ -276,7 +269,11 @@ export default function ServicesPage() {
             >
               <div className="grid lg:grid-cols-[1fr_2fr] gap-6 items-start">
                 {/* Service Info */}
-                <FadeInOnScroll direction="left" delay={0.6}>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                >
                   <div className="space-y-6">
                     <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] text-[#EFC132]">
                       {currentCategory.name}
@@ -292,7 +289,7 @@ export default function ServicesPage() {
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </div>
-                </FadeInOnScroll>
+                </motion.div>
 
                 {/* Service Cards */}
                 <StaggeredReveal direction="right" staggerDelay={0.2}>
@@ -300,27 +297,19 @@ export default function ServicesPage() {
                     {currentCategory.services.map((service, index) => (
                       <ServiceCardAnimation key={service.id} index={index} delay={0.8}>
                         <MagneticCard 
-                          className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-pan-y select-none"
-                          // Removed drag prevention to allow natural scrolling
-                          style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
+                          className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group"
                         >
                           <Link 
                             href={`/services/${service.id}`} 
-                            className="block touch-none select-none"
-                            // Removed drag prevention to allow natural scrolling
-                            style={{ touchAction: 'pan-y', userSelect: 'none' }}
+                            className="block"
                           >
-                            <div 
-                              className="relative h-48 overflow-hidden touch-pan-y select-none" 
-                              // Removed drag prevention to allow natural scrolling
-                              style={{ touchAction: 'pan-y', userSelect: 'none' }}
-                            >
+                            <div className="relative h-48 overflow-hidden">
                               <Image
                                 src={service.imageUrl}
                                 alt={service.name}
                                 fill
                                 draggable={false}
-                                className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
                                 quality={90}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               />
@@ -376,11 +365,15 @@ export default function ServicesPage() {
 
       {/* Dynamic Services Section */}
       {!loading && dynamicServices.length > 0 && (
-        <GlowingBackground className="py-16 md:py-24 bg-white relative overflow-hidden">
+        <GlowingBackground className="py-16 md:py-24 bg-white relative">
           {/* Animated Separator */}
           <AnimatedSeparator className="mb-8" delay={0.5} />
           <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <FadeInOnScroll direction="up" delay={0.2}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               <div className="text-center mb-12">
                 <PulseGlow className="inline-block">
                   <TypewriterText 
@@ -399,38 +392,26 @@ export default function ServicesPage() {
                   {t('services.additionalServicesDescription') || 'Explore our expanded range of specialized services designed to meet your unique requirements.'}
                 </motion.p>
               </div>
-            </FadeInOnScroll>
+            </motion.div>
 
             <StaggeredReveal direction="up" staggerDelay={0.15}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {dynamicServices.map((service, index) => (
                   <ServiceCardAnimation key={service._id} index={index} delay={0.4}>
                     <MagneticCard 
-                      className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-pan-y select-none"
-                      // Removed drag prevention to allow natural scrolling
-                      style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
+                      className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group"
                     >
                       <Link 
                         href={`/services/${service.slug}`} 
-                        className="block touch-pan-y select-none"
-                        onDragStart={(e) => e.preventDefault()}
-                        onDrag={(e) => e.preventDefault()}
-                        onDragEnd={(e) => e.preventDefault()}
-                        onMouseDown={(e) => e.preventDefault()}
-                        onContextMenu={(e) => e.preventDefault()}
-                        style={{ touchAction: 'pan-y', userSelect: 'none' }}
+                        className="block"
                       >
-                        <div 
-                          className="relative h-48 overflow-hidden touch-pan-y select-none" 
-                          // Removed drag prevention to allow natural scrolling
-                          style={{ touchAction: 'pan-y', userSelect: 'none' }}
-                        >
+                        <div className="relative h-48 overflow-hidden">
                           <Image
                             src={service.imageUrl}
-                            alt={service.title[language]}
+                            alt={service.title[language as keyof typeof service.title]}
                             fill
                             draggable={false}
-                            className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
                             quality={90}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
@@ -451,11 +432,11 @@ export default function ServicesPage() {
                       <div className="p-6">
                         <Link href={`/services/${service.slug}`}>
                           <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[20px] mb-3 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300 cursor-pointer">
-                            {service.title[language]}
+                            {service.title[language as keyof typeof service.title]}
                           </h4>
                         </Link>
                         <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
-                          {service.summary[language]}
+                          {service.summary[language as keyof typeof service.summary]}
                         </p>
                         {(service as any).pdfUrl && (
                           <motion.button
@@ -498,11 +479,15 @@ export default function ServicesPage() {
       )}
 
       {/* Applications Section */}
-      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative">
         {/* Animated Separator */}
         <AnimatedSeparator className="mb-8" delay={0.7} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <FadeInOnScroll direction="up" delay={0.2}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="text-center mb-12">
               <PulseGlow className="inline-block">
                 <TypewriterText 
@@ -513,7 +498,7 @@ export default function ServicesPage() {
                 />
               </PulseGlow>
             </div>
-          </FadeInOnScroll>
+          </motion.div>
 
           {/* Application Carousel */}
           <motion.div
@@ -547,24 +532,19 @@ export default function ServicesPage() {
                   {applications.map((application, index) => (
                     <ServiceCardAnimation key={application.id} index={index} delay={0.1 * index}>
                       <MagneticCard 
-                        className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group block touch-pan-y select-none"
-                        style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
+                        className="bg-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden group block"
                       >
                         <Link 
                           href={`/services/${application.id}`}
-                          className="block touch-pan-y select-none"
-                          style={{ touchAction: 'pan-y', userSelect: 'none' }}
+                          className="block"
                         >
-                          <div 
-                            className="relative h-48 overflow-hidden touch-pan-y select-none" 
-                            style={{ touchAction: 'pan-y', userSelect: 'none' }}
-                          >
+                          <div className="relative h-48 overflow-hidden">
                             <Image
                               src={application.imageUrl}
                               alt={application.title}
                               fill
                               draggable={false}
-                              className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
+                              className="object-cover transition-transform duration-500 group-hover:scale-110"
                               quality={90}
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
@@ -601,11 +581,15 @@ export default function ServicesPage() {
       </GlowingBackground>
 
       {/* Contact Form Section */}
-      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative overflow-hidden">
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 relative">
         {/* Animated Separator */}
         <AnimatedSeparator className="mb-8" delay={0.9} />
         <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <FadeInOnScroll direction="up" delay={0.2}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="text-center mb-12">
               <PulseGlow className="inline-block">
                 <TypewriterText 
@@ -624,7 +608,7 @@ export default function ServicesPage() {
                 {t('contact.form.subtitle') || 'Please contact us if you need any additional information about our services.'}
               </motion.p>
             </div>
-          </FadeInOnScroll>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}

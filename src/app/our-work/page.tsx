@@ -180,11 +180,15 @@ export default function OurWorkPage() {
       </div>
 
       {/* Work Portfolio Section */}
-      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative">
         {/* Animated Separator */}
         <AnimatedSeparator className="mb-8" delay={0.3} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <FadeInOnScroll direction="up" delay={0.2}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="mb-12">
               <PulseGlow className="inline-block">
                 <TypewriterText 
@@ -203,10 +207,14 @@ export default function OurWorkPage() {
                 {t('ourWorkPage.portfolioDescription') || 'We showcase our expertise through successful projects that demonstrate our commitment to excellence, innovation, and sustainable solutions across diverse industries and regions.'}
               </motion.p>
             </div>
-          </FadeInOnScroll>
+          </motion.div>
 
           {/* Work Category Tabs */}
-          <FadeInOnScroll direction="up" delay={0.4}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             <div className="flex justify-center mb-12">
               <div className="bg-gray-100 rounded-lg p-2 flex space-x-2">
                 {workCategories.map((category) => (
@@ -224,7 +232,7 @@ export default function OurWorkPage() {
                 ))}
           </div>
         </div>
-          </FadeInOnScroll>
+          </motion.div>
 
           {/* Work Content */}
           {currentCategory && (
@@ -235,7 +243,11 @@ export default function OurWorkPage() {
             >
               <div className="grid lg:grid-cols-[1fr_2fr] gap-6 items-start">
                 {/* Work Info */}
-                <FadeInOnScroll direction="left" delay={0.6}>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                >
                   <div className="space-y-6">
                     <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] text-[#EFC132]">
                       {t(`ourWorkPage.categories.${currentCategory.id}.name`) || currentCategory.name}
@@ -256,7 +268,7 @@ export default function OurWorkPage() {
                       </div>
         </div>
         </div>
-                </FadeInOnScroll>
+                </motion.div>
 
                 {/* Project Cards */}
                 <StaggeredReveal direction="right" staggerDelay={0.2}>
@@ -264,40 +276,20 @@ export default function OurWorkPage() {
                     {currentCategory.projects.map((project, index) => (
                       <ServiceCardAnimation key={project.id} index={index} delay={0.8}>
                         <MagneticCard 
-                          className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block touch-pan-y select-none"
-                          onDragStart={(e) => e.preventDefault()}
-                          onDrag={(e) => e.preventDefault()}
-                          onDragEnd={(e) => e.preventDefault()}
-                          onMouseDown={(e) => e.preventDefault()}
-                          onContextMenu={(e) => e.preventDefault()}
-                          style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
+                          className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block"
                         >
                           <div
                             onClick={() => {
                               window.location.href = `/our-work/${toKebabCase(project.id)}`;
                             }}
-                            onDragStart={(e) => e.preventDefault()}
-                            onDrag={(e) => e.preventDefault()}
-                            onDragEnd={(e) => e.preventDefault()}
-                            onMouseDown={(e) => e.preventDefault()}
-                            onContextMenu={(e) => e.preventDefault()}
-                            style={{ touchAction: 'pan-y', userSelect: 'none' }}
                           >
-                            <div 
-                              className="relative h-48 touch-pan-y select-none" 
-                              onDragStart={(e) => e.preventDefault()}
-                              onDrag={(e) => e.preventDefault()}
-                              onDragEnd={(e) => e.preventDefault()}
-                              onMouseDown={(e) => e.preventDefault()}
-                              onContextMenu={(e) => e.preventDefault()}
-                              style={{ touchAction: 'pan-y', userSelect: 'none' }}
-                            >
+                            <div className="relative h-48">
                               <Image
                                 src={project.imageUrl}
                                 alt={project.title}
                                 fill
                                 draggable={false}
-                                className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
                                 quality={90}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               />
@@ -349,11 +341,15 @@ export default function OurWorkPage() {
       </GlowingBackground>
 
       {/* Project Highlights Section */}
-      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative overflow-hidden">
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-[#EFC132]/5 via-white to-[#FFD700]/5 relative">
         {/* Animated Separator */}
         <AnimatedSeparator className="mb-8" delay={0.7} />
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <FadeInOnScroll direction="up" delay={0.2}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="text-center mb-12">
               <PulseGlow className="inline-block">
                 <TypewriterText 
@@ -364,13 +360,12 @@ export default function OurWorkPage() {
                 />
               </PulseGlow>
             </div>
-          </FadeInOnScroll>
+          </motion.div>
 
           {/* Highlights Carousel */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <div className="relative">
@@ -399,29 +394,15 @@ export default function OurWorkPage() {
                   {projectHighlights.map((highlight, index) => (
                     <ServiceCardAnimation key={highlight.id} index={index} delay={0.1 * index}>
                       <MagneticCard 
-                        className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group touch-pan-y select-none"
-                        onDragStart={(e) => e.preventDefault()}
-                        onDrag={(e) => e.preventDefault()}
-                        onDragEnd={(e) => e.preventDefault()}
-                        onMouseDown={(e) => e.preventDefault()}
-                        onContextMenu={(e) => e.preventDefault()}
-                        style={{ touchAction: 'pan-y', userSelect: 'none', WebkitUserSelect: 'none', MozUserSelect: 'none', msUserSelect: 'none' }}
+                        className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group"
                       >
-                        <div 
-                          className="relative h-48 touch-pan-y select-none" 
-                          onDragStart={(e) => e.preventDefault()}
-                          onDrag={(e) => e.preventDefault()}
-                          onDragEnd={(e) => e.preventDefault()}
-                          onMouseDown={(e) => e.preventDefault()}
-                          onContextMenu={(e) => e.preventDefault()}
-                          style={{ touchAction: 'pan-y', userSelect: 'none' }}
-                        >
+                        <div className="relative h-48">
                           <Image
                             src={highlight.imageUrl}
                             alt={highlight.title}
                             fill
                             draggable={false}
-                            className="object-cover transition-transform duration-500 group-hover:scale-110 select-none pointer-events-none"
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
                             quality={90}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
@@ -486,11 +467,15 @@ export default function OurWorkPage() {
       </GlowingBackground>
 
       {/* Contact Form Section */}
-      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
+      <GlowingBackground className="py-16 md:py-24 bg-gradient-to-br from-white via-gray-50 to-white relative">
         {/* Animated Separator */}
         <AnimatedSeparator className="mb-8" delay={0.9} />
         <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <FadeInOnScroll direction="up" delay={0.2}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="text-center mb-12">
               <PulseGlow className="inline-block">
                 <TypewriterText 
@@ -509,7 +494,7 @@ export default function OurWorkPage() {
                 {t('ourWorkPage.interestedDescription') || "Let's discuss how we can help bring your project to life with our expertise and innovative solutions."}
               </motion.p>
             </div>
-          </FadeInOnScroll>
+          </motion.div>
 
           <motion.div 
               className="bg-gray-50 rounded-2xl p-8 md:p-12"

@@ -6,7 +6,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Navigation } from '@/components/Navigation';
-import { FadeInOnScroll, ParallaxWrapper } from '@/components/ParallaxWrapper';
+import { ParallaxWrapper } from '@/components/ParallaxWrapper';
 import { ServiceCardAnimation, AnimatedSeparator, FloatingIcon, GlowingBackground } from '@/components/animations/ServiceCardAnimation';
 import { StaggeredReveal, MagneticCard, PulseGlow, TypewriterText } from '@/components/animations/StaggeredReveal';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -198,11 +198,12 @@ export default function WorkDetailPage() {
   }
 
   return (
-    <div className="size-full overflow-y-auto overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-x-hidden">
       <Navigation currentSection="work" onNavigate={() => {}} />
 
       {/* Hero banner using project image */}
-      <section className="relative w-full h-[40vh] md:h-[52vh] overflow-hidden">
+      <div className="pt-[103px]">
+        <section className="relative w-full h-[40vh] md:h-[52vh] overflow-hidden">
         <Image 
           src={staticProject ? staticProject.imageUrl : project.imageUrl} 
           alt={staticProject 
@@ -262,13 +263,18 @@ export default function WorkDetailPage() {
           </motion.div>
         </div>
       </section>
+      </div>
 
       {/* Key features */}
       <GlowingBackground className="bg-gray-50 py-12 md:py-16">
         {/* Animated Separator */}
         <AnimatedSeparator className="mb-8" delay={0.3} />
         <div className="max-w-[1280px] mx-auto px-4 md:px-8">
-          <StaggeredReveal direction="up" staggerDelay={0.2}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="grid md:grid-cols-3 gap-6">
               {staticProject ? (
                 staticProject.features.map((featureIndex) => (
@@ -298,7 +304,7 @@ export default function WorkDetailPage() {
                 ))
               )}
             </div>
-          </StaggeredReveal>
+          </motion.div>
         </div>
       </GlowingBackground>
 

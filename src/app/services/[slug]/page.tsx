@@ -105,11 +105,12 @@ export default function ServiceDetailPage() {
   }
 
   return (
-    <div className="size-full overflow-y-auto overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-x-hidden">
       <Navigation currentSection="services" onNavigate={() => {}} />
 
       {/* Hero banner using clicked service image */}
-      <section className="relative w-full h-[40vh] md:h-[52vh] overflow-hidden">
+      <div className="pt-[103px]">
+        <section className="relative w-full h-[40vh] md:h-[52vh] overflow-hidden">
         <Image 
           src={service.imageUrl} 
           alt={service.title} 
@@ -137,6 +138,7 @@ export default function ServiceDetailPage() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* Key features */}
       <section className="bg-white py-12 md:py-16">
