@@ -209,7 +209,7 @@ export function PresenceSection() {
                   {/* Optional caption for better accessibility */}
                   <div className="mt-4 md:mt-6">
                     <p className="text-sm md:text-base text-white/80 font-medium">
-                      {t('presence.globalReach.caption')}
+                      {t('about.presence.globalReach.caption')}
                     </p>
                   </div>
                 </div>
@@ -283,7 +283,7 @@ export function PresenceSection() {
                 {/* Enhanced Legend */}
                 <div className="mb-6 md:mb-8">
                   <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-base md:text-lg text-[#EFC132] mb-4 md:mb-6 drop-shadow-sm">
-                    {t('presence.presenceStatus')}
+                    {t('about.presence.presenceStatus')}
                   </h3>
                   <div className="space-y-2 md:space-y-3">
                     <div className="flex items-center gap-3 md:gap-4">
