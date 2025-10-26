@@ -1085,6 +1085,36 @@ function ServicesTab({ onEditService, categories, setCategories }: ServicesTabPr
     ? services 
     : services.filter(service => service.category === activeCategory);
 
+  const handleDeleteService = async (serviceId: string) => {
+    if (!confirm('Are you sure you want to delete this service? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch(`/api/admin/services?id=${serviceId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Remove the service from the local state
+        setServices(services.filter(service => service._id !== serviceId));
+        // Trigger refresh for other components
+        window.dispatchEvent(new Event('refreshServices'));
+      } else {
+        alert(`Failed to delete service: ${result.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error deleting service:', error);
+      alert('Failed to delete service. Please try again.');
+    }
+  };
+
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow p-6">
@@ -1228,7 +1258,7 @@ function ServicesTab({ onEditService, categories, setCategories }: ServicesTabPr
                       {service.isActive ? 'Hide' : 'Show'}
                     </button>
                     <button
-                      onClick={() => {/* TODO: Delete service */}}
+                      onClick={() => handleDeleteService(service._id)}
                         className="flex items-center px-3 py-2 text-xs font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200"
                     >
                       <Trash2 className="w-3 h-3 mr-1" />
