@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, Download, ArrowRight, ArrowLeft, Search } from 'lucide-react';
@@ -133,14 +133,93 @@ const toKebabCase = (str: string) => {
 
 export default function OurWorkPage() {
   const { t, language } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState('oilGasProjects');
+  const [activeCategory, setActiveCategory] = useState('');
   const [currentHighlight, setCurrentHighlight] = useState(0);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [hoveredHighlight, setHoveredHighlight] = useState<string | null>(null);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [dynamicProjects, setDynamicProjects] = useState<any[]>([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
 
-  const currentCategory = workCategories.find(cat => cat.id === activeCategory);
+  // Fetch dynamic projects and their categories from the database
+  useEffect(() => {
+    const fetchDynamicProjects = async () => {
+      try {
+        const projectsResponse = await fetch('/api/projects');
+        const projectsResult = await projectsResponse.json();
+        
+        if (projectsResult.success && projectsResult.data) {
+          // Transform dynamic projects to match the WorkProject interface
+          const transformedProjects = projectsResult.data.map((project: any) => {
+            const categoryId = project.category?.toString() || project.category || 'oilGasProjects';
+            
+            // Use categoryName from the API response (which is an object with en and ar)
+            const categoryNameObj = project.categoryName || { en: 'Projects', ar: 'مشاريع' };
+            const categoryName = categoryNameObj[language as keyof typeof categoryNameObj] || categoryNameObj.en || 'Projects';
+            
+            return {
+              id: project.slug,
+              title: project.title?.[language as keyof typeof project.title] || project.title?.en || 'Project',
+              description: project.summary?.[language as keyof typeof project.summary] || project.summary?.en || '',
+              category: categoryId,
+              categoryName: categoryName,
+              imageUrl: project.imageUrl,
+              downloadUrl: project.pdfUrl,
+              year: project.year || (project.createdAt ? new Date(project.createdAt).getFullYear().toString() : '2024'),
+              location: project.location?.[language as keyof typeof project.location] || project.location?.en || ''
+            };
+          });
+          
+          setDynamicProjects(transformedProjects);
+        }
+      } catch (error) {
+        console.error('Error fetching dynamic projects:', error);
+      } finally {
+        setLoadingProjects(false);
+      }
+    };
+
+    fetchDynamicProjects();
+  }, [language]);
+
+  // Show only fetched dynamic projects
+  const allWorkCategories = useMemo(() => {
+    const categoriesMap = new Map<string, { id: string; name: string; description: string; projects: WorkProject[] }>();
+    
+    // Group dynamic projects by category
+    dynamicProjects.forEach(project => {
+      const categoryId = project.category || 'oilGasProjects';
+      const categoryName = project.categoryName || categoryId; // Use categoryName from the project
+      
+      if (!categoriesMap.has(categoryId)) {
+        categoriesMap.set(categoryId, {
+          id: categoryId,
+          name: categoryName,
+          description: '',
+          projects: []
+        });
+      }
+      
+      categoriesMap.get(categoryId)!.projects.push(project);
+    });
+    
+    // If no dynamic projects, return empty array
+    if (categoriesMap.size === 0) {
+      return [];
+    }
+    
+    return Array.from(categoriesMap.values());
+  }, [dynamicProjects]);
+
+  // Set active category to first category when categories are loaded
+  useEffect(() => {
+    if (allWorkCategories.length > 0 && !activeCategory) {
+      setActiveCategory(allWorkCategories[0].id);
+    }
+  }, [allWorkCategories, activeCategory]);
+
+  const currentCategory = allWorkCategories.find((cat: WorkCategory) => cat.id === activeCategory);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -210,32 +289,48 @@ export default function OurWorkPage() {
           </motion.div>
 
           {/* Work Category Tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <div className="flex justify-center mb-12">
-              <div className="bg-gray-100 rounded-lg p-2 flex space-x-2">
-                {workCategories.map((category) => (
-                  <button
-                    key={category.id}
-                    onClick={() => setActiveCategory(category.id)}
-                    className={`px-6 py-3 rounded-md font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-                      activeCategory === category.id
-                        ? 'bg-[#EFC132] text-white shadow-lg scale-105'
-                        : 'text-gray-600 hover:text-[#EFC132] hover:bg-white hover:shadow-md'
-                    }`}
-                  >
-                    {t(`ourWorkPage.categories.${category.id}.name`) || category.name}
-                  </button>
-                ))}
-          </div>
-        </div>
-          </motion.div>
+          {allWorkCategories.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <div className="flex justify-center mb-12">
+                <div className="bg-gray-100 rounded-lg p-2 flex space-x-2">
+                  {allWorkCategories.map((category: WorkCategory) => (
+                    <button
+                      key={category.id}
+                      onClick={() => setActiveCategory(category.id)}
+                      className={`px-6 py-3 rounded-md font-['ADLaM_Display:Regular',_sans-serif] text-[16px] transition-all duration-300 transform hover:scale-105 active:scale-95 ${
+                        activeCategory === category.id
+                          ? 'bg-[#EFC132] text-white shadow-lg scale-105'
+                          : 'text-gray-600 hover:text-[#EFC132] hover:bg-white hover:shadow-md'
+                      }`}
+                    >
+                      {category.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Loading or Empty State */}
+          {loadingProjects && (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#EFC132] mx-auto"></div>
+              <p className="mt-4 text-gray-600">Loading projects...</p>
+            </div>
+          )}
+
+          {!loadingProjects && allWorkCategories.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-600">{t('ourWorkPage.noProjects') || 'No projects available at this time.'}</p>
+            </div>
+          )}
 
           {/* Work Content */}
-          {currentCategory && (
+          {currentCategory && !loadingProjects && allWorkCategories.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -250,10 +345,10 @@ export default function OurWorkPage() {
                 >
                   <div className="space-y-6">
                     <h3 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[28px] md:text-[36px] text-[#EFC132]">
-                      {t(`ourWorkPage.categories.${currentCategory.id}.name`) || currentCategory.name}
+                      {currentCategory.name}
                     </h3>
                     <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[16px] md:text-[18px] text-gray-600 leading-relaxed">
-                      {t(`ourWorkPage.categories.${currentCategory.id}.description`) || currentCategory.description}
+                      {currentCategory.description}
                     </p>
                     <div className="space-y-2">
                       <div className="flex items-center text-sm text-gray-600">
@@ -273,7 +368,7 @@ export default function OurWorkPage() {
                 {/* Project Cards */}
                 <StaggeredReveal direction="right" staggerDelay={0.2}>
                   <div className="grid md:grid-cols-2 gap-6">
-                    {currentCategory.projects.map((project, index) => (
+                    {currentCategory.projects.map((project: WorkProject, index: number) => (
                       <ServiceCardAnimation key={project.id} index={index} delay={0.8}>
                         <MagneticCard 
                           className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden group block"
@@ -286,7 +381,7 @@ export default function OurWorkPage() {
                             <div className="relative h-48">
                               <Image
                                 src={project.imageUrl}
-                                alt={project.title}
+                                alt={project.title || 'Project image'}
                                 fill
                                 draggable={false}
                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -309,7 +404,7 @@ export default function OurWorkPage() {
                             <div className="p-6">
                               <div className="flex justify-between items-start mb-3">
                                 <h4 className="font-['Alfa_Slab_One:Bold',_sans-serif] font-bold text-[18px] text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300">
-                                  {t(`ourWorkPage.projects.${toKebabCase(project.id)}.title`)}
+                                  {project.title}
                                 </h4>
                                 <motion.span 
                                   className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded transition-all duration-300 group-hover:bg-[#EFC132] group-hover:text-white"
@@ -319,10 +414,10 @@ export default function OurWorkPage() {
                                 </motion.span>
                               </div>
                               <p className="font-['ADLaM_Display:Regular',_sans-serif] text-[14px] text-gray-600 mb-4 leading-relaxed">
-                                {t(`ourWorkPage.projects.${toKebabCase(project.id)}.description`)}
+                                {project.description}
                               </p>
                               <div className="flex justify-between items-center">
-                                <span className="text-xs text-gray-500">{t(`ourWorkPage.projects.${toKebabCase(project.id)}.location`)}</span>
+                                <span className="text-xs text-gray-500">{project.location}</span>
                                 <FloatingIcon delay={0.2} floatIntensity={0.3}>
                                   <ArrowRight className="w-4 h-4 text-[#EFC132] group-hover:text-[#8B7A0A] transition-colors duration-300" />
                                 </FloatingIcon>
