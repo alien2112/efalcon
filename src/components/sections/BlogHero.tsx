@@ -73,9 +73,10 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
   // Determine which image to show
   const getCurrentImage = () => {
     if (bannerImages.length > 0) {
-      const currentImage = bannerImages[currentImageIndex];
+      const currentImage = bannerImages[currentImageIndex] as any;
+      const v = currentImage.uploadDate ? `?v=${new Date(currentImage.uploadDate).getTime()}` : '';
       return {
-        src: `/api/gridfs/images/${currentImage._id}`,
+        src: `/api/gridfs/images/${currentImage._id}${v}`,
         alt: currentImage.metadata.title
       };
     }

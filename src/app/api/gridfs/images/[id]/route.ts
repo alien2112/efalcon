@@ -19,11 +19,14 @@ export async function GET(_request: NextRequest, { params }: { params: { id: str
     const crypto = require('crypto');
     const etag = crypto.createHash('md5').update(buffer).digest('hex');
 
-    return new Response(buffer, {
+    const uint8 = new Uint8Array(buffer);
+    const blob = new Blob([uint8], { type: contentType });
+    return new Response(blob, {
       status: 200,
       headers: {
         'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=86400, immutable',
+        // Cache for 30 minutes at browser and CDN, allow brief SWR window
+        'Cache-Control': 'public, s-maxage=1800, max-age=1800, stale-while-revalidate=600',
         'ETag': etag,
         'Vary': 'Accept-Encoding'
       }

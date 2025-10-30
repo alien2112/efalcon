@@ -230,7 +230,7 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
   const slides = useMemo(() => {
     if (bannerImages.length > 0) {
       return bannerImages.map(img => ({
-        src: `/api/gridfs/images/${img._id}`,
+        src: `/api/gridfs/images/${img._id}` + ((img as any).uploadDate ? `?v=${new Date((img as any).uploadDate).getTime()}` : ''),
         alt: language === 'ar' && img.metadata.titleAr ? img.metadata.titleAr : img.metadata.title,
         title: img.metadata.title,
         titleAr: img.metadata.titleAr || '',
