@@ -9,6 +9,7 @@ interface BannerImage {
   _id: string;
   filename: string;
   contentType: string;
+  uploadDate?: string | Date;
   metadata: {
     title: string;
     description: string;
@@ -33,7 +34,14 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
     const fetchBannerImages = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch('/api/gridfs/images');
+        // Add cache-busting query param to ensure fresh data
+        const cacheBuster = Date.now();
+        const response = await fetch(`/api/gridfs/images?t=${cacheBuster}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        });
         const result = await response.json();
         
         if (result.success) {
@@ -73,10 +81,10 @@ export function BlogHero({ onAnimationComplete }: BlogHeroProps) {
   // Determine which image to show
   const getCurrentImage = () => {
     if (bannerImages.length > 0) {
-      const currentImage = bannerImages[currentImageIndex] as any;
-      const v = currentImage.uploadDate ? `?v=${new Date(currentImage.uploadDate).getTime()}` : '';
+      const currentImage = bannerImages[currentImageIndex];
+      const uploadDate = currentImage.uploadDate ? new Date(currentImage.uploadDate).getTime() : null;
       return {
-        src: `/api/gridfs/images/${currentImage._id}${v}`,
+        src: `/api/gridfs/images/${currentImage._id}${uploadDate ? `?v=${uploadDate}` : ''}`,
         alt: currentImage.metadata.title
       };
     }

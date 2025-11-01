@@ -10,6 +10,7 @@ interface BannerImage {
   _id: string;
   filename: string;
   contentType: string;
+  uploadDate?: string | Date;
   metadata: {
     title: string;
     titleAr: string;
@@ -200,7 +201,14 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
   useEffect(() => {
     const fetchBannerImages = async () => {
       try {
-        const response = await fetch('/api/gridfs/images');
+        // Add cache-busting query param to ensure fresh data
+        const cacheBuster = Date.now();
+        const response = await fetch(`/api/gridfs/images?t=${cacheBuster}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        });
         const result = await response.json();
         
         if (result.success) {
@@ -229,17 +237,20 @@ export function HeroSlider({ onReady, autoplayMs = 4500, page = 'home' }: HeroSl
   // Convert banner images to slides format
   const slides = useMemo(() => {
     if (bannerImages.length > 0) {
-      return bannerImages.map(img => ({
-        src: `/api/gridfs/images/${img._id}` + ((img as any).uploadDate ? `?v=${new Date((img as any).uploadDate).getTime()}` : ''),
-        alt: language === 'ar' && img.metadata.titleAr ? img.metadata.titleAr : img.metadata.title,
-        title: img.metadata.title,
-        titleAr: img.metadata.titleAr || '',
-        description: img.metadata.description,
-        descriptionAr: img.metadata.descriptionAr || '',
-        showTitle: img.metadata.showTitle !== false,
-        showDescription: img.metadata.showDescription !== false,
-        variant: 'image' as const
-      }));
+      return bannerImages.map(img => {
+        const uploadDate = img.uploadDate ? new Date(img.uploadDate).getTime() : null;
+        return {
+          src: `/api/gridfs/images/${img._id}${uploadDate ? `?v=${uploadDate}` : ''}`,
+          alt: language === 'ar' && img.metadata.titleAr ? img.metadata.titleAr : img.metadata.title,
+          title: img.metadata.title,
+          titleAr: img.metadata.titleAr || '',
+          description: img.metadata.description,
+          descriptionAr: img.metadata.descriptionAr || '',
+          showTitle: img.metadata.showTitle !== false,
+          showDescription: img.metadata.showDescription !== false,
+          variant: 'image' as const
+        };
+      });
     }
     return defaultSlides;
   }, [bannerImages, defaultSlides, language]);

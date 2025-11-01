@@ -11,6 +11,7 @@ interface BannerImage {
   _id: string;
   filename: string;
   contentType: string;
+  uploadDate?: string | Date;
   metadata: {
     title: string;
     titleAr: string;
@@ -199,7 +200,14 @@ export function Banner({
     const fetchBannerImages = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch('/api/gridfs/images');
+        // Add cache-busting query param to ensure fresh data
+        const cacheBuster = Date.now();
+        const response = await fetch(`/api/gridfs/images?t=${cacheBuster}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        });
         const result = await response.json();
         
         if (result.success) {
@@ -228,11 +236,14 @@ export function Banner({
   // Get available images (dynamic or static)
   const getAvailableImages = () => {
     if (useDynamicImages && bannerImages.length > 0) {
-      return bannerImages.map(img => ({
-        src: `/api/gridfs/images/${img._id}` + ((img as any).uploadDate ? `?v=${new Date((img as any).uploadDate).getTime()}` : ''),
-        alt: (language === 'ar' && img.metadata.titleAr) ? img.metadata.titleAr : (img.metadata.title || 'Banner image'),
-        metadata: img.metadata
-      }));
+      return bannerImages.map(img => {
+        const uploadDate = img.uploadDate ? new Date(img.uploadDate).getTime() : null;
+        return {
+          src: `/api/gridfs/images/${img._id}${uploadDate ? `?v=${uploadDate}` : ''}`,
+          alt: (language === 'ar' && img.metadata.titleAr) ? img.metadata.titleAr : (img.metadata.title || 'Banner image'),
+          metadata: img.metadata
+        };
+      });
     } else if (isSlider) {
       const staticImages = getStaticImages(page);
       return staticImages.map(img => ({

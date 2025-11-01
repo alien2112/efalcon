@@ -3,7 +3,7 @@ import { GridFSUtils } from '@/lib/gridfs';
 import { withAuth } from '@/lib/auth';
 
 // GET - List all images with metadata
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const images = await GridFSUtils.listFiles();
     
@@ -12,7 +12,7 @@ export async function GET() {
       .filter(img => img.metadata?.isActive !== false)
       .sort((a, b) => (a.metadata?.order || 0) - (b.metadata?.order || 0));
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       data: activeImages.map(img => ({
         _id: img._id.toString(),
@@ -23,6 +23,15 @@ export async function GET() {
         metadata: img.metadata
       }))
     });
+
+    // Add cache headers - short cache to ensure fresh data on production
+    response.headers.set('Cache-Control', 'public, s-maxage=60, max-age=60, stale-while-revalidate=120');
+    response.headers.set('CDN-Cache-Control', 'public, s-maxage=60, stale-while-revalidate=120');
+    
+    // Prevent caching of stale data
+    response.headers.set('Vary', 'Accept');
+    
+    return response;
 
   } catch (error) {
     console.error('Error listing images:', error);
@@ -110,23 +119,55 @@ export const POST = withAuth(async (request: NextRequest) => {
   }
 });
 
-// PUT - Update image metadata (Admin only)
-// Note: GridFS doesn't support direct metadata updates,
-// so we need to use a workaround with the files collection
+// PUT - Update image metadata or replace image file (Admin only)
+// Handles both FormData (with file) and JSON (metadata only)
 export const PUT = withAuth(async (request: NextRequest) => {
   try {
-    const { 
-      _id, 
-      title, 
-      titleAr, 
-      description, 
-      descriptionAr, 
-      order, 
-      isActive, 
-      showTitle, 
-      showDescription, 
-      page 
-    } = await request.json();
+    const contentType = request.headers.get('content-type') || '';
+    let _id: string;
+    let title: string | undefined;
+    let titleAr: string | undefined;
+    let description: string | undefined;
+    let descriptionAr: string | undefined;
+    let order: number | undefined;
+    let isActive: boolean | undefined;
+    let showTitle: boolean | undefined;
+    let showDescription: boolean | undefined;
+    let page: string | undefined;
+    let file: File | null = null;
+
+    // Check if request is FormData or JSON
+    if (contentType.includes('multipart/form-data')) {
+      const formData = await request.formData();
+      _id = formData.get('_id') as string;
+      file = formData.get('file') as File | null;
+      title = formData.get('title') as string | null || undefined;
+      titleAr = formData.get('titleAr') as string | null || undefined;
+      description = formData.get('description') as string | null || undefined;
+      descriptionAr = formData.get('descriptionAr') as string | null || undefined;
+      const orderStr = formData.get('order') as string | null;
+      order = orderStr ? parseInt(orderStr) : undefined;
+      const isActiveStr = formData.get('isActive') as string | null;
+      isActive = isActiveStr === 'true' ? true : isActiveStr === 'false' ? false : undefined;
+      const showTitleStr = formData.get('showTitle') as string | null;
+      showTitle = showTitleStr === 'true' ? true : showTitleStr === 'false' ? false : undefined;
+      const showDescriptionStr = formData.get('showDescription') as string | null;
+      showDescription = showDescriptionStr === 'true' ? true : showDescriptionStr === 'false' ? false : undefined;
+      page = formData.get('page') as string | null || undefined;
+    } else {
+      // JSON request
+      const body = await request.json();
+      _id = body._id;
+      title = body.title;
+      titleAr = body.titleAr;
+      description = body.description;
+      descriptionAr = body.descriptionAr;
+      order = body.order;
+      isActive = body.isActive;
+      showTitle = body.showTitle;
+      showDescription = body.showDescription;
+      page = body.page;
+    }
 
     if (!_id) {
       return NextResponse.json({
@@ -135,42 +176,107 @@ export const PUT = withAuth(async (request: NextRequest) => {
       }, { status: 400 });
     }
 
-    // Get the database connection
-    const clientPromise = (await import('@/lib/mongodb')).default;
-    const client = await clientPromise;
-    const db = client.db(process.env.MONGODB_DB || 'petrowebsite');
-    const filesCollection = db.collection('images.files');
-
-    // Update the metadata in the files collection
-    const updateFields: any = {};
-    if (title !== undefined) updateFields['metadata.title'] = title;
-    if (titleAr !== undefined) updateFields['metadata.titleAr'] = titleAr;
-    if (description !== undefined) updateFields['metadata.description'] = description;
-    if (descriptionAr !== undefined) updateFields['metadata.descriptionAr'] = descriptionAr;
-    if (order !== undefined) updateFields['metadata.order'] = order;
-    if (isActive !== undefined) updateFields['metadata.isActive'] = isActive;
-    if (showTitle !== undefined) updateFields['metadata.showTitle'] = showTitle;
-    if (showDescription !== undefined) updateFields['metadata.showDescription'] = showDescription;
-    if (page !== undefined) updateFields['metadata.page'] = page;
-
     const { ObjectId } = await import('mongodb');
-    const result = await filesCollection.updateOne(
-      { _id: new ObjectId(_id) },
-      { $set: updateFields }
-    );
 
-    if (result.matchedCount === 0) {
+    // If a file is provided, delete old image and upload new one
+    if (file) {
+      // Delete the old image
+      await GridFSUtils.deleteFile(_id);
+
+      // Upload new image with updated metadata
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const metadata: any = {};
+      if (title !== undefined) metadata.title = title || file.name;
+      if (titleAr !== undefined) metadata.titleAr = titleAr || '';
+      if (description !== undefined) metadata.description = description || '';
+      if (descriptionAr !== undefined) metadata.descriptionAr = descriptionAr || '';
+      if (order !== undefined) metadata.order = order;
+      if (isActive !== undefined) metadata.isActive = isActive;
+      if (showTitle !== undefined) metadata.showTitle = showTitle;
+      if (showDescription !== undefined) metadata.showDescription = showDescription;
+      if (page !== undefined) metadata.page = page;
+
+      // Get existing metadata to preserve values not being updated
+      const existingImages = await GridFSUtils.listFiles();
+      const existing = existingImages.find(img => img._id.toString() === _id);
+      if (existing && existing.metadata) {
+        // Preserve existing metadata if not provided
+        if (title === undefined) metadata.title = existing.metadata.title || file.name;
+        if (titleAr === undefined) metadata.titleAr = existing.metadata.titleAr || '';
+        if (description === undefined) metadata.description = existing.metadata.description || '';
+        if (descriptionAr === undefined) metadata.descriptionAr = existing.metadata.descriptionAr || '';
+        if (order === undefined) metadata.order = existing.metadata.order || 1;
+        if (isActive === undefined) metadata.isActive = existing.metadata.isActive !== false;
+        if (showTitle === undefined) metadata.showTitle = existing.metadata.showTitle !== false;
+        if (showDescription === undefined) metadata.showDescription = existing.metadata.showDescription !== false;
+        if (page === undefined) metadata.page = existing.metadata.page || 'home';
+      } else {
+        // Defaults if no existing metadata
+        if (!metadata.title) metadata.title = file.name;
+        if (metadata.titleAr === undefined) metadata.titleAr = '';
+        if (metadata.description === undefined) metadata.description = '';
+        if (metadata.descriptionAr === undefined) metadata.descriptionAr = '';
+        if (metadata.order === undefined) metadata.order = 1;
+        if (metadata.isActive === undefined) metadata.isActive = true;
+        if (metadata.showTitle === undefined) metadata.showTitle = true;
+        if (metadata.showDescription === undefined) metadata.showDescription = true;
+        if (metadata.page === undefined) metadata.page = 'home';
+      }
+
+      const newFileId = await GridFSUtils.uploadFile(
+        buffer,
+        file.name,
+        file.type,
+        metadata
+      );
+
       return NextResponse.json({
-        success: false,
-        error: 'Image not found'
-      }, { status: 404 });
-    }
+        success: true,
+        message: 'Image replaced successfully',
+        data: {
+          _id: newFileId,
+          filename: file.name,
+          contentType: file.type,
+          metadata
+        }
+      });
+    } else {
+      // Metadata-only update
+      const clientPromise = (await import('@/lib/mongodb')).default;
+      const client = await clientPromise;
+      const db = client.db(process.env.MONGODB_DB || 'petrowebsite');
+      const filesCollection = db.collection('images.files');
 
-    return NextResponse.json({
-      success: true,
-      message: 'Image metadata updated successfully',
-      data: { _id, ...updateFields }
-    });
+      // Update the metadata in the files collection
+      const updateFields: any = {};
+      if (title !== undefined) updateFields['metadata.title'] = title;
+      if (titleAr !== undefined) updateFields['metadata.titleAr'] = titleAr;
+      if (description !== undefined) updateFields['metadata.description'] = description;
+      if (descriptionAr !== undefined) updateFields['metadata.descriptionAr'] = descriptionAr;
+      if (order !== undefined) updateFields['metadata.order'] = order;
+      if (isActive !== undefined) updateFields['metadata.isActive'] = isActive;
+      if (showTitle !== undefined) updateFields['metadata.showTitle'] = showTitle;
+      if (showDescription !== undefined) updateFields['metadata.showDescription'] = showDescription;
+      if (page !== undefined) updateFields['metadata.page'] = page;
+
+      const result = await filesCollection.updateOne(
+        { _id: new ObjectId(_id) },
+        { $set: updateFields }
+      );
+
+      if (result.matchedCount === 0) {
+        return NextResponse.json({
+          success: false,
+          error: 'Image not found'
+        }, { status: 404 });
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: 'Image metadata updated successfully',
+        data: { _id, ...updateFields }
+      });
+    }
 
   } catch (error) {
     console.error('Error updating image:', error);

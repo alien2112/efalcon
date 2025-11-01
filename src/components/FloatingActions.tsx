@@ -5,36 +5,101 @@ import Image from 'next/image';
 
 export function FloatingActions() {
   const [visible, setVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const updateIsMobile = () => setIsMobile(window.innerWidth < 768);
     const onScroll = () => {
       const y = window.scrollY || document.documentElement.scrollTop || 0;
-      const threshold = isMobile ? 40 : 150;
+      const isMobile = window.innerWidth < 768;
+      const threshold = isMobile ? 300 : 400;
       setVisible(y > threshold);
     };
-    updateIsMobile();
+    
+    // Check immediately
     onScroll();
-    window.addEventListener('scroll', onScroll);
-    window.addEventListener('resize', updateIsMobile);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', updateIsMobile);
+    
+    // Add scroll listener with throttling for better performance
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          onScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-  }, [isMobile]);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
-  const scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollTop = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Store initial position
+    const startPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    
+    if (startPosition === 0) return; // Already at top
+    
+    // Cancel any existing scroll animation
+    const scrollId = 'scrollToTop_' + Date.now();
+    (window as any)[scrollId] = true;
+    
+    // Smooth scroll function that always completes
+    const startTime = Date.now();
+    const duration = Math.min(500, startPosition * 0.5); // Adaptive duration
+    
+    const animateScroll = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function (ease-out)
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const currentPosition = startPosition * (1 - easeOut);
+      
+      window.scrollTo(0, Math.max(0, startPosition - currentPosition));
+      
+      if (progress < 1 && (window as any)[scrollId]) {
+        requestAnimationFrame(animateScroll);
+      } else {
+        // Force final position to ensure we're at top
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        delete (window as any)[scrollId];
+      }
+    };
+    
+    // Start animation
+    requestAnimationFrame(animateScroll);
+    
+    // Safety fallback - force scroll to top after max duration
+    setTimeout(() => {
+      if ((window as any)[scrollId]) {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        delete (window as any)[scrollId];
+      }
+    }, duration + 100);
   };
 
   return (
     <div 
-      className="fixed bottom-5 right-5 z-[9999] flex flex-col items-end gap-3 pointer-events-auto floating-actions-container"
+      className="fixed bottom-5 right-5 flex flex-col items-end gap-3 floating-actions-container"
       style={{ 
         position: 'fixed',
-        zIndex: 9999,
-        isolation: 'isolate'
+        bottom: '20px',
+        right: '20px',
+        zIndex: 99999,
+        isolation: 'isolate',
+        pointerEvents: 'auto'
       }}
     >
       {/* Call Button - Always Visible */}
@@ -76,12 +141,47 @@ export function FloatingActions() {
 
       {/* Scroll to top */}
       <button
-        onClick={scrollTop}
+        onClick={(e) => {
+          console.log('Scroll button clicked'); // Debug
+          scrollTop(e);
+        }}
         aria-label="Scroll to top"
-        className={`transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'} bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white hover:shadow-xl transition-all duration-300 group shadow-lg rounded-full w-10 h-10 md:w-10 md:h-10 flex items-center justify-center border border-white/30`}
-        style={{ zIndex: 10000 }}
+        type="button"
+        className={`transition-all duration-300 ${
+          visible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-70 translate-y-0'
+        } bg-gradient-to-r from-[#EFC132] to-[#8B7A0A] text-white hover:from-[#FFD700] hover:to-[#EFC132] hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 group shadow-2xl rounded-full w-12 h-12 flex items-center justify-center border-2 border-white cursor-pointer`}
+        style={{ 
+          zIndex: 10001,
+          pointerEvents: 'auto',
+          touchAction: 'manipulation',
+          WebkitTapHighlightColor: 'transparent',
+          userSelect: 'none',
+          filter: 'none !important',
+          backdropFilter: 'none !important',
+          WebkitBackdropFilter: 'none !important',
+          opacity: visible ? 1 : 0.7,
+          backgroundColor: '#EFC132',
+          backgroundImage: 'linear-gradient(to right, #EFC132, #8B7A0A)',
+          boxShadow: '0 10px 25px rgba(239, 193, 50, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.3)',
+          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: 'grayscale'
+        }}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" className="group-hover:animate-bounce">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 24 24" 
+          width="22" 
+          height="22" 
+          fill="white" 
+          className="group-hover:animate-bounce drop-shadow-sm"
+          style={{
+            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))',
+            stroke: 'white',
+            strokeWidth: 0.5
+          }}
+        >
           <path d="M12 5.828l5.364 5.364-1.414 1.414L13 9.657V20h-2V9.657L8.05 12.606 6.636 11.192 12 5.828z"/>
         </svg>
       </button>

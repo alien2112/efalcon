@@ -511,11 +511,11 @@ img {
   position: fixed !important;
   z-index: 99999 !important;
   isolation: isolate;
-  pointer-events: none;
+  pointer-events: auto !important;
 }
 
 .floating-actions-container > * {
-  pointer-events: auto;
+  pointer-events: auto !important;
 }
 
 /* Mobile-specific adjustments */
